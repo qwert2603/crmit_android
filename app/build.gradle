@@ -1,0 +1,84 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 27
+    defaultConfig {
+        applicationId "com.qwert2603.crmit_android"
+        minSdkVersion 21
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-snapshot"
+        }
+        release {
+            shrinkResources true
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    flavorDimensions 'server'
+
+    productFlavors {
+        home {
+            dimension "server"
+            versionNameSuffix "-home"
+            applicationIdSuffix ".home"
+        }
+
+        prod {
+            dimension "server"
+            applicationIdSuffix ".prod"
+            versionNameSuffix "-prod"
+        }
+    }
+}
+
+dependencies {
+
+    ext.andrlib_version = '1.9.3'
+    ext.andrlib_generator_version = '1.0.7'
+
+    ext.support_version = '27.1.1'
+    ext.mosby_version = '3.1.0'
+    ext.fragmentargs_version = '3.0.2'
+    ext.cicerone_version = '3.0.0'
+
+    ext.rxjava_version = '2.2.1'
+    ext.rxandroid_version = '2.1.0'
+    ext.rxbinding_version = '2.1.1'
+
+    ext.retrofit_version = '2.4.0'
+    ext.okhttp_version = '3.10.0'
+
+    implementation "com.github.qwert2603:andrlib:$andrlib_version"
+    implementation "com.github.qwert2603:andrlib_generator:$andrlib_generator_version"
+    annotationProcessor "com.github.qwert2603:andrlib_generator:$andrlib_generator_version"
+    kapt "com.github.qwert2603:andrlib_generator:$andrlib_generator_version"
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    implementation "com.android.support:appcompat-v7:$support_version"
+    implementation "com.android.support:design:$support_version"
+    implementation "com.android.support:cardview-v7:$support_version"
+
+    implementation "ru.terrakok.cicerone:cicerone:$cicerone_version"
+    implementation "com.hannesdorfmann.mosby3:mvi:$mosby_version"
+
+    implementation "com.hannesdorfmann.fragmentargs:annotation:$fragmentargs_version"
+    kapt "com.hannesdorfmann.fragmentargs:processor:$fragmentargs_version"
+
+    implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
+    implementation "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
+
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
+}
