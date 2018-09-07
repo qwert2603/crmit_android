@@ -5,6 +5,8 @@
     <string name="title_teachers">Преподаватели</string>
     <string name="title_about">О приложении</string>
 
+    <string name="price_format" formatted="true">%s ₽</string>
+
     <string name="app_info_text_format" formatted="true">
         <![CDATA[
         приложение <b>crmit</b><br/>

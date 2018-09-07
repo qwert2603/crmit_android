@@ -13,8 +13,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.hannesdorfmann.fragmentargs.FragmentArgs
 import com.qwert2603.andrlib.base.mvi.BaseFragment
-import com.qwert2603.crmit_android.AboutFragment
-import com.qwert2603.crmit_android.SectionsListFragment
+import com.qwert2603.crmit_android.about.AboutFragment
+import com.qwert2603.crmit_android.list_fragments.SectionsListFragment
+import com.qwert2603.crmit_android.list_fragments.TeachersListFragment
 import ru.terrakok.cicerone.android.SupportFragmentNavigator
 import ru.terrakok.cicerone.commands.Command
 import ru.terrakok.cicerone.commands.Forward
@@ -55,7 +56,7 @@ class Navigator(private val activity: ActivityInterface)
     @Suppress("IMPLICIT_CAST_TO_ANY")
     override fun createFragment(screenKey: String, data: Any?) = when (ScreenKey.valueOf(screenKey)) {
         ScreenKey.SECTIONS -> SectionsListFragment()
-        ScreenKey.TEACHERS -> TODO()
+        ScreenKey.TEACHERS -> TeachersListFragment()
         ScreenKey.ABOUT -> AboutFragment()
     }.also { it.setScreenKey(ScreenKey.valueOf(screenKey)) }
 

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="lessons">
+        <item quantity="one">%d занятие</item>
+        <item quantity="few">%d занятия</item>
+        <item quantity="many">%d занятий</item>
+        <item quantity="other">%d занятий</item>
+    </plurals>
+    <plurals name="sections">
+        <item quantity="one">%d секция</item>
+        <item quantity="few">%d секции</item>
+        <item quantity="many">%d секций</item>
+        <item quantity="other">%d секций</item>
+    </plurals>
+    <plurals name="teachers">
+        <item quantity="one">%d преподаватель</item>
+        <item quantity="few">%d преподавателя</item>
+        <item quantity="many">%d преподавателей</item>
+        <item quantity="other">%d преподавателей</item>
+    </plurals>
+</resources>

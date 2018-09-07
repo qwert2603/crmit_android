@@ -11,6 +11,6 @@ data class Section(
     data class Group(
             val id: Long,
             val name: String,
-            val teacher_fio: String
+            val teacherFio: String
     )
 }

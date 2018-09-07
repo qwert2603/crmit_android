@@ -1,4 +1,4 @@
-package com.qwert2603.crmit_android
+package com.qwert2603.crmit_android.about
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.qwert2603.andrlib.util.inflate
+import com.qwert2603.crmit_android.BuildConfig
+import com.qwert2603.crmit_android.R
 import kotlinx.android.synthetic.main.fragment_about.*
 import kotlinx.android.synthetic.main.toolbar_default.*
 import java.text.SimpleDateFormat

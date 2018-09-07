@@ -5,7 +5,7 @@ import com.qwert2603.andrlib.model.IdentifiableLong
 data class Teacher(
         override val id: Long,
         val fio: String,
-        val lessons_count: Int,
+        val lessonsCount: Int,
         val phone: String,
         val systemUser: SystemUser,
         val groups: List<Group>
