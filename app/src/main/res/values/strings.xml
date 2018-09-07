@@ -3,4 +3,14 @@
 
     <string name="title_sections">Секции</string>
     <string name="title_teachers">Преподаватели</string>
+    <string name="title_about">О приложении</string>
+
+    <string name="app_info_text_format" formatted="true">
+        <![CDATA[
+        приложение <b>crmit</b><br/>
+        версия: <b>%1$s</b><br/>
+        код версии: <b>%2$d</b><br/>
+        собрано: <b>%3$s</b> года в <b>%4$s</b><br/>
+        ]]>
+    </string>
 </resources>

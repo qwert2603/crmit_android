@@ -11,6 +11,7 @@ android {
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
+        buildConfigField "Long", "BIULD_TIME", System.currentTimeMillis() + "L"
     }
     buildTypes {
         debug {

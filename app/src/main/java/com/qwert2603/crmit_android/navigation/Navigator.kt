@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.hannesdorfmann.fragmentargs.FragmentArgs
 import com.qwert2603.andrlib.base.mvi.BaseFragment
+import com.qwert2603.crmit_android.AboutFragment
 import com.qwert2603.crmit_android.SectionsListFragment
 import ru.terrakok.cicerone.android.SupportFragmentNavigator
 import ru.terrakok.cicerone.commands.Command
@@ -55,6 +56,7 @@ class Navigator(private val activity: ActivityInterface)
     override fun createFragment(screenKey: String, data: Any?) = when (ScreenKey.valueOf(screenKey)) {
         ScreenKey.SECTIONS -> SectionsListFragment()
         ScreenKey.TEACHERS -> TODO()
+        ScreenKey.ABOUT -> AboutFragment()
     }.also { it.setScreenKey(ScreenKey.valueOf(screenKey)) }
 
     override fun exit() {
