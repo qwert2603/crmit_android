@@ -11,6 +11,8 @@ import kotlinx.android.synthetic.main.item_section.view.*
 class SectionsListFragment : EntitiesListFragment<Section>() {
     override val source: Single<List<Section>> = DiHolder.rest.getSectionsList()
 
+    override val titleRes = R.string.title_sections
+
     override val vhLayoutRes = R.layout.item_section
 
     override fun View.bindEntity(e: Section) {

@@ -2,6 +2,7 @@ package com.qwert2603.crmit_android.entities_list
 
 import android.os.Bundle
 import android.support.annotation.LayoutRes
+import android.support.annotation.StringRes
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,10 +16,14 @@ import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.di.DiHolder
 import io.reactivex.Single
 import kotlinx.android.synthetic.main.fragment_entities_list.*
+import kotlinx.android.synthetic.main.toolbar_default.*
 
 abstract class EntitiesListFragment<E : IdentifiableLong> : ListFragment<EntitiesListViewState<E>, EntitiesListView<E>, EntitiesListPresenter<E>, E>(), EntitiesListView<E> {
 
     abstract val source: Single<List<E>>
+
+    @get:StringRes
+    abstract val titleRes: Int
 
     @get:LayoutRes
     abstract val vhLayoutRes: Int
@@ -49,6 +54,8 @@ abstract class EntitiesListFragment<E : IdentifiableLong> : ListFragment<Entitie
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 //todo        _list_RecyclerView.addItemDecoration()
+
+        toolbar.setTitle(titleRes)
 
         super.onViewCreated(view, savedInstanceState)
     }

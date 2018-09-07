@@ -8,6 +8,9 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import ru.terrakok.cicerone.Cicerone
+import ru.terrakok.cicerone.NavigatorHolder
+import ru.terrakok.cicerone.Router
 
 object DiHolder {
     private val schedulersProvider by lazy { SchedulersProviderImpl() }
@@ -30,4 +33,9 @@ object DiHolder {
                 .build()
                 .create(Rest::class.java)
     }
+
+    private val cicerone: Cicerone<Router>  by lazy { Cicerone.create() }
+
+    val navigatorHolder: NavigatorHolder by lazy { cicerone.navigatorHolder }
+    val router: Router  by lazy { cicerone.router }
 }

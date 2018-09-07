@@ -44,7 +44,7 @@ android {
 dependencies {
 
     ext.andrlib_version = '1.9.3'
-    ext.andrlib_generator_version = '1.0.11'
+    ext.andrlib_generator_version = '1.2.0'
 
     ext.support_version = '27.1.1'
     ext.mosby_version = '3.1.0'
