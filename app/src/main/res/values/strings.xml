@@ -16,4 +16,9 @@
         собрано: <b>%3$s</b> года в <b>%4$s</b><br/>
         ]]>
     </string>
+
+    <string name="text_source_code">исходный код:</string>
+    <string name="link_github">https://github.com/qwert2603/crmit_android</string>
+    <string name="text_write_to_developer">написать разработчику:</string>
+    <string name="developer_email">qwert2603@mail.ru</string>
 </resources>
