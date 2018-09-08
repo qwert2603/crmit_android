@@ -7,6 +7,7 @@ data class StudentBrief(
         val fio: String,
         val contactPhoneNumber: String,
         val contactPhoneWho: String,
+        val filled: Boolean,
         val systemUser: SystemUser,
         val groups: List<Group>
 ) : IdentifiableLong {

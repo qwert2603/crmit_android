@@ -7,7 +7,8 @@ import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entities_list.EntitiesListFragment
 import com.qwert2603.crmit_android.entity.StudentBrief
-import kotlinx.android.synthetic.main.item_teacher.view.*
+import com.qwert2603.crmit_android.util.setStrike
+import kotlinx.android.synthetic.main.item_student.view.*
 
 class StudentsListFragment : EntitiesListFragment<StudentBrief>() {
     override val source = DiHolder.rest::getStudentsList
@@ -16,6 +17,9 @@ class StudentsListFragment : EntitiesListFragment<StudentBrief>() {
     override val entityPluralsRes = R.plurals.students
     override fun View.bindEntity(e: StudentBrief) {
         fio_TextView.text = e.fio
+        disabled_TextView.setVisible(!e.systemUser.enabled)
+        fio_TextView.setStrike(!e.systemUser.enabled)
+        notFilled_TextView.setVisible(!e.filled)
         login_TextView.text = e.systemUser.login
         @SuppressLint("SetTextI18n")
         phone_TextView.text = "${e.contactPhoneNumber} (${e.contactPhoneWho})"

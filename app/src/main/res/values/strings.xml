@@ -22,4 +22,7 @@
     <string name="link_github">https://github.com/qwert2603/crmit_android</string>
     <string name="text_write_to_developer">написать разработчику:</string>
     <string name="developer_email">qwert2603@mail.ru</string>
+
+    <string name="text_disabled">(отключен)</string>
+    <string name="text_not_filled">(не заполнен)</string>
 </resources>

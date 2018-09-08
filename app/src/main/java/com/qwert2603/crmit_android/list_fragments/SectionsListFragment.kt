@@ -7,7 +7,6 @@ import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entities_list.EntitiesListFragment
 import com.qwert2603.crmit_android.entity.Section
 import com.qwert2603.crmit_android.util.toPointedString
-import io.reactivex.Single
 import kotlinx.android.synthetic.main.item_section.view.*
 
 class SectionsListFragment : EntitiesListFragment<Section>() {
