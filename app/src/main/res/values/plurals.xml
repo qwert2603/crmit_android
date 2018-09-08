@@ -18,4 +18,10 @@
         <item quantity="many">%d преподавателей</item>
         <item quantity="other">%d преподавателей</item>
     </plurals>
+    <plurals name="masters">
+        <item quantity="one">%d руководитель</item>
+        <item quantity="few">%d руководителя</item>
+        <item quantity="many">%d руководителей</item>
+        <item quantity="other">%d руководителей</item>
+    </plurals>
 </resources>

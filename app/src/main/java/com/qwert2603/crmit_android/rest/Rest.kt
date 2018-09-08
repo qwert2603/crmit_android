@@ -1,5 +1,6 @@
 package com.qwert2603.crmit_android.rest
 
+import com.qwert2603.crmit_android.entity.Master
 import com.qwert2603.crmit_android.entity.Section
 import com.qwert2603.crmit_android.entity.Teacher
 import io.reactivex.Single
@@ -14,6 +15,13 @@ interface Rest {
             @Query("count") count: Int,
             @Query("search") search: String
     ): Single<List<Teacher>>
+
+    @GET("masters_list")
+    fun getMastersList(
+            @Query("offset") offset: Int,
+            @Query("count") count: Int,
+            @Query("search") search: String
+    ): Single<List<Master>>
 
     @GET("sections_list")
     fun getSectionsList(

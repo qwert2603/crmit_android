@@ -41,9 +41,10 @@ class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager {
     }
 
     private val rootNavigationItems = listOf(
-            NavigationItem(1L, R.drawable.icon, R.string.title_sections, ScreenKey.SECTIONS),
+            NavigationItem(1L, R.drawable.icon, R.string.title_masters, ScreenKey.MASTERS),
             NavigationItem(2L, R.drawable.icon, R.string.title_teachers, ScreenKey.TEACHERS),
-            NavigationItem(3L, R.drawable.icon, R.string.title_about, ScreenKey.ABOUT)
+            NavigationItem(3L, R.drawable.icon, R.string.title_sections, ScreenKey.SECTIONS),
+            NavigationItem(4L, R.drawable.icon, R.string.title_about, ScreenKey.ABOUT)
     )
 
     private val navigator = Navigator(object : ActivityInterface {
@@ -66,7 +67,7 @@ class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager {
         setContentView(R.layout.activity_main)
 
         if (savedInstanceState == null) {
-            router.newRootScreen(ScreenKey.SECTIONS.name)
+            router.newRootScreen(ScreenKey.MASTERS.name)
         }
 
         headerNavigation = navigation_view.inflate(R.layout.header_navigation)

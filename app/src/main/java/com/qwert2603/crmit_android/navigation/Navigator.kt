@@ -14,6 +14,7 @@ import android.view.ViewGroup
 import com.hannesdorfmann.fragmentargs.FragmentArgs
 import com.qwert2603.andrlib.base.mvi.BaseFragment
 import com.qwert2603.crmit_android.about.AboutFragment
+import com.qwert2603.crmit_android.list_fragments.MastersListFragment
 import com.qwert2603.crmit_android.list_fragments.SectionsListFragment
 import com.qwert2603.crmit_android.list_fragments.TeachersListFragment
 import ru.terrakok.cicerone.android.SupportFragmentNavigator
@@ -57,6 +58,7 @@ class Navigator(private val activity: ActivityInterface)
     override fun createFragment(screenKey: String, data: Any?) = when (ScreenKey.valueOf(screenKey)) {
         ScreenKey.SECTIONS -> SectionsListFragment()
         ScreenKey.TEACHERS -> TeachersListFragment()
+        ScreenKey.MASTERS -> MastersListFragment()
         ScreenKey.ABOUT -> AboutFragment()
     }.also { it.setScreenKey(ScreenKey.valueOf(screenKey)) }
 
