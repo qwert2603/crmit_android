@@ -44,7 +44,7 @@ android {
 
 dependencies {
 
-    ext.andrlib_version = '1.9.3'
+    ext.andrlib_version = '1.9.4'
     ext.andrlib_generator_version = '1.2.0'
 
     ext.support_version = '27.1.1'

@@ -6,11 +6,10 @@ import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entities_list.EntitiesListFragment
 import com.qwert2603.crmit_android.entity.Teacher
-import io.reactivex.Single
 import kotlinx.android.synthetic.main.item_teacher.view.*
 
 class TeachersListFragment : EntitiesListFragment<Teacher>() {
-    override val source: Single<List<Teacher>> = DiHolder.rest.getTeachersList()
+    override val source = DiHolder.rest::getTeachersList
     override val titleRes = R.string.title_teachers
     override val vhLayoutRes = R.layout.item_teacher
     override val entityPluralsRes = R.plurals.teachers

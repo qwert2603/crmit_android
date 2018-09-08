@@ -11,6 +11,7 @@ import com.qwert2603.andrlib.base.mvi.load_refresh.LoadRefreshPanel
 import com.qwert2603.andrlib.base.mvi.load_refresh.list.ListFragment
 import com.qwert2603.andrlib.base.recyclerview.BaseRecyclerViewAdapter
 import com.qwert2603.andrlib.base.recyclerview.BaseRecyclerViewHolder
+import com.qwert2603.andrlib.base.recyclerview.vh.PageIndicatorViewHolder
 import com.qwert2603.andrlib.model.IdentifiableLong
 import com.qwert2603.andrlib.util.inflate
 import com.qwert2603.crmit_android.R
@@ -22,7 +23,7 @@ import kotlinx.android.synthetic.main.toolbar_default.*
 
 abstract class EntitiesListFragment<E : IdentifiableLong> : ListFragment<EntitiesListViewState<E>, EntitiesListView<E>, EntitiesListPresenter<E>, E>(), EntitiesListView<E> {
 
-    abstract val source: Single<List<E>>
+    abstract val source: (offset: Int, count: Int, search: String) -> Single<List<E>>
 
     @get:StringRes
     abstract val titleRes: Int
@@ -32,6 +33,8 @@ abstract class EntitiesListFragment<E : IdentifiableLong> : ListFragment<Entitie
 
     @PluralsRes
     open val entityPluralsRes: Int = R.plurals.items
+
+    open val pageSize: Int = 1
 
     abstract fun View.bindEntity(e: E)
 
@@ -49,7 +52,8 @@ abstract class EntitiesListFragment<E : IdentifiableLong> : ListFragment<Entitie
     override fun createPresenter() = EntitiesListPresenter(
             uiSchedulerProvider = DiHolder.uiSchedulerProvider,
             modelSchedulersProvider = DiHolder.modelSchedulersProvider,
-            source = source
+            source = source,
+            pageSize = pageSize
     )
 
     override fun loadRefreshPanel(): LoadRefreshPanel = entities_LRPanelImpl
@@ -60,11 +64,10 @@ abstract class EntitiesListFragment<E : IdentifiableLong> : ListFragment<Entitie
             container?.inflate(R.layout.fragment_entities_list)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        _list_RecyclerView.addItemDecoration(ConditionDividerDecoration(context!!) { rv, vh ->
-            vh.adapterPosition < rv.adapter.itemCount - 1
-        })
+        _list_RecyclerView.addItemDecoration(ConditionDividerDecoration(requireContext()) { _, vh -> vh !is PageIndicatorViewHolder })
 
         toolbar.setTitle(titleRes)
+        toolbar.setOnClickListener { _list_RecyclerView.smoothScrollToPosition(0) }
 
         super.onViewCreated(view, savedInstanceState)
     }
