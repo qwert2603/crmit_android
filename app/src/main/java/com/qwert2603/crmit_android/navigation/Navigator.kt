@@ -16,6 +16,7 @@ import com.qwert2603.andrlib.base.mvi.BaseFragment
 import com.qwert2603.crmit_android.about.AboutFragment
 import com.qwert2603.crmit_android.list_fragments.MastersListFragment
 import com.qwert2603.crmit_android.list_fragments.SectionsListFragment
+import com.qwert2603.crmit_android.list_fragments.StudentsListFragment
 import com.qwert2603.crmit_android.list_fragments.TeachersListFragment
 import ru.terrakok.cicerone.android.SupportFragmentNavigator
 import ru.terrakok.cicerone.commands.Command
@@ -59,6 +60,7 @@ class Navigator(private val activity: ActivityInterface)
         ScreenKey.SECTIONS -> SectionsListFragment()
         ScreenKey.TEACHERS -> TeachersListFragment()
         ScreenKey.MASTERS -> MastersListFragment()
+        ScreenKey.STUDENTS -> StudentsListFragment()
         ScreenKey.ABOUT -> AboutFragment()
     }.also { it.setScreenKey(ScreenKey.valueOf(screenKey)) }
 

@@ -6,5 +6,6 @@ data class SystemUser(
         override val id: Long,
         val login: String,
         val lastSeen: Long,
-        val systemRoleName: String
-): IdentifiableLong
+        val systemRoleName: String,
+        val enabled: Boolean
+) : IdentifiableLong

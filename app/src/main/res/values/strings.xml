@@ -4,6 +4,7 @@
     <string name="title_sections">Секции</string>
     <string name="title_teachers">Преподаватели</string>
     <string name="title_masters">Руководители</string>
+    <string name="title_students">Ученики</string>
     <string name="title_about">О приложении</string>
 
     <string name="price_format" formatted="true">%s ₽</string>

@@ -24,4 +24,10 @@
         <item quantity="many">%d руководителей</item>
         <item quantity="other">%d руководителей</item>
     </plurals>
+    <plurals name="students">
+        <item quantity="one">%d ученик</item>
+        <item quantity="few">%d ученика</item>
+        <item quantity="many">%d учеников</item>
+        <item quantity="other">%d учеников</item>
+    </plurals>
 </resources>

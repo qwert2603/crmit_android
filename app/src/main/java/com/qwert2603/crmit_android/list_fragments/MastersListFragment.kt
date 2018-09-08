@@ -12,7 +12,6 @@ class MastersListFragment : EntitiesListFragment<Master>() {
     override val titleRes = R.string.title_masters
     override val vhLayoutRes = R.layout.item_master
     override val entityPluralsRes = R.plurals.masters
-    override val pageSize = 20
     override fun View.bindEntity(e: Master) {
         fio_TextView.text = e.fio
         login_TextView.text = e.systemUser.login
