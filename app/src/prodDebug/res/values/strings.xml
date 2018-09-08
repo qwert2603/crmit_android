@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">crmit debug</string>
+    <color name="launcher_color">#FF00FF</color>
+</resources>
