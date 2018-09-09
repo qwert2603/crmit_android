@@ -15,6 +15,7 @@ class StudentsListFragment : EntitiesListFragment<StudentBrief>() {
     override val titleRes = R.string.title_students
     override val vhLayoutRes = R.layout.item_student
     override val entityPluralsRes = R.plurals.students
+    override val pageSize = 1
     override fun View.bindEntity(e: StudentBrief) {
         fio_TextView.text = e.fio
         disabled_TextView.setVisible(!e.systemUser.enabled)

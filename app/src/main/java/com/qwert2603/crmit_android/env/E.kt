@@ -1,5 +1,6 @@
 package com.qwert2603.crmit_android.env
 
+import com.qwert2603.andrlib.util.LogUtils
 import com.qwert2603.crmit_android.BuildConfig
 
 object E {
@@ -14,12 +15,19 @@ object E {
 abstract class EnvInterface {
     protected abstract val serverUrl: String
     val restBaseUrl by lazy { "$serverUrl/api/v1.0/" }
+    abstract val logType: LogUtils.LogType
 }
 
 private object Home : EnvInterface() {
     override val serverUrl = "http://192.168.1.26:1918"
+    override val logType = LogUtils.LogType.ANDROID
 }
 
 private object Prod : EnvInterface() {
     override val serverUrl = "http://crm.cmit22.ru"
+    override val logType = if (BuildConfig.DEBUG) {
+        LogUtils.LogType.ANDROID
+    } else {
+        LogUtils.LogType.ANDROID_ERRORS
+    }
 }
