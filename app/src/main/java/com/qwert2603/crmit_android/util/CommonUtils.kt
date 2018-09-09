@@ -4,7 +4,6 @@ import android.animation.Animator
 import android.graphics.Paint
 import android.view.View
 import android.view.ViewTreeObserver
-import android.widget.EditText
 import android.widget.TextView
 import kotlin.math.absoluteValue
 
@@ -56,15 +55,3 @@ inline fun View.onPreDraw(crossinline action: () -> Boolean) {
     })
 }
 
-fun EditText.setTextIfNotYet(text: String) {
-    if (this.text.toString() != text) {
-        val prevSelection = if (this.selectionStart == this.text.length) {
-            text.length
-        } else {
-            this.selectionStart
-        }
-
-        this.setText(text)
-        this.setSelection(prevSelection)
-    }
-}
