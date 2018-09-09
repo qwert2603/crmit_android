@@ -38,12 +38,13 @@ class EntitiesListPresenter<E : IdentifiableLong>(
                     intent { it.searchQueryChanges() }
                             .debounce(300, TimeUnit.MILLISECONDS)
             )
+            .startWith(initialState.searchQuery)
             .distinctUntilChanged()
             .share()
 
     override val reloadIntent: Observable<Any> = Observable.merge(
             super.reloadIntent,
-            searchQueryChanges
+            searchQueryChanges.skip(1)
     )
 
     override fun EntitiesListViewState<E>.applyInitialModel(i: Page<E>) = copy(
@@ -61,13 +62,14 @@ class EntitiesListPresenter<E : IdentifiableLong>(
     override fun EntitiesListViewState<E>.addNextPage(nextPage: List<E>): EntitiesListViewState<E> = copy(showingList = showingList + nextPage)
 
     override val partialChanges: Observable<PartialChange> = Observable.merge(listOf(
-            loadRefreshPartialChanges(searchQueryChanges.startWith(initialState.searchQuery)),
+            loadRefreshPartialChanges(searchQueryChanges),
             paginationChanges(),
             intent { it.openSearchClicks() }
                     .map { EntitiesListPartialChange.OpenSearch },
             closeSearchClicksIntent
                     .map { EntitiesListPartialChange.CloseSearch },
             searchQueryChanges
+                    .skip(1)
                     .map { EntitiesListPartialChange.SearchQueryChanged(it) }
     ))
 
