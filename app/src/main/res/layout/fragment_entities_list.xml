@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/services_CoordinatorLayout"
+    android:id="@+id/entities_CoordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <include layout="@layout/toolbar_default" />
+
+    <com.qwert2603.crmit_android.util.SearchUI
+        android:id="@+id/entities_SearchUI"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="14dp"
+        android:hint="@string/text_search" />
 
     <com.qwert2603.andrlib.base.mvi.load_refresh.LRPanelImpl
         android:id="@+id/entities_LRPanelImpl"

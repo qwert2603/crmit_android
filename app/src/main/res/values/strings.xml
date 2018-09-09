@@ -25,4 +25,7 @@
 
     <string name="text_disabled">(отключен)</string>
     <string name="text_not_filled">(не заполнен)</string>
+    <string name="text_search">Поиск</string>
+
+    <string name="text_nothing_found">Ничего не найдено</string>
 </resources>

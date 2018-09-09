@@ -10,25 +10,49 @@ import com.qwert2603.andrlib.schedulers.UiSchedulerProvider
 import com.qwert2603.andrlib.util.LogUtils
 import io.reactivex.Observable
 import io.reactivex.Single
+import java.util.concurrent.TimeUnit
 
 class EntitiesListPresenter<E : IdentifiableLong>(
         uiSchedulerProvider: UiSchedulerProvider,
         private val modelSchedulersProvider: ModelSchedulersProvider,
         private val source: (offset: Int, count: Int, search: String) -> Single<List<E>>,
         pageSize: Int
-) : ListPresenter<Any, Page<E>, EntitiesListViewState<E>, EntitiesListView<E>, E>(uiSchedulerProvider) {
+) : ListPresenter<String, Page<E>, EntitiesListViewState<E>, EntitiesListView<E>, E>(uiSchedulerProvider) {
 
     private val paginator = FixedSizePagesLoader<E>(pageSize)
 
-    override val initialState = EntitiesListViewState<E>(EMPTY_LR_MODEL, EMPTY_LIST_MODEL, emptyList())
+    override val initialState = EntitiesListViewState<E>(
+            lrModel = EMPTY_LR_MODEL,
+            listModel = EMPTY_LIST_MODEL,
+            showingList = emptyList(),
+            searchOpen = false,
+            searchQuery = ""
+    )
+
+    private val closeSearchClicksIntent = intent { it.closeSearchClicks() }.share()
+
+    private val searchQueryChanges: Observable<String> = Observable
+            .merge(
+                    closeSearchClicksIntent
+                            .map { "" },
+                    intent { it.searchQueryChanges() }
+                            .debounce(300, TimeUnit.MILLISECONDS)
+            )
+            .distinctUntilChanged()
+            .share()
+
+    override val reloadIntent: Observable<Any> = Observable.merge(
+            super.reloadIntent,
+            searchQueryChanges
+    )
 
     override fun EntitiesListViewState<E>.applyInitialModel(i: Page<E>) = copy(
             listModel = listModel.copy(allItemsLoaded = i.allItemsLoaded),
             showingList = i.list
     )
 
-    override fun initialModelSingle(additionalKey: Any): Single<Page<E>> = paginator.firstPage {
-        source(it.offset, it.limit, "")
+    override fun initialModelSingle(additionalKey: String): Single<Page<E>> = paginator.firstPage {
+        source(it.offset, it.limit, additionalKey)
                 .subscribeOn(modelSchedulersProvider.io)
     }
 
@@ -36,13 +60,24 @@ class EntitiesListPresenter<E : IdentifiableLong>(
 
     override fun EntitiesListViewState<E>.addNextPage(nextPage: List<E>): EntitiesListViewState<E> = copy(showingList = showingList + nextPage)
 
-    override val partialChanges: Observable<PartialChange> = Observable.merge(
-            loadRefreshPartialChanges(),
-            paginationChanges()
-    )
+    override val partialChanges: Observable<PartialChange> = Observable.merge(listOf(
+            loadRefreshPartialChanges(searchQueryChanges.startWith(initialState.searchQuery)),
+            paginationChanges(),
+            intent { it.openSearchClicks() }
+                    .map { EntitiesListPartialChange.OpenSearch },
+            closeSearchClicksIntent
+                    .map { EntitiesListPartialChange.CloseSearch },
+            searchQueryChanges
+                    .map { EntitiesListPartialChange.SearchQueryChanged(it) }
+    ))
 
     override fun stateReducer(vs: EntitiesListViewState<E>, change: PartialChange): EntitiesListViewState<E> {
         LogUtils.d("EntitiesListPresenter stateReducer $change")
-        return super.stateReducer(vs, change)
+        if (change !is EntitiesListPartialChange) return super.stateReducer(vs, change)
+        return when (change) {
+            EntitiesListPartialChange.OpenSearch -> vs.copy(searchOpen = true)
+            EntitiesListPartialChange.CloseSearch -> vs.copy(searchOpen = false)
+            is EntitiesListPartialChange.SearchQueryChanged -> vs.copy(searchQuery = change.query)
+        }
     }
 }

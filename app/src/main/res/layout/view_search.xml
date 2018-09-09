@@ -1,0 +1,47 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/search_FrameLayout"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="@color/colorPrimaryDark"
+    android:clickable="true"
+    android:focusable="true"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:visibility="gone"
+    tools:visibility="visible">
+
+    <ImageView
+        android:id="@+id/closeSearch_Button"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_margin="12dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_arrow_back_24dp"
+        android:tint="@android:color/white"
+        tools:ignore="ContentDescription" />
+
+    <EditText
+        android:id="@+id/query_EditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:imeOptions="flagNoFullscreen"
+        android:inputType="text"
+        android:maxLines="1"
+        android:saveEnabled="false"
+        android:textColor="@android:color/white"
+        android:textColorHint="#80FFFFFF"
+        tools:ignore="LabelFor" />
+
+    <ImageView
+        android:id="@+id/clearSearch_Button"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_margin="12dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_close_black_24dp"
+        android:tint="@android:color/white"
+        tools:ignore="ContentDescription" />
+
+</LinearLayout>

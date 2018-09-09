@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.support.annotation.LayoutRes
 import android.support.annotation.PluralsRes
 import android.support.annotation.StringRes
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import com.qwert2603.andrlib.base.mvi.load_refresh.LoadRefreshPanel
 import com.qwert2603.andrlib.base.mvi.load_refresh.list.ListFragment
 import com.qwert2603.andrlib.base.recyclerview.BaseRecyclerViewAdapter
@@ -16,12 +14,16 @@ import com.qwert2603.andrlib.model.IdentifiableLong
 import com.qwert2603.andrlib.util.inflate
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.di.DiHolder
+import com.qwert2603.crmit_android.navigation.BackPressListener
 import com.qwert2603.crmit_android.util.ConditionDividerDecoration
+import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_entities_list.*
 import kotlinx.android.synthetic.main.toolbar_default.*
 
-abstract class EntitiesListFragment<E : IdentifiableLong> : ListFragment<EntitiesListViewState<E>, EntitiesListView<E>, EntitiesListPresenter<E>, E>(), EntitiesListView<E> {
+abstract class EntitiesListFragment<E : IdentifiableLong>
+    : ListFragment<EntitiesListViewState<E>, EntitiesListView<E>, EntitiesListPresenter<E>, E>(), EntitiesListView<E>, BackPressListener {
 
     abstract val source: (offset: Int, count: Int, search: String) -> Single<List<E>>
 
@@ -49,6 +51,9 @@ abstract class EntitiesListFragment<E : IdentifiableLong> : ListFragment<Entitie
         }
     }
 
+    private val openSearchClicks = PublishSubject.create<Any>()
+    private val closeSearchFromBackPress = PublishSubject.create<Any>()
+
     override fun createPresenter() = EntitiesListPresenter(
             uiSchedulerProvider = DiHolder.uiSchedulerProvider,
             modelSchedulersProvider = DiHolder.modelSchedulersProvider,
@@ -60,6 +65,11 @@ abstract class EntitiesListFragment<E : IdentifiableLong> : ListFragment<Entitie
 
     override fun viewForSnackbar(): View? = entities_LRPanelImpl
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             container?.inflate(R.layout.fragment_entities_list)
 
@@ -70,5 +80,34 @@ abstract class EntitiesListFragment<E : IdentifiableLong> : ListFragment<Entitie
         toolbar.setOnClickListener { _list_RecyclerView.smoothScrollToPosition(0) }
 
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.entities_list, menu)
+        menu.findItem(R.id.search).setOnMenuItemClickListener { openSearchClicks.onNext(Any());true }
+    }
+
+    override fun onBackPressed(): Boolean = entities_SearchUI.isOpen()
+            .also { if (it) closeSearchFromBackPress.onNext(Any()) }
+
+    override fun openSearchClicks(): Observable<Any> = openSearchClicks
+
+    override fun closeSearchClicks(): Observable<Any> = Observable.merge(
+            entities_SearchUI.closeClicks(),
+            closeSearchFromBackPress
+    )
+
+    override fun searchQueryChanges(): Observable<String> = entities_SearchUI.queryChanges()
+
+    override fun render(vs: EntitiesListViewState<E>) {
+        super.render(vs)
+
+        if (vs.showingList.isEmpty()) {
+            _listEmpty_TextView.setText(if (vs.searchQuery.isNotEmpty()) R.string.text_nothing_found else R.string.empty_list_text)
+        }
+
+        renderIfChanged({ searchOpen }) { entities_SearchUI.setOpen(it) }
+        renderIfChanged({ searchQuery }) { entities_SearchUI.setQuery(it) }
     }
 }

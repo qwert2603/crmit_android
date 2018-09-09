@@ -12,5 +12,7 @@ import com.qwert2603.andrlib.model.IdentifiableLong
 data class EntitiesListViewState<E : IdentifiableLong>(
         override val lrModel: LRModel,
         override val listModel: ListModel,
-        override val showingList: List<E>
+        override val showingList: List<E>,
+        val searchOpen: Boolean,
+        val searchQuery: String
 ) : ListViewState<E>
