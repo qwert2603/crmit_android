@@ -9,6 +9,9 @@ data class StudentBrief(
         val contactPhoneWho: String,
         val filled: Boolean,
         val systemUser: SystemUser,
+        val schoolName: String,
+        val grade: String,
+        val shift: String,
         val groups: List<Group>
 ) : IdentifiableLong {
     data class Group(

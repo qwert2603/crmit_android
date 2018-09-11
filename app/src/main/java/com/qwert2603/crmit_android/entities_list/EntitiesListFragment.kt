@@ -13,12 +13,12 @@ import com.qwert2603.andrlib.base.recyclerview.vh.PageIndicatorViewHolder
 import com.qwert2603.andrlib.model.IdentifiableLong
 import com.qwert2603.andrlib.util.inflate
 import com.qwert2603.crmit_android.R
-import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.navigation.BackPressListener
 import com.qwert2603.crmit_android.util.ConditionDividerDecoration
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.subjects.PublishSubject
+import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.fragment_entities_list.*
 import kotlinx.android.synthetic.main.toolbar_default.*
 
@@ -43,7 +43,9 @@ abstract class EntitiesListFragment<E : IdentifiableLong>
     override val adapter = object : BaseRecyclerViewAdapter<E>() {
         override fun pluralsRes() = entityPluralsRes
 
-        override fun onCreateViewHolderModel(parent: ViewGroup, viewType: Int) = object : BaseRecyclerViewHolder<E>(parent, vhLayoutRes) {
+        override fun onCreateViewHolderModel(parent: ViewGroup, viewType: Int) = object : BaseRecyclerViewHolder<E>(parent, vhLayoutRes), LayoutContainer {
+            override val containerView: View = itemView
+
             override fun bind(m: E) {
                 super.bind(m)
                 itemView.bindEntity(m)
@@ -55,15 +57,13 @@ abstract class EntitiesListFragment<E : IdentifiableLong>
     private val closeSearchFromBackPress = PublishSubject.create<Any>()
 
     override fun createPresenter() = EntitiesListPresenter(
-            uiSchedulerProvider = DiHolder.uiSchedulerProvider,
-            modelSchedulersProvider = DiHolder.modelSchedulersProvider,
             source = source,
             pageSize = pageSize
     )
 
     override fun loadRefreshPanel(): LoadRefreshPanel = entities_LRPanelImpl
 
-    override fun viewForSnackbar(): View? = entities_LRPanelImpl
+    override fun viewForSnackbar(): View? = entities_CoordinatorLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -107,7 +107,7 @@ abstract class EntitiesListFragment<E : IdentifiableLong>
             _listEmpty_TextView.setText(if (vs.searchQuery.isNotEmpty()) R.string.text_nothing_found else R.string.empty_list_text)
         }
 
-        renderIfChanged({ searchOpen }) { entities_SearchUI.setOpen(it) }
+        renderIfChanged({ searchOpen }) { entities_SearchUI.setOpen(it, prevViewState != null) }
         renderIfChanged({ searchQuery }) { entities_SearchUI.setQuery(it) }
     }
 }

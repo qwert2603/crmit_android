@@ -1,11 +1,9 @@
 package com.qwert2603.crmit_android.rest
 
-import com.qwert2603.crmit_android.entity.Master
-import com.qwert2603.crmit_android.entity.Section
-import com.qwert2603.crmit_android.entity.StudentBrief
-import com.qwert2603.crmit_android.entity.Teacher
+import com.qwert2603.crmit_android.entity.*
 import io.reactivex.Single
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface Rest {
@@ -37,4 +35,7 @@ interface Rest {
             @Query("count") count: Int,
             @Query("search") search: String
     ): Single<List<Section>>
+
+    @GET("student_details/{student_id}")
+    fun getStudentDetails(@Path("student_id") studentId: Long): Single<StudentFull>
 }

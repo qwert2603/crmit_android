@@ -45,15 +45,20 @@ class SearchUI(context: Context, attrs: AttributeSet) : FrameLayout(context, att
 
     fun isOpen() = search_FrameLayout.visibility == View.VISIBLE
 
-    fun setOpen(open: Boolean) {
-        if (open) {
-            openSearch()
+    fun setOpen(open: Boolean, animate: Boolean) {
+        if (animate) {
+            if (open) {
+                openSearchAnimate()
+            } else {
+                closeSearchAnimate()
+            }
         } else {
-            closeSearch()
+            animator = null
+            search_FrameLayout.setVisible(open)
         }
     }
 
-    private fun openSearch() {
+    private fun openSearchAnimate() {
         if (isOpen()) return
         search_FrameLayout.setVisible(true)
         onPreDraw {
@@ -72,7 +77,7 @@ class SearchUI(context: Context, attrs: AttributeSet) : FrameLayout(context, att
         }
     }
 
-    private fun closeSearch() {
+    private fun closeSearchAnimate() {
         if (!isOpen()) return
         clearSearch()
         (context as KeyboardManager).hideKeyboard()

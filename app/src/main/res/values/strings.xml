@@ -28,4 +28,6 @@
     <string name="text_search">Поиск</string>
 
     <string name="text_nothing_found">Ничего не найдено</string>
+
+    <string name="student_school_format" formatted="true">%s / %s класс / %s смена</string>
 </resources>

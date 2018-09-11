@@ -1,5 +1,7 @@
 package com.qwert2603.crmit_android.di
 
+import com.qwert2603.andrlib.schedulers.ModelSchedulersProvider
+import com.qwert2603.andrlib.schedulers.UiSchedulerProvider
 import com.qwert2603.andrlib.util.LogUtils
 import com.qwert2603.crmit_android.env.E
 import com.qwert2603.crmit_android.rest.Rest
@@ -15,8 +17,8 @@ import ru.terrakok.cicerone.Router
 object DiHolder {
     private val schedulersProvider by lazy { SchedulersProviderImpl() }
 
-    val uiSchedulerProvider by lazy { schedulersProvider }
-    val modelSchedulersProvider by lazy { schedulersProvider }
+    val uiSchedulerProvider: UiSchedulerProvider by lazy { schedulersProvider }
+    val modelSchedulersProvider: ModelSchedulersProvider by lazy { schedulersProvider }
 
     private val okHttpClient by lazy {
         OkHttpClient.Builder()

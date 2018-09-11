@@ -3,17 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
     android:orientation="vertical"
     android:padding="12dp">
 
     <TextView
         android:id="@+id/fio_TextView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="24sp"
+        android:ellipsize="end"
+        android:lines="1"
+        android:maxLines="1"
         android:textColor="@android:color/black"
         android:textSize="18sp"
         android:textStyle="bold"
-        tools:text="Фукпке Икепкер Окепркер" />
+        tools:text="Фукпке Икепкер Окепркер Икпqwe" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,7 +31,7 @@
             android:layout_marginEnd="4dp"
             android:text="@string/text_disabled"
             android:textColor="@android:color/black"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/notFilled_TextView"
@@ -35,7 +39,7 @@
             android:layout_height="wrap_content"
             android:text="@string/text_not_filled"
             android:textColor="@color/colorAccent"
-            android:textSize="16sp" />
+            android:textSize="14sp" />
 
     </LinearLayout>
 
@@ -72,6 +76,15 @@
             tools:text="89531112244 (мать)" />
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/school_TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textColor="@android:color/black"
+        android:textSize="14sp"
+        tools:text="@string/student_school_format" />
 
     <TextView
         android:id="@+id/groups_TextView"

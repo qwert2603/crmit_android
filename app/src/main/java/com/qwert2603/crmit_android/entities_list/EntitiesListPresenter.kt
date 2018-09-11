@@ -5,19 +5,17 @@ import com.qwert2603.andrlib.base.mvi.load_refresh.list.ListPresenter
 import com.qwert2603.andrlib.model.IdentifiableLong
 import com.qwert2603.andrlib.model.pagination.Page
 import com.qwert2603.andrlib.model.pagination.fixed_size.FixedSizePagesLoader
-import com.qwert2603.andrlib.schedulers.ModelSchedulersProvider
-import com.qwert2603.andrlib.schedulers.UiSchedulerProvider
 import com.qwert2603.andrlib.util.LogUtils
+import com.qwert2603.crmit_android.di.DiHolder
 import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.subjects.CompletableSubject
 import java.util.concurrent.TimeUnit
 
 class EntitiesListPresenter<E : IdentifiableLong>(
-        uiSchedulerProvider: UiSchedulerProvider,
-        private val modelSchedulersProvider: ModelSchedulersProvider,
         private val source: (offset: Int, count: Int, search: String) -> Single<List<E>>,
         pageSize: Int
-) : ListPresenter<String, Page<E>, EntitiesListViewState<E>, EntitiesListView<E>, E>(uiSchedulerProvider) {
+) : ListPresenter<String, Page<E>, EntitiesListViewState<E>, EntitiesListView<E>, E>(DiHolder.uiSchedulerProvider) {
 
     private val paginator = FixedSizePagesLoader<E>(pageSize)
 
@@ -28,6 +26,9 @@ class EntitiesListPresenter<E : IdentifiableLong>(
             searchOpen = false,
             searchQuery = ""
     )
+
+    // todo: move it to andrlib.
+    private val viewStateWasSubscribed = CompletableSubject.create()
 
     private val closeSearchClicksIntent = intent { it.closeSearchClicks() }.share()
 
@@ -40,6 +41,7 @@ class EntitiesListPresenter<E : IdentifiableLong>(
             )
             .startWith(initialState.searchQuery)
             .distinctUntilChanged()
+            .delaySubscription(viewStateWasSubscribed.toObservable<Any>())
             .share()
 
     override val reloadIntent: Observable<Any> = Observable.merge(
@@ -54,7 +56,7 @@ class EntitiesListPresenter<E : IdentifiableLong>(
 
     override fun initialModelSingle(additionalKey: String): Single<Page<E>> = paginator.firstPage {
         source(it.offset, it.limit, additionalKey)
-                .subscribeOn(modelSchedulersProvider.io)
+                .subscribeOn(DiHolder.modelSchedulersProvider.io)
     }
 
     override fun nextPageSingle(): Single<Page<E>> = paginator.nextPage()
@@ -72,6 +74,11 @@ class EntitiesListPresenter<E : IdentifiableLong>(
                     .skip(1)
                     .map { EntitiesListPartialChange.SearchQueryChanged(it) }
     ))
+
+    override fun bindIntents() {
+        super.bindIntents()
+        viewStateWasSubscribed.onComplete()
+    }
 
     override fun stateReducer(vs: EntitiesListViewState<E>, change: PartialChange): EntitiesListViewState<E> {
         LogUtils.d("EntitiesListPresenter stateReducer $change")

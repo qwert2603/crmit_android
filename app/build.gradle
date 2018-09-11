@@ -42,6 +42,10 @@ android {
     }
 }
 
+androidExtensions {
+    experimental = true
+}
+
 dependencies {
 
     ext.andrlib_version = '1.9.7'
