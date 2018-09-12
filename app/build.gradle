@@ -54,6 +54,10 @@ androidExtensions {
 
 dependencies {
 
+    implementation project(":dao_generator")
+    annotationProcessor project(":dao_generator")
+    kapt project(":dao_generator")
+
     ext.andrlib_version = '1.9.7'
     ext.andrlib_generator_version = '1.2.0'
 

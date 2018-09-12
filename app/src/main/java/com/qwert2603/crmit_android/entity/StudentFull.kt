@@ -4,10 +4,12 @@ import android.arch.persistence.room.Embedded
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 import com.qwert2603.andrlib.model.IdentifiableLong
+import com.qwert2603.dao_generator.GenerateDao
 import java.text.SimpleDateFormat
 import java.util.*
 
 @Entity
+@GenerateDao(searchField = "fio")
 data class StudentFull(
         @PrimaryKey override val id: Long,
         @Embedded(prefix = "systemUser_") val systemUser: SystemUser,
