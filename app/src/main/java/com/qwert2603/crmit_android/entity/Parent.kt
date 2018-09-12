@@ -8,5 +8,5 @@ data class Parent(
         val email: String?,
         val vkLink: String?,
         val homePhone: String?,
-        val notification_types_string: List<String>
+        val notificationTypesString: List<String>
 )

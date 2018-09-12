@@ -6,6 +6,6 @@
     <arcMotion
         android:maximumAngle="10"
         android:minimumHorizontalAngle="0"
-        android:minimumVerticalAngle="45" />
+        android:minimumVerticalAngle="30" />
     <transition class="com.qwert2603.crmit_android.util.TextSizeTransition" />
 </transitionSet>

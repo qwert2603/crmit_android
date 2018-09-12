@@ -49,6 +49,7 @@ class StudentsListFragment : EntitiesListFragment<StudentBrief>() {
                     DiHolder.router.navigateTo(ScreenKey.STUDENT_DETAILS.name, StudentDetailsKey(
                             studentId = it.id,
                             studentFio = it.fio,
+                            systemUserEnabled = it.systemUser.enabled,
                             studentFioTextView = _list_RecyclerView.findViewHolderForItemId(it.id).itemView.fio_TextView
                     ))
                 }

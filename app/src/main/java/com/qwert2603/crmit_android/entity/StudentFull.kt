@@ -7,6 +7,7 @@ import java.util.*
 data class StudentFull(
         override val id: Long,
         val systemUser: SystemUser,
+        val filled: Boolean,
         val fio: String,
         val birthDate: String,
         val birthPlace: String,
@@ -21,7 +22,8 @@ data class StudentFull(
         val contactPhoneNumber: String,
         val contactPhoneWho: String,
         val citizenshipName: String,
-        val parents: List<Parent>,
+        val mother: Parent?,
+        val father: Parent?,
         val groups: List<Group>
 ) : IdentifiableLong {
     data class Group(
@@ -33,7 +35,7 @@ data class StudentFull(
     fun showingBirthDate(): String = BIRTH_DATE_FORMAT_SHOWING.format(BIRTH_DATE_FORMAT.parse(birthDate))
 
     companion object {
-        private val BIRTH_DATE_FORMAT = SimpleDateFormat("dd.mm.yyyy", Locale.getDefault())
-        private val BIRTH_DATE_FORMAT_SHOWING = SimpleDateFormat("d MMM yyyy", Locale.getDefault())
+        private val BIRTH_DATE_FORMAT = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+        private val BIRTH_DATE_FORMAT_SHOWING = SimpleDateFormat("d MMMM yyyy", Locale.getDefault())
     }
 }

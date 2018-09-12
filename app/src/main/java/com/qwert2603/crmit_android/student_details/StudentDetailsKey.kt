@@ -5,5 +5,6 @@ import android.widget.TextView
 data class StudentDetailsKey(
         val studentId: Long,
         val studentFio: String,
+        val systemUserEnabled: Boolean,
         val studentFioTextView: TextView
 )

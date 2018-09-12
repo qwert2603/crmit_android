@@ -70,7 +70,7 @@ class Navigator(private val activity: ActivityInterface)
         ScreenKey.TEACHERS -> TeachersListFragment()
         ScreenKey.MASTERS -> MastersListFragment()
         ScreenKey.STUDENTS -> StudentsListFragment()
-        ScreenKey.STUDENT_DETAILS -> (data as StudentDetailsKey).let { StudentDetailsFragmentBuilder.newStudentDetailsFragment(it.studentFio, it.studentId) }
+        ScreenKey.STUDENT_DETAILS -> (data as StudentDetailsKey).let { StudentDetailsFragmentBuilder.newStudentDetailsFragment(it.studentFio, it.studentId, it.systemUserEnabled) }
         ScreenKey.ABOUT -> AboutFragment()
     }.also { it.setScreenKey(ScreenKey.valueOf(screenKey)) }
 
