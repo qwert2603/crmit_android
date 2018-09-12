@@ -17,8 +17,8 @@ import com.qwert2603.andrlib.model.IdentifiableLong
 import com.qwert2603.andrlib.util.inflate
 import com.qwert2603.andrlib.util.showIfNotYet
 import com.qwert2603.crmit_android.R
+import com.qwert2603.crmit_android.entity.GroupBrief
 import com.qwert2603.crmit_android.entity.Parent
-import com.qwert2603.crmit_android.entity.StudentFull
 import com.qwert2603.crmit_android.util.ConditionDividerDecoration
 import com.qwert2603.crmit_android.util.setStrike
 import kotlinx.android.synthetic.main.fragment_student_details.*
@@ -106,7 +106,7 @@ class StudentDetailsFragment : LRFragment<StudentDetailsViewState, StudentDetail
             .map { "${getString(it.first)}: ${it.second}" }
             .reduce { acc, s -> "$acc\n$s" }
 
-    private fun List<StudentFull.Group>.toTextFieldValue() =
+    private fun List<GroupBrief>.toTextFieldValue() =
             if (isEmpty()) getString(R.string.text_no_groups)
             else this
                     .map { "* ${it.name} (${it.teacherFio})" }

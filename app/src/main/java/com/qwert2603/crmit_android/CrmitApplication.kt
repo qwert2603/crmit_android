@@ -1,6 +1,8 @@
 package com.qwert2603.crmit_android
 
+import android.annotation.SuppressLint
 import android.app.Application
+import android.content.Context
 import android.os.Looper
 import com.qwert2603.andrlib.base.mvi.load_refresh.list.listModelChangerInstance
 import com.qwert2603.andrlib.base.mvi.load_refresh.lrModelChangerInstance
@@ -13,8 +15,16 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.plugins.RxJavaPlugins
 
 class CrmitApplication : Application() {
+
+    companion object {
+        @SuppressLint("StaticFieldLeak")
+        lateinit var APP_CONTEXT: Context
+    }
+
     override fun onCreate() {
         super.onCreate()
+
+        APP_CONTEXT = this
 
         RxJavaPlugins.setErrorHandler {
             LogUtils.e("RxJavaPlugins.setErrorHandler", it)

@@ -1,12 +1,16 @@
 package com.qwert2603.crmit_android.entity
 
+import android.arch.persistence.room.Embedded
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
 import com.qwert2603.andrlib.model.IdentifiableLong
 import java.text.SimpleDateFormat
 import java.util.*
 
+@Entity
 data class StudentFull(
-        override val id: Long,
-        val systemUser: SystemUser,
+        @PrimaryKey override val id: Long,
+        @Embedded(prefix = "systemUser_") val systemUser: SystemUser,
         val filled: Boolean,
         val fio: String,
         val birthDate: String,
@@ -15,22 +19,17 @@ data class StudentFull(
         val actualAddress: String,
         val additionalInfo: String?,
         val knownFrom: String?,
-        val school: School,
+        @Embedded(prefix = "school_") val school: School,
         val grade: String,
         val shift: String,
         val phone: String?,
         val contactPhoneNumber: String,
         val contactPhoneWho: String,
         val citizenshipName: String,
-        val mother: Parent?,
-        val father: Parent?,
-        val groups: List<Group>
+        @Embedded(prefix = "mother_") val mother: Parent?,
+        @Embedded(prefix = "father_") val father: Parent?,
+        val groups: List<GroupBrief>
 ) : IdentifiableLong {
-    data class Group(
-            val id: Long,
-            val name: String,
-            val teacherFio: String
-    )
 
     fun showingBirthDate(): String = BIRTH_DATE_FORMAT_SHOWING.format(BIRTH_DATE_FORMAT.parse(birthDate))
 

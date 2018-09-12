@@ -1,17 +1,16 @@
 package com.qwert2603.crmit_android.entity
 
+import android.arch.persistence.room.Embedded
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
 import com.qwert2603.andrlib.model.IdentifiableLong
 
+@Entity
 data class Teacher(
-        override val id: Long,
+        @PrimaryKey override val id: Long,
         val fio: String,
         val lessonsCount: Int,
         val phone: String,
-        val systemUser: SystemUser,
-        val groups: List<Group>
-) : IdentifiableLong {
-    data class Group(
-            val id: Long,
-            val name: String
-    )
-}
+        @Embedded(prefix = "systemUser_") val systemUser: SystemUser,
+        val groups: List<GroupBrief>
+) : IdentifiableLong
