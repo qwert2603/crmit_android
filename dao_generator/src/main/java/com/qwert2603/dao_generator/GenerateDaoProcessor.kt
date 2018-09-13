@@ -56,7 +56,7 @@ import ${element.qualifiedName}
 @Dao
 interface ${element.simpleName}Dao {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun addItems(items: List<${element.simpleName}>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -65,7 +65,7 @@ interface ${element.simpleName}Dao {
     @Query("SELECT * FROM ${element.simpleName} WHERE id = :itemId")
     fun getItem(itemId: Long): ${element.simpleName}
 
-    @Query("SELECT * FROM ${element.simpleName} WHERE ${element.getAnnotation(GenerateDao::class.java).searchField} LIKE '%' || :search || '%' LIMIT :count OFFSET :offset")
+    @Query("SELECT * FROM ${element.simpleName} WHERE ${element.getAnnotation(GenerateDao::class.java).searchField} LIKE '%' || :search || '%' ORDER BY id LIMIT :count OFFSET :offset")
     fun getItems(search: String, offset: Int, count: Int): List<${element.simpleName}>
 
     @Query("DELETE FROM ${element.simpleName}")

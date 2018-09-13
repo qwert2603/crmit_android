@@ -16,11 +16,13 @@ abstract class EnvInterface {
     protected abstract val serverUrl: String
     val restBaseUrl by lazy { "$serverUrl/api/v1.0/" }
     abstract val logType: LogUtils.LogType
+    abstract val showClearCacheButton: Boolean
 }
 
 private object Home : EnvInterface() {
     override val serverUrl = "http://192.168.1.26:1918"
     override val logType = LogUtils.LogType.ANDROID
+    override val showClearCacheButton = true
 }
 
 private object Prod : EnvInterface() {
@@ -30,4 +32,5 @@ private object Prod : EnvInterface() {
     } else {
         LogUtils.LogType.ANDROID_ERRORS
     }
+    override val showClearCacheButton = BuildConfig.DEBUG
 }

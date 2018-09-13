@@ -11,7 +11,7 @@ import com.qwert2603.crmit_android.entity.StudentFull
 @Dao
 interface StudentFullDao {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun addItems(items: List<StudentFull>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -20,7 +20,7 @@ interface StudentFullDao {
     @Query("SELECT * FROM StudentFull WHERE id = :itemId")
     fun getItem(itemId: Long): StudentFull
 
-    @Query("SELECT * FROM StudentFull WHERE fio LIKE '%' || :search || '%' LIMIT :count OFFSET :offset")
+    @Query("SELECT * FROM StudentFull WHERE fio LIKE '%' || :search || '%' ORDER BY id LIMIT :count OFFSET :offset")
     fun getItems(search: String, offset: Int, count: Int): List<StudentFull>
 
     @Query("DELETE FROM StudentFull")

@@ -11,7 +11,7 @@ import com.qwert2603.crmit_android.entity.Master
 @Dao
 interface MasterDao {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun addItems(items: List<Master>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -20,7 +20,7 @@ interface MasterDao {
     @Query("SELECT * FROM Master WHERE id = :itemId")
     fun getItem(itemId: Long): Master
 
-    @Query("SELECT * FROM Master WHERE fio LIKE '%' || :search || '%' LIMIT :count OFFSET :offset")
+    @Query("SELECT * FROM Master WHERE fio LIKE '%' || :search || '%' ORDER BY id LIMIT :count OFFSET :offset")
     fun getItems(search: String, offset: Int, count: Int): List<Master>
 
     @Query("DELETE FROM Master")

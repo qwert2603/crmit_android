@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.support.annotation.LayoutRes
 import android.support.annotation.PluralsRes
 import android.support.annotation.StringRes
+import android.support.design.widget.Snackbar
 import android.view.*
+import com.qwert2603.andrlib.base.mvi.ViewAction
 import com.qwert2603.andrlib.base.mvi.load_refresh.LoadRefreshPanel
 import com.qwert2603.andrlib.base.mvi.load_refresh.list.ListFragment
 import com.qwert2603.andrlib.base.recyclerview.BaseRecyclerViewAdapter
@@ -113,5 +115,12 @@ abstract class EntitiesListFragment<E : IdentifiableLong>
 
         renderIfChanged({ searchOpen }) { entities_SearchUI.setOpen(it, prevViewState != null) }
         renderIfChanged({ searchQuery }) { entities_SearchUI.setQuery(it) }
+    }
+
+    override fun executeAction(va: ViewAction) {
+        if (va !is EntitiesListViewAction) return super.executeAction(va)
+        when (va) {
+            EntitiesListViewAction.ShowingCachedData -> Snackbar.make(entities_CoordinatorLayout, R.string.text_showing_cached_data, Snackbar.LENGTH_SHORT).show()
+        }.also { }
     }
 }

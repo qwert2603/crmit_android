@@ -7,8 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.qwert2603.andrlib.util.inflate
+import com.qwert2603.andrlib.util.setVisible
 import com.qwert2603.crmit_android.BuildConfig
 import com.qwert2603.crmit_android.R
+import com.qwert2603.crmit_android.db.generated_dao.wrap
+import com.qwert2603.crmit_android.di.DiHolder
+import com.qwert2603.crmit_android.env.E
 import kotlinx.android.synthetic.main.fragment_about.*
 import kotlinx.android.synthetic.main.toolbar_default.*
 import java.text.SimpleDateFormat
@@ -29,6 +33,19 @@ class AboutFragment : Fragment() {
                 SimpleDateFormat("d MMMM yyyy", Locale.getDefault()).format(Date(BuildConfig.BIULD_TIME)),
                 SimpleDateFormat("H:mm", Locale.getDefault()).format(Date(BuildConfig.BIULD_TIME))
         ))
+
+        clearCache_Button.setVisible(E.env.showClearCacheButton)
+        clearCache_Button.setOnClickListener { _ ->
+            DiHolder.modelSchedulersProvider.io.scheduleDirect {
+                listOf(
+                        DiHolder.localDB.mastersDao().wrap(),
+                        DiHolder.localDB.teacherDao().wrap(),
+                        DiHolder.localDB.studentBriefDao().wrap(),
+                        DiHolder.localDB.studentFullDao().wrap(),
+                        DiHolder.localDB.sectionDao().wrap()
+                ).forEach { it.deleteAllItems() }
+            }
+        }
 
         super.onViewCreated(view, savedInstanceState)
     }

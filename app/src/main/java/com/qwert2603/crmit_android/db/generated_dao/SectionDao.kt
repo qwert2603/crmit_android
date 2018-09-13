@@ -11,7 +11,7 @@ import com.qwert2603.crmit_android.entity.Section
 @Dao
 interface SectionDao {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun addItems(items: List<Section>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -20,7 +20,7 @@ interface SectionDao {
     @Query("SELECT * FROM Section WHERE id = :itemId")
     fun getItem(itemId: Long): Section
 
-    @Query("SELECT * FROM Section WHERE name LIKE '%' || :search || '%' LIMIT :count OFFSET :offset")
+    @Query("SELECT * FROM Section WHERE name LIKE '%' || :search || '%' ORDER BY id LIMIT :count OFFSET :offset")
     fun getItems(search: String, offset: Int, count: Int): List<Section>
 
     @Query("DELETE FROM Section")

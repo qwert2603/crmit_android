@@ -64,6 +64,13 @@
                 android:text="@string/developer_email"
                 android:textSize="16sp" />
 
+            <Button
+                android:id="@+id/clearCache_Button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:text="@string/text_clear_cache" />
+
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>

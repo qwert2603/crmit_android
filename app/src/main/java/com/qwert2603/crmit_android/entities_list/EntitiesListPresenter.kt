@@ -4,6 +4,7 @@ import com.qwert2603.andrlib.base.mvi.PartialChange
 import com.qwert2603.andrlib.base.mvi.load_refresh.list.ListPresenter
 import com.qwert2603.andrlib.model.IdentifiableLong
 import com.qwert2603.andrlib.model.pagination.Page
+import com.qwert2603.andrlib.model.pagination.fixed_size.FixedSizeKey
 import com.qwert2603.andrlib.model.pagination.fixed_size.FixedSizePagesLoader
 import com.qwert2603.andrlib.util.LogUtils
 import com.qwert2603.crmit_android.db.DaoInterface
@@ -56,10 +57,45 @@ class EntitiesListPresenter<E : IdentifiableLong>(
             showingList = i.list
     )
 
-    override fun initialModelSingle(additionalKey: String): Single<Page<E>> = paginator.firstPage {
-        source(it.offset, it.limit, additionalKey)
-                .subscribeOn(DiHolder.modelSchedulersProvider.io)
-    }
+    override fun initialModelSingle(additionalKey: String): Single<Page<E>> = paginator.firstPage(
+            object : Function1<FixedSizeKey, Single<List<E>>> {
+                @Volatile
+                private var fromServer = true
+
+                override fun invoke(fixedSizeKey: FixedSizeKey): Single<List<E>> {
+                    return if (fixedSizeKey.offset == 0) {
+                        source(0, fixedSizeKey.limit, additionalKey)
+                                .doOnSuccess {
+                                    dbDao.deleteAllItems()
+                                    dbDao.addItems(it)
+                                }
+                                .onErrorResumeNext { t ->
+                                    LogUtils.e("EntitiesListPresenter error from server!", t)
+                                    fromServer = false
+                                    Single
+                                            .fromCallable { dbDao.getItems(additionalKey, 0, fixedSizeKey.limit) }
+                                            .flatMap {
+                                                if (it.isNotEmpty()) {
+                                                    viewActions.onNext(EntitiesListViewAction.ShowingCachedData)
+                                                    Single.just(it)
+                                                } else {
+                                                    Single.error(Exception("no cache"))
+                                                }
+                                            }
+
+                                }
+                    } else {
+                        if (fromServer) {
+                            source(fixedSizeKey.offset, fixedSizeKey.limit, additionalKey)
+                                    .doOnSuccess { dbDao.addItems(it) }
+                        } else {
+                            Single.fromCallable { dbDao.getItems(additionalKey, fixedSizeKey.offset, fixedSizeKey.limit) }
+                        }
+                    }
+                            .subscribeOn(DiHolder.modelSchedulersProvider.io)
+                }
+            }
+    )
 
     override fun nextPageSingle(): Single<Page<E>> = paginator.nextPage()
 

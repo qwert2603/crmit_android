@@ -11,7 +11,7 @@ import com.qwert2603.crmit_android.entity.StudentBrief
 @Dao
 interface StudentBriefDao {
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun addItems(items: List<StudentBrief>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -20,7 +20,7 @@ interface StudentBriefDao {
     @Query("SELECT * FROM StudentBrief WHERE id = :itemId")
     fun getItem(itemId: Long): StudentBrief
 
-    @Query("SELECT * FROM StudentBrief WHERE fio LIKE '%' || :search || '%' LIMIT :count OFFSET :offset")
+    @Query("SELECT * FROM StudentBrief WHERE fio LIKE '%' || :search || '%' ORDER BY id LIMIT :count OFFSET :offset")
     fun getItems(search: String, offset: Int, count: Int): List<StudentBrief>
 
     @Query("DELETE FROM StudentBrief")
