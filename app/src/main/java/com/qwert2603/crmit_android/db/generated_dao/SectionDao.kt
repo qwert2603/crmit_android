@@ -27,6 +27,8 @@ interface SectionDao {
     fun deleteAllItems()
 }
 
+fun SectionDao.wrap() = SectionDaoWrapper(this)
+
 class SectionDaoWrapper(private val sectionDao: SectionDao) : DaoInterface<Section> {
     override fun addItems(items: List<Section>) = sectionDao.addItems(items)
     override fun saveItem(item: Section) = sectionDao.saveItem(item)

@@ -3,6 +3,8 @@ package com.qwert2603.crmit_android.list_fragments
 import android.view.View
 import com.qwert2603.andrlib.util.setVisible
 import com.qwert2603.crmit_android.R
+import com.qwert2603.crmit_android.db.DaoInterface
+import com.qwert2603.crmit_android.db.generated_dao.wrap
 import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entities_list.EntitiesListFragment
 import com.qwert2603.crmit_android.entity.Section
@@ -11,6 +13,9 @@ import kotlinx.android.synthetic.main.item_section.view.*
 
 class SectionsListFragment : EntitiesListFragment<Section>() {
     override val source = DiHolder.rest::getSectionsList
+
+    override val dbDao: DaoInterface<Section> = DiHolder.localDB.sectionDao().wrap()
+
     override val titleRes = R.string.title_sections
 
     override val vhLayoutRes = R.layout.item_section

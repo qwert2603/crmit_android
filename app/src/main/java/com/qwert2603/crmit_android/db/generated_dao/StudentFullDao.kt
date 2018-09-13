@@ -27,6 +27,8 @@ interface StudentFullDao {
     fun deleteAllItems()
 }
 
+fun StudentFullDao.wrap() = StudentFullDaoWrapper(this)
+
 class StudentFullDaoWrapper(private val studentFullDao: StudentFullDao) : DaoInterface<StudentFull> {
     override fun addItems(items: List<StudentFull>) = studentFullDao.addItems(items)
     override fun saveItem(item: StudentFull) = studentFullDao.saveItem(item)

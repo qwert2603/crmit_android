@@ -72,6 +72,8 @@ interface ${element.simpleName}Dao {
     fun deleteAllItems()
 }
 
+fun ${element.simpleName}Dao.wrap() = ${element.simpleName}DaoWrapper(this)
+
 class ${element.simpleName}DaoWrapper(private val $daoVariableName: ${element.simpleName}Dao) : DaoInterface<${element.simpleName}> {
     override fun addItems(items: List<${element.simpleName}>) = $daoVariableName.addItems(items)
     override fun saveItem(item: ${element.simpleName}) = $daoVariableName.saveItem(item)

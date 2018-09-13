@@ -3,6 +3,8 @@ package com.qwert2603.crmit_android.list_fragments
 import android.view.View
 import com.qwert2603.andrlib.util.setVisible
 import com.qwert2603.crmit_android.R
+import com.qwert2603.crmit_android.db.DaoInterface
+import com.qwert2603.crmit_android.db.generated_dao.wrap
 import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entities_list.EntitiesListFragment
 import com.qwert2603.crmit_android.entity.Master
@@ -11,6 +13,7 @@ import kotlinx.android.synthetic.main.item_master.view.*
 
 class MastersListFragment : EntitiesListFragment<Master>() {
     override val source = DiHolder.rest::getMastersList
+    override val dbDao: DaoInterface<Master> = DiHolder.localDB.mastersDao().wrap()
     override val titleRes = R.string.title_masters
     override val vhLayoutRes = R.layout.item_master
     override val entityPluralsRes = R.plurals.masters

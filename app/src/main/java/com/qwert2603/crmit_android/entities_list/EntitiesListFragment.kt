@@ -13,6 +13,7 @@ import com.qwert2603.andrlib.base.recyclerview.vh.PageIndicatorViewHolder
 import com.qwert2603.andrlib.model.IdentifiableLong
 import com.qwert2603.andrlib.util.inflate
 import com.qwert2603.crmit_android.R
+import com.qwert2603.crmit_android.db.DaoInterface
 import com.qwert2603.crmit_android.navigation.BackPressListener
 import com.qwert2603.crmit_android.util.ConditionDividerDecoration
 import io.reactivex.Observable
@@ -26,6 +27,8 @@ abstract class EntitiesListFragment<E : IdentifiableLong>
     : ListFragment<EntitiesListViewState<E>, EntitiesListView<E>, EntitiesListPresenter<E>, E>(), EntitiesListView<E>, BackPressListener {
 
     abstract val source: (offset: Int, count: Int, search: String) -> Single<List<E>>
+
+    abstract val dbDao: DaoInterface<E>
 
     @get:StringRes
     abstract val titleRes: Int
@@ -58,6 +61,7 @@ abstract class EntitiesListFragment<E : IdentifiableLong>
 
     override fun createPresenter() = EntitiesListPresenter(
             source = source,
+            dbDao = dbDao,
             pageSize = pageSize
     )
 

@@ -6,6 +6,7 @@ import com.qwert2603.andrlib.model.IdentifiableLong
 import com.qwert2603.andrlib.model.pagination.Page
 import com.qwert2603.andrlib.model.pagination.fixed_size.FixedSizePagesLoader
 import com.qwert2603.andrlib.util.LogUtils
+import com.qwert2603.crmit_android.db.DaoInterface
 import com.qwert2603.crmit_android.di.DiHolder
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -14,6 +15,7 @@ import java.util.concurrent.TimeUnit
 
 class EntitiesListPresenter<E : IdentifiableLong>(
         private val source: (offset: Int, count: Int, search: String) -> Single<List<E>>,
+        private val dbDao: DaoInterface<E>,
         pageSize: Int
 ) : ListPresenter<String, Page<E>, EntitiesListViewState<E>, EntitiesListView<E>, E>(DiHolder.uiSchedulerProvider) {
 

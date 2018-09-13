@@ -27,6 +27,8 @@ interface MasterDao {
     fun deleteAllItems()
 }
 
+fun MasterDao.wrap() = MasterDaoWrapper(this)
+
 class MasterDaoWrapper(private val masterDao: MasterDao) : DaoInterface<Master> {
     override fun addItems(items: List<Master>) = masterDao.addItems(items)
     override fun saveItem(item: Master) = masterDao.saveItem(item)
