@@ -1,0 +1,539 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 2,
+    "identityHash": "9c38ca48515a8d1e8e25f5d418a07c61",
+    "entities": [
+      {
+        "tableName": "Master",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `fio` TEXT NOT NULL, `systemUser_id` INTEGER NOT NULL, `systemUser_login` TEXT NOT NULL, `systemUser_lastSeen` INTEGER NOT NULL, `systemUser_systemRoleName` TEXT NOT NULL, `systemUser_enabled` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "fio",
+            "columnName": "fio",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "systemUser.id",
+            "columnName": "systemUser_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "systemUser.login",
+            "columnName": "systemUser_login",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "systemUser.lastSeen",
+            "columnName": "systemUser_lastSeen",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "systemUser.systemRoleName",
+            "columnName": "systemUser_systemRoleName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "systemUser.enabled",
+            "columnName": "systemUser_enabled",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "Teacher",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `fio` TEXT NOT NULL, `lessonsDoneCount` INTEGER NOT NULL, `phone` TEXT NOT NULL, `groups` TEXT NOT NULL, `systemUser_id` INTEGER NOT NULL, `systemUser_login` TEXT NOT NULL, `systemUser_lastSeen` INTEGER NOT NULL, `systemUser_systemRoleName` TEXT NOT NULL, `systemUser_enabled` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "fio",
+            "columnName": "fio",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lessonsDoneCount",
+            "columnName": "lessonsDoneCount",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "phone",
+            "columnName": "phone",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "groups",
+            "columnName": "groups",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "systemUser.id",
+            "columnName": "systemUser_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "systemUser.login",
+            "columnName": "systemUser_login",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "systemUser.lastSeen",
+            "columnName": "systemUser_lastSeen",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "systemUser.systemRoleName",
+            "columnName": "systemUser_systemRoleName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "systemUser.enabled",
+            "columnName": "systemUser_enabled",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "StudentBrief",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `fio` TEXT NOT NULL, `contactPhoneNumber` TEXT NOT NULL, `contactPhoneWho` TEXT NOT NULL, `filled` INTEGER NOT NULL, `schoolName` TEXT NOT NULL, `grade` TEXT NOT NULL, `shift` TEXT NOT NULL, `groups` TEXT NOT NULL, `lessonsAttendedCount` INTEGER NOT NULL, `systemUser_id` INTEGER NOT NULL, `systemUser_login` TEXT NOT NULL, `systemUser_lastSeen` INTEGER NOT NULL, `systemUser_systemRoleName` TEXT NOT NULL, `systemUser_enabled` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "fio",
+            "columnName": "fio",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "contactPhoneNumber",
+            "columnName": "contactPhoneNumber",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "contactPhoneWho",
+            "columnName": "contactPhoneWho",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "filled",
+            "columnName": "filled",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "schoolName",
+            "columnName": "schoolName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "grade",
+            "columnName": "grade",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "shift",
+            "columnName": "shift",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "groups",
+            "columnName": "groups",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lessonsAttendedCount",
+            "columnName": "lessonsAttendedCount",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "systemUser.id",
+            "columnName": "systemUser_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "systemUser.login",
+            "columnName": "systemUser_login",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "systemUser.lastSeen",
+            "columnName": "systemUser_lastSeen",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "systemUser.systemRoleName",
+            "columnName": "systemUser_systemRoleName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "systemUser.enabled",
+            "columnName": "systemUser_enabled",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "StudentFull",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `filled` INTEGER NOT NULL, `fio` TEXT NOT NULL, `birthDate` TEXT NOT NULL, `birthPlace` TEXT NOT NULL, `registrationPlace` TEXT NOT NULL, `actualAddress` TEXT NOT NULL, `additionalInfo` TEXT, `knownFrom` TEXT, `grade` TEXT NOT NULL, `shift` TEXT NOT NULL, `phone` TEXT, `contactPhoneNumber` TEXT NOT NULL, `contactPhoneWho` TEXT NOT NULL, `citizenshipName` TEXT NOT NULL, `groups` TEXT NOT NULL, `lessonsAttendedCount` INTEGER NOT NULL, `systemUser_id` INTEGER NOT NULL, `systemUser_login` TEXT NOT NULL, `systemUser_lastSeen` INTEGER NOT NULL, `systemUser_systemRoleName` TEXT NOT NULL, `systemUser_enabled` INTEGER NOT NULL, `school_id` INTEGER NOT NULL, `school_name` TEXT NOT NULL, `mother_id` INTEGER, `mother_fio` TEXT, `mother_phone` TEXT, `mother_address` TEXT, `mother_email` TEXT, `mother_vkLink` TEXT, `mother_homePhone` TEXT, `mother_notificationTypesString` TEXT, `father_id` INTEGER, `father_fio` TEXT, `father_phone` TEXT, `father_address` TEXT, `father_email` TEXT, `father_vkLink` TEXT, `father_homePhone` TEXT, `father_notificationTypesString` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "filled",
+            "columnName": "filled",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "fio",
+            "columnName": "fio",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "birthDate",
+            "columnName": "birthDate",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "birthPlace",
+            "columnName": "birthPlace",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "registrationPlace",
+            "columnName": "registrationPlace",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "actualAddress",
+            "columnName": "actualAddress",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "additionalInfo",
+            "columnName": "additionalInfo",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "knownFrom",
+            "columnName": "knownFrom",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "grade",
+            "columnName": "grade",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "shift",
+            "columnName": "shift",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "phone",
+            "columnName": "phone",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "contactPhoneNumber",
+            "columnName": "contactPhoneNumber",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "contactPhoneWho",
+            "columnName": "contactPhoneWho",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "citizenshipName",
+            "columnName": "citizenshipName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "groups",
+            "columnName": "groups",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lessonsAttendedCount",
+            "columnName": "lessonsAttendedCount",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "systemUser.id",
+            "columnName": "systemUser_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "systemUser.login",
+            "columnName": "systemUser_login",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "systemUser.lastSeen",
+            "columnName": "systemUser_lastSeen",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "systemUser.systemRoleName",
+            "columnName": "systemUser_systemRoleName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "systemUser.enabled",
+            "columnName": "systemUser_enabled",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "school.id",
+            "columnName": "school_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "school.name",
+            "columnName": "school_name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mother.id",
+            "columnName": "mother_id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mother.fio",
+            "columnName": "mother_fio",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mother.phone",
+            "columnName": "mother_phone",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mother.address",
+            "columnName": "mother_address",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mother.email",
+            "columnName": "mother_email",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mother.vkLink",
+            "columnName": "mother_vkLink",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mother.homePhone",
+            "columnName": "mother_homePhone",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mother.notificationTypesString",
+            "columnName": "mother_notificationTypesString",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "father.id",
+            "columnName": "father_id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "father.fio",
+            "columnName": "father_fio",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "father.phone",
+            "columnName": "father_phone",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "father.address",
+            "columnName": "father_address",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "father.email",
+            "columnName": "father_email",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "father.vkLink",
+            "columnName": "father_vkLink",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "father.homePhone",
+            "columnName": "father_homePhone",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "father.notificationTypesString",
+            "columnName": "father_notificationTypesString",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "Section",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `price` INTEGER NOT NULL, `groups` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "price",
+            "columnName": "price",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "groups",
+            "columnName": "groups",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"9c38ca48515a8d1e8e25f5d418a07c61\")"
+    ]
+  }
+}
