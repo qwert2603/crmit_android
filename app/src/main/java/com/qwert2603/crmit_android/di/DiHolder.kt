@@ -6,6 +6,7 @@ import com.qwert2603.andrlib.schedulers.UiSchedulerProvider
 import com.qwert2603.andrlib.util.LogUtils
 import com.qwert2603.crmit_android.CrmitApplication
 import com.qwert2603.crmit_android.db.LocalDB
+import com.qwert2603.crmit_android.db.generated_dao.wrap
 import com.qwert2603.crmit_android.env.E
 import com.qwert2603.crmit_android.rest.Rest
 import okhttp3.OkHttpClient
@@ -44,9 +45,15 @@ object DiHolder {
     val navigatorHolder: NavigatorHolder by lazy { cicerone.navigatorHolder }
     val router: Router  by lazy { cicerone.router }
 
-    val localDB by lazy {
+    private val localDB by lazy {
         Room
                 .databaseBuilder(CrmitApplication.APP_CONTEXT, LocalDB::class.java, "local.db")
                 .build()
     }
+
+    val masterDao by lazy { localDB.masterDao().wrap() }
+    val teacherDao by lazy { localDB.teacherDao().wrap() }
+    val studentBriefDao by lazy { localDB.studentBriefDao().wrap() }
+    val studentFullDao by lazy { localDB.studentFullDao().wrap() }
+    val sectionDao by lazy { localDB.sectionDao().wrap() }
 }

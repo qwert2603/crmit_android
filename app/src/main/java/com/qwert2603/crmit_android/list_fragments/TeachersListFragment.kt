@@ -4,7 +4,6 @@ import android.view.View
 import com.qwert2603.andrlib.util.setVisible
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.db.DaoInterface
-import com.qwert2603.crmit_android.db.generated_dao.wrap
 import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entities_list.EntitiesListFragment
 import com.qwert2603.crmit_android.entity.Teacher
@@ -13,7 +12,7 @@ import kotlinx.android.synthetic.main.item_teacher.view.*
 
 class TeachersListFragment : EntitiesListFragment<Teacher>() {
     override val source = DiHolder.rest::getTeachersList
-    override val dbDao: DaoInterface<Teacher> = DiHolder.localDB.teacherDao().wrap()
+    override val dbDao: DaoInterface<Teacher> = DiHolder.teacherDao
     override val titleRes = R.string.title_teachers
     override val vhLayoutRes = R.layout.item_teacher
     override val entityPluralsRes = R.plurals.teachers

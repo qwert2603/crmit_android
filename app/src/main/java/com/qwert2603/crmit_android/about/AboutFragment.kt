@@ -10,7 +10,6 @@ import com.qwert2603.andrlib.util.inflate
 import com.qwert2603.andrlib.util.setVisible
 import com.qwert2603.crmit_android.BuildConfig
 import com.qwert2603.crmit_android.R
-import com.qwert2603.crmit_android.db.generated_dao.wrap
 import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.env.E
 import kotlinx.android.synthetic.main.fragment_about.*
@@ -38,11 +37,11 @@ class AboutFragment : Fragment() {
         clearCache_Button.setOnClickListener { _ ->
             DiHolder.modelSchedulersProvider.io.scheduleDirect {
                 listOf(
-                        DiHolder.localDB.mastersDao().wrap(),
-                        DiHolder.localDB.teacherDao().wrap(),
-                        DiHolder.localDB.studentBriefDao().wrap(),
-                        DiHolder.localDB.studentFullDao().wrap(),
-                        DiHolder.localDB.sectionDao().wrap()
+                        DiHolder.masterDao,
+                        DiHolder.teacherDao,
+                        DiHolder.studentBriefDao,
+                        DiHolder.studentFullDao,
+                        DiHolder.sectionDao
                 ).forEach { it.deleteAllItems() }
             }
         }

@@ -21,7 +21,7 @@ import com.qwert2603.crmit_android.entity.*
 )
 @TypeConverters(GroupBriefListConverter::class, StringListConverter::class)
 abstract class LocalDB : RoomDatabase() {
-    abstract fun mastersDao(): MasterDao
+    abstract fun masterDao(): MasterDao
     abstract fun teacherDao(): TeacherDao
     abstract fun studentBriefDao(): StudentBriefDao
     abstract fun studentFullDao(): StudentFullDao
