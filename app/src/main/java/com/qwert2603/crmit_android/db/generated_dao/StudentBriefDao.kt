@@ -20,7 +20,14 @@ interface StudentBriefDao {
     @Query("SELECT * FROM StudentBrief WHERE id = :itemId")
     fun getItem(itemId: Long): StudentBrief
 
-    @Query("SELECT * FROM StudentBrief WHERE fio LIKE '%' || :search || '%' ORDER BY id LIMIT :count OFFSET :offset")
+    @Query(
+        " SELECT *" +
+        " FROM StudentBrief" +
+        " WHERE fio LIKE '%' || :search || '%'" +
+        " ORDER BY filled, id" +
+        " LIMIT :count" +
+        " OFFSET :offset"
+    )
     fun getItems(search: String, offset: Int, count: Int): List<StudentBrief>
 
     @Query("DELETE FROM StudentBrief")

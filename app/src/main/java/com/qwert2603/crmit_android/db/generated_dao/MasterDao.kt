@@ -20,7 +20,14 @@ interface MasterDao {
     @Query("SELECT * FROM Master WHERE id = :itemId")
     fun getItem(itemId: Long): Master
 
-    @Query("SELECT * FROM Master WHERE fio LIKE '%' || :search || '%' ORDER BY id LIMIT :count OFFSET :offset")
+    @Query(
+        " SELECT *" +
+        " FROM Master" +
+        " WHERE fio LIKE '%' || :search || '%'" +
+        " ORDER BY id" +
+        " LIMIT :count" +
+        " OFFSET :offset"
+    )
     fun getItems(search: String, offset: Int, count: Int): List<Master>
 
     @Query("DELETE FROM Master")

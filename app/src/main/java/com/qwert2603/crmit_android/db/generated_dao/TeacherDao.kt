@@ -20,7 +20,14 @@ interface TeacherDao {
     @Query("SELECT * FROM Teacher WHERE id = :itemId")
     fun getItem(itemId: Long): Teacher
 
-    @Query("SELECT * FROM Teacher WHERE fio LIKE '%' || :search || '%' ORDER BY id LIMIT :count OFFSET :offset")
+    @Query(
+        " SELECT *" +
+        " FROM Teacher" +
+        " WHERE fio LIKE '%' || :search || '%'" +
+        " ORDER BY id" +
+        " LIMIT :count" +
+        " OFFSET :offset"
+    )
     fun getItems(search: String, offset: Int, count: Int): List<Teacher>
 
     @Query("DELETE FROM Teacher")
