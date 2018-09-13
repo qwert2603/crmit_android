@@ -6,7 +6,7 @@ interface DaoInterface<T> {
 
     fun saveItem(item: T)
 
-    fun getItem(itemId: Long): T
+    fun getItem(itemId: Long): T?
 
     fun getItems(search: String, offset: Int, count: Int): List<T>
 

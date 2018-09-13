@@ -18,7 +18,7 @@ interface SectionDao {
     fun saveItem(item: Section)
 
     @Query("SELECT * FROM Section WHERE id = :itemId")
-    fun getItem(itemId: Long): Section
+    fun getItem(itemId: Long): Section?
 
     @Query(
         " SELECT *" +
@@ -39,7 +39,7 @@ fun SectionDao.wrap() = SectionDaoWrapper(this)
 class SectionDaoWrapper(private val sectionDao: SectionDao) : DaoInterface<Section> {
     override fun addItems(items: List<Section>) = sectionDao.addItems(items)
     override fun saveItem(item: Section) = sectionDao.saveItem(item)
-    override fun getItem(itemId: Long): Section = sectionDao.getItem(itemId)
+    override fun getItem(itemId: Long): Section? = sectionDao.getItem(itemId)
     override fun getItems(search: String, offset: Int, count: Int): List<Section> = sectionDao.getItems(search, offset, count)
     override fun deleteAllItems() = sectionDao.deleteAllItems()
 }

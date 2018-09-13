@@ -1,6 +1,7 @@
 package com.qwert2603.crmit_android.student_details
 
 import android.os.Bundle
+import android.support.design.widget.Snackbar
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import android.widget.TextView
 import android.widget.ViewAnimator
 import com.hannesdorfmann.fragmentargs.annotation.Arg
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs
+import com.qwert2603.andrlib.base.mvi.ViewAction
 import com.qwert2603.andrlib.base.mvi.load_refresh.LRFragment
 import com.qwert2603.andrlib.base.mvi.load_refresh.LoadRefreshPanel
 import com.qwert2603.andrlib.base.recyclerview.BaseRecyclerViewAdapter
@@ -89,6 +91,13 @@ class StudentDetailsFragment : LRFragment<StudentDetailsViewState, StudentDetail
                     StudentDetailsField(R.string.student_details_field_groups, student.groups.toTextFieldValue())
             ))
         }
+    }
+
+    override fun executeAction(va: ViewAction) {
+        if (va !is StudentDetailsViewAction) return super.executeAction(va)
+        when (va) {
+            StudentDetailsViewAction.ShowingCachedData -> Snackbar.make(studentDetails_CoordinatorLayout, R.string.text_showing_cached_data, Snackbar.LENGTH_SHORT).show()
+        }.also { }
     }
 
     private fun toolbarTitleTextView(): TextView = toolbar.getChildAt(0) as TextView

@@ -65,7 +65,7 @@ interface ${element.simpleName}Dao {
     fun saveItem(item: ${element.simpleName})
 
     @Query("SELECT * FROM ${element.simpleName} WHERE id = :itemId")
-    fun getItem(itemId: Long): ${element.simpleName}
+    fun getItem(itemId: Long): ${element.simpleName}?
 
     @Query(
         " SELECT *" +
@@ -86,7 +86,7 @@ fun ${element.simpleName}Dao.wrap() = ${element.simpleName}DaoWrapper(this)
 class ${element.simpleName}DaoWrapper(private val $daoVariableName: ${element.simpleName}Dao) : DaoInterface<${element.simpleName}> {
     override fun addItems(items: List<${element.simpleName}>) = $daoVariableName.addItems(items)
     override fun saveItem(item: ${element.simpleName}) = $daoVariableName.saveItem(item)
-    override fun getItem(itemId: Long): ${element.simpleName} = $daoVariableName.getItem(itemId)
+    override fun getItem(itemId: Long): ${element.simpleName}? = $daoVariableName.getItem(itemId)
     override fun getItems(search: String, offset: Int, count: Int): List<${element.simpleName}> = $daoVariableName.getItems(search, offset, count)
     override fun deleteAllItems() = $daoVariableName.deleteAllItems()
 }

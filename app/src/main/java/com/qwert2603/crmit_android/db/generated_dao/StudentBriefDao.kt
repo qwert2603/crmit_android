@@ -18,7 +18,7 @@ interface StudentBriefDao {
     fun saveItem(item: StudentBrief)
 
     @Query("SELECT * FROM StudentBrief WHERE id = :itemId")
-    fun getItem(itemId: Long): StudentBrief
+    fun getItem(itemId: Long): StudentBrief?
 
     @Query(
         " SELECT *" +
@@ -39,7 +39,7 @@ fun StudentBriefDao.wrap() = StudentBriefDaoWrapper(this)
 class StudentBriefDaoWrapper(private val studentBriefDao: StudentBriefDao) : DaoInterface<StudentBrief> {
     override fun addItems(items: List<StudentBrief>) = studentBriefDao.addItems(items)
     override fun saveItem(item: StudentBrief) = studentBriefDao.saveItem(item)
-    override fun getItem(itemId: Long): StudentBrief = studentBriefDao.getItem(itemId)
+    override fun getItem(itemId: Long): StudentBrief? = studentBriefDao.getItem(itemId)
     override fun getItems(search: String, offset: Int, count: Int): List<StudentBrief> = studentBriefDao.getItems(search, offset, count)
     override fun deleteAllItems() = studentBriefDao.deleteAllItems()
 }

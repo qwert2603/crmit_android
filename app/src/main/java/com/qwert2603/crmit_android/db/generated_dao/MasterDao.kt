@@ -18,7 +18,7 @@ interface MasterDao {
     fun saveItem(item: Master)
 
     @Query("SELECT * FROM Master WHERE id = :itemId")
-    fun getItem(itemId: Long): Master
+    fun getItem(itemId: Long): Master?
 
     @Query(
         " SELECT *" +
@@ -39,7 +39,7 @@ fun MasterDao.wrap() = MasterDaoWrapper(this)
 class MasterDaoWrapper(private val masterDao: MasterDao) : DaoInterface<Master> {
     override fun addItems(items: List<Master>) = masterDao.addItems(items)
     override fun saveItem(item: Master) = masterDao.saveItem(item)
-    override fun getItem(itemId: Long): Master = masterDao.getItem(itemId)
+    override fun getItem(itemId: Long): Master? = masterDao.getItem(itemId)
     override fun getItems(search: String, offset: Int, count: Int): List<Master> = masterDao.getItems(search, offset, count)
     override fun deleteAllItems() = masterDao.deleteAllItems()
 }
