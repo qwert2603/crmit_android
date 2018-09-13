@@ -5,7 +5,7 @@ import android.arch.persistence.room.RoomDatabase
 import android.arch.persistence.room.TypeConverters
 import com.qwert2603.crmit_android.db.converters.GroupBriefListConverter
 import com.qwert2603.crmit_android.db.converters.StringListConverter
-import com.qwert2603.crmit_android.db.dao.*
+import com.qwert2603.crmit_android.db.generated_dao.*
 import com.qwert2603.crmit_android.entity.*
 
 @Database(
