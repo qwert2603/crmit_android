@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <plurals name="lessons">
-        <item quantity="one">%d занятие</item>
-        <item quantity="few">%d занятия</item>
-        <item quantity="many">%d занятий</item>
-        <item quantity="other">%d занятий</item>
+    <plurals name="lessons_done">
+        <item quantity="one">%d проведенное занятие</item>
+        <item quantity="few">%d проведенных занятия</item>
+        <item quantity="many">%d проведенных занятий</item>
+        <item quantity="other">%d проведенных занятий</item>
+    </plurals>
+    <plurals name="lessons_attended">
+        <item quantity="one">%d посещенное занятие</item>
+        <item quantity="few">%d посещенных занятия</item>
+        <item quantity="many">%d посещенных занятий</item>
+        <item quantity="other">%d посещенных занятий</item>
     </plurals>
     <plurals name="sections">
         <item quantity="one">%d секция</item>

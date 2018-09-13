@@ -22,7 +22,7 @@ class TeachersListFragment : EntitiesListFragment<Teacher>() {
         fio_TextView.setStrike(!e.systemUser.enabled)
         login_TextView.text = e.systemUser.login
         phone_TextView.text = e.phone
-        lessonsCount_TextView.text = resources.getQuantityString(R.plurals.lessons, e.lessonsCount, e.lessonsCount)
+        lessonsDoneCount_TextView.text = resources.getQuantityString(R.plurals.lessons_done, e.lessonsDoneCount, e.lessonsDoneCount)
         groups_TextView.setVisible(e.groups.isNotEmpty())
         if (e.groups.isNotEmpty()) {
             groups_TextView.text = e.groups

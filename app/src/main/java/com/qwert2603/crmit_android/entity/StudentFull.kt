@@ -30,7 +30,8 @@ data class StudentFull(
         val citizenshipName: String,
         @Embedded(prefix = "mother_") val mother: Parent?,
         @Embedded(prefix = "father_") val father: Parent?,
-        val groups: List<GroupBrief>
+        val groups: List<GroupBrief>,
+        val lessonsAttendedCount: Int
 ) : IdentifiableLong {
 
     fun showingBirthDate(): String = BIRTH_DATE_FORMAT_SHOWING.format(BIRTH_DATE_FORMAT.parse(birthDate))

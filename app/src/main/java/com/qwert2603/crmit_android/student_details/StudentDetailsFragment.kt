@@ -76,6 +76,7 @@ class StudentDetailsFragment : LRFragment<StudentDetailsViewState, StudentDetail
             adapter.adapterList = BaseRecyclerViewAdapter.AdapterList(listOfNotNull(
                     StudentDetailsSystemInfo(student.systemUser.enabled, student.filled),
                     StudentDetailsField(R.string.student_details_field_login, student.systemUser.login, R.drawable.ic_person_black_24dp),
+                    StudentDetailsField(R.string.student_details_field_lessonsAttendedCount, student.lessonsAttendedCount.toString()),
                     StudentDetailsField(R.string.student_details_field_birthDate, student.showingBirthDate()),
                     StudentDetailsField(R.string.student_details_field_birthPlace, student.birthPlace),
                     StudentDetailsField(R.string.student_details_field_registrationPlace, student.registrationPlace),

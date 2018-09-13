@@ -38,6 +38,7 @@ class StudentsListFragment : EntitiesListFragment<StudentBrief>() {
         @SuppressLint("SetTextI18n")
         phone_TextView.text = "${e.contactPhoneNumber} (${e.contactPhoneWho})"
         school_TextView.text = getString(R.string.student_school_format, e.schoolName, e.grade, e.shift)
+        lessonsAttendedCount_TextView.text = resources.getQuantityString(R.plurals.lessons_attended, e.lessonsAttendedCount, e.lessonsAttendedCount)
         groups_TextView.setVisible(e.groups.isNotEmpty())
         if (e.groups.isNotEmpty()) {
             groups_TextView.text = e.groups

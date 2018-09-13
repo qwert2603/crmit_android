@@ -33,6 +33,7 @@
 
     <string name="student_details_field_fio">ФИО</string>
     <string name="student_details_field_login">Логин</string>
+    <string name="student_details_field_lessonsAttendedCount">Посещено занятий</string>
     <string name="student_details_field_birthDate">Дата рождения</string>
     <string name="student_details_field_birthPlace">Место рождения</string>
     <string name="student_details_field_registrationPlace">Регистрация</string>

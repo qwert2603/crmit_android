@@ -58,13 +58,13 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/lessonsCount_TextView"
+        android:id="@+id/lessonsDoneCount_TextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:textColor="@color/gray_text"
         android:textSize="14sp"
-        tools:text="32 занятия" />
+        tools:text="26 проведенных занятий" />
 
     <TextView
         android:id="@+id/groups_TextView"

@@ -11,7 +11,7 @@ import com.qwert2603.dao_generator.GenerateDao
 data class Teacher(
         @PrimaryKey override val id: Long,
         val fio: String,
-        val lessonsCount: Int,
+        val lessonsDoneCount: Int,
         val phone: String,
         @Embedded(prefix = "systemUser_") val systemUser: SystemUser,
         val groups: List<GroupBrief>

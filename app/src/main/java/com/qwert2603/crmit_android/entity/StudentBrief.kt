@@ -18,5 +18,6 @@ data class StudentBrief(
         val schoolName: String,
         val grade: String,
         val shift: String,
-        val groups: List<GroupBrief>
+        val groups: List<GroupBrief>,
+        val lessonsAttendedCount: Int
 ) : IdentifiableLong
