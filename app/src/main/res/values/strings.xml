@@ -2,6 +2,7 @@
     <string name="app_name">crmit</string>
 
     <string name="title_sections">Секции</string>
+    <string name="title_groups">Группы</string>
     <string name="title_teachers">Преподаватели</string>
     <string name="title_masters">Руководители</string>
     <string name="title_students">Ученики</string>

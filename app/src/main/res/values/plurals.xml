@@ -18,6 +18,12 @@
         <item quantity="many">%d секций</item>
         <item quantity="other">%d секций</item>
     </plurals>
+    <plurals name="groups">
+        <item quantity="one">%d группа</item>
+        <item quantity="few">%d группы</item>
+        <item quantity="many">%d групп</item>
+        <item quantity="other">%d групп</item>
+    </plurals>
     <plurals name="teachers">
         <item quantity="one">%d преподаватель</item>
         <item quantity="few">%d преподавателя</item>

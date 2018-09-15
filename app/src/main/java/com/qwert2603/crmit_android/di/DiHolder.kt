@@ -48,7 +48,7 @@ object DiHolder {
     private val localDB by lazy {
         Room
                 .databaseBuilder(CrmitApplication.APP_CONTEXT, LocalDB::class.java, "local.db")
-                .fallbackToDestructiveMigrationFrom(1)
+                .fallbackToDestructiveMigrationFrom(1, 2)
                 .build()
     }
 
@@ -57,4 +57,6 @@ object DiHolder {
     val studentBriefDao by lazy { localDB.studentBriefDao().wrap() }
     val studentFullDao by lazy { localDB.studentFullDao().wrap() }
     val sectionDao by lazy { localDB.sectionDao().wrap() }
+    val groupBriefDao by lazy { localDB.groupBriefDao().wrap() }
+    val groupFullDao by lazy { localDB.groupFullDao().wrap() }
 }

@@ -16,10 +16,7 @@ import com.hannesdorfmann.fragmentargs.FragmentArgs
 import com.qwert2603.andrlib.base.mvi.BaseFragment
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.about.AboutFragment
-import com.qwert2603.crmit_android.list_fragments.MastersListFragment
-import com.qwert2603.crmit_android.list_fragments.SectionsListFragment
-import com.qwert2603.crmit_android.list_fragments.StudentsListFragment
-import com.qwert2603.crmit_android.list_fragments.TeachersListFragment
+import com.qwert2603.crmit_android.list_fragments.*
 import com.qwert2603.crmit_android.student_details.StudentDetailsFragment
 import com.qwert2603.crmit_android.student_details.StudentDetailsFragmentBuilder
 import com.qwert2603.crmit_android.student_details.StudentDetailsKey
@@ -67,6 +64,7 @@ class Navigator(private val activity: ActivityInterface)
     @Suppress("IMPLICIT_CAST_TO_ANY")
     override fun createFragment(screenKey: String, data: Any?) = when (ScreenKey.valueOf(screenKey)) {
         ScreenKey.SECTIONS -> SectionsListFragment()
+        ScreenKey.GROUPS -> GroupsListFragment()
         ScreenKey.TEACHERS -> TeachersListFragment()
         ScreenKey.MASTERS -> MastersListFragment()
         ScreenKey.STUDENTS -> StudentsListFragment()

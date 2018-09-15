@@ -45,7 +45,8 @@ class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager {
             NavigationItem(2L, R.drawable.ic_person_black_24dp, R.string.title_teachers, ScreenKey.TEACHERS),
             NavigationItem(3L, R.drawable.ic_person_black_24dp, R.string.title_students, ScreenKey.STUDENTS),
             NavigationItem(4L, R.drawable.ic_group_black_24dp, R.string.title_sections, ScreenKey.SECTIONS),
-            NavigationItem(5L, R.drawable.ic_info_black_24dp, R.string.title_about, ScreenKey.ABOUT)
+            NavigationItem(5L, R.drawable.ic_group_black_24dp, R.string.title_groups, ScreenKey.GROUPS),
+            NavigationItem(6L, R.drawable.ic_info_black_24dp, R.string.title_about, ScreenKey.ABOUT)
     )
 
     private val navigator = Navigator(object : ActivityInterface {

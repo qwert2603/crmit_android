@@ -36,6 +36,13 @@ interface Rest {
             @Query("search") search: String
     ): Single<List<Section>>
 
+    @GET("groups_list")
+    fun getGroupsList(
+            @Query("offset") offset: Int,
+            @Query("count") count: Int,
+            @Query("search") search: String
+    ): Single<List<GroupBrief>>
+
     @GET("student_details/{student_id}")
     fun getStudentDetails(@Path("student_id") studentId: Long): Single<StudentFull>
 }

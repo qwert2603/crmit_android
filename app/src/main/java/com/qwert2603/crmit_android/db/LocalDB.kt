@@ -14,9 +14,11 @@ import com.qwert2603.crmit_android.entity.*
             Teacher::class,
             StudentBrief::class,
             StudentFull::class,
-            Section::class
+            Section::class,
+            GroupBrief::class,
+            GroupFull::class
         ],
-        version = 2,
+        version = 3,
         exportSchema = true
 )
 @TypeConverters(GroupBriefListConverter::class, StringListConverter::class)
@@ -26,4 +28,6 @@ abstract class LocalDB : RoomDatabase() {
     abstract fun studentBriefDao(): StudentBriefDao
     abstract fun studentFullDao(): StudentFullDao
     abstract fun sectionDao(): SectionDao
+    abstract fun groupBriefDao(): GroupBriefDao
+    abstract fun groupFullDao(): GroupFullDao
 }
