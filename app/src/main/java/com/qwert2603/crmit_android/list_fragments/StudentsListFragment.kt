@@ -6,11 +6,11 @@ import android.view.View
 import com.qwert2603.andrlib.util.setVisible
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.db.DaoInterface
+import com.qwert2603.crmit_android.details_fragments.StudentDetailsFragment
 import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entities_list.EntitiesListFragment
 import com.qwert2603.crmit_android.entity.StudentBrief
 import com.qwert2603.crmit_android.navigation.ScreenKey
-import com.qwert2603.crmit_android.student_details.StudentDetailsKey
 import com.qwert2603.crmit_android.util.setStrike
 import kotlinx.android.synthetic.main.item_student.view.*
 
@@ -50,7 +50,7 @@ class StudentsListFragment : EntitiesListFragment<StudentBrief>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         adapter.modelItemClicks
                 .subscribe {
-                    DiHolder.router.navigateTo(ScreenKey.STUDENT_DETAILS.name, StudentDetailsKey(
+                    DiHolder.router.navigateTo(ScreenKey.STUDENT_DETAILS.name, StudentDetailsFragment.Key(
                             studentId = it.id,
                             studentFio = it.fio,
                             systemUserEnabled = it.systemUser.enabled,

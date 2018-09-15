@@ -16,10 +16,9 @@ import com.hannesdorfmann.fragmentargs.FragmentArgs
 import com.qwert2603.andrlib.base.mvi.BaseFragment
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.about.AboutFragment
+import com.qwert2603.crmit_android.details_fragments.StudentDetailsFragment
+import com.qwert2603.crmit_android.details_fragments.StudentDetailsFragmentBuilder
 import com.qwert2603.crmit_android.list_fragments.*
-import com.qwert2603.crmit_android.student_details.StudentDetailsFragment
-import com.qwert2603.crmit_android.student_details.StudentDetailsFragmentBuilder
-import com.qwert2603.crmit_android.student_details.StudentDetailsKey
 import ru.terrakok.cicerone.android.SupportFragmentNavigator
 import ru.terrakok.cicerone.commands.Command
 import ru.terrakok.cicerone.commands.Forward
@@ -49,7 +48,7 @@ class Navigator(private val activity: ActivityInterface)
                         f.enterTransition = Slide(if (fm.backStackEntryCount > 0) Gravity.RIGHT else Gravity.LEFT)
                                 .also { it.duration = TRANSITION_DURATION }
                         val sharedElementTransition = TransitionInflater.from(f.requireContext())
-                                .inflateTransition(R.transition.shared_element_student_fio)
+                                .inflateTransition(R.transition.shared_element)
                         f.sharedElementEnterTransition = sharedElementTransition
                         f.sharedElementReturnTransition = sharedElementTransition
                     }
@@ -68,7 +67,7 @@ class Navigator(private val activity: ActivityInterface)
         ScreenKey.TEACHERS -> TeachersListFragment()
         ScreenKey.MASTERS -> MastersListFragment()
         ScreenKey.STUDENTS -> StudentsListFragment()
-        ScreenKey.STUDENT_DETAILS -> (data as StudentDetailsKey).let { StudentDetailsFragmentBuilder.newStudentDetailsFragment(it.studentFio, it.studentId, it.systemUserEnabled) }
+        ScreenKey.STUDENT_DETAILS -> (data as StudentDetailsFragment.Key).let { StudentDetailsFragmentBuilder.newStudentDetailsFragment(it.studentId, it.studentFio, it.systemUserEnabled) }
         ScreenKey.ABOUT -> AboutFragment()
     }.also { it.setScreenKey(ScreenKey.valueOf(screenKey)) }
 
@@ -90,7 +89,7 @@ class Navigator(private val activity: ActivityInterface)
         nextFragment.enterTransition = Slide(if (command is Forward) Gravity.RIGHT else Gravity.LEFT)
                 .also { it.duration = TRANSITION_DURATION }
         if (command is Forward && currentFragment is StudentsListFragment && nextFragment is StudentDetailsFragment) {
-            val studentFioTextView = (command.transitionData as StudentDetailsKey).studentFioTextView
+            val studentFioTextView = (command.transitionData as StudentDetailsFragment.Key).studentFioTextView
             fragmentTransaction.addSharedElement(studentFioTextView, studentFioTextView.transitionName)
         }
     }

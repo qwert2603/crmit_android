@@ -39,7 +39,7 @@
             android:nestedScrollingEnabled="false"
             app:layoutManager="android.support.v7.widget.LinearLayoutManager"
             tools:itemCount="3"
-            tools:listitem="@layout/item_student_details_group" />
+            tools:listitem="@layout/item_entity_details_group" />
 
     </FrameLayout>
 

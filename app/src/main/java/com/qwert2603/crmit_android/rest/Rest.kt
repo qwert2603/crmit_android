@@ -45,4 +45,7 @@ interface Rest {
 
     @GET("student_details/{student_id}")
     fun getStudentDetails(@Path("student_id") studentId: Long): Single<StudentFull>
+
+    @GET("group_details/{group_id}")
+    fun getGroupDetails(@Path("group_id") groupId: Long): Single<GroupFull>
 }
