@@ -19,7 +19,6 @@ import com.qwert2603.andrlib.model.IdentifiableLong
 import com.qwert2603.andrlib.util.inflate
 import com.qwert2603.andrlib.util.showIfNotYet
 import com.qwert2603.crmit_android.R
-import com.qwert2603.crmit_android.entity.GroupBrief
 import com.qwert2603.crmit_android.entity.Parent
 import com.qwert2603.crmit_android.util.ConditionDividerDecoration
 import com.qwert2603.crmit_android.util.setStrike
@@ -89,7 +88,7 @@ class StudentDetailsFragment : LRFragment<StudentDetailsViewState, StudentDetail
                     StudentDetailsField(R.string.student_details_field_citizenshipName, student.citizenshipName),
                     student.mother?.let { StudentDetailsField(R.string.student_details_field_mother, it.toTextFieldValue()) },
                     student.father?.let { StudentDetailsField(R.string.student_details_field_father, it.toTextFieldValue()) },
-                    StudentDetailsField(R.string.student_details_field_groups, student.groups.toTextFieldValue())
+                    StudentDetailsGroupsList(student.groups)
             ))
         }
     }
@@ -115,10 +114,4 @@ class StudentDetailsFragment : LRFragment<StudentDetailsViewState, StudentDetail
             .filter { it.second != null }
             .map { "${getString(it.first)}: ${it.second}" }
             .reduce { acc, s -> "$acc\n$s" }
-
-    private fun List<GroupBrief>.toTextFieldValue() =
-            if (isEmpty()) getString(R.string.text_no_groups)
-            else this
-                    .map { "* ${it.name} (${it.teacherFio})" }
-                    .reduce { acc, s -> "$acc\n$s" }
 }

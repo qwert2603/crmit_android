@@ -10,11 +10,13 @@ class StudentDetailsAdapter : BaseRecyclerViewAdapter<StudentDetailsListItem>() 
     override fun getItemViewTypeModel(m: StudentDetailsListItem) = when (m) {
         is StudentDetailsField -> R.layout.item_student_details_field
         is StudentDetailsSystemInfo -> R.layout.item_student_details_system_info
+        is StudentDetailsGroupsList -> R.layout.item_student_details_groups_list
     }
 
     override fun onCreateViewHolderModel(parent: ViewGroup, viewType: Int) = when (viewType) {
         R.layout.item_student_details_field -> StudentDetailsViewHolder(parent)
         R.layout.item_student_details_system_info -> StudentDetailsSystemInfoViewHolder(parent)
+        R.layout.item_student_details_groups_list -> StudentDetailsGroupsListViewHolder(parent)
         else -> null!!
     } as BaseRecyclerViewHolder<StudentDetailsListItem>
 }

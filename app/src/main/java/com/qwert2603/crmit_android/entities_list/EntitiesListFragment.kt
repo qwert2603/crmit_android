@@ -41,7 +41,7 @@ abstract class EntitiesListFragment<E : IdentifiableLong>
     @PluralsRes
     open val entityPluralsRes: Int = R.plurals.items
 
-    open val pageSize: Int = 30
+    open val pageSize: Int = 100
 
     abstract fun View.bindEntity(e: E)
 

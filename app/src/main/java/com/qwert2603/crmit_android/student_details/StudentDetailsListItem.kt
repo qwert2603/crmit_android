@@ -3,6 +3,7 @@ package com.qwert2603.crmit_android.student_details
 import android.support.annotation.DrawableRes
 import android.support.annotation.StringRes
 import com.qwert2603.andrlib.model.IdentifiableLong
+import com.qwert2603.crmit_android.entity.GroupBrief
 
 sealed class StudentDetailsListItem : IdentifiableLong
 
@@ -19,4 +20,10 @@ data class StudentDetailsSystemInfo(
         val filled: Boolean
 ) : StudentDetailsListItem() {
     override val id = 34537923963497L
+}
+
+data class StudentDetailsGroupsList(
+        val groups: List<GroupBrief>
+) : StudentDetailsListItem() {
+    override val id = 57028682756354L
 }
