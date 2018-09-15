@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="12dp"
-        android:text="@string/student_details_field_groups"
+        android:text="@string/detailsField_groups"
         android:textColor="@color/gray_text"
         android:textSize="12sp"
         android:textStyle="bold" />

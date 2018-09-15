@@ -32,27 +32,27 @@
 
     <string name="student_school_format" formatted="true">%s / %s класс / %s смена</string>
 
-    <string name="student_details_field_fio">ФИО</string>
-    <string name="student_details_field_login">Логин</string>
-    <string name="student_details_field_lessonsAttendedCount">Посещено занятий</string>
-    <string name="student_details_field_birthDate">Дата рождения</string>
-    <string name="student_details_field_birthPlace">Место рождения</string>
-    <string name="student_details_field_registrationPlace">Регистрация</string>
-    <string name="student_details_field_actualAddress">Фактический адрес</string>
-    <string name="student_details_field_additionalInfo">Доп. инфо</string>
-    <string name="student_details_field_knownFrom">Узнал(а) о ЦМИТ</string>
-    <string name="student_details_field_school">Школа</string>
-    <string name="student_details_field_phone">Телефон</string>
-    <string name="student_details_field_contactPhone">Телефон для связи</string>
-    <string name="student_details_field_citizenshipName">Гражданство</string>
-    <string name="student_details_field_mother">Мать</string>
-    <string name="student_details_field_father">Отец</string>
-    <string name="student_details_field_groups">Группы</string>
-    <string name="student_details_field_address">Адрес</string>
-    <string name="student_details_field_email">E-mail</string>
-    <string name="student_details_field_homePhone">Домашний телефон</string>
-    <string name="student_details_field_vkLink">ВКонтакте</string>
-    <string name="student_details_field_notificationTypesString">Уведомления</string>
+    <string name="detailsField_fio">ФИО</string>
+    <string name="detailsField_login">Логин</string>
+    <string name="detailsField_lessonsAttendedCount">Посещено занятий</string>
+    <string name="detailsField_birthDate">Дата рождения</string>
+    <string name="detailsField_birthPlace">Место рождения</string>
+    <string name="detailsField_registrationPlace">Регистрация</string>
+    <string name="detailsField_actualAddress">Фактический адрес</string>
+    <string name="detailsField_additionalInfo">Доп. инфо</string>
+    <string name="detailsField_knownFrom">Узнал(а) о ЦМИТ</string>
+    <string name="detailsField_school">Школа</string>
+    <string name="detailsField_phone">Телефон</string>
+    <string name="detailsField_contactPhone">Телефон для связи</string>
+    <string name="detailsField_citizenshipName">Гражданство</string>
+    <string name="detailsField_mother">Мать</string>
+    <string name="detailsField_father">Отец</string>
+    <string name="detailsField_groups">Группы</string>
+    <string name="detailsField_address">Адрес</string>
+    <string name="detailsField_email">E-mail</string>
+    <string name="detailsField_homePhone">Домашний телефон</string>
+    <string name="detailsField_vkLink">ВКонтакте</string>
+    <string name="detailsField_notificationTypesString">Уведомления</string>
     <string name="detailsField_name">Название</string>
     <string name="detailsField_price">Цена в месяц</string>
 
