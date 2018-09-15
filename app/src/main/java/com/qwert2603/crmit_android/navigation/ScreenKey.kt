@@ -7,5 +7,6 @@ enum class ScreenKey(val allowDrawer: Boolean = true) {
     MASTERS,
     STUDENTS,
     STUDENT_DETAILS,
+    SECTION_DETAILS,
     ABOUT
 }

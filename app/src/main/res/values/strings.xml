@@ -53,6 +53,8 @@
     <string name="student_details_field_homePhone">Домашний телефон</string>
     <string name="student_details_field_vkLink">ВКонтакте</string>
     <string name="student_details_field_notificationTypesString">Уведомления</string>
+    <string name="detailsField_name">Название</string>
+    <string name="detailsField_price">Цена в месяц</string>
 
     <string name="text_no_groups">Нет групп</string>
     <string name="text_clear_cache">Очистить кеш</string>
