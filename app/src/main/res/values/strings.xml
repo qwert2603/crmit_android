@@ -55,6 +55,13 @@
     <string name="detailsField_notificationTypesString">Уведомления</string>
     <string name="detailsField_name">Название</string>
     <string name="detailsField_price">Цена в месяц</string>
+    <string name="detailsField_teacher">Преподаватель</string>
+    <string name="detailsField_section">Секция</string>
+    <string name="detailsField_startMonth">Начало функционирования</string>
+    <string name="detailsField_endMonth">Окончание функционирования</string>
+    <string name="detailsField_studentsCount">Кол-во учеников</string>
+    <string name="detailsField_lessonsDoneCount">Проведено занятий</string>
+    <string name="detailsField_lessonsFutureCount">Занятий в прошлом</string>
 
     <string name="text_no_groups">Нет групп</string>
     <string name="text_clear_cache">Очистить кеш</string>

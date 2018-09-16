@@ -16,10 +16,7 @@ import com.hannesdorfmann.fragmentargs.FragmentArgs
 import com.qwert2603.andrlib.base.mvi.BaseFragment
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.about.AboutFragment
-import com.qwert2603.crmit_android.details_fragments.SectionDetailsFragment
-import com.qwert2603.crmit_android.details_fragments.SectionDetailsFragmentBuilder
-import com.qwert2603.crmit_android.details_fragments.StudentDetailsFragment
-import com.qwert2603.crmit_android.details_fragments.StudentDetailsFragmentBuilder
+import com.qwert2603.crmit_android.details_fragments.*
 import com.qwert2603.crmit_android.list_fragments.*
 import ru.terrakok.cicerone.android.SupportFragmentNavigator
 import ru.terrakok.cicerone.commands.Command
@@ -72,6 +69,7 @@ class Navigator(private val activity: ActivityInterface)
         ScreenKey.STUDENT_DETAILS -> (data as StudentDetailsFragment.Key).let { StudentDetailsFragmentBuilder.newStudentDetailsFragment(it.studentId, it.studentFio, it.systemUserEnabled) }
         ScreenKey.ABOUT -> AboutFragment()
         ScreenKey.SECTION_DETAILS -> (data as SectionDetailsFragment.Key).let { SectionDetailsFragmentBuilder.newSectionDetailsFragment(it.sectionId, it.sectionName) }
+        ScreenKey.GROUP_DETAILS -> (data as GroupDetailsFragment.Key).let { GroupDetailsFragmentBuilder.newGroupDetailsFragment(it.groupId, it.groupName) }
     }.also { it.setScreenKey(ScreenKey.valueOf(screenKey)) }
 
     override fun exit() {
@@ -98,6 +96,10 @@ class Navigator(private val activity: ActivityInterface)
         if (command is Forward && currentFragment is SectionsListFragment && nextFragment is SectionDetailsFragment) {
             val sectionNameTextView = (command.transitionData as SectionDetailsFragment.Key).sectionNameTextView
             fragmentTransaction.addSharedElement(sectionNameTextView, sectionNameTextView.transitionName)
+        }
+        if (command is Forward && currentFragment is GroupsListFragment && nextFragment is GroupDetailsFragment) {
+            val groupNameTextView = (command.transitionData as GroupDetailsFragment.Key).groupNameTextView
+            fragmentTransaction.addSharedElement(groupNameTextView, groupNameTextView.transitionName)
         }
     }
 

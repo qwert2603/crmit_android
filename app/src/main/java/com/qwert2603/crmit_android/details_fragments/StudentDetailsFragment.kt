@@ -50,7 +50,7 @@ class StudentDetailsFragment : EntityDetailsFragment<StudentFull>() {
             knownFrom?.takeIf { it.isNotEmpty() }?.let { EntityDetailsField(R.string.detailsField_knownFrom, it) },
             EntityDetailsField(R.string.detailsField_school, getString(R.string.student_school_format, school.name, grade, shift)),
             phone?.let { EntityDetailsField(R.string.detailsField_phone, it, R.drawable.ic_local_phone_black_24dp) },
-            EntityDetailsField(R.string.detailsField_contactPhone, "${contactPhoneNumber} (${contactPhoneWho})", R.drawable.ic_local_phone_black_24dp),
+            EntityDetailsField(R.string.detailsField_contactPhone, "$contactPhoneNumber ($contactPhoneWho)", R.drawable.ic_local_phone_black_24dp),
             EntityDetailsField(R.string.detailsField_citizenshipName, citizenshipName),
             mother?.let { EntityDetailsField(R.string.detailsField_mother, it.toTextFieldValue()) },
             father?.let { EntityDetailsField(R.string.detailsField_father, it.toTextFieldValue()) },

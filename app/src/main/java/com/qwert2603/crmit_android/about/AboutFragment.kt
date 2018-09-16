@@ -41,7 +41,9 @@ class AboutFragment : Fragment() {
                         DiHolder.teacherDao,
                         DiHolder.studentBriefDao,
                         DiHolder.studentFullDao,
-                        DiHolder.sectionDao
+                        DiHolder.sectionDao,
+                        DiHolder.groupBriefDao,
+                        DiHolder.groupFullDao
                 ).forEach { it.deleteAllItems() }
             }
         }
