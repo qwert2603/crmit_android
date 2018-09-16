@@ -57,7 +57,7 @@ abstract class EntityDetailsFragment<E : Any> : LRFragment<EntityDetailsViewStat
         val recyclerView = view.findViewById<RecyclerView>(R.id.list_RecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
-        recyclerView.addItemDecoration(ConditionDividerDecoration(requireContext()) { _, vh -> vh !is EntityDetailsStudentSystemInfoViewHolder })
+        recyclerView.addItemDecoration(ConditionDividerDecoration(requireContext()) { _, vh -> vh !is EntityDetailsSystemInfoViewHolder })
     }
 
     override fun render(vs: EntityDetailsViewState<E>) {

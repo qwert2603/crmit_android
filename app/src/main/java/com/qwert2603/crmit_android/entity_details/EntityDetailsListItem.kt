@@ -15,7 +15,7 @@ data class EntityDetailsField(
     override val id = fieldTitleStringRes.toLong()
 }
 
-data class EntityDetailsStudentSystemInfo(
+data class EntityDetailsSystemInfo(
         val enabled: Boolean,
         val filled: Boolean
 ) : EntityDetailsListItem() {
@@ -23,7 +23,8 @@ data class EntityDetailsStudentSystemInfo(
 }
 
 data class EntityDetailsGroupsList(
-        val groups: List<GroupBrief>
+        val groups: List<GroupBrief>,
+        val showTeacherFio: Boolean = true
 ) : EntityDetailsListItem() {
     override val id = 57028682756354L
 }

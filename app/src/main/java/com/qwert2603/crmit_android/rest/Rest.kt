@@ -51,4 +51,7 @@ interface Rest {
 
     @GET("section_details/{section_id}")
     fun getSectionDetails(@Path("section_id") sectionId: Long): Single<Section>
+
+    @GET("teacher_details/{teacher_id}")
+    fun getTeacherDetails(@Path("teacher_id") teacherId: Long): Single<Teacher>
 }

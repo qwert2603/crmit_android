@@ -1,12 +1,15 @@
 package com.qwert2603.crmit_android.list_fragments
 
+import android.os.Bundle
 import android.view.View
 import com.qwert2603.andrlib.util.setVisible
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.db.DaoInterface
+import com.qwert2603.crmit_android.details_fragments.TeacherDetailsFragment
 import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entities_list.EntitiesListFragment
 import com.qwert2603.crmit_android.entity.Teacher
+import com.qwert2603.crmit_android.navigation.ScreenKey
 import com.qwert2603.crmit_android.util.setStrike
 import kotlinx.android.synthetic.main.item_teacher.view.*
 
@@ -20,6 +23,7 @@ class TeachersListFragment : EntitiesListFragment<Teacher>() {
         fio_TextView.text = e.fio
         disabled_TextView.setVisible(!e.systemUser.enabled)
         fio_TextView.setStrike(!e.systemUser.enabled)
+        fio_TextView.transitionName = "teacher_fio_${e.id}"
         login_TextView.text = e.systemUser.login
         phone_TextView.text = e.phone
         lessonsDoneCount_TextView.text = resources.getQuantityString(R.plurals.lessons_done, e.lessonsDoneCount, e.lessonsDoneCount)
@@ -29,5 +33,20 @@ class TeachersListFragment : EntitiesListFragment<Teacher>() {
                     .map { "* ${it.name}" }
                     .reduce { acc, s -> "$acc\n$s" }
         }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        adapter.modelItemClicks
+                .subscribe {
+                    DiHolder.router.navigateTo(ScreenKey.TEACHER_DETAILS.name, TeacherDetailsFragment.Key(
+                            teacherId =  it.id,
+                            teacherFio = it.fio,
+                            systemUserEnabled = it.systemUser.enabled,
+                            teacherFioTextView = _list_RecyclerView.findViewHolderForItemId(it.id).itemView.fio_TextView
+                    ))
+                }
+                .disposeOnDestroyView()
+
+        super.onViewCreated(view, savedInstanceState)
     }
 }

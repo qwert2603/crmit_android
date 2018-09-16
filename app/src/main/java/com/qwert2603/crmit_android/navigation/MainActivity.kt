@@ -75,6 +75,7 @@ class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager {
         headerNavigation = navigation_view.inflate(R.layout.header_navigation)
         navigation_view.addHeaderView(headerNavigation)
         headerNavigation.navigation_recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
+        headerNavigation.navigation_recyclerView.itemAnimator = null
 
         lifecycle.addObserver(navigatorHolder.createLifecycleObserver(navigator))
     }

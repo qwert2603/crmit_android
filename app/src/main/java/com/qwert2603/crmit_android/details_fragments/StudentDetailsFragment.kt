@@ -39,7 +39,7 @@ class StudentDetailsFragment : EntityDetailsFragment<StudentFull>() {
     override val dbDao: DaoInterface<StudentFull> = DiHolder.studentFullDao
 
     override fun StudentFull.toDetailsList(): List<EntityDetailsListItem> = listOfNotNull(
-            EntityDetailsStudentSystemInfo(systemUser.enabled, filled),
+            EntityDetailsSystemInfo(systemUser.enabled, filled),
             EntityDetailsField(R.string.detailsField_login, systemUser.login, R.drawable.ic_person_black_24dp),
             EntityDetailsField(R.string.detailsField_lessonsAttendedCount, lessonsAttendedCount.toString()),
             EntityDetailsField(R.string.detailsField_birthDate, showingBirthDate()),
