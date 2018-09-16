@@ -61,7 +61,6 @@
     <string name="detailsField_endMonth">Окончание функционирования</string>
     <string name="detailsField_studentsCount">Кол-во учеников</string>
     <string name="detailsField_lessonsDoneCount">Проведено занятий</string>
-    <string name="detailsField_lessonsFutureCount">Занятий в прошлом</string>
 
     <string name="text_no_groups">Нет групп</string>
     <string name="text_clear_cache">Очистить кеш</string>

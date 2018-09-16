@@ -33,14 +33,12 @@ class GroupDetailsFragment : EntityDetailsFragment<GroupFull>() {
     override val dbDao = DiHolder.groupFullDao
 
     override fun GroupFull.toDetailsList() = kotlin.collections.listOf(
-            EntityDetailsField(R.string.detailsField_name, name),
             EntityDetailsField(R.string.detailsField_section, sectionName),
             EntityDetailsField(R.string.detailsField_teacher, teacherFio),
             EntityDetailsField(R.string.detailsField_startMonth, startMonth.toMonthString()),
             EntityDetailsField(R.string.detailsField_endMonth, endMonth.toMonthString()),
             EntityDetailsField(R.string.detailsField_studentsCount, studentsCount.toString()),
-            EntityDetailsField(R.string.detailsField_lessonsDoneCount, lessonsDoneCount.toString()),
-            EntityDetailsField(R.string.detailsField_lessonsFutureCount, "todo")
+            EntityDetailsField(R.string.detailsField_lessonsDoneCount, lessonsDoneCount.toString())
     )
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

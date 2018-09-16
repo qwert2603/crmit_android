@@ -5,7 +5,10 @@ import com.qwert2603.andrlib.base.recyclerview.BaseRecyclerViewAdapter
 import com.qwert2603.andrlib.base.recyclerview.BaseRecyclerViewHolder
 import com.qwert2603.andrlib.util.setVisible
 import com.qwert2603.crmit_android.R
+import com.qwert2603.crmit_android.details_fragments.GroupDetailsFragment
+import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entity.GroupBrief
+import com.qwert2603.crmit_android.navigation.ScreenKey
 import kotlinx.android.synthetic.main.item_entity_details_group.view.*
 import kotlinx.android.synthetic.main.item_entity_details_groups_list.view.*
 
@@ -28,6 +31,14 @@ class EntityDetailsGroupsListViewHolder(parent: ViewGroup) : BaseRecyclerViewHol
     init {
         itemView.groups_RecyclerView.itemAnimator = null
         itemView.groups_RecyclerView.adapter = groupsAdapter
+        groupsAdapter.modelItemClicks
+                .subscribe {
+                    DiHolder.router.navigateTo(ScreenKey.GROUP_DETAILS.name, GroupDetailsFragment.Key(
+                            groupId = it.id,
+                            groupName = it.name,
+                            groupNameTextView = itemView.groups_RecyclerView.findViewHolderForItemId(it.id).itemView.groupName_TextView
+                    ))
+                }
     }
 
     override fun bind(m: EntityDetailsGroupsList) = with(itemView) {
