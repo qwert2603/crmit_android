@@ -5,7 +5,6 @@ import com.qwert2603.andrlib.base.recyclerview.BaseRecyclerViewAdapter
 import com.qwert2603.andrlib.base.recyclerview.BaseRecyclerViewHolder
 import com.qwert2603.andrlib.util.setVisible
 import com.qwert2603.crmit_android.R
-import com.qwert2603.crmit_android.details_fragments.GroupDetailsFragment
 import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entity.GroupBrief
 import com.qwert2603.crmit_android.navigation.ScreenKey
@@ -33,10 +32,9 @@ class EntityDetailsGroupsListViewHolder(parent: ViewGroup) : BaseRecyclerViewHol
         itemView.groups_RecyclerView.adapter = groupsAdapter
         groupsAdapter.modelItemClicks
                 .subscribe {
-                    DiHolder.router.navigateTo(ScreenKey.GROUP_DETAILS.name, GroupDetailsFragment.Key(
-                            groupId = it.id,
-                            groupName = it.name,
-                            groupNameTextView = itemView.groups_RecyclerView.findViewHolderForItemId(it.id).itemView.groupName_TextView
+                    DiHolder.router.navigateTo(ScreenKey.GROUP_DETAILS.name, EntityDetailsFragment.Key(
+                            entityId = it.id,
+                            entityName = it.name
                     ))
                 }
     }

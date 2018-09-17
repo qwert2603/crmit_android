@@ -28,22 +28,22 @@ import kotlinx.android.synthetic.main.toolbar_default.*
 abstract class EntitiesListFragment<E : IdentifiableLong>
     : ListFragment<EntitiesListViewState<E>, EntitiesListView<E>, EntitiesListPresenter<E>, E>(), EntitiesListView<E>, BackPressListener {
 
-    abstract val source: (offset: Int, count: Int, search: String) -> Single<List<E>>
+    protected abstract val source: (offset: Int, count: Int, search: String) -> Single<List<E>>
 
-    abstract val dbDao: DaoInterface<E>
+    protected abstract val dbDao: DaoInterface<E>
 
     @get:StringRes
-    abstract val titleRes: Int
+    protected abstract val titleRes: Int
 
     @get:LayoutRes
-    abstract val vhLayoutRes: Int
+    protected abstract val vhLayoutRes: Int
 
     @PluralsRes
     open val entityPluralsRes: Int = R.plurals.items
 
-    open val pageSize: Int = 100
+    protected open val pageSize: Int = 100
 
-    abstract fun View.bindEntity(e: E)
+    protected abstract fun View.bindEntity(e: E)
 
     override val adapter = object : BaseRecyclerViewAdapter<E>() {
         override fun pluralsRes() = entityPluralsRes

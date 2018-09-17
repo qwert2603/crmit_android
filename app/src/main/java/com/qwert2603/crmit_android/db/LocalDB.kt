@@ -18,7 +18,7 @@ import com.qwert2603.crmit_android.entity.*
             GroupBrief::class,
             GroupFull::class
         ],
-        version = 3,
+        version = 4,
         exportSchema = true
 )
 @TypeConverters(GroupBriefListConverter::class, StringListConverter::class)

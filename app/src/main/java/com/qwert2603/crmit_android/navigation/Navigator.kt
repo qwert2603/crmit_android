@@ -16,11 +16,16 @@ import com.hannesdorfmann.fragmentargs.FragmentArgs
 import com.qwert2603.andrlib.base.mvi.BaseFragment
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.about.AboutFragment
-import com.qwert2603.crmit_android.details_fragments.*
+import com.qwert2603.crmit_android.details_fragments.GroupDetailsFragmentBuilder
+import com.qwert2603.crmit_android.details_fragments.SectionDetailsFragmentBuilder
+import com.qwert2603.crmit_android.details_fragments.StudentDetailsFragmentBuilder
+import com.qwert2603.crmit_android.details_fragments.TeacherDetailsFragmentBuilder
+import com.qwert2603.crmit_android.entity_details.EntityDetailsFragment
 import com.qwert2603.crmit_android.list_fragments.*
 import ru.terrakok.cicerone.android.SupportFragmentNavigator
 import ru.terrakok.cicerone.commands.Command
 import ru.terrakok.cicerone.commands.Forward
+import ru.terrakok.cicerone.commands.Replace
 
 class Navigator(private val activity: ActivityInterface)
     : SupportFragmentNavigator(activity.supportFragmentManager, activity.fragmentContainer) {
@@ -67,10 +72,10 @@ class Navigator(private val activity: ActivityInterface)
         ScreenKey.MASTERS -> MastersListFragment()
         ScreenKey.STUDENTS -> StudentsListFragment()
         ScreenKey.ABOUT -> AboutFragment()
-        ScreenKey.STUDENT_DETAILS -> (data as StudentDetailsFragment.Key).let { StudentDetailsFragmentBuilder.newStudentDetailsFragment(it.studentId, it.studentFio, it.systemUserEnabled) }
-        ScreenKey.SECTION_DETAILS -> (data as SectionDetailsFragment.Key).let { SectionDetailsFragmentBuilder.newSectionDetailsFragment(it.sectionId, it.sectionName) }
-        ScreenKey.GROUP_DETAILS -> (data as GroupDetailsFragment.Key).let { GroupDetailsFragmentBuilder.newGroupDetailsFragment(it.groupId, it.groupName) }
-        ScreenKey.TEACHER_DETAILS -> (data as TeacherDetailsFragment.Key).let { TeacherDetailsFragmentBuilder.newTeacherDetailsFragment(it.teacherId, it.systemUserEnabled, it.teacherFio) }
+        ScreenKey.STUDENT_DETAILS -> (data as EntityDetailsFragment.Key).let { StudentDetailsFragmentBuilder.newStudentDetailsFragment(it.entityId, it.entityName, it.entityNameStrike) }
+        ScreenKey.SECTION_DETAILS -> (data as EntityDetailsFragment.Key).let { SectionDetailsFragmentBuilder.newSectionDetailsFragment(it.entityId, it.entityName, it.entityNameStrike) }
+        ScreenKey.GROUP_DETAILS -> (data as EntityDetailsFragment.Key).let { GroupDetailsFragmentBuilder.newGroupDetailsFragment(it.entityId, it.entityName, it.entityNameStrike) }
+        ScreenKey.TEACHER_DETAILS -> (data as EntityDetailsFragment.Key).let { TeacherDetailsFragmentBuilder.newTeacherDetailsFragment(it.entityId, it.entityName, it.entityNameStrike) }
     }.also { it.setScreenKey(ScreenKey.valueOf(screenKey)) }
 
     override fun exit() {
@@ -90,21 +95,16 @@ class Navigator(private val activity: ActivityInterface)
                 .also { it.duration = TRANSITION_DURATION }
         nextFragment.enterTransition = Slide(if (command is Forward) Gravity.RIGHT else Gravity.LEFT)
                 .also { it.duration = TRANSITION_DURATION }
-        if (command is Forward && currentFragment is StudentsListFragment && nextFragment is StudentDetailsFragment) {
-            val studentFioTextView = (command.transitionData as StudentDetailsFragment.Key).studentFioTextView
-            fragmentTransaction.addSharedElement(studentFioTextView, studentFioTextView.transitionName)
-        }
-        if (command is Forward && currentFragment is SectionsListFragment && nextFragment is SectionDetailsFragment) {
-            val sectionNameTextView = (command.transitionData as SectionDetailsFragment.Key).sectionNameTextView
-            fragmentTransaction.addSharedElement(sectionNameTextView, sectionNameTextView.transitionName)
-        }
-        if (command is Forward && currentFragment is GroupsListFragment && nextFragment is GroupDetailsFragment) {
-            val groupNameTextView = (command.transitionData as GroupDetailsFragment.Key).groupNameTextView
-            fragmentTransaction.addSharedElement(groupNameTextView, groupNameTextView.transitionName)
-        }
-        if (command is Forward && currentFragment is TeachersListFragment && nextFragment is TeacherDetailsFragment) {
-            val teacherFioTextView = (command.transitionData as TeacherDetailsFragment.Key).teacherFioTextView
-            fragmentTransaction.addSharedElement(teacherFioTextView, teacherFioTextView.transitionName)
+
+        command
+                .let { it as? Forward }
+                ?.transitionData
+                .let { it as? EntityDetailsFragment.Key }
+                ?.entityNameTextView
+                ?.also { fragmentTransaction.addSharedElement(it, it.transitionName) }
+
+        if (command is Replace) {
+            currentFragment?.sharedElementReturnTransition = null
         }
     }
 

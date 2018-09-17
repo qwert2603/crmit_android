@@ -9,28 +9,50 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.ViewAnimator
+import com.hannesdorfmann.fragmentargs.annotation.Arg
 import com.qwert2603.andrlib.base.mvi.ViewAction
 import com.qwert2603.andrlib.base.mvi.load_refresh.LRFragment
 import com.qwert2603.andrlib.base.mvi.load_refresh.LoadRefreshPanel
 import com.qwert2603.andrlib.base.recyclerview.BaseRecyclerViewAdapter
+import com.qwert2603.andrlib.model.IdentifiableLong
 import com.qwert2603.andrlib.util.inflate
 import com.qwert2603.andrlib.util.showIfNotYet
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.db.DaoInterface
 import com.qwert2603.crmit_android.util.ConditionDividerDecoration
+import com.qwert2603.crmit_android.util.setStrike
 import io.reactivex.Single
 import kotlinx.android.synthetic.main.fragment_entity_details.*
 import kotlinx.android.synthetic.main.toolbar_default.*
 
 abstract class EntityDetailsFragment<E : Any> : LRFragment<EntityDetailsViewState<E>, EntityDetailsView<E>, EntityDetailsPresenter<E>>(), EntityDetailsView<E> {
 
-    abstract val entityId: Long
+    data class Key(
+            val entityId: Long,
+            val entityName: String,
+            val entityNameTextView: TextView? = null,
+            val entityNameStrike: Boolean = false
+    )
 
-    abstract val source: (entityId: Long) -> Single<E>
+    @Arg
+    var entityId: Long = IdentifiableLong.NO_ID
 
-    abstract val dbDao: DaoInterface<E>
+    @Arg
+    lateinit var entityName: String
 
-    abstract fun E.toDetailsList(): List<EntityDetailsListItem>
+    @Arg
+    var entityNameStrike: Boolean = false
+
+
+    protected abstract val source: (entityId: Long) -> Single<E>
+
+    protected abstract val dbDao: DaoInterface<E>
+
+    protected abstract fun E.entityName(): String
+
+    protected open fun E.entityNameStrike() = false
+
+    protected abstract fun E.toDetailsList(): List<EntityDetailsListItem>
 
     private val adapter = EntityDetailsAdapter()
 
@@ -52,6 +74,10 @@ abstract class EntityDetailsFragment<E : Any> : LRFragment<EntityDetailsViewStat
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        toolbar.title = entityName
+        toolbarTitleTextView.transitionName = "entity_name_$entityId"
+        toolbarTitleTextView.setStrike(entityNameStrike)
+
         view.findViewById<ViewAnimator>(R.id.list_ViewAnimator).showIfNotYet(2)
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.list_RecyclerView)
@@ -60,8 +86,14 @@ abstract class EntityDetailsFragment<E : Any> : LRFragment<EntityDetailsViewStat
         recyclerView.addItemDecoration(ConditionDividerDecoration(requireContext()) { _, vh -> vh !is EntityDetailsSystemInfoViewHolder })
     }
 
+
     override fun render(vs: EntityDetailsViewState<E>) {
         super.render(vs)
+
+        vs.entity?.let {
+            toolbarTitleTextView.text = it.entityName()
+            toolbarTitleTextView.setStrike(it.entityNameStrike())
+        }
 
         renderIfChanged({ entity }) {
             if (it == null) return@renderIfChanged

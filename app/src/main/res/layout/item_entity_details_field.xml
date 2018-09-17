@@ -2,8 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="12dp"
-    android:orientation="vertical">
+    android:background="?attr/selectableItemBackground"
+    android:orientation="vertical"
+    android:padding="12dp">
 
     <TextView
         android:id="@+id/fieldName_TextView"
@@ -24,6 +25,7 @@
         android:gravity="center_vertical"
         android:textColor="@android:color/black"
         android:textSize="16sp"
+        tools:drawableEnd="@drawable/ic_navigate_next_black_24dp"
         tools:drawableStart="@drawable/ic_local_phone_black_24dp"
         tools:text="89532225487" />
 

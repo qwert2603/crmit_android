@@ -10,7 +10,8 @@ sealed class EntityDetailsListItem : IdentifiableLong
 data class EntityDetailsField(
         @StringRes val fieldTitleStringRes: Int,
         val fieldValue: String,
-        @DrawableRes val iconDrawableRes: Int? = null
+        @DrawableRes val iconDrawableRes: Int? = null,
+        val clickCallback: (() -> Unit)? = null
 ) : EntityDetailsListItem() {
     override val id = fieldTitleStringRes.toLong()
 }

@@ -6,10 +6,10 @@ import android.view.View
 import com.qwert2603.andrlib.util.setVisible
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.db.DaoInterface
-import com.qwert2603.crmit_android.details_fragments.StudentDetailsFragment
 import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entities_list.EntitiesListFragment
 import com.qwert2603.crmit_android.entity.StudentBrief
+import com.qwert2603.crmit_android.entity_details.EntityDetailsFragment
 import com.qwert2603.crmit_android.navigation.ScreenKey
 import com.qwert2603.crmit_android.util.setStrike
 import kotlinx.android.synthetic.main.item_student.view.*
@@ -30,7 +30,7 @@ class StudentsListFragment : EntitiesListFragment<StudentBrief>() {
 
     override fun View.bindEntity(e: StudentBrief) {
         fio_TextView.text = e.fio
-        fio_TextView.transitionName = "student_fio_${e.id}"
+        fio_TextView.transitionName = "entity_name_${e.id}"
         disabled_TextView.setVisible(!e.systemUser.enabled)
         fio_TextView.setStrike(!e.systemUser.enabled)
         notFilled_TextView.setVisible(!e.filled)
@@ -50,11 +50,11 @@ class StudentsListFragment : EntitiesListFragment<StudentBrief>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         adapter.modelItemClicks
                 .subscribe {
-                    DiHolder.router.navigateTo(ScreenKey.STUDENT_DETAILS.name, StudentDetailsFragment.Key(
-                            studentId = it.id,
-                            studentFio = it.fio,
-                            systemUserEnabled = it.systemUser.enabled,
-                            studentFioTextView = _list_RecyclerView.findViewHolderForItemId(it.id).itemView.fio_TextView
+                    DiHolder.router.navigateTo(ScreenKey.STUDENT_DETAILS.name, EntityDetailsFragment.Key(
+                            entityId = it.id,
+                            entityName = it.fio,
+                            entityNameTextView = _list_RecyclerView.findViewHolderForItemId(it.id).itemView.fio_TextView,
+                            entityNameStrike = !it.systemUser.enabled
                     ))
                 }
                 .disposeOnDestroyView()

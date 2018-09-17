@@ -9,7 +9,9 @@ import com.qwert2603.dao_generator.GenerateDao
 data class GroupFull(
         @PrimaryKey val id: Long,
         val name: String,
+        val teacherId: Long,
         val teacherFio: String,
+        val sectionId: Long,
         val sectionName: String,
         val startMonth: Int,
         val endMonth: Int,

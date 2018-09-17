@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "d1cfa5babac96f39a90be22251244961",
+    "identityHash": "2e052a14c207533ceb3abb82e7eec178",
     "entities": [
       {
         "tableName": "Master",
@@ -564,7 +564,7 @@
       },
       {
         "tableName": "GroupFull",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `teacherFio` TEXT NOT NULL, `sectionName` TEXT NOT NULL, `startMonth` INTEGER NOT NULL, `endMonth` INTEGER NOT NULL, `studentsCount` INTEGER NOT NULL, `lessonsDoneCount` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `teacherId` INTEGER NOT NULL, `teacherFio` TEXT NOT NULL, `sectionId` INTEGER NOT NULL, `sectionName` TEXT NOT NULL, `startMonth` INTEGER NOT NULL, `endMonth` INTEGER NOT NULL, `studentsCount` INTEGER NOT NULL, `lessonsDoneCount` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -579,9 +579,21 @@
             "notNull": true
           },
           {
+            "fieldPath": "teacherId",
+            "columnName": "teacherId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
             "fieldPath": "teacherFio",
             "columnName": "teacherFio",
             "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sectionId",
+            "columnName": "sectionId",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -627,7 +639,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"d1cfa5babac96f39a90be22251244961\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"2e052a14c207533ceb3abb82e7eec178\")"
     ]
   }
 }

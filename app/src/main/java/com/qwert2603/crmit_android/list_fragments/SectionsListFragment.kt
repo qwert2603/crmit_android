@@ -5,10 +5,10 @@ import android.view.View
 import com.qwert2603.andrlib.util.setVisible
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.db.DaoInterface
-import com.qwert2603.crmit_android.details_fragments.SectionDetailsFragment
 import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entities_list.EntitiesListFragment
 import com.qwert2603.crmit_android.entity.Section
+import com.qwert2603.crmit_android.entity_details.EntityDetailsFragment
 import com.qwert2603.crmit_android.navigation.ScreenKey
 import com.qwert2603.crmit_android.util.toPointedString
 import kotlinx.android.synthetic.main.item_section.view.*
@@ -26,7 +26,7 @@ class SectionsListFragment : EntitiesListFragment<Section>() {
 
     override fun View.bindEntity(e: Section) {
         name_TextView.text = e.name
-        name_TextView.transitionName = "section_name_${e.id}"
+        name_TextView.transitionName = "entity_name_${e.id}"
         price_TextView.text = getString(R.string.price_format, e.price.toPointedString())
         groups_TextView.setVisible(e.groups.isNotEmpty())
         if (e.groups.isNotEmpty()) {
@@ -39,10 +39,10 @@ class SectionsListFragment : EntitiesListFragment<Section>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         adapter.modelItemClicks
                 .subscribe {
-                    DiHolder.router.navigateTo(ScreenKey.SECTION_DETAILS.name, SectionDetailsFragment.Key(
-                            sectionId = it.id,
-                            sectionName = it.name,
-                            sectionNameTextView = _list_RecyclerView.findViewHolderForItemId(it.id).itemView.name_TextView
+                    DiHolder.router.navigateTo(ScreenKey.SECTION_DETAILS.name, EntityDetailsFragment.Key(
+                            entityId = it.id,
+                            entityName = it.name,
+                            entityNameTextView = _list_RecyclerView.findViewHolderForItemId(it.id).itemView.name_TextView
                     ))
                 }
                 .disposeOnDestroyView()
