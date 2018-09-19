@@ -11,7 +11,6 @@ import com.qwert2603.crmit_android.db.DaoInterface
 import com.qwert2603.crmit_android.di.DiHolder
 import io.reactivex.Observable
 import io.reactivex.Single
-import io.reactivex.subjects.CompletableSubject
 import java.util.concurrent.TimeUnit
 
 class EntitiesListPresenter<E : IdentifiableLong>(
@@ -30,10 +29,7 @@ class EntitiesListPresenter<E : IdentifiableLong>(
             searchQuery = ""
     )
 
-    // todo: move it to andrlib.
-    private val viewStateWasSubscribed = CompletableSubject.create()
-
-    private val closeSearchClicksIntent = intent { it.closeSearchClicks() }.share()
+    private val closeSearchClicksIntent = intent { it.closeSearchClicks() }.shareAfterViewSubscribed()
 
     private val searchQueryChanges: Observable<String> = Observable
             .merge(
@@ -44,8 +40,7 @@ class EntitiesListPresenter<E : IdentifiableLong>(
             )
             .startWith(initialState.searchQuery)
             .distinctUntilChanged()
-            .delaySubscription(viewStateWasSubscribed.toObservable<Any>())
-            .share()
+            .shareAfterViewSubscribed()
 
     override val reloadIntent: Observable<Any> = Observable.merge(
             super.reloadIntent,
@@ -97,6 +92,15 @@ class EntitiesListPresenter<E : IdentifiableLong>(
             }
     )
 
+    override fun initialModelSingleRefresh(additionalKey: String): Single<Page<E>> = paginator.firstPage { (limit, offset) ->
+        source(offset, limit, additionalKey)
+                .doOnSuccess {
+                    if (offset == 0) dbDao.deleteAllItems()
+                    dbDao.addItems(it)
+                }
+                .subscribeOn(DiHolder.modelSchedulersProvider.io)
+    }
+
     override fun nextPageSingle(): Single<Page<E>> = paginator.nextPage()
 
     override fun EntitiesListViewState<E>.addNextPage(nextPage: List<E>): EntitiesListViewState<E> = copy(showingList = showingList + nextPage)
@@ -112,11 +116,6 @@ class EntitiesListPresenter<E : IdentifiableLong>(
                     .skip(1)
                     .map { EntitiesListPartialChange.SearchQueryChanged(it) }
     ))
-
-    override fun bindIntents() {
-        super.bindIntents()
-        viewStateWasSubscribed.onComplete()
-    }
 
     override fun stateReducer(vs: EntitiesListViewState<E>, change: PartialChange): EntitiesListViewState<E> {
         LogUtils.d("EntitiesListPresenter stateReducer $change")

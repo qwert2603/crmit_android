@@ -31,5 +31,9 @@ class EntityDetailsPresenter<E : Any>(
             }
             .subscribeOn(DiHolder.modelSchedulersProvider.io)
 
+    override fun initialModelSingleRefresh(additionalKey: Any): Single<E> = source(entityId)
+            .doOnSuccess { dbDao.saveItem(it) }
+            .subscribeOn(DiHolder.modelSchedulersProvider.io)
+
     override fun EntityDetailsViewState<E>.applyInitialModel(i: E) = copy(entity = i)
 }

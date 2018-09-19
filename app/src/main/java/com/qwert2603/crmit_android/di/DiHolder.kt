@@ -10,6 +10,9 @@ import com.qwert2603.crmit_android.db.generated_dao.wrap
 import com.qwert2603.crmit_android.env.E
 import com.qwert2603.crmit_android.rest.Rest
 import okhttp3.OkHttpClient
+import okhttp3.Protocol
+import okhttp3.Response
+import okhttp3.ResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -19,6 +22,9 @@ import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
 
 object DiHolder {
+    private const val HEADER_ACCESS_TOKEN = "access_token"
+    private const val RESPONSE_CODE_UNAUTHORIZED = 401
+
     private val schedulersProvider by lazy { SchedulersProviderImpl() }
 
     val uiSchedulerProvider: UiSchedulerProvider by lazy { schedulersProvider }
@@ -27,10 +33,27 @@ object DiHolder {
     private val okHttpClient by lazy {
         OkHttpClient.Builder()
                 .addInterceptor(HttpLoggingInterceptor { message -> LogUtils.d("ok_http", message) }.setLevel(HttpLoggingInterceptor.Level.BODY))
+                .addInterceptor {
+                    val accessToken = userSettingsRepo.accessToken
+                    if (accessToken == null) {
+                        return@addInterceptor Response.Builder()
+                                .request(it.request())
+                                .protocol(Protocol.HTTP_1_1)
+                                .code(RESPONSE_CODE_UNAUTHORIZED)
+                                .message("UNAUTHORIZED")
+                                .body(ResponseBody.create(null, "userSettingsRepo.accessToken == null"))
+                                .build()
+                    }
+                    val request = it.request()
+                            .newBuilder()
+                            .addHeader(HEADER_ACCESS_TOKEN, accessToken)
+                            .build()
+                    it.proceed(request)
+                }
                 .build()
     }
 
-    val rest by lazy {
+    val rest: Rest by lazy {
         Retrofit.Builder()
                 .baseUrl(E.env.restBaseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -48,7 +71,7 @@ object DiHolder {
     private val localDB by lazy {
         Room
                 .databaseBuilder(CrmitApplication.APP_CONTEXT, LocalDB::class.java, "local.db")
-                .fallbackToDestructiveMigrationFrom(1, 2, 3)
+                .fallbackToDestructiveMigration()
                 .build()
     }
 
@@ -59,4 +82,6 @@ object DiHolder {
     val sectionDao by lazy { localDB.sectionDao().wrap() }
     val groupBriefDao by lazy { localDB.groupBriefDao().wrap() }
     val groupFullDao by lazy { localDB.groupFullDao().wrap() }
+
+    val userSettingsRepo by lazy { UserSettingsRepo(CrmitApplication.APP_CONTEXT) }
 }
