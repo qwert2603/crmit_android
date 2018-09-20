@@ -23,14 +23,14 @@ interface AttendingDao {
     @Query(
         " SELECT *" +
         " FROM Attending" +
-        " WHERE lessonId == :lessonId" +
+        " WHERE lessonId = :lessonId" +
         " ORDER BY id" +
         " LIMIT :count" +
         " OFFSET :offset"
     )
     fun getItems(lessonId: Long, offset: Int, count: Int): List<Attending>
 
-    @Query("DELETE FROM Attending WHERE lessonId == :lessonId")
+    @Query("DELETE FROM Attending WHERE lessonId = :lessonId")
     fun deleteAllItems(lessonId: Long)
 
     @Query("DELETE FROM Attending")

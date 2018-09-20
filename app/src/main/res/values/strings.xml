@@ -7,8 +7,11 @@
     <string name="title_masters">Руководители</string>
     <string name="title_students">Ученики</string>
     <string name="title_about">О приложении</string>
+    <string name="title_students_in_group" formatted="true">Ученики в %s</string>
+    <string name="title_lessons_in_group" formatted="true">Занятия в %s</string>
 
     <string name="price_format" formatted="true">%s ₽</string>
+    <string name="discount_format" formatted="true">скидка: %s ₽</string>
 
     <string name="app_info_text_format" formatted="true">
         <![CDATA[
@@ -53,7 +56,6 @@
     <string name="detailsField_homePhone">Домашний телефон</string>
     <string name="detailsField_vkLink">ВКонтакте</string>
     <string name="detailsField_notificationTypesString">Уведомления</string>
-    <string name="detailsField_name">Название</string>
     <string name="detailsField_price">Цена в месяц</string>
     <string name="detailsField_teacher">Преподаватель</string>
     <string name="detailsField_section">Секция</string>

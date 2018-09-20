@@ -45,7 +45,7 @@ class GenerateDaoProcessor : AbstractProcessor() {
                 val generateDaoAnnotation = element.getAnnotation(GenerateDao::class.java)
 
                 val searchWhereString = generateDaoAnnotation.filters
-                        .map { "${it.fieldName} == :${it.fieldName}" }
+                        .map { "${it.fieldName} = :${it.fieldName}" }
                         .let {
                             if (generateDaoAnnotation.searchField.isEmpty()) {
                                 it
@@ -62,7 +62,7 @@ class GenerateDaoProcessor : AbstractProcessor() {
                         }
 
                 val deleteWhereString = generateDaoAnnotation.filters
-                        .map { "${it.fieldName} == :${it.fieldName}" }
+                        .map { "${it.fieldName} = :${it.fieldName}" }
                         .let {
                             if (it.isEmpty()) {
                                 ""

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "b9e923e5092a018e1b6d031e75288693",
+    "identityHash": "128d0dda300b6c9ac530ffd2d0b8b5f9",
     "entities": [
       {
         "tableName": "Master",
@@ -638,11 +638,17 @@
       },
       {
         "tableName": "StudentInGroup",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `studentId` INTEGER NOT NULL, `studentFio` TEXT NOT NULL, `groupId` INTEGER NOT NULL, `discount` INTEGER NOT NULL, `enterMonth` INTEGER NOT NULL, `exitMonth` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `systemUserEnabled` INTEGER NOT NULL, `studentId` INTEGER NOT NULL, `studentFio` TEXT NOT NULL, `groupId` INTEGER NOT NULL, `discount` INTEGER NOT NULL, `enterMonth` INTEGER NOT NULL, `exitMonth` INTEGER NOT NULL, `lessonsAttendedCount` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
             "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "systemUserEnabled",
+            "columnName": "systemUserEnabled",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -679,6 +685,12 @@
           {
             "fieldPath": "exitMonth",
             "columnName": "exitMonth",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lessonsAttendedCount",
+            "columnName": "lessonsAttendedCount",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -765,7 +777,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"b9e923e5092a018e1b6d031e75288693\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"128d0dda300b6c9ac530ffd2d0b8b5f9\")"
     ]
   }
 }

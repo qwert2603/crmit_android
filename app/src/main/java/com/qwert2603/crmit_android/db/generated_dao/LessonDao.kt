@@ -23,14 +23,14 @@ interface LessonDao {
     @Query(
         " SELECT *" +
         " FROM Lesson" +
-        " WHERE groupId == :groupId" +
+        " WHERE groupId = :groupId" +
         " ORDER BY date DESC" +
         " LIMIT :count" +
         " OFFSET :offset"
     )
     fun getItems(groupId: Long, offset: Int, count: Int): List<Lesson>
 
-    @Query("DELETE FROM Lesson WHERE groupId == :groupId")
+    @Query("DELETE FROM Lesson WHERE groupId = :groupId")
     fun deleteAllItems(groupId: Long)
 
     @Query("DELETE FROM Lesson")

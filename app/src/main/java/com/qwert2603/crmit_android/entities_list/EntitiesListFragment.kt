@@ -33,7 +33,7 @@ abstract class EntitiesListFragment<E : IdentifiableLong>
     protected abstract val dbDaoInterface: DaoInterface<E>
 
     @get:StringRes
-    protected abstract val titleRes: Int
+    protected open val titleRes: Int? = null
 
     @get:LayoutRes
     protected abstract val vhLayoutRes: Int
@@ -44,6 +44,8 @@ abstract class EntitiesListFragment<E : IdentifiableLong>
     protected open val pageSize: Int = 100
 
     protected abstract fun View.bindEntity(e: E)
+
+    protected open val withSearch = true
 
     override val adapter = object : BaseRecyclerViewAdapter<E>() {
         override fun pluralsRes() = entityPluralsRes
@@ -82,7 +84,7 @@ abstract class EntitiesListFragment<E : IdentifiableLong>
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         _list_RecyclerView.addItemDecoration(ConditionDividerDecoration(requireContext()) { _, vh -> vh !is PageIndicatorViewHolder })
 
-        toolbar.setTitle(titleRes)
+        titleRes?.also { toolbar.setTitle(it) }
         toolbar.setOnClickListener { _list_RecyclerView.smoothScrollToPosition(0) }
 
         super.onViewCreated(view, savedInstanceState)
@@ -91,7 +93,9 @@ abstract class EntitiesListFragment<E : IdentifiableLong>
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.entities_list, menu)
-        menu.findItem(R.id.search).setOnMenuItemClickListener { openSearchClicks.onNext(Any());true }
+        val searchMenuItem = menu.findItem(R.id.search)
+        searchMenuItem.isVisible = withSearch
+        searchMenuItem.setOnMenuItemClickListener { openSearchClicks.onNext(Any());true }
     }
 
     override fun onBackPressed(): Boolean = entities_SearchUI.isOpen()

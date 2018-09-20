@@ -19,7 +19,6 @@ class SectionDetailsFragment : EntityDetailsFragment<Section>() {
     override fun Section.entityName() = name
 
     override fun Section.toDetailsList() = listOf(
-            EntityDetailsField(R.string.detailsField_name, name),
             EntityDetailsField(R.string.detailsField_price, getString(R.string.price_format, price.toPointedString())),
             EntityDetailsGroupsList(groups)
     )

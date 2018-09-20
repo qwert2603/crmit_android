@@ -14,10 +14,12 @@ import com.qwert2603.dao_generator.GenerateDao
 )
 data class StudentInGroup(
         @PrimaryKey override val id: Long,
+        val systemUserEnabled: Boolean,
         val studentId: Long,
         val studentFio: String,
         val groupId: Long,
         val discount: Int,
         val enterMonth: Int,
-        val exitMonth: Int
+        val exitMonth: Int,
+        val lessonsAttendedCount: Int
 ) : IdentifiableLong

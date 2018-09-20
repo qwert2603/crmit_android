@@ -23,14 +23,14 @@ interface StudentInGroupDao {
     @Query(
         " SELECT *" +
         " FROM StudentInGroup" +
-        " WHERE groupId == :groupId" +
+        " WHERE groupId = :groupId" +
         " ORDER BY studentFio" +
         " LIMIT :count" +
         " OFFSET :offset"
     )
     fun getItems(groupId: Long, offset: Int, count: Int): List<StudentInGroup>
 
-    @Query("DELETE FROM StudentInGroup WHERE groupId == :groupId")
+    @Query("DELETE FROM StudentInGroup WHERE groupId = :groupId")
     fun deleteAllItems(groupId: Long)
 
     @Query("DELETE FROM StudentInGroup")

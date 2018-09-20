@@ -26,6 +26,8 @@ class CrmitApplication : Application() {
 
         APP_CONTEXT = this
 
+        StethoInstaller.install(this)
+
         RxJavaPlugins.setErrorHandler {
             LogUtils.e("RxJavaPlugins.setErrorHandler", it)
             var cause = it.cause

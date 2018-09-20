@@ -1,13 +1,17 @@
 package com.qwert2603.crmit_android.util
 
 import android.animation.Animator
+import android.content.res.Resources
 import android.graphics.Paint
 import android.view.View
 import android.view.ViewTreeObserver
 import android.widget.TextView
+import com.qwert2603.crmit_android.R
 import kotlin.math.absoluteValue
 
 fun Int.toPointedString() = toLong().toPointedString()
+
+fun Int.toMonthString(resources: Resources) = "${this / 12 + 2017} ${resources.getStringArray(R.array.month_names)[this % 12]}"
 
 fun Long.toPointedString(): String {
     val negative = this < 0
