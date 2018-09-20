@@ -6,6 +6,7 @@ import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entity.GroupFull
 import com.qwert2603.crmit_android.entity_details.EntityDetailsField
 import com.qwert2603.crmit_android.entity_details.EntityDetailsFragment
+import com.qwert2603.crmit_android.list_fragments.LessonsInGroupListFragment
 import com.qwert2603.crmit_android.list_fragments.StudentsInGroupListFragment
 import com.qwert2603.crmit_android.navigation.ScreenKey
 import com.qwert2603.crmit_android.util.toMonthString
@@ -28,9 +29,11 @@ class GroupDetailsFragment : EntityDetailsFragment<GroupFull>() {
             },
             EntityDetailsField(R.string.detailsField_startMonth, startMonth.toMonthString(resources)),
             EntityDetailsField(R.string.detailsField_endMonth, endMonth.toMonthString(resources)),
-            EntityDetailsField(R.string.detailsField_studentsCount, studentsCount.toString()) {
+            EntityDetailsField(R.string.detailsField_studentsCount, studentsCount.toString(), R.drawable.ic_group_black_24dp) {
                 DiHolder.router.navigateTo(ScreenKey.STUDENTS_IN_GROUP.name, StudentsInGroupListFragment.Key(id, name))
             },
-            EntityDetailsField(R.string.detailsField_lessonsDoneCount, lessonsDoneCount.toString())
+            EntityDetailsField(R.string.detailsField_lessonsDoneCount, lessonsDoneCount.toString(), R.drawable.ic_date_range_black_24dp) {
+                DiHolder.router.navigateTo(ScreenKey.LESSONS_IN_GROUP.name, LessonsInGroupListFragment.Key(id, name))
+            }
     )
 }

@@ -7,7 +7,6 @@ import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs
 import com.qwert2603.andrlib.model.IdentifiableLong
 import com.qwert2603.andrlib.util.setVisible
 import com.qwert2603.crmit_android.R
-import com.qwert2603.crmit_android.db.DaoInterface
 import com.qwert2603.crmit_android.db.generated_dao.wrap
 import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entities_list.EntitiesListFragment
@@ -36,7 +35,7 @@ class StudentsInGroupListFragment : EntitiesListFragment<StudentInGroup>() {
 
     override val source = { _: Int, _: Int, _: String -> DiHolder.rest.getStudentsInGroup(groupId) }
 
-    override val dbDaoInterface: DaoInterface<StudentInGroup> by lazy { DiHolder.studentInGroupDao.wrap(groupId) }
+    override val dbDaoInterface by lazy { DiHolder.studentInGroupDao.wrap(groupId) }
 
     override val vhLayoutRes = R.layout.item_student_in_group
 

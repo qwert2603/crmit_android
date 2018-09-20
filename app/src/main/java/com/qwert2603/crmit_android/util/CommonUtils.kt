@@ -3,15 +3,29 @@ package com.qwert2603.crmit_android.util
 import android.animation.Animator
 import android.content.res.Resources
 import android.graphics.Paint
+import android.support.annotation.MainThread
 import android.view.View
 import android.view.ViewTreeObserver
 import android.widget.TextView
 import com.qwert2603.crmit_android.R
+import com.qwert2603.crmit_android.rest.Rest
+import java.text.SimpleDateFormat
+import java.util.*
 import kotlin.math.absoluteValue
 
 fun Int.toPointedString() = toLong().toPointedString()
 
 fun Int.toMonthString(resources: Resources) = "${this / 12 + 2017} ${resources.getStringArray(R.array.month_names)[this % 12]}"
+
+private object DateFormats {
+    val DATE_FORMAT_SERVER = SimpleDateFormat(Rest.DATE_FORMAT, Locale.getDefault())
+    val DATE_FORMAT_SHOWING = SimpleDateFormat("d MMMM yyyy", Locale.getDefault())
+}
+
+@MainThread
+fun String.toShowingDate(): String = this
+        .let { DateFormats.DATE_FORMAT_SERVER.parse(it) }
+        .let { DateFormats.DATE_FORMAT_SHOWING.format(it) }
 
 fun Long.toPointedString(): String {
     val negative = this < 0

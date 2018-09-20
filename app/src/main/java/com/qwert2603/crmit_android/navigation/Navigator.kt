@@ -77,7 +77,8 @@ class Navigator(private val activity: ActivityInterface)
         ScreenKey.GROUP_DETAILS -> (data as EntityDetailsFragment.Key).let { GroupDetailsFragmentBuilder.newGroupDetailsFragment(it.entityId, it.entityName, it.entityNameStrike) }
         ScreenKey.TEACHER_DETAILS -> (data as EntityDetailsFragment.Key).let { TeacherDetailsFragmentBuilder.newTeacherDetailsFragment(it.entityId, it.entityName, it.entityNameStrike) }
         ScreenKey.STUDENTS_IN_GROUP -> (data as StudentsInGroupListFragment.Key).let { StudentsInGroupListFragmentBuilder.newStudentsInGroupListFragment(it.groupId, it.groupName) }
-        ScreenKey.LESSONS_IN_GROUP -> TODO()
+        ScreenKey.LESSONS_IN_GROUP -> (data as LessonsInGroupListFragment.Key).let { LessonsInGroupListFragmentBuilder.newLessonsInGroupListFragment(it.groupId, it.groupName) }
+        ScreenKey.LESSON_DETAILS -> TODO()
     }.also { it.setScreenKey(ScreenKey.valueOf(screenKey)) }
 
     override fun exit() {

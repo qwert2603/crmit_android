@@ -12,3 +12,9 @@ interface DaoInterface<T> {
 
     fun deleteAllItems()
 }
+
+fun <T> DaoInterface<T>.filterWhenGetItems(filterProvider: () -> ((T) -> Boolean)) = object : DaoInterface<T> by this {
+    override fun getItems(search: String, offset: Int, count: Int): List<T> = this@filterWhenGetItems
+            .getItems(search, offset, count)
+            .filter(filterProvider())
+}

@@ -7,6 +7,7 @@ import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entity.Parent
 import com.qwert2603.crmit_android.entity.StudentFull
 import com.qwert2603.crmit_android.entity_details.*
+import com.qwert2603.crmit_android.util.toShowingDate
 
 @FragmentWithArgs
 class StudentDetailsFragment : EntityDetailsFragment<StudentFull>() {
@@ -23,7 +24,7 @@ class StudentDetailsFragment : EntityDetailsFragment<StudentFull>() {
             EntityDetailsSystemInfo(systemUser.enabled, filled),
             EntityDetailsField(R.string.detailsField_login, systemUser.login, R.drawable.ic_person_black_24dp),
             EntityDetailsField(R.string.detailsField_lessonsAttendedCount, lessonsAttendedCount.toString()),
-            EntityDetailsField(R.string.detailsField_birthDate, showingBirthDate()),
+            EntityDetailsField(R.string.detailsField_birthDate, birthDate.toShowingDate()),
             EntityDetailsField(R.string.detailsField_birthPlace, birthPlace),
             EntityDetailsField(R.string.detailsField_registrationPlace, registrationPlace),
             EntityDetailsField(R.string.detailsField_actualAddress, actualAddress),

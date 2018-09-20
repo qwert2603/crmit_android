@@ -42,4 +42,10 @@
         <item quantity="many">%d учеников</item>
         <item quantity="other">%d учеников</item>
     </plurals>
+    <plurals name="lessons">
+        <item quantity="one">%d занятие</item>
+        <item quantity="few">%d занятия</item>
+        <item quantity="many">%d занятий</item>
+        <item quantity="other">%d занятий</item>
+    </plurals>
 </resources>

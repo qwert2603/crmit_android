@@ -10,7 +10,7 @@ import com.qwert2603.dao_generator.GenerateDao
 @Entity
 @GenerateDao(
         filters = [Filter("groupId", FilterType.LONG)],
-        orderBy = "date DESC"
+        orderBy = "date"
 )
 data class Lesson(
         @PrimaryKey override val id: Long,

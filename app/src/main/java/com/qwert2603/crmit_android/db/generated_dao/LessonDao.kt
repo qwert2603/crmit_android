@@ -24,7 +24,7 @@ interface LessonDao {
         " SELECT *" +
         " FROM Lesson" +
         " WHERE groupId = :groupId" +
-        " ORDER BY date DESC" +
+        " ORDER BY date" +
         " LIMIT :count" +
         " OFFSET :offset"
     )
