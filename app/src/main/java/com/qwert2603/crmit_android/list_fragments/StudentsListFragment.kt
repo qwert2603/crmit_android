@@ -18,7 +18,7 @@ class StudentsListFragment : EntitiesListFragment<StudentBrief>() {
 
     override val source = DiHolder.rest::getStudentsList
 
-    override val dbDao: DaoInterface<StudentBrief> = DiHolder.studentBriefDao
+    override val dbDaoInterface: DaoInterface<StudentBrief> = DiHolder.studentBriefDaoInterface
 
     override val titleRes = R.string.title_students
 

@@ -15,7 +15,7 @@ import kotlinx.android.synthetic.main.item_teacher.view.*
 
 class TeachersListFragment : EntitiesListFragment<Teacher>() {
     override val source = DiHolder.rest::getTeachersList
-    override val dbDao: DaoInterface<Teacher> = DiHolder.teacherDao
+    override val dbDaoInterface: DaoInterface<Teacher> = DiHolder.teacherDaoInterface
     override val titleRes = R.string.title_teachers
     override val vhLayoutRes = R.layout.item_teacher
     override val entityPluralsRes = R.plurals.teachers

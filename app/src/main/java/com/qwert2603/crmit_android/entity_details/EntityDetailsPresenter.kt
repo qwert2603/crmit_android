@@ -11,17 +11,17 @@ import io.reactivex.Single
 class EntityDetailsPresenter<E : Any>(
         private val entityId: Long,
         private val source: (id: Long) -> Single<E>,
-        private val dbDao: DaoInterface<E>
+        private val dbDaoInterface: DaoInterface<E>
 ) : LRPresenter<Any, E, EntityDetailsViewState<E>, EntityDetailsView<E>>(DiHolder.uiSchedulerProvider) {
     override val initialState = EntityDetailsViewState<E>(EMPTY_LR_MODEL, null)
 
     override val partialChanges: Observable<PartialChange> = loadRefreshPartialChanges()
 
     override fun initialModelSingle(additionalKey: Any): Single<E> = source(entityId)
-            .doOnSuccess { dbDao.saveItem(it) }
+            .doOnSuccess { dbDaoInterface.saveItem(it) }
             .onErrorResumeNext { t ->
                 LogUtils.e("EntityDetailsPresenter error from server!", t)
-                val entity = dbDao.getItem(entityId)
+                val entity = dbDaoInterface.getItem(entityId)
                 if (entity != null) {
                     viewActions.onNext(EntityDetailsViewAction.ShowingCachedData)
                     Single.just(entity)
@@ -32,7 +32,7 @@ class EntityDetailsPresenter<E : Any>(
             .subscribeOn(DiHolder.modelSchedulersProvider.io)
 
     override fun initialModelSingleRefresh(additionalKey: Any): Single<E> = source(entityId)
-            .doOnSuccess { dbDao.saveItem(it) }
+            .doOnSuccess { dbDaoInterface.saveItem(it) }
             .subscribeOn(DiHolder.modelSchedulersProvider.io)
 
     override fun EntityDetailsViewState<E>.applyInitialModel(i: E) = copy(entity = i)

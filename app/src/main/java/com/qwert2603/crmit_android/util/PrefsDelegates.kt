@@ -1,6 +1,8 @@
 package com.qwert2603.crmit_android.util
 
 import android.content.SharedPreferences
+import com.google.gson.Gson
+import com.qwert2603.crmit_android.entity.LoginResult
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
@@ -83,6 +85,31 @@ class PrefsStringNullable(
         prefs.makeEdit {
             if (value != null) {
                 putString(key, value)
+            } else {
+                remove(key)
+            }
+        }
+    }
+}
+
+
+class PrefsLoginResultNullable(
+        private val prefs: SharedPreferences,
+        private val key: String,
+        private val gson: Gson
+) : ReadWriteProperty<Any, LoginResult?> {
+
+    override fun getValue(thisRef: Any, property: KProperty<*>): LoginResult? =
+            if (key in prefs) {
+                gson.fromJson(prefs.getString(key, ""), LoginResult::class.java)
+            } else {
+                null
+            }
+
+    override fun setValue(thisRef: Any, property: KProperty<*>, value: LoginResult?) {
+        prefs.makeEdit {
+            if (value != null) {
+                putString(key, gson.toJson(value))
             } else {
                 remove(key)
             }

@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit
 
 class EntitiesListPresenter<E : IdentifiableLong>(
         private val source: (offset: Int, count: Int, search: String) -> Single<List<E>>,
-        private val dbDao: DaoInterface<E>,
+        private val dbDaoInterface: DaoInterface<E>,
         pageSize: Int
 ) : ListPresenter<String, Page<E>, EntitiesListViewState<E>, EntitiesListView<E>, E>(DiHolder.uiSchedulerProvider) {
 
@@ -61,14 +61,14 @@ class EntitiesListPresenter<E : IdentifiableLong>(
                     return if (fixedSizeKey.offset == 0) {
                         source(0, fixedSizeKey.limit, additionalKey)
                                 .doOnSuccess {
-                                    dbDao.deleteAllItems()
-                                    dbDao.addItems(it)
+                                    dbDaoInterface.deleteAllItems()
+                                    dbDaoInterface.addItems(it)
                                 }
                                 .onErrorResumeNext { t ->
                                     LogUtils.e("EntitiesListPresenter error from server!", t)
                                     fromServer = false
                                     Single
-                                            .fromCallable { dbDao.getItems(additionalKey, 0, fixedSizeKey.limit) }
+                                            .fromCallable { dbDaoInterface.getItems(additionalKey, 0, fixedSizeKey.limit) }
                                             .flatMap {
                                                 if (it.isNotEmpty()) {
                                                     viewActions.onNext(EntitiesListViewAction.ShowingCachedData)
@@ -82,9 +82,9 @@ class EntitiesListPresenter<E : IdentifiableLong>(
                     } else {
                         if (fromServer) {
                             source(fixedSizeKey.offset, fixedSizeKey.limit, additionalKey)
-                                    .doOnSuccess { dbDao.addItems(it) }
+                                    .doOnSuccess { dbDaoInterface.addItems(it) }
                         } else {
-                            Single.fromCallable { dbDao.getItems(additionalKey, fixedSizeKey.offset, fixedSizeKey.limit) }
+                            Single.fromCallable { dbDaoInterface.getItems(additionalKey, fixedSizeKey.offset, fixedSizeKey.limit) }
                         }
                     }
                             .subscribeOn(DiHolder.modelSchedulersProvider.io)
@@ -95,8 +95,8 @@ class EntitiesListPresenter<E : IdentifiableLong>(
     override fun initialModelSingleRefresh(additionalKey: String): Single<Page<E>> = paginator.firstPage { (limit, offset) ->
         source(offset, limit, additionalKey)
                 .doOnSuccess {
-                    if (offset == 0) dbDao.deleteAllItems()
-                    dbDao.addItems(it)
+                    if (offset == 0) dbDaoInterface.deleteAllItems()
+                    dbDaoInterface.addItems(it)
                 }
                 .subscribeOn(DiHolder.modelSchedulersProvider.io)
     }

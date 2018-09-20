@@ -14,7 +14,7 @@ class TeacherDetailsFragment : EntityDetailsFragment<Teacher>() {
 
     override val source = DiHolder.rest::getTeacherDetails
 
-    override val dbDao = DiHolder.teacherDao
+    override val dbDaoInterface = DiHolder.teacherDaoInterface
 
     override fun Teacher.entityName() = fio
 

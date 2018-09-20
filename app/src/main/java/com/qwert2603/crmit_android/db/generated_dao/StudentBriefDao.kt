@@ -30,13 +30,16 @@ interface StudentBriefDao {
     )
     fun getItems(search: String, offset: Int, count: Int): List<StudentBrief>
 
-    @Query("DELETE FROM StudentBrief")
+    @Query("DELETE FROM StudentBrief ")
     fun deleteAllItems()
+
+    @Query("DELETE FROM StudentBrief")
+    fun clearTable()
 }
 
-fun StudentBriefDao.wrap() = StudentBriefDaoWrapper(this)
+fun StudentBriefDao.wrap(): DaoInterface<StudentBrief> = StudentBriefDaoWrapper( this)
 
-class StudentBriefDaoWrapper(private val studentBriefDao: StudentBriefDao) : DaoInterface<StudentBrief> {
+private class StudentBriefDaoWrapper( private val studentBriefDao: StudentBriefDao) : DaoInterface<StudentBrief> {
     override fun addItems(items: List<StudentBrief>) = studentBriefDao.addItems(items)
     override fun saveItem(item: StudentBrief) = studentBriefDao.saveItem(item)
     override fun getItem(itemId: Long): StudentBrief? = studentBriefDao.getItem(itemId)

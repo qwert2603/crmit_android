@@ -13,7 +13,7 @@ class GroupDetailsFragment : EntityDetailsFragment<GroupFull>() {
 
     override val source = DiHolder.rest::getGroupDetails
 
-    override val dbDao = DiHolder.groupFullDao
+    override val dbDaoInterface = DiHolder.groupFullDaoInterface
 
     override fun GroupFull.entityName() = name
 

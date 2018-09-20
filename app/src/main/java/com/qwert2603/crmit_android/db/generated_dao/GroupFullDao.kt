@@ -30,13 +30,16 @@ interface GroupFullDao {
     )
     fun getItems(search: String, offset: Int, count: Int): List<GroupFull>
 
-    @Query("DELETE FROM GroupFull")
+    @Query("DELETE FROM GroupFull ")
     fun deleteAllItems()
+
+    @Query("DELETE FROM GroupFull")
+    fun clearTable()
 }
 
-fun GroupFullDao.wrap() = GroupFullDaoWrapper(this)
+fun GroupFullDao.wrap(): DaoInterface<GroupFull> = GroupFullDaoWrapper( this)
 
-class GroupFullDaoWrapper(private val groupFullDao: GroupFullDao) : DaoInterface<GroupFull> {
+private class GroupFullDaoWrapper( private val groupFullDao: GroupFullDao) : DaoInterface<GroupFull> {
     override fun addItems(items: List<GroupFull>) = groupFullDao.addItems(items)
     override fun saveItem(item: GroupFull) = groupFullDao.saveItem(item)
     override fun getItem(itemId: Long): GroupFull? = groupFullDao.getItem(itemId)

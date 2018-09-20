@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.item_master.view.*
 
 class MastersListFragment : EntitiesListFragment<Master>() {
     override val source = DiHolder.rest::getMastersList
-    override val dbDao: DaoInterface<Master> = DiHolder.masterDao
+    override val dbDaoInterface: DaoInterface<Master> = DiHolder.masterDaoInterface
     override val titleRes = R.string.title_masters
     override val vhLayoutRes = R.layout.item_master
     override val entityPluralsRes = R.plurals.masters

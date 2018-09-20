@@ -30,13 +30,16 @@ interface GroupBriefDao {
     )
     fun getItems(search: String, offset: Int, count: Int): List<GroupBrief>
 
-    @Query("DELETE FROM GroupBrief")
+    @Query("DELETE FROM GroupBrief ")
     fun deleteAllItems()
+
+    @Query("DELETE FROM GroupBrief")
+    fun clearTable()
 }
 
-fun GroupBriefDao.wrap() = GroupBriefDaoWrapper(this)
+fun GroupBriefDao.wrap(): DaoInterface<GroupBrief> = GroupBriefDaoWrapper( this)
 
-class GroupBriefDaoWrapper(private val groupBriefDao: GroupBriefDao) : DaoInterface<GroupBrief> {
+private class GroupBriefDaoWrapper( private val groupBriefDao: GroupBriefDao) : DaoInterface<GroupBrief> {
     override fun addItems(items: List<GroupBrief>) = groupBriefDao.addItems(items)
     override fun saveItem(item: GroupBrief) = groupBriefDao.saveItem(item)
     override fun getItem(itemId: Long): GroupBrief? = groupBriefDao.getItem(itemId)

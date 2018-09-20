@@ -14,7 +14,7 @@ class SectionDetailsFragment : EntityDetailsFragment<Section>() {
 
     override val source = DiHolder.rest::getSectionDetails
 
-    override val dbDao = DiHolder.sectionDao
+    override val dbDaoInterface = DiHolder.sectionDaoInterface
 
     override fun Section.entityName() = name
 

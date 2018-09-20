@@ -37,14 +37,18 @@ class AboutFragment : Fragment() {
         clearCache_Button.setOnClickListener { _ ->
             DiHolder.modelSchedulersProvider.io.scheduleDirect {
                 listOf(
-                        DiHolder.masterDao,
-                        DiHolder.teacherDao,
-                        DiHolder.studentBriefDao,
-                        DiHolder.studentFullDao,
-                        DiHolder.sectionDao,
-                        DiHolder.groupBriefDao,
-                        DiHolder.groupFullDao
+                        DiHolder.masterDaoInterface,
+                        DiHolder.teacherDaoInterface,
+                        DiHolder.studentBriefDaoInterface,
+                        DiHolder.studentFullDaoInterface,
+                        DiHolder.sectionDaoInterface,
+                        DiHolder.groupBriefDaoInterface,
+                        DiHolder.groupFullDaoInterface
                 ).forEach { it.deleteAllItems() }
+
+                DiHolder.studentInGroupDao.clearTable()
+                DiHolder.lessonDao.clearTable()
+                DiHolder.attendingDao.clearTable()
             }
         }
 

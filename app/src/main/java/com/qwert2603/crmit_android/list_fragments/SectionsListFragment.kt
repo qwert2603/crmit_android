@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.item_section.view.*
 class SectionsListFragment : EntitiesListFragment<Section>() {
     override val source = DiHolder.rest::getSectionsList
 
-    override val dbDao: DaoInterface<Section> = DiHolder.sectionDao
+    override val dbDaoInterface: DaoInterface<Section> = DiHolder.sectionDaoInterface
 
     override val titleRes = R.string.title_sections
 

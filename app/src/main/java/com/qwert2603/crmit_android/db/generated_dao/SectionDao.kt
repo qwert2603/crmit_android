@@ -30,13 +30,16 @@ interface SectionDao {
     )
     fun getItems(search: String, offset: Int, count: Int): List<Section>
 
-    @Query("DELETE FROM Section")
+    @Query("DELETE FROM Section ")
     fun deleteAllItems()
+
+    @Query("DELETE FROM Section")
+    fun clearTable()
 }
 
-fun SectionDao.wrap() = SectionDaoWrapper(this)
+fun SectionDao.wrap(): DaoInterface<Section> = SectionDaoWrapper( this)
 
-class SectionDaoWrapper(private val sectionDao: SectionDao) : DaoInterface<Section> {
+private class SectionDaoWrapper( private val sectionDao: SectionDao) : DaoInterface<Section> {
     override fun addItems(items: List<Section>) = sectionDao.addItems(items)
     override fun saveItem(item: Section) = sectionDao.saveItem(item)
     override fun getItem(itemId: Long): Section? = sectionDao.getItem(itemId)

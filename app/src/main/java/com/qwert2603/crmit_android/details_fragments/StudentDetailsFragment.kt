@@ -13,7 +13,7 @@ class StudentDetailsFragment : EntityDetailsFragment<StudentFull>() {
 
     override val source = DiHolder.rest::getStudentDetails
 
-    override val dbDao: DaoInterface<StudentFull> = DiHolder.studentFullDao
+    override val dbDaoInterface: DaoInterface<StudentFull> = DiHolder.studentFullDaoInterface
 
     override fun StudentFull.entityName() = fio
 

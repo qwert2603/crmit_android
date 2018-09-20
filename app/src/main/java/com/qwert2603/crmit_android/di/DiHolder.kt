@@ -34,7 +34,7 @@ object DiHolder {
         OkHttpClient.Builder()
                 .addInterceptor(HttpLoggingInterceptor { message -> LogUtils.d("ok_http", message) }.setLevel(HttpLoggingInterceptor.Level.BODY))
                 .addInterceptor {
-                    val accessToken = userSettingsRepo.accessToken
+                    val accessToken = userSettingsRepo.loginResult?.token
                     if (accessToken == null) {
                         return@addInterceptor Response.Builder()
                                 .request(it.request())
@@ -75,13 +75,17 @@ object DiHolder {
                 .build()
     }
 
-    val masterDao by lazy { localDB.masterDao().wrap() }
-    val teacherDao by lazy { localDB.teacherDao().wrap() }
-    val studentBriefDao by lazy { localDB.studentBriefDao().wrap() }
-    val studentFullDao by lazy { localDB.studentFullDao().wrap() }
-    val sectionDao by lazy { localDB.sectionDao().wrap() }
-    val groupBriefDao by lazy { localDB.groupBriefDao().wrap() }
-    val groupFullDao by lazy { localDB.groupFullDao().wrap() }
+    val masterDaoInterface by lazy { localDB.masterDao().wrap() }
+    val teacherDaoInterface by lazy { localDB.teacherDao().wrap() }
+    val studentBriefDaoInterface by lazy { localDB.studentBriefDao().wrap() }
+    val studentFullDaoInterface by lazy { localDB.studentFullDao().wrap() }
+    val sectionDaoInterface by lazy { localDB.sectionDao().wrap() }
+    val groupBriefDaoInterface by lazy { localDB.groupBriefDao().wrap() }
+    val groupFullDaoInterface by lazy { localDB.groupFullDao().wrap() }
+
+    val studentInGroupDao by lazy { localDB.studentInGroupDao() }
+    val lessonDao by lazy { localDB.lessonDao() }
+    val attendingDao by lazy { localDB.attendingDao() }
 
     val userSettingsRepo by lazy { UserSettingsRepo(CrmitApplication.APP_CONTEXT) }
 }

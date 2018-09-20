@@ -38,13 +38,114 @@ class GenerateDaoProcessor : AbstractProcessor() {
             element as TypeElement
 
             val fileName = "${element.simpleName}Dao.kt"
-            FileWriter(File(packageFile, fileName)).use {
+            FileWriter(File(packageFile, fileName)).use { fileWriter ->
                 val daoVariableName = element.simpleName.toString()
                         .let { name -> name[0].toLowerCase() + name.drop(1) + "Dao" }
 
                 val generateDaoAnnotation = element.getAnnotation(GenerateDao::class.java)
 
-                it.write("""
+                val searchWhereString = generateDaoAnnotation.filters
+                        .map { "${it.fieldName} == :${it.fieldName}" }
+                        .let {
+                            if (generateDaoAnnotation.searchField.isEmpty()) {
+                                it
+                            } else {
+                                it + "${generateDaoAnnotation.searchField} LIKE '%' || :search || '%'"
+                            }
+                        }
+                        .let {
+                            if (it.isEmpty()) {
+                                ""
+                            } else {
+                                "WHERE ${it.reduce { acc, s -> "$acc AND $s" }}"
+                            }
+                        }
+
+                val deleteWhereString = generateDaoAnnotation.filters
+                        .map { "${it.fieldName} == :${it.fieldName}" }
+                        .let {
+                            if (it.isEmpty()) {
+                                ""
+                            } else {
+                                "WHERE ${it.reduce { acc, s -> "$acc AND $s" }}"
+                            }
+                        }
+
+                val searchParamsString = generateDaoAnnotation.filters
+                        .map { "${it.fieldName}: ${it.filterType.typeString}" }
+                        .let {
+                            if (generateDaoAnnotation.searchField.isEmpty()) {
+                                it
+                            } else {
+                                it + "search: String"
+                            }
+                        }
+                        .let {
+                            if (it.isEmpty()) {
+                                ""
+                            } else {
+                                it.reduce { acc, s -> "$acc, $s" }
+                            }
+                        }
+
+                val deleteParamsString = generateDaoAnnotation.filters
+                        .map { "${it.fieldName}: ${it.filterType.typeString}" }
+                        .let {
+                            if (it.isEmpty()) {
+                                ""
+                            } else {
+                                it.reduce { acc, s -> "$acc, $s" }
+                            }
+                        }
+
+                val constructorParamsString = generateDaoAnnotation.filters
+                        .map { "private val ${it.fieldName}: ${it.filterType.typeString}, " }
+                        .let {
+                            if (it.isEmpty()) {
+                                ""
+                            } else {
+                                it.reduce { acc, s -> "$acc$s" }
+                            }
+                        }
+
+                val searchValuesString = generateDaoAnnotation.filters
+                        .map { it.fieldName }
+                        .let {
+                            if (generateDaoAnnotation.searchField.isEmpty()) {
+                                it
+                            } else {
+                                it + "search"
+                            }
+                        }
+                        .let {
+                            if (it.isEmpty()) {
+                                ""
+                            } else {
+                                it.reduce { acc, s -> "$acc, $s" }
+                            }
+                        }
+
+                val deleteValuesString = generateDaoAnnotation.filters
+                        .map { it.fieldName }
+                        .let {
+                            if (it.isEmpty()) {
+                                ""
+                            } else {
+                                it.reduce { acc, s -> "$acc, $s" }
+                            }
+                        }
+
+                val constructorValuesString = generateDaoAnnotation.filters
+                        .map { "${it.fieldName}, " }
+                        .let {
+                            if (it.isEmpty()) {
+                                ""
+                            } else {
+                                it.reduce { acc, s -> "$acc$s" }
+                            }
+                        }
+
+                fileWriter.write("""
 // this file is auto-generated by com.qwert2603.dao_generator.GenerateDaoProcessor
 package $generatedPackage
 
@@ -70,25 +171,28 @@ interface ${element.simpleName}Dao {
     @Query(
         " SELECT *" +
         " FROM ${element.simpleName}" +
-        " WHERE ${generateDaoAnnotation.searchField} LIKE '%' || :search || '%'" +
+        " $searchWhereString" +
         " ORDER BY ${generateDaoAnnotation.orderBy}" +
         " LIMIT :count" +
         " OFFSET :offset"
     )
-    fun getItems(search: String, offset: Int, count: Int): List<${element.simpleName}>
+    fun getItems($searchParamsString, offset: Int, count: Int): List<${element.simpleName}>
+
+    @Query("DELETE FROM ${element.simpleName} $deleteWhereString")
+    fun deleteAllItems($deleteParamsString)
 
     @Query("DELETE FROM ${element.simpleName}")
-    fun deleteAllItems()
+    fun clearTable()
 }
 
-fun ${element.simpleName}Dao.wrap() = ${element.simpleName}DaoWrapper(this)
+fun ${element.simpleName}Dao.wrap($deleteParamsString): DaoInterface<${element.simpleName}> = ${element.simpleName}DaoWrapper($constructorValuesString this)
 
-class ${element.simpleName}DaoWrapper(private val $daoVariableName: ${element.simpleName}Dao) : DaoInterface<${element.simpleName}> {
+private class ${element.simpleName}DaoWrapper($constructorParamsString private val $daoVariableName: ${element.simpleName}Dao) : DaoInterface<${element.simpleName}> {
     override fun addItems(items: List<${element.simpleName}>) = $daoVariableName.addItems(items)
     override fun saveItem(item: ${element.simpleName}) = $daoVariableName.saveItem(item)
     override fun getItem(itemId: Long): ${element.simpleName}? = $daoVariableName.getItem(itemId)
-    override fun getItems(search: String, offset: Int, count: Int): List<${element.simpleName}> = $daoVariableName.getItems(search, offset, count)
-    override fun deleteAllItems() = $daoVariableName.deleteAllItems()
+    override fun getItems(search: String, offset: Int, count: Int): List<${element.simpleName}> = $daoVariableName.getItems($searchValuesString, offset, count)
+    override fun deleteAllItems() = $daoVariableName.deleteAllItems($deleteValuesString)
 }
                 """.trimIndent())
             }

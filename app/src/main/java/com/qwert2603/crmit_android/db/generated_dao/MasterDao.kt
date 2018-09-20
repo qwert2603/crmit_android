@@ -30,13 +30,16 @@ interface MasterDao {
     )
     fun getItems(search: String, offset: Int, count: Int): List<Master>
 
-    @Query("DELETE FROM Master")
+    @Query("DELETE FROM Master ")
     fun deleteAllItems()
+
+    @Query("DELETE FROM Master")
+    fun clearTable()
 }
 
-fun MasterDao.wrap() = MasterDaoWrapper(this)
+fun MasterDao.wrap(): DaoInterface<Master> = MasterDaoWrapper( this)
 
-class MasterDaoWrapper(private val masterDao: MasterDao) : DaoInterface<Master> {
+private class MasterDaoWrapper( private val masterDao: MasterDao) : DaoInterface<Master> {
     override fun addItems(items: List<Master>) = masterDao.addItems(items)
     override fun saveItem(item: Master) = masterDao.saveItem(item)
     override fun getItem(itemId: Long): Master? = masterDao.getItem(itemId)

@@ -1,0 +1,17 @@
+package com.qwert2603.crmit_android.entity
+
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
+import com.qwert2603.andrlib.model.IdentifiableLong
+import com.qwert2603.dao_generator.Filter
+import com.qwert2603.dao_generator.FilterType
+import com.qwert2603.dao_generator.GenerateDao
+
+@Entity
+@GenerateDao(filters = [Filter("lessonId", FilterType.LONG)])
+data class Attending(
+        @PrimaryKey override val id: Long,
+        val lessonId: Long,
+        val studentId: Long,
+        val state: Int
+) : IdentifiableLong

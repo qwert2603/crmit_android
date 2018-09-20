@@ -46,7 +46,7 @@ abstract class EntityDetailsFragment<E : Any> : LRFragment<EntityDetailsViewStat
 
     protected abstract val source: (entityId: Long) -> Single<E>
 
-    protected abstract val dbDao: DaoInterface<E>
+    protected abstract val dbDaoInterface: DaoInterface<E>
 
     protected abstract fun E.entityName(): String
 
@@ -59,7 +59,7 @@ abstract class EntityDetailsFragment<E : Any> : LRFragment<EntityDetailsViewStat
     override fun createPresenter() = EntityDetailsPresenter(
             entityId = entityId,
             source = source,
-            dbDao = dbDao
+            dbDaoInterface = dbDaoInterface
     )
 
     override fun loadRefreshPanel(): LoadRefreshPanel = entityDetails_LRPanelImpl

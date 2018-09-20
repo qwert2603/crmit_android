@@ -1,12 +1,17 @@
 package com.qwert2603.crmit_android.rest
 
 import com.qwert2603.crmit_android.entity.*
+import com.qwert2603.crmit_android.rest.params.LoginParams
+import com.qwert2603.crmit_android.rest.params.SaveAttendingStateParams
+import io.reactivex.Completable
 import io.reactivex.Single
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface Rest {
+
+    companion object {
+        const val DATE_FORMAT = "yyyy-MM-dd"
+    }
 
     @GET("teachers_list")
     fun getTeachersList(
@@ -54,4 +59,22 @@ interface Rest {
 
     @GET("teacher_details/{teacher_id}")
     fun getTeacherDetails(@Path("teacher_id") teacherId: Long): Single<Teacher>
+
+    @GET("students_in_group/{group_id}")
+    fun getStudentsInGroup(@Path("group_id") groupId: Long): Single<List<StudentInGroup>>
+
+    @GET("lessons_in_group/{group_id}")
+    fun getLessonsInGroup(@Path("group_id") groupId: Long): Single<List<Lesson>>
+
+    @GET("attendings_of_lesson/{lesson_id}")
+    fun getAttendingsOfLesson(@Path("lesson_id") lessonId: Long): Single<List<Attending>>
+
+    @POST("save_attending_state")
+    fun saveAttendingState(@Body saveAttendingStateParams: SaveAttendingStateParams): Completable
+
+    @POST("login")
+    fun login(@Body loginParams: LoginParams): Single<LoginResult>
+
+    @POST("logout")
+    fun logout(): Completable
 }

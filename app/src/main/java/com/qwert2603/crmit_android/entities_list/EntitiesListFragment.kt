@@ -30,7 +30,7 @@ abstract class EntitiesListFragment<E : IdentifiableLong>
 
     protected abstract val source: (offset: Int, count: Int, search: String) -> Single<List<E>>
 
-    protected abstract val dbDao: DaoInterface<E>
+    protected abstract val dbDaoInterface: DaoInterface<E>
 
     @get:StringRes
     protected abstract val titleRes: Int
@@ -63,7 +63,7 @@ abstract class EntitiesListFragment<E : IdentifiableLong>
 
     override fun createPresenter() = EntitiesListPresenter(
             source = source,
-            dbDao = dbDao,
+            dbDaoInterface = dbDaoInterface,
             pageSize = pageSize
     )
 
