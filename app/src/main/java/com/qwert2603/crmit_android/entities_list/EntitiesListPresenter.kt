@@ -61,7 +61,9 @@ class EntitiesListPresenter<E : IdentifiableLong>(
                     return if (fixedSizeKey.offset == 0) {
                         source(0, fixedSizeKey.limit, additionalKey)
                                 .doOnSuccess {
-                                    dbDaoInterface.deleteAllItems()
+                                    if (additionalKey.isEmpty()) {
+                                        dbDaoInterface.deleteAllItems()
+                                    }
                                     dbDaoInterface.addItems(it)
                                 }
                                 .onErrorResumeNext { t ->
@@ -95,7 +97,9 @@ class EntitiesListPresenter<E : IdentifiableLong>(
     override fun initialModelSingleRefresh(additionalKey: String): Single<Page<E>> = paginator.firstPage { (limit, offset) ->
         source(offset, limit, additionalKey)
                 .doOnSuccess {
-                    if (offset == 0) dbDaoInterface.deleteAllItems()
+                    if (offset == 0 && additionalKey.isEmpty()) {
+                        dbDaoInterface.deleteAllItems()
+                    }
                     dbDaoInterface.addItems(it)
                 }
                 .subscribeOn(DiHolder.modelSchedulersProvider.io)
