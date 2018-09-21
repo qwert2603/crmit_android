@@ -1,6 +1,7 @@
 package com.qwert2603.crmit_android.di
 
 import android.arch.persistence.room.Room
+import android.content.res.Resources
 import com.qwert2603.andrlib.schedulers.ModelSchedulersProvider
 import com.qwert2603.andrlib.schedulers.UiSchedulerProvider
 import com.qwert2603.andrlib.util.LogUtils
@@ -88,4 +89,6 @@ object DiHolder {
     val attendingDao by lazy { localDB.attendingDao() }
 
     val userSettingsRepo by lazy { UserSettingsRepo(CrmitApplication.APP_CONTEXT) }
+
+    val resources: Resources by lazy { CrmitApplication.APP_CONTEXT.resources }
 }

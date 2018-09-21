@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/greeting_LinearLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/messages_ViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:clipToPadding="false"
+        android:padding="12dp">
+
+        <Button
+            android:id="@+id/back_Button"
+            style="@style/ColoredButton"
+            android:text="@string/text_back" />
+
+        <Button
+            android:id="@+id/forward_Button"
+            style="@style/ColoredButton"
+            android:layout_gravity="end"
+            android:text="@string/text_forward" />
+
+        <Button
+            android:id="@+id/go_Button"
+            style="@style/ColoredButton"
+            android:layout_gravity="end"
+            android:text="@string/text_start" />
+
+    </FrameLayout>
+
+</FrameLayout>

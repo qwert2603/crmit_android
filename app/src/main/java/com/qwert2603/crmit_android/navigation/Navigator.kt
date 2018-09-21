@@ -21,7 +21,10 @@ import com.qwert2603.crmit_android.details_fragments.SectionDetailsFragmentBuild
 import com.qwert2603.crmit_android.details_fragments.StudentDetailsFragmentBuilder
 import com.qwert2603.crmit_android.details_fragments.TeacherDetailsFragmentBuilder
 import com.qwert2603.crmit_android.entity_details.EntityDetailsFragment
+import com.qwert2603.crmit_android.greeting.GreetingFragment
+import com.qwert2603.crmit_android.lesson_details.LessonDetailsFragment
 import com.qwert2603.crmit_android.list_fragments.*
+import com.qwert2603.crmit_android.login.LoginFragment
 import ru.terrakok.cicerone.android.SupportFragmentNavigator
 import ru.terrakok.cicerone.commands.Command
 import ru.terrakok.cicerone.commands.Forward
@@ -49,7 +52,7 @@ class Navigator(private val activity: ActivityInterface)
                     override fun onFragmentCreated(fm: FragmentManager, f: Fragment, savedInstanceState: Bundle?) {
                         f.exitTransition = Slide(Gravity.LEFT)
                                 .also { it.duration = TRANSITION_DURATION }
-                        f.enterTransition = Slide(if (fm.backStackEntryCount > 0) Gravity.RIGHT else Gravity.LEFT)
+                        f.enterTransition = Slide(if (fm.backStackEntryCount > 0 || f is LoginFragment) Gravity.RIGHT else Gravity.LEFT)
                                 .also { it.duration = TRANSITION_DURATION }
                         val sharedElementTransition = TransitionInflater.from(f.requireContext())
                                 .inflateTransition(R.transition.shared_element)
@@ -78,7 +81,9 @@ class Navigator(private val activity: ActivityInterface)
         ScreenKey.TEACHER_DETAILS -> (data as EntityDetailsFragment.Key).let { TeacherDetailsFragmentBuilder.newTeacherDetailsFragment(it.entityId, it.entityName, it.entityNameStrike) }
         ScreenKey.STUDENTS_IN_GROUP -> (data as StudentsInGroupListFragment.Key).let { StudentsInGroupListFragmentBuilder.newStudentsInGroupListFragment(it.groupId, it.groupName) }
         ScreenKey.LESSONS_IN_GROUP -> (data as LessonsInGroupListFragment.Key).let { LessonsInGroupListFragmentBuilder.newLessonsInGroupListFragment(it.groupId, it.groupName) }
-        ScreenKey.LESSON_DETAILS -> TODO()
+        ScreenKey.LESSON_DETAILS -> LessonDetailsFragment()
+        ScreenKey.GREETING -> GreetingFragment()
+        ScreenKey.LOGIN -> LoginFragment()
     }.also { it.setScreenKey(ScreenKey.valueOf(screenKey)) }
 
     override fun exit() {
@@ -96,7 +101,7 @@ class Navigator(private val activity: ActivityInterface)
     override fun setupFragmentTransactionAnimation(command: Command, currentFragment: Fragment?, nextFragment: Fragment, fragmentTransaction: FragmentTransaction) {
         currentFragment?.exitTransition = Slide(Gravity.LEFT)
                 .also { it.duration = TRANSITION_DURATION }
-        nextFragment.enterTransition = Slide(if (command is Forward) Gravity.RIGHT else Gravity.LEFT)
+        nextFragment.enterTransition = Slide(if (command is Forward || nextFragment is LoginFragment) Gravity.RIGHT else Gravity.LEFT)
                 .also { it.duration = TRANSITION_DURATION }
 
         command

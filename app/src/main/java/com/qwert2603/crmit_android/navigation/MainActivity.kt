@@ -69,7 +69,11 @@ class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager {
         setContentView(R.layout.activity_main)
 
         if (savedInstanceState == null) {
-            router.newRootScreen(ScreenKey.MASTERS.name)
+            router.newRootScreen(when {
+                !DiHolder.userSettingsRepo.greetingShown -> ScreenKey.GREETING
+                DiHolder.userSettingsRepo.loginResult == null -> ScreenKey.LOGIN
+                else -> ScreenKey.MASTERS
+            }.name)
         }
 
         headerNavigation = navigation_view.inflate(R.layout.header_navigation)

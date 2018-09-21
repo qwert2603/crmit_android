@@ -35,6 +35,8 @@ class AboutFragment : Fragment() {
 
         clearCache_Button.setVisible(E.env.showClearCacheButton)
         clearCache_Button.setOnClickListener { _ ->
+            DiHolder.userSettingsRepo.clear()
+
             DiHolder.modelSchedulersProvider.io.scheduleDirect {
                 listOf(
                         DiHolder.masterDaoInterface,

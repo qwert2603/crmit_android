@@ -67,4 +67,12 @@
     <string name="text_no_groups">Нет групп</string>
     <string name="text_clear_cache">Очистить кеш</string>
     <string name="text_showing_cached_data">Показаны кешированные данные</string>
+
+    <string name="text_back">Назад</string>
+    <string name="text_forward">Вперед</string>
+    <string name="text_start">Начать</string>
+    <string name="text_enter">Войти</string>
+    <string name="hint_login">Логин</string>
+    <string name="hint_password">Пароль</string>
+
 </resources>
