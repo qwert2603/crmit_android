@@ -20,9 +20,6 @@ import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
 
 object DiHolder {
-    const val HEADER_ACCESS_TOKEN = "access_token"
-    const val RESPONSE_CODE_UNAUTHORIZED = 401
-    const val RESPONSE_CODE_BAD_REQUEST = 400
 
     private val schedulersProvider by lazy { SchedulersProviderImpl() }
 

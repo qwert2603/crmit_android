@@ -7,6 +7,7 @@ import com.qwert2603.andrlib.util.LogUtils
 import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entity.LoginErrorReason
 import com.qwert2603.crmit_android.entity.LoginResultError
+import com.qwert2603.crmit_android.rest.Rest
 import com.qwert2603.crmit_android.rest.params.LoginParams
 import com.qwert2603.crmit_android.util.makePair
 import com.qwert2603.crmit_android.util.secondOfTwo
@@ -33,7 +34,7 @@ class LoginPresenter : BasePresenter<LoginView, LoginViewState>(DiHolder.uiSched
                                 .subscribeOn(DiHolder.modelSchedulersProvider.io)
                                 .map<LoginPartialChange> { LoginPartialChange.LoggingSuccess }
                                 .doOnError {
-                                    val loginErrorReason = if (it is HttpException && it.code() == DiHolder.RESPONSE_CODE_BAD_REQUEST) {
+                                    val loginErrorReason = if (it is HttpException && it.code() == Rest.RESPONSE_CODE_BAD_REQUEST) {
                                         try {
                                             val string = it.response().errorBody()!!.string()
                                             Gson().fromJson(string, LoginResultError::class.java).loginErrorReason
