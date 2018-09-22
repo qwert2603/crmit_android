@@ -9,6 +9,7 @@ import android.view.ViewTreeObserver
 import android.widget.TextView
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.rest.Rest
+import io.reactivex.functions.BiFunction
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.absoluteValue
@@ -73,3 +74,5 @@ inline fun View.onPreDraw(crossinline action: () -> Boolean) {
     })
 }
 
+fun <T, U> makePair() = BiFunction { t: T, u: U -> Pair(t, u) }
+fun <T, U> secondOfTwo() = BiFunction { _: T, u: U -> u }

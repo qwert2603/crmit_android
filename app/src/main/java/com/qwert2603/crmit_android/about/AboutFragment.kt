@@ -1,5 +1,6 @@
 package com.qwert2603.crmit_android.about
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.text.Html
@@ -12,6 +13,7 @@ import com.qwert2603.crmit_android.BuildConfig
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.env.E
+import com.qwert2603.crmit_android.navigation.MainActivity
 import kotlinx.android.synthetic.main.fragment_about.*
 import kotlinx.android.synthetic.main.toolbar_default.*
 import java.text.SimpleDateFormat
@@ -51,6 +53,11 @@ class AboutFragment : Fragment() {
                 DiHolder.studentInGroupDao.clearTable()
                 DiHolder.lessonDao.clearTable()
                 DiHolder.attendingDao.clearTable()
+
+                DiHolder.uiSchedulerProvider.ui.scheduleDirect {
+                    startActivity(Intent(requireContext(), MainActivity::class.java))
+                    System.exit(0)
+                }
             }
         }
 

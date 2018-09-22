@@ -141,7 +141,7 @@ class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager {
         } else {
             navigationAdapter.selectedItemId = 0
         }
-        val allowDrawer = screenKey.allowDrawer
+        val allowDrawer = screenKey.allowDrawer && DiHolder.userSettingsRepo.isLogged()
         activity_DrawerLayout.setDrawerLockMode(
                 (if (allowDrawer) DrawerLayout.LOCK_MODE_UNLOCKED else DrawerLayout.LOCK_MODE_LOCKED_CLOSED),
                 GravityCompat.START

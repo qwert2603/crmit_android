@@ -9,6 +9,7 @@
     <string name="title_about">О приложении</string>
     <string name="title_students_in_group" formatted="true">Ученики в %s</string>
     <string name="title_lessons_in_group" formatted="true">Занятия в %s</string>
+    <string name="title_login" formatted="true">Вход</string>
 
     <string name="price_format" formatted="true">%s ₽</string>
     <string name="discount_format" formatted="true">скидка: %s ₽</string>
@@ -65,14 +66,20 @@
     <string name="detailsField_lessonsDoneCount">Проведено занятий</string>
 
     <string name="text_no_groups">Нет групп</string>
-    <string name="text_clear_cache">Очистить кеш</string>
+    <string name="text_clear_cache">Очистить кеш и перезапустить</string>
     <string name="text_showing_cached_data">Показаны кешированные данные</string>
 
     <string name="text_back">Назад</string>
-    <string name="text_forward">Вперед</string>
+    <string name="text_forward">Далее</string>
     <string name="text_start">Начать</string>
     <string name="text_enter">Войти</string>
     <string name="hint_login">Логин</string>
     <string name="hint_password">Пароль</string>
+    <string name="text_logging">Выполняется вход..</string>
+
+    <string name="login_error_reason_wrong_login_or_password">Неверный логин или пароль!</string>
+    <string name="login_error_reason_account_disabled">Ваш аккаунт был отключен!</string>
+    <string name="login_error_reason_student_account_is_not_supported">Аккаунт ученика не поддерживается</string>
+    <string name="login_error_reason_another">Ошибка входа</string>
 
 </resources>

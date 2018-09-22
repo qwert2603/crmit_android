@@ -61,6 +61,8 @@ class GreetingFragment : BaseFragment<GreetingViewState, GreetingView, GreetingP
         }
         renderIfChanged({ currentMessageIndex }) { messages_ViewPager.currentItem = it }
 
+        pointsView.setProgress(vs.currentMessageIndex, vs.messages.size)
+
         back_Button.setVisible(vs.showBack())
         forward_Button.setVisible(vs.showForward())
         go_Button.setVisible(vs.showStart())

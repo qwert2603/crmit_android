@@ -25,6 +25,7 @@ import ru.terrakok.cicerone.Router
 object DiHolder {
     private const val HEADER_ACCESS_TOKEN = "access_token"
     private const val RESPONSE_CODE_UNAUTHORIZED = 401
+    const val RESPONSE_CODE_BAD_REQUEST = 400
 
     private val schedulersProvider by lazy { SchedulersProviderImpl() }
 
@@ -35,6 +36,9 @@ object DiHolder {
         OkHttpClient.Builder()
                 .addInterceptor(HttpLoggingInterceptor { message -> LogUtils.d("ok_http", message) }.setLevel(HttpLoggingInterceptor.Level.BODY))
                 .addInterceptor {
+                    if (it.request().url().toString() == E.env.restBaseUrl + Rest.LOGIN_ENDPOINT) {
+                        return@addInterceptor it.proceed(it.request())
+                    }
                     val accessToken = userSettingsRepo.loginResult?.token
                     if (accessToken == null) {
                         return@addInterceptor Response.Builder()

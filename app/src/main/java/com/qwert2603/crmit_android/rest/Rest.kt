@@ -11,6 +11,8 @@ interface Rest {
 
     companion object {
         const val DATE_FORMAT = "yyyy-MM-dd"
+
+        const val LOGIN_ENDPOINT = "login"
     }
 
     @GET("teachers_list")
@@ -72,7 +74,7 @@ interface Rest {
     @POST("save_attending_state")
     fun saveAttendingState(@Body saveAttendingStateParams: SaveAttendingStateParams): Completable
 
-    @POST("login")
+    @POST(LOGIN_ENDPOINT)
     fun login(@Body loginParams: LoginParams): Single<LoginResult>
 
     @POST("logout")
