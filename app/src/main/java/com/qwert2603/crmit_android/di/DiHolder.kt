@@ -11,9 +11,6 @@ import com.qwert2603.crmit_android.db.generated_dao.wrap
 import com.qwert2603.crmit_android.env.E
 import com.qwert2603.crmit_android.rest.Rest
 import okhttp3.OkHttpClient
-import okhttp3.Protocol
-import okhttp3.Response
-import okhttp3.ResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -23,8 +20,8 @@ import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
 
 object DiHolder {
-    private const val HEADER_ACCESS_TOKEN = "access_token"
-    private const val RESPONSE_CODE_UNAUTHORIZED = 401
+    const val HEADER_ACCESS_TOKEN = "access_token"
+    const val RESPONSE_CODE_UNAUTHORIZED = 401
     const val RESPONSE_CODE_BAD_REQUEST = 400
 
     private val schedulersProvider by lazy { SchedulersProviderImpl() }
@@ -35,26 +32,7 @@ object DiHolder {
     private val okHttpClient by lazy {
         OkHttpClient.Builder()
                 .addInterceptor(HttpLoggingInterceptor { message -> LogUtils.d("ok_http", message) }.setLevel(HttpLoggingInterceptor.Level.BODY))
-                .addInterceptor {
-                    if (it.request().url().toString() == E.env.restBaseUrl + Rest.LOGIN_ENDPOINT) {
-                        return@addInterceptor it.proceed(it.request())
-                    }
-                    val accessToken = userSettingsRepo.loginResult?.token
-                    if (accessToken == null) {
-                        return@addInterceptor Response.Builder()
-                                .request(it.request())
-                                .protocol(Protocol.HTTP_1_1)
-                                .code(RESPONSE_CODE_UNAUTHORIZED)
-                                .message("UNAUTHORIZED")
-                                .body(ResponseBody.create(null, "userSettingsRepo.accessToken == null"))
-                                .build()
-                    }
-                    val request = it.request()
-                            .newBuilder()
-                            .addHeader(HEADER_ACCESS_TOKEN, accessToken)
-                            .build()
-                    it.proceed(request)
-                }
+                .addInterceptor(AccessTokenInterceptor())
                 .build()
     }
 
