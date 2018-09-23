@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cabinet_CoordinatorLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/toolbar_default" />
+
+    <com.qwert2603.andrlib.base.mvi.load_refresh.LRPanelImpl
+        android:id="@+id/cabinet_LRPanelImpl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <android.support.v4.widget.NestedScrollView
+            android:id="@+id/nestedScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/fio_LinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:orientation="horizontal"
+                    android:padding="12dp">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/fio_TextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="24sp"
+                            android:ellipsize="end"
+                            android:gravity="center_vertical"
+                            android:lines="1"
+                            android:maxLines="1"
+                            android:textColor="@android:color/black"
+                            android:textSize="18sp"
+                            tools:text="Иванов Иван Иванович" />
+
+                        <TextView
+                            android:id="@+id/accountType_TextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/gray_text"
+                            android:textSize="14sp"
+                            tools:text="@string/account_type_master" />
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="4dp"
+                        android:src="@drawable/ic_navigate_next_black_24dp"
+                        tools:ignore="ContentDescription" />
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/logout_Button"
+                    style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="4dp"
+                    android:text="@string/text_logout" />
+
+            </LinearLayout>
+
+        </android.support.v4.widget.NestedScrollView>
+
+    </com.qwert2603.andrlib.base.mvi.load_refresh.LRPanelImpl>
+
+</android.support.design.widget.CoordinatorLayout>

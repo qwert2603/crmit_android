@@ -5,6 +5,7 @@
     <color name="colorAccent">#FF0000</color>
 
     <color name="gray_text">#666666</color>
+    <color name="gray_point">#B0B0B0</color>
 
     <color name="navigation_menu_item_background">#EEEEEE</color>
     <color name="navigation_menu_item_background_selected">#DDDDDD</color>

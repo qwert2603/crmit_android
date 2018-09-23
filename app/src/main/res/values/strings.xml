@@ -9,7 +9,8 @@
     <string name="title_about">О приложении</string>
     <string name="title_students_in_group" formatted="true">Ученики в %s</string>
     <string name="title_lessons_in_group" formatted="true">Занятия в %s</string>
-    <string name="title_login" formatted="true">Вход</string>
+    <string name="title_login">Вход</string>
+    <string name="title_cabinet">Кабинет</string>
 
     <string name="price_format" formatted="true">%s ₽</string>
     <string name="discount_format" formatted="true">скидка: %s ₽</string>
@@ -76,10 +77,16 @@
     <string name="hint_login">Логин</string>
     <string name="hint_password">Пароль</string>
     <string name="text_logging">Выполняется вход..</string>
+    <string name="text_logout_is_on">Выполняется выход..</string>
 
     <string name="login_error_reason_wrong_login_or_password">Неверный логин или пароль!</string>
     <string name="login_error_reason_account_disabled">Ваш аккаунт был отключен!</string>
     <string name="login_error_reason_student_account_is_not_supported">Аккаунт ученика не поддерживается</string>
     <string name="login_error_reason_another">Ошибка входа</string>
+
+    <string name="text_logout">Выйти</string>
+
+    <string name="account_type_master">Руководитель</string>
+    <string name="account_type_teacher">Преподаватель</string>
 
 </resources>

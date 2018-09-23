@@ -10,10 +10,12 @@ enum class ScreenKey(val allowDrawer: Boolean = true) {
     SECTION_DETAILS,
     GROUP_DETAILS,
     TEACHER_DETAILS,
+    MASTER_DETAILS,
     ABOUT,
     STUDENTS_IN_GROUP,
     LESSONS_IN_GROUP,
     LESSON_DETAILS,
     GREETING(allowDrawer = false),
-    LOGIN(allowDrawer = false)
+    LOGIN(allowDrawer = false),
+    CABINET,
 }

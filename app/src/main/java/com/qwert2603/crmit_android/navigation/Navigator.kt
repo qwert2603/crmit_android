@@ -16,10 +16,8 @@ import com.hannesdorfmann.fragmentargs.FragmentArgs
 import com.qwert2603.andrlib.base.mvi.BaseFragment
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.about.AboutFragment
-import com.qwert2603.crmit_android.details_fragments.GroupDetailsFragmentBuilder
-import com.qwert2603.crmit_android.details_fragments.SectionDetailsFragmentBuilder
-import com.qwert2603.crmit_android.details_fragments.StudentDetailsFragmentBuilder
-import com.qwert2603.crmit_android.details_fragments.TeacherDetailsFragmentBuilder
+import com.qwert2603.crmit_android.cabinet.CabinetFragment
+import com.qwert2603.crmit_android.details_fragments.*
 import com.qwert2603.crmit_android.entity_details.EntityDetailsFragment
 import com.qwert2603.crmit_android.greeting.GreetingFragment
 import com.qwert2603.crmit_android.lesson_details.LessonDetailsFragment
@@ -79,11 +77,13 @@ class Navigator(private val activity: ActivityInterface)
         ScreenKey.SECTION_DETAILS -> (data as EntityDetailsFragment.Key).let { SectionDetailsFragmentBuilder.newSectionDetailsFragment(it.entityId, it.entityName, it.entityNameStrike) }
         ScreenKey.GROUP_DETAILS -> (data as EntityDetailsFragment.Key).let { GroupDetailsFragmentBuilder.newGroupDetailsFragment(it.entityId, it.entityName, it.entityNameStrike) }
         ScreenKey.TEACHER_DETAILS -> (data as EntityDetailsFragment.Key).let { TeacherDetailsFragmentBuilder.newTeacherDetailsFragment(it.entityId, it.entityName, it.entityNameStrike) }
+        ScreenKey.MASTER_DETAILS -> (data as EntityDetailsFragment.Key).let { MasterDetailsFragmentBuilder.newMasterDetailsFragment(it.entityId, it.entityName, it.entityNameStrike) }
         ScreenKey.STUDENTS_IN_GROUP -> (data as StudentsInGroupListFragment.Key).let { StudentsInGroupListFragmentBuilder.newStudentsInGroupListFragment(it.groupId, it.groupName) }
         ScreenKey.LESSONS_IN_GROUP -> (data as LessonsInGroupListFragment.Key).let { LessonsInGroupListFragmentBuilder.newLessonsInGroupListFragment(it.groupId, it.groupName) }
         ScreenKey.LESSON_DETAILS -> LessonDetailsFragment()
         ScreenKey.GREETING -> GreetingFragment()
         ScreenKey.LOGIN -> LoginFragment()
+        ScreenKey.CABINET -> CabinetFragment()
     }.also { it.setScreenKey(ScreenKey.valueOf(screenKey)) }
 
     override fun exit() {

@@ -67,6 +67,22 @@ object DiHolder {
     val lessonDao by lazy { localDB.lessonDao() }
     val attendingDao by lazy { localDB.attendingDao() }
 
+    fun clearDB() {
+        listOf(
+                masterDaoInterface,
+                teacherDaoInterface,
+                studentBriefDaoInterface,
+                studentFullDaoInterface,
+                sectionDaoInterface,
+                groupBriefDaoInterface,
+                groupFullDaoInterface
+        ).forEach { it.deleteAllItems() }
+
+        studentInGroupDao.clearTable()
+        lessonDao.clearTable()
+        attendingDao.clearTable()
+    }
+
     val userSettingsRepo by lazy { UserSettingsRepo(CrmitApplication.APP_CONTEXT) }
 
     val resources: Resources by lazy { CrmitApplication.APP_CONTEXT.resources }

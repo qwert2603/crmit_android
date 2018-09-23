@@ -47,7 +47,7 @@ class LoginPresenter : BasePresenter<LoginView, LoginViewState>(DiHolder.uiSched
                                     }
                                     viewActions.onNext(LoginViewAction.ShowLoginError(loginErrorReason))
                                 }
-                                .doOnSuccess { viewActions.onNext(LoginViewAction.MoveToMastersList) }
+                                .doOnSuccess { viewActions.onNext(LoginViewAction.MoveToCabinet) }
                                 .onErrorReturn { LoginPartialChange.LoggingError }
                                 .toObservable()
                                 .startWith(LoginPartialChange.LoggingStarted)

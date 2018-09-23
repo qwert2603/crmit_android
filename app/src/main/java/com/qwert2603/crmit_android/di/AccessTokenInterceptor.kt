@@ -11,7 +11,7 @@ class AccessTokenInterceptor : Interceptor {
         if (chain.request().url().toString() == E.env.restBaseUrl + Rest.LOGIN_ENDPOINT) {
             return chain.proceed(chain.request())
         }
-        val accessToken = DiHolder.userSettingsRepo.loginResult?.token
+        val accessToken = DiHolder.userSettingsRepo.loginResult?.getTokenSafe()
         if (accessToken == null) {
             on401()
             throw Exception("DiHolder.userSettingsRepo.loginResult == null")

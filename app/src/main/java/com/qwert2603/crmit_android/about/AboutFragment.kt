@@ -40,19 +40,7 @@ class AboutFragment : Fragment() {
             DiHolder.userSettingsRepo.clear()
 
             DiHolder.modelSchedulersProvider.io.scheduleDirect {
-                listOf(
-                        DiHolder.masterDaoInterface,
-                        DiHolder.teacherDaoInterface,
-                        DiHolder.studentBriefDaoInterface,
-                        DiHolder.studentFullDaoInterface,
-                        DiHolder.sectionDaoInterface,
-                        DiHolder.groupBriefDaoInterface,
-                        DiHolder.groupFullDaoInterface
-                ).forEach { it.deleteAllItems() }
-
-                DiHolder.studentInGroupDao.clearTable()
-                DiHolder.lessonDao.clearTable()
-                DiHolder.attendingDao.clearTable()
+                DiHolder.clearDB()
 
                 DiHolder.uiSchedulerProvider.ui.scheduleDirect {
                     startActivity(Intent(requireContext(), MainActivity::class.java))

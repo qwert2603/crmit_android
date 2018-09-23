@@ -13,7 +13,7 @@ import com.qwert2603.crmit_android.R
 class PointsView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     @ColorInt
-    private val colorPrimary = resources.color(R.color.gray_text)
+    private val colorPrimary = resources.color(R.color.gray_point)
     @ColorInt
     private val colorAccent = resources.color(R.color.colorAccent)
 
@@ -45,7 +45,7 @@ class PointsView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
         for (i in 0 until count) {
             paint.color = if (i == current) colorAccent else colorPrimary
-            val dx = i * interval - (count * interval) / 2f
+            val dx = i * interval - ((count - 1) * interval) / 2f
             canvas.drawCircle(cx + dx, cy, radius, paint)
         }
     }

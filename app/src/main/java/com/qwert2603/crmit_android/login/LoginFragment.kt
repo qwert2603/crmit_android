@@ -93,7 +93,7 @@ class LoginFragment : BaseFragment<LoginViewState, LoginView, LoginPresenter>(),
         if (va !is LoginViewAction) return
         when (va) {
             is LoginViewAction.ShowLoginError -> Snackbar.make(login_CoordinatorLayout, va.loginErrorReason.descriptionRes, Snackbar.LENGTH_SHORT).show()
-            LoginViewAction.MoveToMastersList -> DiHolder.router.newRootScreen(ScreenKey.MASTERS.name)
+            LoginViewAction.MoveToCabinet -> DiHolder.router.newRootScreen(ScreenKey.CABINET.name)
         }.also { }
     }
 }
