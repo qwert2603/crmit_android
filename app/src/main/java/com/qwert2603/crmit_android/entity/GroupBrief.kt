@@ -10,5 +10,6 @@ import com.qwert2603.dao_generator.GenerateDao
 data class GroupBrief(
         @PrimaryKey override val id: Long,
         val name: String,
+        val teacherId: Long,
         val teacherFio: String
 ) : IdentifiableLong

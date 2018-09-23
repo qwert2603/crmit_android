@@ -3,6 +3,7 @@ package com.qwert2603.crmit_android.details_fragments
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.di.DiHolder
+import com.qwert2603.crmit_android.entity.AccountType
 import com.qwert2603.crmit_android.entity.GroupFull
 import com.qwert2603.crmit_android.entity_details.EntityDetailsField
 import com.qwert2603.crmit_android.entity_details.EntityDetailsFragment
@@ -21,9 +22,16 @@ class GroupDetailsFragment : EntityDetailsFragment<GroupFull>() {
     override fun GroupFull.entityName() = name
 
     override fun GroupFull.toDetailsList() = listOf(
-            EntityDetailsField(R.string.detailsField_teacher, teacherFio, R.drawable.ic_person_black_24dp) {
-                DiHolder.router.navigateTo(ScreenKey.TEACHER_DETAILS.name, EntityDetailsFragment.Key(teacherId, teacherFio))
-            },
+            EntityDetailsField(
+                    fieldTitleStringRes = R.string.detailsField_teacher,
+                    fieldValue = teacherFio,
+                    iconDrawableRes = R.drawable.ic_person_black_24dp,
+                    textColorRes = if (currentViewState.authedUserAccountType == AccountType.TEACHER && currentViewState.authedUserDetailsId == teacherId)
+                        R.color.colorAccent
+                    else
+                        android.R.color.black,
+                    clickCallback = { DiHolder.router.navigateTo(ScreenKey.TEACHER_DETAILS.name, EntityDetailsFragment.Key(teacherId, teacherFio)) }
+            ),
             EntityDetailsField(R.string.detailsField_section, sectionName, R.drawable.ic_group_black_24dp) {
                 DiHolder.router.navigateTo(ScreenKey.SECTION_DETAILS.name, EntityDetailsFragment.Key(sectionId, sectionName))
             },

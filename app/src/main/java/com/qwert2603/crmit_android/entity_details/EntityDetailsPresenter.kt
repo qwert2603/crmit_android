@@ -13,9 +13,14 @@ class EntityDetailsPresenter<E : Any>(
         private val source: (id: Long) -> Single<E>,
         private val dbDaoInterface: DaoInterface<E>
 ) : LRPresenter<Any, E, EntityDetailsViewState<E>, EntityDetailsView<E>>(DiHolder.uiSchedulerProvider) {
-    override val initialState = EntityDetailsViewState<E>(EMPTY_LR_MODEL, null)
+    override val initialState = EntityDetailsViewState<E>(EMPTY_LR_MODEL, null, null, null)
 
-    override val partialChanges: Observable<PartialChange> = loadRefreshPartialChanges()
+    override val partialChanges: Observable<PartialChange> = Observable.merge(
+            loadRefreshPartialChanges(),
+            loadIntent
+                    .map { DiHolder.userSettingsRepo.loginResult!! }
+                    .map { EntityDetailsPartialChange.AuthedUserLoaded(it) }
+    )
 
     override fun initialModelSingle(additionalKey: Any): Single<E> = source(entityId)
             .doOnSuccess { dbDaoInterface.saveItem(it) }
@@ -36,4 +41,15 @@ class EntityDetailsPresenter<E : Any>(
             .subscribeOn(DiHolder.modelSchedulersProvider.io)
 
     override fun EntityDetailsViewState<E>.applyInitialModel(i: E) = copy(entity = i)
+
+    override fun stateReducer(vs: EntityDetailsViewState<E>, change: PartialChange): EntityDetailsViewState<E> {
+        LogUtils.d { "EntityDetailsPresenter stateReducer $change" }
+        if (change !is EntityDetailsPartialChange) return super.stateReducer(vs, change)
+        return when (change) {
+            is EntityDetailsPartialChange.AuthedUserLoaded -> vs.copy(
+                    authedUserAccountType = change.loginResult.accountType,
+                    authedUserDetailsId = change.loginResult.detailsId
+            )
+        }
+    }
 }

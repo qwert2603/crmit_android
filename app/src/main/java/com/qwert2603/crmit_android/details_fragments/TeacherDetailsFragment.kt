@@ -3,11 +3,9 @@ package com.qwert2603.crmit_android.details_fragments
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.di.DiHolder
+import com.qwert2603.crmit_android.entity.AccountType
 import com.qwert2603.crmit_android.entity.Teacher
-import com.qwert2603.crmit_android.entity_details.EntityDetailsField
-import com.qwert2603.crmit_android.entity_details.EntityDetailsFragment
-import com.qwert2603.crmit_android.entity_details.EntityDetailsGroupsList
-import com.qwert2603.crmit_android.entity_details.EntityDetailsSystemInfo
+import com.qwert2603.crmit_android.entity_details.*
 
 @FragmentWithArgs
 class TeacherDetailsFragment : EntityDetailsFragment<Teacher>() {
@@ -19,6 +17,8 @@ class TeacherDetailsFragment : EntityDetailsFragment<Teacher>() {
     override fun Teacher.entityName() = fio
 
     override fun Teacher.entityNameStrike() = !systemUser.enabled
+
+    override fun EntityDetailsViewState<Teacher>.entityNameColorAccent() = authedUserAccountType == AccountType.TEACHER && entity != null && entity.id == authedUserDetailsId
 
     override fun Teacher.toDetailsList() = listOf(
             EntityDetailsSystemInfo(systemUser.enabled, true),

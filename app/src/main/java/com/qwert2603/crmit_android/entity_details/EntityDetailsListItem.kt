@@ -1,5 +1,6 @@
 package com.qwert2603.crmit_android.entity_details
 
+import android.support.annotation.ColorRes
 import android.support.annotation.DrawableRes
 import android.support.annotation.StringRes
 import com.qwert2603.andrlib.model.IdentifiableLong
@@ -11,6 +12,7 @@ data class EntityDetailsField(
         @StringRes val fieldTitleStringRes: Int,
         val fieldValue: String,
         @DrawableRes val iconDrawableRes: Int? = null,
+        @ColorRes val textColorRes: Int? = null,
         val clickCallback: (() -> Unit)? = null
 ) : EntityDetailsListItem() {
     override val id = fieldTitleStringRes.toLong()

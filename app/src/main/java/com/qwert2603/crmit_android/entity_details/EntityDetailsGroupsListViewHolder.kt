@@ -3,9 +3,11 @@ package com.qwert2603.crmit_android.entity_details
 import android.view.ViewGroup
 import com.qwert2603.andrlib.base.recyclerview.BaseRecyclerViewAdapter
 import com.qwert2603.andrlib.base.recyclerview.BaseRecyclerViewHolder
+import com.qwert2603.andrlib.util.color
 import com.qwert2603.andrlib.util.setVisible
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.di.DiHolder
+import com.qwert2603.crmit_android.entity.AccountType
 import com.qwert2603.crmit_android.entity.GroupBrief
 import com.qwert2603.crmit_android.navigation.ScreenKey
 import kotlinx.android.synthetic.main.item_entity_details_group.view.*
@@ -18,6 +20,14 @@ class EntityDetailsGroupsListViewHolder(parent: ViewGroup) : BaseRecyclerViewHol
             super.bind(m)
             val showTeacherFio = this@EntityDetailsGroupsListViewHolder.m!!.showTeacherFio
             groupName_TextView.text = if (showTeacherFio) "${m.name} (${m.teacherFio})" else m.name
+
+            val entityDetailsAdapter = this@EntityDetailsGroupsListViewHolder.adapter as EntityDetailsAdapter
+            groupName_TextView.setTextColor(resources.color(
+                    if (entityDetailsAdapter.authedUserAccountType == AccountType.TEACHER && entityDetailsAdapter.authedUserDetailsId == m.teacherId)
+                        R.color.colorAccent
+                    else
+                        android.R.color.black
+            ))
         }
     }
 

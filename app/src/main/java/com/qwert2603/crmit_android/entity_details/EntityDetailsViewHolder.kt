@@ -3,6 +3,7 @@ package com.qwert2603.crmit_android.entity_details
 import android.view.View
 import android.view.ViewGroup
 import com.qwert2603.andrlib.base.recyclerview.BaseRecyclerViewHolder
+import com.qwert2603.andrlib.util.color
 import com.qwert2603.crmit_android.R
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.item_entity_details_field.view.*
@@ -23,6 +24,7 @@ class EntityDetailsViewHolder(parent: ViewGroup) : BaseRecyclerViewHolder<Entity
             background = null
         }
 
+        fieldValue_TextView.setTextColor(resources.color(m.textColorRes ?: android.R.color.black))
         fieldName_TextView.setText(m.fieldTitleStringRes)
         fieldValue_TextView.text = m.fieldValue
         fieldValue_TextView.setCompoundDrawablesRelativeWithIntrinsicBounds(

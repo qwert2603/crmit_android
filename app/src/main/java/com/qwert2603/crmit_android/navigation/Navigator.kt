@@ -73,11 +73,11 @@ class Navigator(private val activity: ActivityInterface)
         ScreenKey.MASTERS -> MastersListFragment()
         ScreenKey.STUDENTS -> StudentsListFragment()
         ScreenKey.ABOUT -> AboutFragment()
-        ScreenKey.STUDENT_DETAILS -> (data as EntityDetailsFragment.Key).let { StudentDetailsFragmentBuilder.newStudentDetailsFragment(it.entityId, it.entityName, it.entityNameStrike) }
-        ScreenKey.SECTION_DETAILS -> (data as EntityDetailsFragment.Key).let { SectionDetailsFragmentBuilder.newSectionDetailsFragment(it.entityId, it.entityName, it.entityNameStrike) }
-        ScreenKey.GROUP_DETAILS -> (data as EntityDetailsFragment.Key).let { GroupDetailsFragmentBuilder.newGroupDetailsFragment(it.entityId, it.entityName, it.entityNameStrike) }
-        ScreenKey.TEACHER_DETAILS -> (data as EntityDetailsFragment.Key).let { TeacherDetailsFragmentBuilder.newTeacherDetailsFragment(it.entityId, it.entityName, it.entityNameStrike) }
-        ScreenKey.MASTER_DETAILS -> (data as EntityDetailsFragment.Key).let { MasterDetailsFragmentBuilder.newMasterDetailsFragment(it.entityId, it.entityName, it.entityNameStrike) }
+        ScreenKey.STUDENT_DETAILS -> (data as EntityDetailsFragment.Key).let { StudentDetailsFragmentBuilder.newStudentDetailsFragment(it.entityId, it.entityName, it.entityNameColorAccent, it.entityNameStrike) }
+        ScreenKey.SECTION_DETAILS -> (data as EntityDetailsFragment.Key).let { SectionDetailsFragmentBuilder.newSectionDetailsFragment(it.entityId, it.entityName, it.entityNameColorAccent, it.entityNameStrike) }
+        ScreenKey.GROUP_DETAILS -> (data as EntityDetailsFragment.Key).let { GroupDetailsFragmentBuilder.newGroupDetailsFragment(it.entityId, it.entityName, it.entityNameColorAccent, it.entityNameStrike) }
+        ScreenKey.TEACHER_DETAILS -> (data as EntityDetailsFragment.Key).let { TeacherDetailsFragmentBuilder.newTeacherDetailsFragment(it.entityId, it.entityName, it.entityNameColorAccent, it.entityNameStrike) }
+        ScreenKey.MASTER_DETAILS -> (data as EntityDetailsFragment.Key).let { MasterDetailsFragmentBuilder.newMasterDetailsFragment(it.entityId, it.entityName, it.entityNameColorAccent, it.entityNameStrike) }
         ScreenKey.STUDENTS_IN_GROUP -> (data as StudentsInGroupListFragment.Key).let { StudentsInGroupListFragmentBuilder.newStudentsInGroupListFragment(it.groupId, it.groupName) }
         ScreenKey.LESSONS_IN_GROUP -> (data as LessonsInGroupListFragment.Key).let { LessonsInGroupListFragmentBuilder.newLessonsInGroupListFragment(it.groupId, it.groupName) }
         ScreenKey.LESSON_DETAILS -> LessonDetailsFragment()

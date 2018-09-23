@@ -2,10 +2,12 @@ package com.qwert2603.crmit_android.list_fragments
 
 import android.os.Bundle
 import android.view.View
+import com.qwert2603.andrlib.util.color
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.db.DaoInterface
 import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entities_list.EntitiesListFragment
+import com.qwert2603.crmit_android.entity.AccountType
 import com.qwert2603.crmit_android.entity.GroupBrief
 import com.qwert2603.crmit_android.entity_details.EntityDetailsFragment
 import com.qwert2603.crmit_android.navigation.ScreenKey
@@ -23,6 +25,11 @@ class GroupsListFragment : EntitiesListFragment<GroupBrief>() {
     override val entityPluralsRes = R.plurals.groups
 
     override fun View.bindEntity(e: GroupBrief) {
+        teacherFio_TextView.setTextColor(resources.color(if (currentViewState.authedUserAccountType == AccountType.TEACHER && e.teacherId == currentViewState.authedUserDetailsId)
+            R.color.colorAccent
+        else
+            android.R.color.black
+        ))
         name_TextView.text = e.name
         name_TextView.transitionName = "entity_name_${e.id}"
         teacherFio_TextView.text = e.teacherFio

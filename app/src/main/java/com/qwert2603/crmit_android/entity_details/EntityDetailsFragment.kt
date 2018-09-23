@@ -15,6 +15,7 @@ import com.qwert2603.andrlib.base.mvi.load_refresh.LRFragment
 import com.qwert2603.andrlib.base.mvi.load_refresh.LoadRefreshPanel
 import com.qwert2603.andrlib.base.recyclerview.BaseRecyclerViewAdapter
 import com.qwert2603.andrlib.model.IdentifiableLong
+import com.qwert2603.andrlib.util.color
 import com.qwert2603.andrlib.util.inflate
 import com.qwert2603.andrlib.util.showIfNotYet
 import com.qwert2603.crmit_android.R
@@ -31,7 +32,8 @@ abstract class EntityDetailsFragment<E : Any> : LRFragment<EntityDetailsViewStat
             val entityId: Long,
             val entityName: String,
             val entityNameTextView: TextView? = null,
-            val entityNameStrike: Boolean = false
+            val entityNameStrike: Boolean = false,
+            val entityNameColorAccent: Boolean = false
     )
 
     @Arg
@@ -43,6 +45,9 @@ abstract class EntityDetailsFragment<E : Any> : LRFragment<EntityDetailsViewStat
     @Arg
     var entityNameStrike: Boolean = false
 
+    @Arg
+    var entityNameColorAccent: Boolean = false
+
 
     protected abstract val source: (entityId: Long) -> Single<E>
 
@@ -51,6 +56,8 @@ abstract class EntityDetailsFragment<E : Any> : LRFragment<EntityDetailsViewStat
     protected abstract fun E.entityName(): String
 
     protected open fun E.entityNameStrike() = false
+
+    protected open fun EntityDetailsViewState<E>.entityNameColorAccent() = false
 
     protected abstract fun E.toDetailsList(): List<EntityDetailsListItem>
 
@@ -77,6 +84,7 @@ abstract class EntityDetailsFragment<E : Any> : LRFragment<EntityDetailsViewStat
         toolbar.title = entityName
         toolbarTitleTextView.transitionName = "entity_name_$entityId"
         toolbarTitleTextView.setStrike(entityNameStrike)
+        toolbarTitleTextView.setTextColor(resources.color(if (entityNameColorAccent) R.color.colorAccent else android.R.color.black))
 
         view.findViewById<ViewAnimator>(R.id.list_ViewAnimator).showIfNotYet(2)
 
@@ -93,7 +101,11 @@ abstract class EntityDetailsFragment<E : Any> : LRFragment<EntityDetailsViewStat
         vs.entity?.let {
             toolbarTitleTextView.text = it.entityName()
             toolbarTitleTextView.setStrike(it.entityNameStrike())
+            toolbarTitleTextView.setTextColor(resources.color(if (vs.entityNameColorAccent()) R.color.colorAccent else android.R.color.black))
         }
+
+        adapter.authedUserAccountType = vs.authedUserAccountType
+        adapter.authedUserDetailsId = vs.authedUserDetailsId
 
         renderIfChanged({ entity }) {
             if (it == null) return@renderIfChanged

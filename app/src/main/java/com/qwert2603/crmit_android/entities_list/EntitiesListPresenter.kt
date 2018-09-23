@@ -26,7 +26,9 @@ class EntitiesListPresenter<E : IdentifiableLong>(
             listModel = EMPTY_LIST_MODEL,
             showingList = emptyList(),
             searchOpen = false,
-            searchQuery = ""
+            searchQuery = "",
+            authedUserAccountType = null,
+            authedUserDetailsId = null
     )
 
     private val closeSearchClicksIntent = intent { it.closeSearchClicks() }.shareAfterViewSubscribed()
@@ -118,13 +120,20 @@ class EntitiesListPresenter<E : IdentifiableLong>(
                     .map { EntitiesListPartialChange.CloseSearch },
             searchQueryChanges
                     .skip(1)
-                    .map { EntitiesListPartialChange.SearchQueryChanged(it) }
+                    .map { EntitiesListPartialChange.SearchQueryChanged(it) },
+            loadIntent
+                    .map { DiHolder.userSettingsRepo.loginResult!! }
+                    .map { EntitiesListPartialChange.AuthedUserLoaded(it) }
     ))
 
     override fun stateReducer(vs: EntitiesListViewState<E>, change: PartialChange): EntitiesListViewState<E> {
-        LogUtils.d("EntitiesListPresenter stateReducer $change")
+        LogUtils.d { "EntitiesListPresenter stateReducer $change" }
         if (change !is EntitiesListPartialChange) return super.stateReducer(vs, change)
         return when (change) {
+            is EntitiesListPartialChange.AuthedUserLoaded -> vs.copy(
+                    authedUserAccountType = change.loginResult.accountType,
+                    authedUserDetailsId = change.loginResult.detailsId
+            )
             EntitiesListPartialChange.OpenSearch -> vs.copy(searchOpen = true)
             EntitiesListPartialChange.CloseSearch -> vs.copy(searchOpen = false)
             is EntitiesListPartialChange.SearchQueryChanged -> vs.copy(searchQuery = change.query)

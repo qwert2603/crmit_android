@@ -2,11 +2,13 @@ package com.qwert2603.crmit_android.list_fragments
 
 import android.os.Bundle
 import android.view.View
+import com.qwert2603.andrlib.util.color
 import com.qwert2603.andrlib.util.setVisible
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.db.DaoInterface
 import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entities_list.EntitiesListFragment
+import com.qwert2603.crmit_android.entity.AccountType
 import com.qwert2603.crmit_android.entity.Teacher
 import com.qwert2603.crmit_android.entity_details.EntityDetailsFragment
 import com.qwert2603.crmit_android.navigation.ScreenKey
@@ -20,6 +22,7 @@ class TeachersListFragment : EntitiesListFragment<Teacher>() {
     override val vhLayoutRes = R.layout.item_teacher
     override val entityPluralsRes = R.plurals.teachers
     override fun View.bindEntity(e: Teacher) {
+        fio_TextView.setTextColor(resources.color(if (e.isAuthed()) R.color.colorAccent else android.R.color.black))
         fio_TextView.text = e.fio
         disabled_TextView.setVisible(!e.systemUser.enabled)
         fio_TextView.setStrike(!e.systemUser.enabled)
@@ -42,11 +45,14 @@ class TeachersListFragment : EntitiesListFragment<Teacher>() {
                             entityId = it.id,
                             entityName = it.fio,
                             entityNameTextView = _list_RecyclerView.findViewHolderForItemId(it.id).itemView.fio_TextView,
-                            entityNameStrike = !it.systemUser.enabled
+                            entityNameStrike = !it.systemUser.enabled,
+                            entityNameColorAccent = it.isAuthed()
                     ))
                 }
                 .disposeOnDestroyView()
 
         super.onViewCreated(view, savedInstanceState)
     }
+
+    private fun Teacher.isAuthed() = currentViewState.authedUserAccountType == AccountType.TEACHER && this.id == currentViewState.authedUserDetailsId
 }
