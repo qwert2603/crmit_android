@@ -8,6 +8,8 @@ import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entity.Attending
 import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.schedulers.Schedulers
+import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
 class LessonDetailsPresenter(private val lessonId: Long)
@@ -19,6 +21,8 @@ class LessonDetailsPresenter(private val lessonId: Long)
 
     private val loadRefreshPartialChanges = loadRefreshPartialChanges().shareAfterViewSubscribed()
 
+    private val saveAttendingsStateScheduler = Schedulers.from(Executors.newSingleThreadExecutor())
+
     override val partialChanges: Observable<PartialChange> = Observable.merge(listOf(
             loadRefreshPartialChanges,
             loadIntent
@@ -27,7 +31,7 @@ class LessonDetailsPresenter(private val lessonId: Long)
             attendingStatesChangesIntent
                     .map { LessonDetailsPartialChange.AttendingStateChanged(it.attendingId, it.attendingState) },
             attendingStatesChangesIntent
-                    .concatMap { params ->
+                    .flatMap { params ->
                         DiHolder.rest.saveAttendingState(params)
                                 .doOnComplete {
                                     DiHolder.attendingDao
@@ -37,8 +41,8 @@ class LessonDetailsPresenter(private val lessonId: Long)
                                 .toSingleDefault<LessonDetailsPartialChange>(LessonDetailsPartialChange.UploadAttendingStateSuccess(params.attendingId))
                                 .onErrorReturnItem(LessonDetailsPartialChange.UploadAttendingStateError(params.attendingId))
                                 .toObservable()
+                                .subscribeOn(saveAttendingsStateScheduler)
                                 .startWith(LessonDetailsPartialChange.UploadAttendingStateStarted(params.attendingId))
-                                .subscribeOn(DiHolder.modelSchedulersProvider.io)
                     }
     ))
 
