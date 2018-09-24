@@ -6,4 +6,6 @@ data class LoginResult(
         val detailsId: Long
 ) {
     fun getTokenSafe() = token
+
+    override fun toString() = "LoginResult(token='<token>', accountType=$accountType, detailsId=$detailsId)"
 }
