@@ -19,4 +19,22 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 -renamesourcefileattribute SourceFile
-#todo
+
+# andrlib_generator
+-dontwarn com.qwert2603.andrlib.generator.**
+
+# dao_generator
+-dontwarn com.qwert2603.dao_generator.**
+
+# retrofit & okhttp
+-dontwarn okio.**
+-dontwarn okhttp3.**
+-dontwarn javax.annotation.**
+-dontwarn retrofit2.**
+-dontwarn retrofit2.Platform$Java8
+-dontnote retrofit2.Platform
+-keepattributes Signature
+-keepattributes Exceptions
+
+-keep class com.qwert2603.crmit_android.entity.** { *; }
+-keep class com.qwert2603.crmit_android.rest.params.** { *; }
