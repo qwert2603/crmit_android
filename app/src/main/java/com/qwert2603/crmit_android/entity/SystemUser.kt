@@ -6,6 +6,13 @@ data class SystemUser(
         override val id: Long,
         val login: String,
         val lastSeen: Long,
+        val lastSeenWhere: Int,
         val systemRoleName: String,
         val enabled: Boolean
-) : IdentifiableLong
+) : IdentifiableLong {
+    companion object {
+        const val LAST_SEEN_REGISTRATION = 1
+        const val LAST_SEEN_WEB = 2
+        const val LAST_SEEN_ANDROID = 3
+    }
+}

@@ -65,6 +65,10 @@
     <string name="detailsField_endMonth">Окончание функционирования</string>
     <string name="detailsField_studentsCount">Кол-во учеников</string>
     <string name="detailsField_lessonsDoneCount">Проведено занятий</string>
+    <string name="detailsField_systemRoleName">Системная роль</string>
+    <string name="detailsField_lastSeen">Последний визит</string>
+
+    <string name="text_never">Никогда</string>
 
     <string name="text_no_groups">Нет групп</string>
     <string name="text_clear_cache">Очистить кеш и перезапустить</string>
@@ -88,5 +92,14 @@
 
     <string name="account_type_master">Руководитель</string>
     <string name="account_type_teacher">Преподаватель</string>
+
+    <string name="date_pattern_last_seen_date">d MMMM yyyy года</string>
+    <string name="date_pattern_last_seen_time">в H:mm</string>
+
+    <string name="today_text">сегодня</string>
+    <string name="yesterday_text">вчера</string>
+    <string name="day_before_yesterday_text">позавчера</string>
+    <string name="tomorrow_text">завтра</string>
+    <string name="day_after_tomorrow_text">послезавтра</string>
 
 </resources>

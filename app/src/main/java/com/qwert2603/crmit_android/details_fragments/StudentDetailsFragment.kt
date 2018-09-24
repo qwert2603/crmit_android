@@ -7,6 +7,7 @@ import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entity.Parent
 import com.qwert2603.crmit_android.entity.StudentFull
 import com.qwert2603.crmit_android.entity_details.*
+import com.qwert2603.crmit_android.util.toLastSeenString
 import com.qwert2603.crmit_android.util.toShowingDate
 
 @FragmentWithArgs
@@ -23,6 +24,8 @@ class StudentDetailsFragment : EntityDetailsFragment<StudentFull>() {
     override fun StudentFull.toDetailsList(): List<EntityDetailsListItem> = listOfNotNull(
             EntityDetailsSystemInfo(systemUser.enabled, filled),
             EntityDetailsField(R.string.detailsField_login, systemUser.login, R.drawable.ic_person_black_24dp),
+            EntityDetailsField(R.string.detailsField_systemRoleName, systemUser.systemRoleName),
+            EntityDetailsField(R.string.detailsField_lastSeen, systemUser.toLastSeenString(resources)),
             EntityDetailsField(R.string.detailsField_lessonsAttendedCount, lessonsAttendedCount.toString()),
             EntityDetailsField(R.string.detailsField_birthDate, birthDate.toShowingDate()),
             EntityDetailsField(R.string.detailsField_birthPlace, birthPlace),
