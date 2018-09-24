@@ -36,6 +36,7 @@ class AttendingViewHolder(parent: ViewGroup) : BaseRecyclerViewHolder<Attending>
         super.bind(m)
         studentFio_TextView.text = m.studentFio
         attendingStateView.setAttendingState(m.state)
+        attendingStateView.userCanClick = (adapter as AttendingsAdapter).userCanChangeAttendingState
 
         val uploadStatuses = (adapter as AttendingsAdapter).uploadStatuses
         UploadStatus.values().forEachIndexed { index, uploadStatus ->

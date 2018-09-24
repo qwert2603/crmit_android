@@ -1,6 +1,7 @@
 package com.qwert2603.crmit_android.util
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.widget.FrameLayout
 import com.qwert2603.andrlib.util.color
@@ -20,6 +21,21 @@ class AttendingStateView(context: Context, attrs: AttributeSet) : FrameLayout(co
     var state: Int = -1
         private set
 
+    private var clickBackground: Drawable? = null
+
+    var userCanClick = true
+        set(value) {
+            field = value
+            if (field) {
+                click_FrameLayout.setOnClickListener { stateChangesFromClicksListener?.invoke(nextState()) }
+                clickBackground?.let { click_FrameLayout.background = it }
+            } else {
+                click_FrameLayout.setOnClickListener(null)
+                clickBackground = click_FrameLayout.background
+                click_FrameLayout.background = null
+            }
+        }
+
 //    private var backColorAnimator: Animator? = null
 //        set(value) {
 //            field?.cancel()
@@ -31,7 +47,6 @@ class AttendingStateView(context: Context, attrs: AttributeSet) : FrameLayout(co
 
     init {
         inflate(R.layout.view_attending_state, attachToRoot = true)
-        click_FrameLayout.setOnClickListener { stateChangesFromClicksListener?.invoke(nextState()) }
         if (isInEditMode) setAttendingState(Attending.ATTENDING_STATE_WAS_NOT_ILL)
     }
 

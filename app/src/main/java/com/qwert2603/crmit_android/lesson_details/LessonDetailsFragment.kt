@@ -116,6 +116,7 @@ class LessonDetailsFragment : LRFragment<LessonDetailsViewState, LessonDetailsVi
         }
 
         adapter.uploadStatuses = vs.uploadingAttendingStateStatuses
+        adapter.userCanChangeAttendingState = vs.isUserCanChangeAttendingStates()
         adapter.adapterList = BaseRecyclerViewAdapter.AdapterList(vs.attendings ?: emptyList())
     }
 

@@ -16,4 +16,10 @@ data class LessonDetailsViewState(
         val uploadingAttendingStateStatuses: Map<Long, UploadStatus>,
         val authedUserAccountType: AccountType?,
         val authedUserDetailsId: Long?
-) : LRViewState
+) : LRViewState {
+    fun isUserCanChangeAttendingStates() = when (authedUserAccountType) {
+        AccountType.MASTER -> true
+        AccountType.TEACHER -> authedUserDetailsId != null && authedUserDetailsId == groupBrief?.teacherId
+        null -> false
+    }
+}

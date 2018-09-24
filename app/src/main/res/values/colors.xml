@@ -13,5 +13,5 @@
 
     <color name="attending_state_was_not">#666666</color>
     <color name="attending_state_was">#36D636</color>
-    <color name="attending_state_was_not_ill">#D6D606</color>
+    <color name="attending_state_was_not_ill">#F69606</color>
 </resources>

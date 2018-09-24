@@ -16,5 +16,7 @@ class AttendingsAdapter : BaseRecyclerViewAdapter<Attending>() {
             notifyItemRangeChanged(0, itemCount)
         }
 
+    var userCanChangeAttendingState = false
+
     override fun onCreateViewHolderModel(parent: ViewGroup, viewType: Int) = AttendingViewHolder(parent)
 }

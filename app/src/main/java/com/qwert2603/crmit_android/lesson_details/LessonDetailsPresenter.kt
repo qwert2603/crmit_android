@@ -47,17 +47,35 @@ class LessonDetailsPresenter(private val lessonId: Long)
             .doOnSuccess { DiHolder.attendingDao.addItems(it) }
             .subscribeOn(DiHolder.modelSchedulersProvider.io)
 
-    private fun Single<List<Attending>>.toInitialModel(): Single<LessonDetailsInitialModel> = map { attendings ->
-        val lesson = DiHolder.lessonDao
-                .getItem(lessonId)
-        LessonDetailsInitialModel(
-                groupBrief = lesson
-                        ?.groupId
-                        ?.let { DiHolder.groupBriefDaoInterface.getItem(it) },
-                date = lesson?.date,
-                attendings = attendings
-        )
-    }
+    private fun Single<List<Attending>>.toInitialModel(): Single<LessonDetailsInitialModel> = this
+            .flatMap { attendings ->
+                val lesson = DiHolder.lessonDao.getItem(lessonId)
+                if (lesson != null) {
+                    DiHolder.rest.getGroupDetails(lesson.groupId)
+                            .doOnSuccess { DiHolder.groupFullDaoInterface.saveItem(it) }
+                            .map { it.toGroupBrief() }
+                            .doOnSuccess { DiHolder.groupBriefDaoInterface.saveItem(it) }
+                            .map {
+                                LessonDetailsInitialModel(
+                                        groupBrief = it,
+                                        date = lesson.date,
+                                        attendings = attendings
+                                )
+                            }
+                            .onErrorReturnItem(LessonDetailsInitialModel(
+                                    groupBrief = DiHolder.groupBriefDaoInterface.getItem(lesson.groupId)
+                                            ?: DiHolder.groupFullDaoInterface.getItem(lesson.groupId)?.toGroupBrief(),
+                                    date = lesson.date,
+                                    attendings = attendings
+                            ))
+                } else {
+                    Single.just(LessonDetailsInitialModel(
+                            groupBrief = null,
+                            date = null,
+                            attendings = attendings
+                    ))
+                }
+            }
 
     override fun initialModelSingle(additionalKey: Any): Single<LessonDetailsInitialModel> = getAttendingsFromServer()
             .onErrorResumeNext { t ->
