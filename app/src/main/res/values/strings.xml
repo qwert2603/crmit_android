@@ -109,4 +109,9 @@
     <string name="attending_state_was">был</string>
     <string name="attending_state_was_not_ill">болел</string>
 
+    <string name="message_there_will_be_attending_changes_caching">
+        В настоящее время изменения посещений НЕ кешируются.
+        Все, что не удалось отправить на сервер, будет потеряно при закрытии экрана.
+    </string>
+
 </resources>

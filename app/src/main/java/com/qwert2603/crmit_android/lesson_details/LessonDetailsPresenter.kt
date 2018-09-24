@@ -8,6 +8,7 @@ import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entity.Attending
 import io.reactivex.Observable
 import io.reactivex.Single
+import java.util.concurrent.TimeUnit
 
 class LessonDetailsPresenter(private val lessonId: Long)
     : LRPresenter<Any, LessonDetailsInitialModel, LessonDetailsViewState, LessonDetailsView>(DiHolder.uiSchedulerProvider) {
@@ -16,8 +17,10 @@ class LessonDetailsPresenter(private val lessonId: Long)
 
     private val attendingStatesChangesIntent = intent { it.attendingStatesChanges() }.shareAfterViewSubscribed()
 
-    override val partialChanges: Observable<PartialChange> = Observable.merge(
-            loadRefreshPartialChanges(),
+    private val loadRefreshPartialChanges = loadRefreshPartialChanges().shareAfterViewSubscribed()
+
+    override val partialChanges: Observable<PartialChange> = Observable.merge(listOf(
+            loadRefreshPartialChanges,
             loadIntent
                     .map { DiHolder.userSettingsRepo.loginResult }
                     .map { LessonDetailsPartialChange.AuthedUserLoaded(it) },
@@ -37,7 +40,7 @@ class LessonDetailsPresenter(private val lessonId: Long)
                                 .startWith(LessonDetailsPartialChange.UploadAttendingStateStarted(params.attendingId))
                                 .subscribeOn(DiHolder.modelSchedulersProvider.io)
                     }
-    )
+    ))
 
     private fun getAttendingsFromServer() = DiHolder.rest
             .getAttendingsOfLesson(lessonId)
@@ -114,5 +117,22 @@ class LessonDetailsPresenter(private val lessonId: Long)
                     uploadingAttendingStateStatuses = vs.uploadingAttendingStateStatuses + Pair(change.attendingId, UploadStatus.DONE)
             )
         }
+    }
+
+    override fun bindIntents() {
+        super.bindIntents()
+
+        loadRefreshPartialChanges
+                .filter { it is LRPartialChange.InitialModelLoaded<*> }
+                .firstOrError()
+                .delay(2, TimeUnit.SECONDS)
+                .doOnSuccess {
+                    if (!DiHolder.userSettingsRepo.thereWillBeAttendingChangesCachingShown) {
+                        DiHolder.userSettingsRepo.thereWillBeAttendingChangesCachingShown = true
+                        viewActions.onNext(LessonDetailsViewAction.ShowThereWillBeAttendingChangesCaching)
+                    }
+                }
+                .toObservable()
+                .subscribeToView()
     }
 }

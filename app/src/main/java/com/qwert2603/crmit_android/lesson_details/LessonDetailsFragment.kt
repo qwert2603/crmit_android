@@ -123,6 +123,7 @@ class LessonDetailsFragment : LRFragment<LessonDetailsViewState, LessonDetailsVi
         if (va !is LessonDetailsViewAction) return super.executeAction(va)
         when (va) {
             LessonDetailsViewAction.ShowingCachedData -> Snackbar.make(lessonDetails_CoordinatorLayout, R.string.text_showing_cached_data, Snackbar.LENGTH_SHORT).show()
+            LessonDetailsViewAction.ShowThereWillBeAttendingChangesCaching -> ThereWillBeAttendingChangesCachingDialogFragment().show(fragmentManager, null)
         }.also { }
     }
 }
