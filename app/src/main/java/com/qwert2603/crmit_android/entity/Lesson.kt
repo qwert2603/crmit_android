@@ -15,5 +15,6 @@ import com.qwert2603.dao_generator.GenerateDao
 data class Lesson(
         @PrimaryKey override val id: Long,
         val groupId: Long,
+        val teacherId: Long,
         val date: String
 ) : IdentifiableLong

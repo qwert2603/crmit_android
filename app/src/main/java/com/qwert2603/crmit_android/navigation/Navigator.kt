@@ -20,7 +20,7 @@ import com.qwert2603.crmit_android.cabinet.CabinetFragment
 import com.qwert2603.crmit_android.details_fragments.*
 import com.qwert2603.crmit_android.entity_details.EntityDetailsFragment
 import com.qwert2603.crmit_android.greeting.GreetingFragment
-import com.qwert2603.crmit_android.lesson_details.LessonDetailsFragment
+import com.qwert2603.crmit_android.lesson_details.LessonDetailsFragmentBuilder
 import com.qwert2603.crmit_android.list_fragments.*
 import com.qwert2603.crmit_android.login.LoginFragment
 import ru.terrakok.cicerone.android.SupportFragmentNavigator
@@ -80,7 +80,7 @@ class Navigator(private val activity: ActivityInterface)
         ScreenKey.MASTER_DETAILS -> (data as EntityDetailsFragment.Key).let { MasterDetailsFragmentBuilder.newMasterDetailsFragment(it.entityId, it.entityName, it.entityNameColorAccent, it.entityNameStrike) }
         ScreenKey.STUDENTS_IN_GROUP -> (data as StudentsInGroupListFragment.Key).let { StudentsInGroupListFragmentBuilder.newStudentsInGroupListFragment(it.groupId, it.groupName) }
         ScreenKey.LESSONS_IN_GROUP -> (data as LessonsInGroupListFragment.Key).let { LessonsInGroupListFragmentBuilder.newLessonsInGroupListFragment(it.groupId, it.groupName) }
-        ScreenKey.LESSON_DETAILS -> LessonDetailsFragment()
+        ScreenKey.LESSON_DETAILS -> LessonDetailsFragmentBuilder.newLessonDetailsFragment(data as Long)
         ScreenKey.GREETING -> GreetingFragment()
         ScreenKey.LOGIN -> LoginFragment()
         ScreenKey.CABINET -> CabinetFragment()

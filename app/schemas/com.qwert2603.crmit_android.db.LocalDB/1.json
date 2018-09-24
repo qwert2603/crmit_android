@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "6b21c12d47ff3fe0b05011c90248dc59",
+    "identityHash": "d9615198e51d9d233cd5a1f4347a563b",
     "entities": [
       {
         "tableName": "Master",
@@ -736,7 +736,7 @@
       },
       {
         "tableName": "Lesson",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `groupId` INTEGER NOT NULL, `date` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `groupId` INTEGER NOT NULL, `teacherId` INTEGER NOT NULL, `date` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -747,6 +747,12 @@
           {
             "fieldPath": "groupId",
             "columnName": "groupId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "teacherId",
+            "columnName": "teacherId",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -768,7 +774,7 @@
       },
       {
         "tableName": "Attending",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `lessonId` INTEGER NOT NULL, `studentId` INTEGER NOT NULL, `state` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `lessonId` INTEGER NOT NULL, `studentId` INTEGER NOT NULL, `studentFio` TEXT NOT NULL, `state` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -786,6 +792,12 @@
             "fieldPath": "studentId",
             "columnName": "studentId",
             "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "studentFio",
+            "columnName": "studentFio",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
@@ -807,7 +819,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"6b21c12d47ff3fe0b05011c90248dc59\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"d9615198e51d9d233cd5a1f4347a563b\")"
     ]
   }
 }

@@ -10,4 +10,8 @@
     <color name="navigation_menu_item_background">#EEEEEE</color>
     <color name="navigation_menu_item_background_selected">#DDDDDD</color>
     <color name="navigation_menu_item_background_pressed">#CCCCCC</color>
+
+    <color name="attending_state_was_not">#666666</color>
+    <color name="attending_state_was">#36D636</color>
+    <color name="attending_state_was_not_ill">#D6D606</color>
 </resources>

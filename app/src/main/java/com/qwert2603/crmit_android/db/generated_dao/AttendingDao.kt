@@ -24,7 +24,7 @@ interface AttendingDao {
         " SELECT *" +
         " FROM Attending" +
         " WHERE lessonId = :lessonId" +
-        " ORDER BY id" +
+        " ORDER BY studentFio" +
         " LIMIT :count" +
         " OFFSET :offset"
     )

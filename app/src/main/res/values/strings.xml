@@ -11,6 +11,8 @@
     <string name="title_lessons_in_group" formatted="true">Занятия в %s</string>
     <string name="title_login">Вход</string>
     <string name="title_cabinet">Кабинет</string>
+    <string name="title_lesson_default">Занятие</string>
+    <string name="title_lesson_format" formatted="true">Занятие %s</string>
 
     <string name="price_format" formatted="true">%s ₽</string>
     <string name="discount_format" formatted="true">скидка: %s ₽</string>
@@ -53,6 +55,7 @@
     <string name="detailsField_mother">Мать</string>
     <string name="detailsField_father">Отец</string>
     <string name="detailsField_groups">Группы</string>
+    <string name="detailsField_group">Группа</string>
     <string name="detailsField_address">Адрес</string>
     <string name="detailsField_email">E-mail</string>
     <string name="detailsField_homePhone">Домашний телефон</string>
@@ -101,5 +104,9 @@
     <string name="day_before_yesterday_text">позавчера</string>
     <string name="tomorrow_text">завтра</string>
     <string name="day_after_tomorrow_text">послезавтра</string>
+
+    <string name="attending_state_was_not">не был</string>
+    <string name="attending_state_was">был</string>
+    <string name="attending_state_was_not_ill">болел</string>
 
 </resources>
