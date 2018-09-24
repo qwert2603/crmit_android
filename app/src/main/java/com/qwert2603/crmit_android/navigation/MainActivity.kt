@@ -2,6 +2,7 @@ package com.qwert2603.crmit_android.navigation
 
 import android.app.Service
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
@@ -24,6 +25,51 @@ import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
 
 class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager {
+
+    companion object {
+        private fun getScreenKeyFromIntent(intent: Intent): Pair<ScreenKey, Any?>? {
+            if (intent.action != Intent.ACTION_VIEW) return null
+            val pathSegments = intent.data.pathSegments
+            val result: Any = when (pathSegments.getOrNull(0)) {
+                "users" -> when (pathSegments.getOrNull(1)) {
+                    "masters" -> ScreenKey.MASTERS
+                    "teachers" -> ScreenKey.TEACHERS
+                    "students" -> ScreenKey.STUDENTS
+                    "master" -> /*pathSegments.getOrNull(2)?.toIntOrNull()
+                                ?.let { Pair(ScreenKey.MASTER_DETAILS, it) } ?:*/ ScreenKey.MASTERS
+                    "teacher" -> /*pathSegments.getOrNull(2)?.toIntOrNull()
+                            ?.let { Pair(ScreenKey.TEACHER_DETAILS, it) } ?:*/ ScreenKey.TEACHERS
+                    "student_details" -> /*pathSegments.getOrNull(2)?.toIntOrNull()
+                            ?.let { Pair(ScreenKey.STUDENT_DETAILS, it) } ?:*/ ScreenKey.STUDENTS
+                    else -> ScreenKey.CABINET
+                }
+                "structure" -> when (pathSegments.getOrNull(1)) {
+                    "groups" -> ScreenKey.GROUPS
+                    "sections" -> ScreenKey.SECTIONS
+                    "group" -> /*pathSegments.getOrNull(2)?.toIntOrNull()
+                            ?.let { Pair(ScreenKey.GROUP_DETAILS, it) } ?:*/ ScreenKey.GROUPS
+                    "section" -> /*pathSegments.getOrNull(2)?.toIntOrNull()
+                            ?.let { Pair(ScreenKey.SECTION_DETAILS, it) } ?:*/ ScreenKey.SECTION_DETAILS
+                    "group_details" -> /*pathSegments.getOrNull(2)?.toIntOrNull()
+                            ?.let { Pair(ScreenKey.STUDENTS_IN_GROUP, it) } ?:*/ ScreenKey.GROUPS
+                    "students_in_group" -> /*pathSegments.getOrNull(2)?.toIntOrNull()
+                            ?.let { Pair(ScreenKey.STUDENTS_IN_GROUP, it) } ?:*/ ScreenKey.GROUPS
+                    else -> ScreenKey.CABINET
+                }
+//                "lessons" -> when {
+//                    pathSegments.getOrNull(1) == "months" -> pathSegments.getOrNull(2)?.toIntOrNull()
+//                            ?.let { Pair(ScreenKey.LESSONS_IN_GROUP, it) } ?: ScreenKey.CABINET
+//                    else -> pathSegments.getOrNull(1)?.toIntOrNull()
+//                            ?.let { Pair(ScreenKey.LESSONS_IN_GROUP, it) } ?: ScreenKey.GROUPS
+//                }
+                else -> ScreenKey.CABINET
+            }
+            return result.let {
+                if (it is ScreenKey) Pair(it, null)
+                else it as Pair<ScreenKey, Any?>
+            }
+        }
+    }
 
     private val router: Router = DiHolder.router
     private val navigatorHolder: NavigatorHolder = DiHolder.navigatorHolder
@@ -70,11 +116,13 @@ class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager {
         setContentView(R.layout.activity_main)
 
         if (savedInstanceState == null) {
-            router.newRootScreen(when {
-                !DiHolder.userSettingsRepo.greetingShown -> ScreenKey.GREETING
-                DiHolder.userSettingsRepo.loginResult == null -> ScreenKey.LOGIN
-                else -> ScreenKey.CABINET
-            }.name)
+            val screenKeyFromIntent = getScreenKeyFromIntent(intent)
+            when {
+                screenKeyFromIntent != null -> router.newRootScreen(screenKeyFromIntent.first.name, screenKeyFromIntent.second)
+                !DiHolder.userSettingsRepo.greetingShown -> router.newRootScreen(ScreenKey.GREETING.name)
+                DiHolder.userSettingsRepo.loginResult == null -> router.newRootScreen(ScreenKey.LOGIN.name)
+                else -> router.newRootScreen(ScreenKey.CABINET.name)
+            }
         }
 
         headerNavigation = navigation_view.inflate(R.layout.header_navigation)
@@ -112,6 +160,15 @@ class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager {
         activity_DrawerLayout.removeDrawerListener(drawerListener)
         navigationDisposable.clear()
         super.onStop()
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        getScreenKeyFromIntent(intent)
+                ?.also {
+                    closeDrawer()
+                    DiHolder.router.newRootScreen(it.first.name, it.second)
+                }
     }
 
     private fun navigateToItem(navigationItem: NavigationItem, newRootScreen: Boolean) {

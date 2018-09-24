@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">crmit home</string>
     <color name="launcher_color">#FFFF00</color>
+
+    <string name="action_view_host" translatable="true">192.168.1.26</string>
+    <string name="action_view_port" translatable="true">1918</string>
 </resources>
