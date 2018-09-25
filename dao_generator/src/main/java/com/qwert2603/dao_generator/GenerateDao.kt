@@ -18,5 +18,6 @@ annotation class Filter(
 
 enum class FilterType(val typeString: String) {
     LONG("Long"),
+    INT("Int"),
     STRING("String")
 }

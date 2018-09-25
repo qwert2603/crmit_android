@@ -66,6 +66,7 @@ object DiHolder {
     val studentInGroupDao by lazy { localDB.studentInGroupDao() }
     val lessonDao by lazy { localDB.lessonDao() }
     val attendingDao by lazy { localDB.attendingDao() }
+    val paymentDao by lazy { localDB.paymentDao() }
 
     fun clearDB() {
         listOf(
@@ -81,6 +82,7 @@ object DiHolder {
         studentInGroupDao.clearTable()
         lessonDao.clearTable()
         attendingDao.clearTable()
+        paymentDao.clearTable()
     }
 
     val userSettingsRepo by lazy { UserSettingsRepo(CrmitApplication.APP_CONTEXT) }

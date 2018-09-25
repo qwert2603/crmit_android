@@ -19,7 +19,8 @@ import com.qwert2603.crmit_android.entity.*
             GroupFull::class,
             StudentInGroup::class,
             Lesson::class,
-            Attending::class
+            Attending::class,
+            Payment::class
         ],
         version = 1,
         exportSchema = true
@@ -36,4 +37,5 @@ abstract class LocalDB : RoomDatabase() {
     abstract fun studentInGroupDao(): StudentInGroupDao
     abstract fun lessonDao(): LessonDao
     abstract fun attendingDao(): AttendingDao
+    abstract fun paymentDao(): PaymentDao
 }
