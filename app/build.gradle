@@ -13,6 +13,8 @@ android {
         versionName "1.0"
         buildConfigField "Long", "BIULD_TIME", System.currentTimeMillis() + "L"
 
+        resConfigs "ru"
+
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments = [
