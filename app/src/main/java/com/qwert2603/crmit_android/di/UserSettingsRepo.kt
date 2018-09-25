@@ -15,6 +15,7 @@ class UserSettingsRepo(appContext: Context) {
     var loginResult by PrefsLoginResultNullable(prefs, "loginResult", Gson())
     var displayFio by PrefsStringNullable(prefs, "displayFio")
     var thereWillBeAttendingChangesCachingShown by PrefsBoolean(prefs, "thereWillBeAttendingChangesCachingShown")
+    var thereWillBePaymentChangesCachingShown by PrefsBoolean(prefs, "thereWillBePaymentChangesCachingShown")
 
     fun isLogged() = loginResult != null
 
