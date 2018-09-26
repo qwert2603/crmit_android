@@ -22,35 +22,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical">
 
-        <FrameLayout
-            android:id="@+id/uploadStatus_FrameLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="36dp">
-
-            <ProgressBar
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_margin="6dp"
-                android:indeterminateTint="@android:color/black" />
-
-            <ImageView
-                android:id="@+id/uploadError_ImageView"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:padding="6dp"
-                android:src="@drawable/ic_warning_black_24dp"
-                android:tint="@color/colorAccent"
-                tools:ignore="ContentDescription" />
-
-            <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_margin="6dp"
-                android:src="@drawable/ic_done_black_24dp"
-                tools:ignore="ContentDescription" />
-
-        </FrameLayout>
+        <include layout="@layout/include_upload_status" />
 
         <com.qwert2603.crmit_android.util.AttendingStateView
             android:id="@+id/attendingStateView"

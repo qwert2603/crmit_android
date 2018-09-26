@@ -2,6 +2,7 @@ package com.qwert2603.crmit_android.lesson_details
 
 import android.view.ViewGroup
 import com.qwert2603.andrlib.base.recyclerview.BaseRecyclerViewAdapter
+import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.entity.Attending
 import com.qwert2603.crmit_android.rest.params.SaveAttendingStateParams
 import io.reactivex.subjects.PublishSubject
@@ -17,6 +18,8 @@ class AttendingsAdapter : BaseRecyclerViewAdapter<Attending>() {
         }
 
     var userCanChangeAttendingState = false
+
+    override fun pluralsRes() = R.plurals.students
 
     override fun onCreateViewHolderModel(parent: ViewGroup, viewType: Int) = AttendingViewHolder(parent)
 }

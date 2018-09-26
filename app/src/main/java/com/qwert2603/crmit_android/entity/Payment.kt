@@ -3,6 +3,7 @@ package com.qwert2603.crmit_android.entity
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 import com.qwert2603.andrlib.model.IdentifiableLong
+import com.qwert2603.crmit_android.rest.params.SavePaymentParams
 import com.qwert2603.dao_generator.Filter
 import com.qwert2603.dao_generator.FilterType
 import com.qwert2603.dao_generator.GenerateDao
@@ -11,7 +12,7 @@ import com.qwert2603.dao_generator.GenerateDao
 @GenerateDao(
         filters = [
             Filter("groupId", FilterType.LONG),
-            Filter("month", FilterType.INT)
+            Filter("monthNumber", FilterType.INT)
         ],
         orderBy = "studentFio"
 )
@@ -21,10 +22,18 @@ data class Payment(
         val studentId: Long,
         val studentFio: String,
         val groupId: Long,
-        val month: Int,
+        val monthNumber: Int,
         val value: Int,
         val cash: Boolean,
         val confirmed: Boolean,
         val comment: String,
         val needToPay: Int
-) : IdentifiableLong
+) : IdentifiableLong {
+    fun toSavePaymentParams() = SavePaymentParams(
+            paymentId = id,
+            value = value,
+            comment = comment,
+            cash = cash,
+            confirmed = confirmed
+    )
+}

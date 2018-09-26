@@ -43,7 +43,7 @@ class AboutFragment : Fragment() {
                 DiHolder.clearDB()
 
                 DiHolder.uiSchedulerProvider.ui.scheduleDirect {
-                    startActivity(Intent(requireContext(), MainActivity::class.java))
+                    startActivity(Intent(requireContext(), MainActivity::class.java))//todo: don't work
                     System.exit(0)
                 }
             }

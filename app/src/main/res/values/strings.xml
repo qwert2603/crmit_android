@@ -16,6 +16,7 @@
 
     <string name="price_format" formatted="true">%s ₽</string>
     <string name="discount_format" formatted="true">скидка: %s ₽</string>
+    <string name="payment_value_format" formatted="true" translatable="false">%s / %s ₽</string>
 
     <string name="app_info_text_format" formatted="true">
         <![CDATA[
@@ -70,6 +71,8 @@
     <string name="detailsField_lessonsDoneCount">Проведено занятий</string>
     <string name="detailsField_systemRoleName">Системная роль</string>
     <string name="detailsField_lastSeen">Последний визит</string>
+    <string name="detailsField_payments">Оплата</string>
+    <string name="detailsField_paymentsInfo">Информация о платежах</string>
 
     <string name="text_never">Никогда</string>
 
@@ -118,5 +121,9 @@
         В настоящее время изменения платежей НЕ кешируются.
         Все изменения, которые не удалось отправить на сервер, будут потеряны при закрытии экрана.
     </string>
+    <string name="text_cash">Наличные</string>
+    <string name="text_confirmed">Подтверждение</string>
+
+    <string name="text_no_comment">нет комментария</string>
 
 </resources>

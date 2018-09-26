@@ -11,6 +11,7 @@ import android.widget.TextView
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.entity.SystemUser
 import com.qwert2603.crmit_android.rest.Rest
+import io.reactivex.Observable
 import io.reactivex.functions.BiFunction
 import java.text.SimpleDateFormat
 import java.util.*
@@ -119,3 +120,7 @@ fun Date.onlyDate(): Date {
     calendar.set(Calendar.MILLISECOND, 0)
     return calendar.time
 }
+
+inline fun <T, R> Observable<T>.mapNotNull(crossinline mapper: (T) -> R?): Observable<R> = this
+        .filter { mapper(it) != null }
+        .map { mapper(it)!! }

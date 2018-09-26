@@ -14,4 +14,6 @@
     <color name="attending_state_was_not">#666666</color>
     <color name="attending_state_was">#36D636</color>
     <color name="attending_state_was_not_ill">#F69606</color>
+
+    <color name="payment_value_confirmed">#00B000</color>
 </resources>

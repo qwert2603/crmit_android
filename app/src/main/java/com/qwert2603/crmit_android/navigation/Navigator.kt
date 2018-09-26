@@ -23,6 +23,8 @@ import com.qwert2603.crmit_android.greeting.GreetingFragment
 import com.qwert2603.crmit_android.lesson_details.LessonDetailsFragmentBuilder
 import com.qwert2603.crmit_android.list_fragments.*
 import com.qwert2603.crmit_android.login.LoginFragment
+import com.qwert2603.crmit_android.payments.PaymentsFragment
+import com.qwert2603.crmit_android.payments.PaymentsFragmentBuilder
 import ru.terrakok.cicerone.android.SupportFragmentNavigator
 import ru.terrakok.cicerone.commands.Command
 import ru.terrakok.cicerone.commands.Forward
@@ -81,6 +83,7 @@ class Navigator(private val activity: ActivityInterface)
         ScreenKey.STUDENTS_IN_GROUP -> (data as StudentsInGroupListFragment.Key).let { StudentsInGroupListFragmentBuilder.newStudentsInGroupListFragment(it.groupId, it.groupName) }
         ScreenKey.LESSONS_IN_GROUP -> (data as LessonsInGroupListFragment.Key).let { LessonsInGroupListFragmentBuilder.newLessonsInGroupListFragment(it.groupId, it.groupName) }
         ScreenKey.LESSON_DETAILS -> LessonDetailsFragmentBuilder.newLessonDetailsFragment(data as Long)
+        ScreenKey.PAYMENTS -> (data as PaymentsFragment.Key).let { PaymentsFragmentBuilder.newPaymentsFragment(it.groupId, it.monthNumber) }
         ScreenKey.GREETING -> GreetingFragment()
         ScreenKey.LOGIN -> LoginFragment()
         ScreenKey.CABINET -> CabinetFragment()

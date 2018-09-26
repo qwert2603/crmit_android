@@ -3,6 +3,7 @@ package com.qwert2603.crmit_android.rest
 import com.qwert2603.crmit_android.entity.*
 import com.qwert2603.crmit_android.rest.params.LoginParams
 import com.qwert2603.crmit_android.rest.params.SaveAttendingStateParams
+import com.qwert2603.crmit_android.rest.params.SavePaymentParams
 import io.reactivex.Completable
 import io.reactivex.Single
 import retrofit2.http.*
@@ -79,8 +80,17 @@ interface Rest {
     @GET("attendings_of_lesson/{lesson_id}")
     fun getAttendingsOfLesson(@Path("lesson_id") lessonId: Long): Single<List<Attending>>
 
+    @GET("payments/{group_id}/{month_number}")
+    fun getPayments(
+            @Path("group_id") groupId: Long,
+            @Path("month_number") monthNumber: Int
+    ): Single<List<Payment>>
+
     @POST("save_attending_state")
     fun saveAttendingState(@Body saveAttendingStateParams: SaveAttendingStateParams): Completable
+
+    @POST("save_payment")
+    fun savePayment(@Body savePaymentParams: SavePaymentParams): Completable
 
     @POST(LOGIN_ENDPOINT)
     fun login(@Body loginParams: LoginParams): Single<LoginResult>

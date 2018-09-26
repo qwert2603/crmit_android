@@ -8,7 +8,7 @@ interface DaoInterface<T> {
 
     fun getItem(itemId: Long): T?
 
-    fun getItems(search: String, offset: Int, count: Int): List<T>
+    fun getItems(search: String = "", offset: Int = 0, count: Int = Int.MAX_VALUE): List<T>
 
     fun deleteAllItems()
 }

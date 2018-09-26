@@ -48,7 +48,10 @@ class LessonDetailsPresenter(private val lessonId: Long)
 
     private fun getAttendingsFromServer() = DiHolder.rest
             .getAttendingsOfLesson(lessonId)
-            .doOnSuccess { DiHolder.attendingDao.addItems(it) }
+            .doOnSuccess {
+                //     todo DiHolder.attendingDao.wrap(lessonId).deleteAllItems()
+                DiHolder.attendingDao.addItems(it)
+            }
             .subscribeOn(DiHolder.modelSchedulersProvider.io)
 
     private fun Single<List<Attending>>.toInitialModel(): Single<LessonDetailsInitialModel> = this
@@ -121,13 +124,12 @@ class LessonDetailsPresenter(private val lessonId: Long)
                     authedUserDetailsId = change.loginResult.detailsId
             )
             is LessonDetailsPartialChange.AttendingStateChanged -> vs.copy(
-                    attendings = vs.attendings
-                            ?.map {
-                                if (it.id == change.attendingId)
-                                    it.copy(state = change.state)
-                                else
-                                    it
-                            }
+                    attendings = vs.attendings?.map {
+                        if (it.id == change.attendingId)
+                            it.copy(state = change.state)
+                        else
+                            it
+                    }
             )
             is LessonDetailsPartialChange.UploadAttendingStateStarted -> vs.copy(
                     uploadingAttendingStateStatuses = vs.uploadingAttendingStateStatuses + Pair(change.attendingId, UploadStatus.UPLOADING)

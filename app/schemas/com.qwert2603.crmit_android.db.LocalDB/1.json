@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "d1e1b2859fc55d0d38878fcb0538036e",
+    "identityHash": "20f19fa328707710399c31d556f42755",
     "entities": [
       {
         "tableName": "Master",
@@ -818,7 +818,7 @@
       },
       {
         "tableName": "Payment",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `studentInGroupId` INTEGER NOT NULL, `studentId` INTEGER NOT NULL, `studentFio` TEXT NOT NULL, `groupId` INTEGER NOT NULL, `month` INTEGER NOT NULL, `value` INTEGER NOT NULL, `cash` INTEGER NOT NULL, `confirmed` INTEGER NOT NULL, `comment` TEXT NOT NULL, `needToPay` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `studentInGroupId` INTEGER NOT NULL, `studentId` INTEGER NOT NULL, `studentFio` TEXT NOT NULL, `groupId` INTEGER NOT NULL, `monthNumber` INTEGER NOT NULL, `value` INTEGER NOT NULL, `cash` INTEGER NOT NULL, `confirmed` INTEGER NOT NULL, `comment` TEXT NOT NULL, `needToPay` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -851,8 +851,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "month",
-            "columnName": "month",
+            "fieldPath": "monthNumber",
+            "columnName": "monthNumber",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -899,7 +899,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"d1e1b2859fc55d0d38878fcb0538036e\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"20f19fa328707710399c31d556f42755\")"
     ]
   }
 }

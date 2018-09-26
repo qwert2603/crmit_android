@@ -11,6 +11,7 @@ import com.qwert2603.andrlib.base.mvi.ViewAction
 import com.qwert2603.andrlib.base.mvi.load_refresh.LRFragment
 import com.qwert2603.andrlib.base.mvi.load_refresh.LoadRefreshPanel
 import com.qwert2603.andrlib.base.recyclerview.BaseRecyclerViewAdapter
+import com.qwert2603.andrlib.base.recyclerview.page_list_item.AllItemsLoaded
 import com.qwert2603.andrlib.model.IdentifiableLong
 import com.qwert2603.andrlib.util.color
 import com.qwert2603.andrlib.util.inflate
@@ -117,7 +118,9 @@ class LessonDetailsFragment : LRFragment<LessonDetailsViewState, LessonDetailsVi
 
         adapter.uploadStatuses = vs.uploadingAttendingStateStatuses
         adapter.userCanChangeAttendingState = vs.isUserCanChangeAttendingStates()
-        adapter.adapterList = BaseRecyclerViewAdapter.AdapterList(vs.attendings ?: emptyList())
+
+        val modelList = vs.attendings ?: emptyList()
+        adapter.adapterList = BaseRecyclerViewAdapter.AdapterList(modelList, AllItemsLoaded(modelList.size).takeIf { modelList.isEmpty() })//todo
     }
 
     override fun executeAction(va: ViewAction) {
