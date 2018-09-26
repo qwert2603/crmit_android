@@ -7,7 +7,7 @@ import com.qwert2603.andrlib.util.LogUtils
 import com.qwert2603.crmit_android.db.generated_dao.wrap
 import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entity.Payment
-import com.qwert2603.crmit_android.lesson_details.UploadStatus
+import com.qwert2603.crmit_android.entity.UploadStatus
 import com.qwert2603.crmit_android.util.makePair
 import com.qwert2603.crmit_android.util.mapNotNull
 import io.reactivex.Observable

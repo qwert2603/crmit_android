@@ -7,6 +7,7 @@ import com.qwert2603.andrlib.util.LogUtils
 import com.qwert2603.crmit_android.db.generated_dao.wrap
 import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entity.Attending
+import com.qwert2603.crmit_android.entity.UploadStatus
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers

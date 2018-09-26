@@ -8,7 +8,7 @@ import com.qwert2603.andrlib.util.color
 import com.qwert2603.andrlib.util.setVisible
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.entity.Payment
-import com.qwert2603.crmit_android.lesson_details.UploadStatus
+import com.qwert2603.crmit_android.entity.UploadStatus
 import com.qwert2603.crmit_android.util.UserInputCompoundButton
 import com.qwert2603.crmit_android.util.toPointedString
 import kotlinx.android.synthetic.main.include_upload_status.view.*

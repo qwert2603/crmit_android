@@ -4,7 +4,7 @@ import android.view.ViewGroup
 import com.qwert2603.andrlib.base.recyclerview.BaseRecyclerViewAdapter
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.entity.Payment
-import com.qwert2603.crmit_android.lesson_details.UploadStatus
+import com.qwert2603.crmit_android.entity.UploadStatus
 import io.reactivex.subjects.PublishSubject
 
 class PaymentsAdapter : BaseRecyclerViewAdapter<Payment>() {

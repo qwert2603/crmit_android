@@ -6,6 +6,7 @@ import com.qwert2603.andrlib.generator.GenerateLRChanger
 import com.qwert2603.crmit_android.entity.AccountType
 import com.qwert2603.crmit_android.entity.Attending
 import com.qwert2603.crmit_android.entity.GroupBrief
+import com.qwert2603.crmit_android.entity.UploadStatus
 
 @GenerateLRChanger
 data class LessonDetailsViewState(

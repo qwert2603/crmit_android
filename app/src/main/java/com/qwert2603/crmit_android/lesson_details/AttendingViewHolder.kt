@@ -5,6 +5,7 @@ import com.qwert2603.andrlib.base.recyclerview.BaseRecyclerViewHolder
 import com.qwert2603.andrlib.util.setVisible
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.entity.Attending
+import com.qwert2603.crmit_android.entity.UploadStatus
 import com.qwert2603.crmit_android.rest.params.SaveAttendingStateParams
 import kotlinx.android.synthetic.main.include_upload_status.view.*
 import kotlinx.android.synthetic.main.item_attending.view.*
