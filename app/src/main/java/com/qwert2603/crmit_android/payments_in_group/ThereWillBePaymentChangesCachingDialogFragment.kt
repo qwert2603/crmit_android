@@ -1,4 +1,4 @@
-package com.qwert2603.crmit_android.payments
+package com.qwert2603.crmit_android.payments_in_group
 
 import android.os.Bundle
 import android.support.v4.app.DialogFragment

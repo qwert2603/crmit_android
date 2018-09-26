@@ -17,9 +17,11 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.absoluteValue
 
+private const val START_YEAR = 2017
+
 fun Int.toPointedString() = toLong().toPointedString()
 
-fun Int.toMonthString(resources: Resources) = "${this / 12 + 2017} ${resources.getStringArray(R.array.month_names)[this % 12]}"
+fun Int.toMonthString(resources: Resources) = "${this / 12 + START_YEAR} ${resources.getStringArray(R.array.month_names)[this % 12]}"
 
 private object DateFormats {
     val DATE_FORMAT_SERVER = SimpleDateFormat(Rest.DATE_FORMAT, Locale.getDefault())
@@ -124,3 +126,7 @@ fun Date.onlyDate(): Date {
 inline fun <T, R> Observable<T>.mapNotNull(crossinline mapper: (T) -> R?): Observable<R> = this
         .filter { mapper(it) != null }
         .map { mapper(it)!! }
+
+fun Date.getMonthNumber() = Calendar.getInstance()
+        .also { it.time = this }
+        .let { 12 * (it.get(Calendar.YEAR) - START_YEAR) + it.get(Calendar.MONTH) }

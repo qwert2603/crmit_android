@@ -89,7 +89,7 @@ class LessonDetailsPresenter(private val lessonId: Long)
 
     override fun initialModelSingle(additionalKey: Any): Single<LessonDetailsInitialModel> = getAttendingsFromServer()
             .onErrorResumeNext { t ->
-                LogUtils.e("LessonDetailsPresenter DiHolder.rest.getAttendingsOfLesson(lessonId)", t)
+                LogUtils.e("LessonDetailsPresenter getAttendingsFromServer", t)
                 Single
                         .fromCallable { daoInterface.getItems() }
                         .flatMap {

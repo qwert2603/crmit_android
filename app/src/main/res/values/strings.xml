@@ -13,6 +13,8 @@
     <string name="title_cabinet">Кабинет</string>
     <string name="title_lesson_default">Занятие</string>
     <string name="title_lesson_format" formatted="true">Занятие %s</string>
+    <string name="title_payments_in_group_default">Платежи</string>
+    <string name="title_payments_in_group_format" formatted="true">Платежи в %s</string>
 
     <string name="price_format" formatted="true">%s ₽</string>
     <string name="discount_format" formatted="true">скидка: %s ₽</string>

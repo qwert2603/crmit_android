@@ -28,9 +28,9 @@ class CabinetFragment : LRFragment<CabinetViewState, CabinetView, CabinetPresent
 
     override fun viewForSnackbar(): View? = cabinet_CoordinatorLayout
 
-    private val loggingDialog by lazy {
+    private val logoutDialog by lazy {
         AlertDialog.Builder(requireContext())
-                .setView(R.layout.dialog_logging)
+                .setView(R.layout.dialog_logout)
                 .setCancelable(false)
                 .create()
     }
@@ -44,7 +44,7 @@ class CabinetFragment : LRFragment<CabinetViewState, CabinetView, CabinetPresent
     }
 
     override fun onDestroyView() {
-        loggingDialog.dismiss()
+        logoutDialog.dismiss()
         super.onDestroyView()
     }
 
@@ -61,9 +61,9 @@ class CabinetFragment : LRFragment<CabinetViewState, CabinetView, CabinetPresent
 
         if (vs.isLogout) {
             (requireActivity() as KeyboardManager).hideKeyboard()
-            loggingDialog.show()
+            logoutDialog.show()
         } else {
-            loggingDialog.dismiss()
+            logoutDialog.dismiss()
         }
     }
 

@@ -3,9 +3,6 @@ package com.qwert2603.crmit_android.payments
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +19,7 @@ import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entity_details.EntityDetailsFragment
 import com.qwert2603.crmit_android.navigation.ScreenKey
+import com.qwert2603.crmit_android.util.ConditionDividerDecoration
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_payments.*
@@ -46,7 +44,7 @@ class PaymentsFragment : LRFragment<PaymentsViewState, PaymentsView, PaymentsPre
 
     override fun loadRefreshPanel(): LoadRefreshPanel = payments_LRPanelImpl
 
-    override fun viewForSnackbar(): View? = payments_CoordinatorLayout
+    override fun viewForSnackbar(): View? = payments_LRPanelImpl
 
     private val adapter = PaymentsAdapter()
 
@@ -59,7 +57,7 @@ class PaymentsFragment : LRFragment<PaymentsViewState, PaymentsView, PaymentsPre
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         payments_RecyclerView.adapter = adapter
         payments_RecyclerView.itemAnimator = null
-        payments_RecyclerView.addItemDecoration(DividerItemDecoration(requireContext(), RecyclerView.VERTICAL))
+        payments_RecyclerView.addItemDecoration(ConditionDividerDecoration(requireContext()) { _, vh -> vh is PaymentViewHolder })
 
         adapter.modelItemClicks
                 .subscribe {
@@ -111,11 +109,6 @@ class PaymentsFragment : LRFragment<PaymentsViewState, PaymentsView, PaymentsPre
     override fun executeAction(va: ViewAction) {
         if (va !is PaymentsViewAction) return super.executeAction(va)
         when (va) {
-            PaymentsViewAction.ShowingCachedData -> Snackbar
-                    .make(payments_CoordinatorLayout, R.string.text_showing_cached_data, Snackbar.LENGTH_SHORT)
-                    .show()
-            PaymentsViewAction.ShowThereWillBePaymentChangesCaching -> ThereWillBePaymentChangesCachingDialogFragment()
-                    .show(fragmentManager, null)
             is PaymentsViewAction.AskToEditValue -> EditValueDialogFragmentBuilder
                     .newEditValueDialogFragment(va.paymentId, va.value)
                     .also { it.setTargetFragment(this, REQUEST_CODE_VALUE) }

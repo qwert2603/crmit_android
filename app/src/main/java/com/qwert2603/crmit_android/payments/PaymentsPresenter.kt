@@ -14,7 +14,6 @@ import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.Executors
-import java.util.concurrent.TimeUnit
 
 class PaymentsPresenter(
         private val groupId: Long,
@@ -33,8 +32,6 @@ class PaymentsPresenter(
             authedUserAccountType = null,
             authedUserDetailsId = null
     )
-
-    private val loadRefreshPartialChanges = loadRefreshPartialChanges().shareAfterViewSubscribed()
 
     private sealed class OnePaymentPC {
         abstract val paymentId: Long
@@ -72,7 +69,7 @@ class PaymentsPresenter(
     private val savePaymentsScheduler = Schedulers.from(Executors.newSingleThreadExecutor())
 
     override val partialChanges: Observable<PartialChange> = Observable.merge(
-            loadRefreshPartialChanges,
+            loadRefreshPartialChanges(),
             loadIntent
                     .map { DiHolder.userSettingsRepo.loginResult }
                     .map { PaymentsPartialChange.AuthedUserLoaded(it) },
@@ -109,7 +106,6 @@ class PaymentsPresenter(
                         .fromCallable { daoInterface.getItems() }
                         .flatMap {
                             if (it.isNotEmpty()) {
-                                viewActions.onNext(PaymentsViewAction.ShowingCachedData)
                                 Single.just(it)
                             } else {
                                 Single.error(Exception("no cache!"))
@@ -155,19 +151,6 @@ class PaymentsPresenter(
 
     override fun bindIntents() {
         super.bindIntents()
-
-        loadRefreshPartialChanges
-                .filter { it is LRPartialChange.InitialModelLoaded<*> }
-                .firstOrError()
-                .delay(2, TimeUnit.SECONDS)
-                .doOnSuccess {
-                    if (!DiHolder.userSettingsRepo.thereWillBePaymentChangesCachingShown) {
-                        DiHolder.userSettingsRepo.thereWillBePaymentChangesCachingShown = true
-                        viewActions.onNext(PaymentsViewAction.ShowThereWillBePaymentChangesCaching)
-                    }
-                }
-                .toObservable()
-                .subscribeToView()
 
         intent { it.askToEditValue() }
                 .doOnNext { viewActions.onNext(PaymentsViewAction.AskToEditValue(it.first, it.second)) }
