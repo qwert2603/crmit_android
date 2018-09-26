@@ -13,5 +13,4 @@ class ThereWillBePaymentChangesCachingDialogFragment : DialogFragment() {
             .setCancelable(false)
             .create()
             .also { it.setCanceledOnTouchOutside(false) }
-            .also { it.setCancelable(false) }
 }

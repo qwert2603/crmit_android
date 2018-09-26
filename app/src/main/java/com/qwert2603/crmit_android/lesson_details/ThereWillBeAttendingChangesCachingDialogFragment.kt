@@ -13,5 +13,4 @@ class ThereWillBeAttendingChangesCachingDialogFragment : DialogFragment() {
             .setCancelable(false)
             .create()
             .also { it.setCanceledOnTouchOutside(false) }
-//          todo ????   .also { it.setCancelable(false) }
 }
