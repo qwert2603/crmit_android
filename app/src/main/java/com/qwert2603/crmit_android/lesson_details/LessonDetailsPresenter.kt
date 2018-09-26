@@ -4,6 +4,7 @@ import com.qwert2603.andrlib.base.mvi.PartialChange
 import com.qwert2603.andrlib.base.mvi.load_refresh.LRPartialChange
 import com.qwert2603.andrlib.base.mvi.load_refresh.LRPresenter
 import com.qwert2603.andrlib.util.LogUtils
+import com.qwert2603.crmit_android.db.generated_dao.wrap
 import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entity.Attending
 import io.reactivex.Observable
@@ -23,6 +24,8 @@ class LessonDetailsPresenter(private val lessonId: Long)
 
     private val saveAttendingsStateScheduler = Schedulers.from(Executors.newSingleThreadExecutor())
 
+    private val daoInterface = DiHolder.attendingDao.wrap(lessonId)
+
     override val partialChanges: Observable<PartialChange> = Observable.merge(listOf(
             loadRefreshPartialChanges,
             loadIntent
@@ -34,9 +37,8 @@ class LessonDetailsPresenter(private val lessonId: Long)
                     .flatMap { params ->
                         DiHolder.rest.saveAttendingState(params)
                                 .doOnComplete {
-                                    DiHolder.attendingDao
-                                            .getItem(params.attendingId)
-                                            ?.also { DiHolder.attendingDao.saveItem(it.copy(state = params.attendingState)) }
+                                    daoInterface.getItem(params.attendingId)
+                                            ?.also { daoInterface.saveItem(it.copy(state = params.attendingState)) }
                                 }
                                 .toSingleDefault<LessonDetailsPartialChange>(LessonDetailsPartialChange.UploadAttendingStateSuccess(params.attendingId))
                                 .onErrorReturnItem(LessonDetailsPartialChange.UploadAttendingStateError(params.attendingId))
@@ -49,8 +51,8 @@ class LessonDetailsPresenter(private val lessonId: Long)
     private fun getAttendingsFromServer() = DiHolder.rest
             .getAttendingsOfLesson(lessonId)
             .doOnSuccess {
-                //     todo DiHolder.attendingDao.wrap(lessonId).deleteAllItems()
-                DiHolder.attendingDao.addItems(it)
+                daoInterface.deleteAllItems()
+                daoInterface.addItems(it)
             }
             .subscribeOn(DiHolder.modelSchedulersProvider.io)
 
@@ -88,7 +90,7 @@ class LessonDetailsPresenter(private val lessonId: Long)
             .onErrorResumeNext { t ->
                 LogUtils.e("LessonDetailsPresenter DiHolder.rest.getAttendingsOfLesson(lessonId)", t)
                 Single
-                        .fromCallable { DiHolder.attendingDao.getItems(lessonId, 0, Int.MAX_VALUE) }
+                        .fromCallable { daoInterface.getItems() }
                         .flatMap {
                             if (it.isNotEmpty()) {
                                 viewActions.onNext(LessonDetailsViewAction.ShowingCachedData)
