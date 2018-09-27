@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentStatePagerAdapter
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.entity.GroupFull
 import com.qwert2603.crmit_android.payments.PaymentsFragmentBuilder
+import com.qwert2603.crmit_android.util.CrmitConst
 
 class MonthsAdapter(
         childFragmentManager: FragmentManager,
@@ -15,7 +16,10 @@ class MonthsAdapter(
 ) : FragmentStatePagerAdapter(childFragmentManager) {
 
     companion object {
-        private fun Int.toMonthTabTitle(resources: Resources) = "${this / 12 + 2017}\n${resources.getStringArray(R.array.month_names)[this % 12].take(3)}"
+        private fun Int.toMonthTabTitle(resources: Resources): String {
+            val monthName = resources.getStringArray(R.array.month_names)[this % CrmitConst.MONTHS_PER_YEAR].take(3)
+            return "${this / CrmitConst.MONTHS_PER_YEAR + CrmitConst.START_YEAR}\n$monthName"
+        }
     }
 
     override fun getItem(position: Int): Fragment = PaymentsFragmentBuilder.newPaymentsFragment(

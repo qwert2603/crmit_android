@@ -17,11 +17,13 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.absoluteValue
 
-private const val START_YEAR = 2017
 
 fun Int.toPointedString() = toLong().toPointedString()
 
-fun Int.toMonthString(resources: Resources) = "${this / 12 + START_YEAR} ${resources.getStringArray(R.array.month_names)[this % 12]}"
+fun Int.toMonthString(resources: Resources): String {
+    val monthName = resources.getStringArray(R.array.month_names)[this % CrmitConst.MONTHS_PER_YEAR]
+    return "${this / CrmitConst.MONTHS_PER_YEAR + CrmitConst.START_YEAR} $monthName"
+}
 
 private object DateFormats {
     val DATE_FORMAT_SERVER = SimpleDateFormat(Rest.DATE_FORMAT, Locale.getDefault())
@@ -129,4 +131,4 @@ inline fun <T, R> Observable<T>.mapNotNull(crossinline mapper: (T) -> R?): Obser
 
 fun Date.getMonthNumber() = Calendar.getInstance()
         .also { it.time = this }
-        .let { 12 * (it.get(Calendar.YEAR) - START_YEAR) + it.get(Calendar.MONTH) }
+        .let { CrmitConst.MONTHS_PER_YEAR * (it.get(Calendar.YEAR) - CrmitConst.START_YEAR) + it.get(Calendar.MONTH) }
