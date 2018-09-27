@@ -62,6 +62,7 @@ class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager {
 //                    else -> pathSegments.getOrNull(1)?.toIntOrNull()
 //                            ?.let { Pair(ScreenKey.LESSONS_IN_GROUP, it) } ?: ScreenKey.GROUPS
 //                }
+//                "payment" -> {}
                 else -> ScreenKey.CABINET
             }
             return result.let {
@@ -112,6 +113,8 @@ class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        LogUtils.d("MainActivity onCreate")
 
         setContentView(R.layout.activity_main)
 

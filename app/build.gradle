@@ -81,6 +81,8 @@ dependencies {
 
     ext.stetho_version = '1.5.0'
 
+    ext.leakcanary_version = '1.6.1'
+
     implementation "com.github.qwert2603:andrlib:$andrlib_version"
     implementation "com.github.qwert2603:andrlib_generator:$andrlib_generator_version"
     annotationProcessor "com.github.qwert2603:andrlib_generator:$andrlib_generator_version"
@@ -110,4 +112,7 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
 
     debugImplementation "com.facebook.stetho:stetho:$stetho_version"
+
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:$leakcanary_version"
+    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanary_version"
 }

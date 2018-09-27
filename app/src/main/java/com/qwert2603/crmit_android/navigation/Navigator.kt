@@ -24,6 +24,7 @@ import com.qwert2603.crmit_android.lesson_details.LessonDetailsFragmentBuilder
 import com.qwert2603.crmit_android.list_fragments.*
 import com.qwert2603.crmit_android.login.LoginFragment
 import com.qwert2603.crmit_android.payments_in_group.PaymentsInGroupFragmentBuilder
+import com.squareup.leakcanary.LeakCanary
 import ru.terrakok.cicerone.android.SupportFragmentNavigator
 import ru.terrakok.cicerone.commands.Command
 import ru.terrakok.cicerone.commands.Forward
@@ -37,6 +38,10 @@ class Navigator(private val activity: ActivityInterface)
                 object : FragmentManager.FragmentLifecycleCallbacks() {
                     override fun onFragmentPreCreated(fm: FragmentManager?, f: Fragment?, savedInstanceState: Bundle?) {
                         FragmentArgs.inject(f)
+                    }
+
+                    override fun onFragmentCreated(fm: FragmentManager?, f: Fragment, savedInstanceState: Bundle?) {
+                        LeakCanary.installedRefWatcher().watch(f)
                     }
 
                     override fun onFragmentViewCreated(fm: FragmentManager?, f: Fragment?, v: View?, savedInstanceState: Bundle?) {
