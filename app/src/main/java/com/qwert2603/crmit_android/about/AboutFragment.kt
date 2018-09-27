@@ -37,13 +37,14 @@ class AboutFragment : Fragment() {
 
         clearCache_Button.setVisible(E.env.showClearCacheButton)
         clearCache_Button.setOnClickListener { _ ->
-            DiHolder.userSettingsRepo.clear()
-
             DiHolder.modelSchedulersProvider.io.scheduleDirect {
+                DiHolder.userSettingsRepo.clear()
                 DiHolder.clearDB()
 
                 DiHolder.uiSchedulerProvider.ui.scheduleDirect {
-                    startActivity(Intent(requireContext(), MainActivity::class.java))//todo: don't work
+                    val intent = Intent(requireContext(), MainActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    startActivity(intent)
                     System.exit(0)
                 }
             }

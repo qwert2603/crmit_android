@@ -3,6 +3,7 @@ package com.qwert2603.crmit_android.di
 import android.annotation.SuppressLint
 import android.content.Context
 import android.preference.PreferenceManager
+import android.support.annotation.WorkerThread
 import com.google.gson.Gson
 import com.qwert2603.crmit_android.util.PrefsBoolean
 import com.qwert2603.crmit_android.util.PrefsLoginResultNullable
@@ -20,6 +21,7 @@ class UserSettingsRepo(appContext: Context) {
     fun isLogged() = loginResult != null
 
     @SuppressLint("ApplySharedPref")
+    @WorkerThread
     fun clear() {
         prefs.edit().clear().commit()
     }
