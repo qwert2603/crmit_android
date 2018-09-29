@@ -4,9 +4,12 @@ import android.animation.Animator
 import android.content.res.Resources
 import android.graphics.Paint
 import android.support.annotation.MainThread
+import android.text.Editable
 import android.text.Html
+import android.text.TextWatcher
 import android.view.View
 import android.view.ViewTreeObserver
+import android.widget.EditText
 import android.widget.TextView
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.entity.SystemUser
@@ -132,3 +135,17 @@ inline fun <T, R> Observable<T>.mapNotNull(crossinline mapper: (T) -> R?): Obser
 fun Date.getMonthNumber() = Calendar.getInstance()
         .also { it.time = this }
         .let { CrmitConst.MONTHS_PER_YEAR * (it.get(Calendar.YEAR) - CrmitConst.START_YEAR) + it.get(Calendar.MONTH) }
+
+fun EditText.doAfterTextChanged(action: (String) -> Unit) {
+    addTextChangedListener(object : TextWatcher {
+        override fun afterTextChanged(s: Editable?) {
+            action(s.toString())
+        }
+
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+        }
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+        }
+    })
+}

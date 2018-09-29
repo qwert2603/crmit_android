@@ -153,7 +153,12 @@ class PaymentsPresenter(
         super.bindIntents()
 
         intent { it.askToEditValue() }
-                .doOnNext { viewActions.onNext(PaymentsViewAction.AskToEditValue(it.first, it.second)) }
+                .map { it.first }
+                .withLatestFrom(viewStateObservable, makePair())
+                .mapNotNull { (paymentId, vs) ->
+                    vs.payments?.singleOrNull { it.id == paymentId }
+                }
+                .doOnNext { viewActions.onNext(PaymentsViewAction.AskToEditValue(it.id, it.value, it.needToPay)) }
                 .subscribeToView()
 
         intent { it.askToEditComment() }

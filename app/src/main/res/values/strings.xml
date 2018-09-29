@@ -16,9 +16,13 @@
     <string name="title_payments_in_group_default">Платежи</string>
     <string name="title_payments_in_group_format" formatted="true">Платежи в %s</string>
 
+    <string name="title_dialog_edit_payment_comment">Комментарий</string>
+    <string name="title_dialog_edit_payment_value">Сумма</string>
+
     <string name="price_format" formatted="true">%s ₽</string>
     <string name="discount_format" formatted="true">скидка: %s ₽</string>
     <string name="payment_value_format" formatted="true" translatable="false">%s / %s ₽</string>
+    <string name="max_payment_value_format" formatted="true" translatable="false">/ %s ₽</string>
 
     <string name="app_info_text_format" formatted="true">
         <![CDATA[

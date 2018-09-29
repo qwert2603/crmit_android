@@ -27,7 +27,7 @@ data class Payment(
         val cash: Boolean,
         val confirmed: Boolean,
         val comment: String,
-        val needToPay: Int
+        val needToPay: Int // price - discount == maxValue
 ) : IdentifiableLong {
     fun toSavePaymentParams() = SavePaymentParams(
             paymentId = id,
