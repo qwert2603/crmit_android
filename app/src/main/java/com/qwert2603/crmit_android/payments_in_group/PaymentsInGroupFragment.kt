@@ -15,6 +15,7 @@ import com.qwert2603.andrlib.model.IdentifiableLong
 import com.qwert2603.andrlib.util.inflate
 import com.qwert2603.andrlib.util.setVisible
 import com.qwert2603.crmit_android.R
+import com.qwert2603.crmit_android.util.SaveImageLifecycleObserver
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.fragment_payments_in_group.*
 
@@ -29,6 +30,11 @@ class PaymentsInGroupFragment : LRFragment<PaymentsInGroupViewState, PaymentsInG
     override fun loadRefreshPanel(): LoadRefreshPanel = paymentsInGroup_LRPanelImpl
 
     override fun viewForSnackbar(): View? = paymentsInGroup_CoordinatorLayout
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        lifecycle.addObserver(SaveImageLifecycleObserver())
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             container?.inflate(R.layout.fragment_payments_in_group)
