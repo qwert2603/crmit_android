@@ -17,10 +17,11 @@ import com.qwert2603.andrlib.util.setVisible
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.util.SaveImageLifecycleObserver
 import io.reactivex.Observable
+import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_payments_in_group.*
 
 @FragmentWithArgs
-class PaymentsInGroupFragment : LRFragment<PaymentsInGroupViewState, PaymentsInGroupView, PaymentsInGroupPresenter>(), PaymentsInGroupView {
+class PaymentsInGroupFragment : LRFragment<PaymentsInGroupViewState, PaymentsInGroupView, PaymentsInGroupPresenter>(), PaymentsInGroupView, ParentPaymentsFragment {
 
     @Arg
     var groupId: Long = IdentifiableLong.NO_ID
@@ -30,6 +31,8 @@ class PaymentsInGroupFragment : LRFragment<PaymentsInGroupViewState, PaymentsInG
     override fun loadRefreshPanel(): LoadRefreshPanel = paymentsInGroup_LRPanelImpl
 
     override fun viewForSnackbar(): View? = paymentsInGroup_CoordinatorLayout
+
+    private val onRetryMonthClicked = PublishSubject.create<Any>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +50,15 @@ class PaymentsInGroupFragment : LRFragment<PaymentsInGroupViewState, PaymentsInG
 
         super.onViewCreated(view, savedInstanceState)
     }
+
+    override fun onRetryMonthClicked() {
+        onRetryMonthClicked.onNext(Any())
+    }
+
+    override fun retry(): Observable<Any> = Observable.merge(
+            super.retry(),
+            onRetryMonthClicked
+    )
 
     override fun monthSelected(): Observable<Int> = RxViewPager.pageSelections(months_ViewPager)
             .map { it + (currentViewState.groupFull?.startMonth ?: 0) }

@@ -19,6 +19,7 @@ import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entity_details.EntityDetailsFragment
 import com.qwert2603.crmit_android.navigation.ScreenKey
+import com.qwert2603.crmit_android.payments_in_group.ParentPaymentsFragment
 import com.qwert2603.crmit_android.util.ConditionDividerDecoration
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
@@ -85,6 +86,10 @@ class PaymentsFragment : LRFragment<PaymentsViewState, PaymentsView, PaymentsPre
             ))
         }
     }
+
+    override fun retry(): Observable<Any> = super.retry()
+            .doOnNext { (parentFragment as ParentPaymentsFragment).onRetryMonthClicked() }
+            .filter { false }
 
     override fun isCashChanges(): Observable<Pair<Long, Boolean>> = adapter.isCashChanges
     override fun isConfirmedChanges(): Observable<Pair<Long, Boolean>> = adapter.isConfirmedChanges
