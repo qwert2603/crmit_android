@@ -10,7 +10,6 @@ import com.qwert2603.andrlib.generated.LRModelChangerImpl
 import com.qwert2603.andrlib.generated.ListModelChangerImpl
 import com.qwert2603.andrlib.util.LogUtils
 import com.qwert2603.crmit_android.env.E
-import com.squareup.leakcanary.LeakCanary
 import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.plugins.RxJavaPlugins
@@ -24,9 +23,6 @@ class CrmitApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-
-        if (LeakCanary.isInAnalyzerProcess(this)) return
-//        LeakCanary.install(this)
 
         LogUtils.d("CrmitApplication onCreate")
 
