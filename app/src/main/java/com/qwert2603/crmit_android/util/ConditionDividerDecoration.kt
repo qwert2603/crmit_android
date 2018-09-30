@@ -19,7 +19,7 @@ class ConditionDividerDecoration(context: Context, private val condition: (Recyc
         a.recycle()
     }
 
-    override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State?) {
+    override fun onDraw(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
         drawVertical(c, parent)
     }
 
