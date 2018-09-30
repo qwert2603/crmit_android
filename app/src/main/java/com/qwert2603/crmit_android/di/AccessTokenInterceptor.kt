@@ -1,7 +1,6 @@
 package com.qwert2603.crmit_android.di
 
 import com.qwert2603.crmit_android.env.E
-import com.qwert2603.crmit_android.navigation.ScreenKey
 import com.qwert2603.crmit_android.rest.Rest
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -11,9 +10,9 @@ class AccessTokenInterceptor : Interceptor {
         if (chain.request().url().toString() == E.env.restBaseUrl + Rest.LOGIN_ENDPOINT) {
             return chain.proceed(chain.request())
         }
-        val accessToken = DiHolder.userSettingsRepo.loginResult?.getTokenSafe()
+        val accessToken = DiHolder.userSettingsRepo.getAccessTokenSafe()
         if (accessToken == null) {
-            on401()
+            DiHolder.userSettingsRepo.on401()
             throw Exception("DiHolder.userSettingsRepo.loginResult == null")
         }
         val request = chain.request()
@@ -22,15 +21,9 @@ class AccessTokenInterceptor : Interceptor {
                 .build()
         val response = chain.proceed(request)
         if (response.code() == Rest.RESPONSE_CODE_UNAUTHORIZED) {
-            DiHolder.userSettingsRepo.loginResult = null
-            on401()
+            DiHolder.userSettingsRepo.clearAccessToken()
+            DiHolder.userSettingsRepo.on401()
         }
         return response
-    }
-
-    private fun on401() {
-        DiHolder.uiSchedulerProvider.ui.scheduleDirect {
-            DiHolder.router.newRootScreen(ScreenKey.LOGIN.name)
-        }
     }
 }

@@ -4,6 +4,7 @@ import com.qwert2603.crmit_android.entity.*
 import com.qwert2603.crmit_android.rest.params.LoginParams
 import com.qwert2603.crmit_android.rest.params.SaveAttendingStateParams
 import com.qwert2603.crmit_android.rest.params.SavePaymentParams
+import com.qwert2603.crmit_android.rest.results.LoginResultServer
 import io.reactivex.Completable
 import io.reactivex.Single
 import retrofit2.http.*
@@ -93,7 +94,7 @@ interface Rest {
     fun savePayment(@Body savePaymentParams: SavePaymentParams): Completable
 
     @POST(LOGIN_ENDPOINT)
-    fun login(@Body loginParams: LoginParams): Single<LoginResult>
+    fun login(@Body loginParams: LoginParams): Single<LoginResultServer>
 
     @POST("logout")
     fun logout(): Completable

@@ -30,7 +30,7 @@ class LessonDetailsPresenter(private val lessonId: Long)
     override val partialChanges: Observable<PartialChange> = Observable.merge(listOf(
             loadRefreshPartialChanges,
             loadIntent
-                    .map { DiHolder.userSettingsRepo.loginResult }
+                    .switchMapSingle { DiHolder.userSettingsRepo.getLoginResultOrMoveToLogin() }
                     .map { LessonDetailsPartialChange.AuthedUserLoaded(it) },
             attendingStatesChangesIntent
                     .map { LessonDetailsPartialChange.AttendingStateChanged(it.attendingId, it.attendingState) },

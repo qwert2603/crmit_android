@@ -22,7 +22,7 @@ class PaymentsInGroupPresenter(private val groupId: Long)
     override val partialChanges: Observable<PartialChange> = Observable.merge(
             loadRefreshPartialChanges,
             loadIntent
-                    .map { DiHolder.userSettingsRepo.loginResult }
+                    .switchMapSingle { DiHolder.userSettingsRepo.getLoginResultOrMoveToLogin() }
                     .map { PaymentsInGroupPartialChange.AuthedUserLoaded(it) },
             intent { it.monthSelected() }
                     .map { PaymentsInGroupPartialChange.SelectedMonthChanged(it) }
@@ -81,7 +81,7 @@ class PaymentsInGroupPresenter(private val groupId: Long)
         loadRefreshPartialChanges
                 .filter { it is LRPartialChange.InitialModelLoaded<*> }
                 .firstOrError()
-                .delay(2, TimeUnit.SECONDS)
+                .delay(3, TimeUnit.SECONDS)
                 .doOnSuccess {
                     if (!DiHolder.userSettingsRepo.thereWillBePaymentChangesCachingShown) {
                         DiHolder.userSettingsRepo.thereWillBePaymentChangesCachingShown = true

@@ -122,7 +122,7 @@ class EntitiesListPresenter<E : IdentifiableLong>(
                     .skip(1)
                     .map { EntitiesListPartialChange.SearchQueryChanged(it) },
             loadIntent
-                    .map { DiHolder.userSettingsRepo.loginResult!! }
+                    .switchMapSingle { DiHolder.userSettingsRepo.getLoginResultOrMoveToLogin() }
                     .map { EntitiesListPartialChange.AuthedUserLoaded(it) }
     ))
 

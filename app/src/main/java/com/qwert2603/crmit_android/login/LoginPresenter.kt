@@ -30,7 +30,16 @@ class LoginPresenter : BasePresenter<LoginView, LoginViewState>(DiHolder.uiSched
                     .switchMap { (login, password) ->
                         DiHolder.rest
                                 .login(LoginParams(login, password))
-                                .doOnSuccess { DiHolder.userSettingsRepo.loginResult = it }
+                                .doOnSuccess { loginResultServer ->
+                                    val newLoginResult = loginResultServer.toLoginResult()
+                                    if (newLoginResult != DiHolder.userSettingsRepo.loginResult) {
+                                        DiHolder.clearDB()
+                                        DiHolder.userSettingsRepo.clearUserInfo()
+                                    }
+
+                                    DiHolder.userSettingsRepo.loginResult = newLoginResult
+                                    DiHolder.userSettingsRepo.saveAccessToken(loginResultServer.token)
+                                }
                                 .subscribeOn(DiHolder.modelSchedulersProvider.io)
                                 .map<LoginPartialChange> { LoginPartialChange.LoggingSuccess }
                                 .doOnError {

@@ -2,6 +2,7 @@ package com.qwert2603.crmit_android.payments
 
 import android.annotation.SuppressLint
 import android.graphics.Typeface
+import android.view.View
 import android.view.ViewGroup
 import com.qwert2603.andrlib.base.recyclerview.BaseRecyclerViewHolder
 import com.qwert2603.andrlib.util.color
@@ -11,10 +12,13 @@ import com.qwert2603.crmit_android.entity.Payment
 import com.qwert2603.crmit_android.entity.UploadStatus
 import com.qwert2603.crmit_android.util.UserInputCompoundButton
 import com.qwert2603.crmit_android.util.toPointedString
+import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.include_upload_status.view.*
 import kotlinx.android.synthetic.main.item_payment.view.*
 
-class PaymentViewHolder(parent: ViewGroup) : BaseRecyclerViewHolder<Payment>(parent, R.layout.item_payment) {
+class PaymentViewHolder(parent: ViewGroup) : BaseRecyclerViewHolder<Payment>(parent, R.layout.item_payment), LayoutContainer {
+
+    override val containerView: View = itemView
 
     private val cashSwitch = UserInputCompoundButton(itemView.cash_Switch)
     private val confirmedSwitch = UserInputCompoundButton(itemView.confirmed_Switch)

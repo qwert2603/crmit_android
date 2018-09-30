@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager {
                     "group" -> /*pathSegments.getOrNull(2)?.toIntOrNull()
                             ?.let { Pair(ScreenKey.GROUP_DETAILS, it) } ?:*/ ScreenKey.GROUPS
                     "section" -> /*pathSegments.getOrNull(2)?.toIntOrNull()
-                            ?.let { Pair(ScreenKey.SECTION_DETAILS, it) } ?:*/ ScreenKey.SECTION_DETAILS
+                            ?.let { Pair(ScreenKey.SECTION_DETAILS, it) } ?:*/ ScreenKey.SECTIONS
                     "group_details" -> /*pathSegments.getOrNull(2)?.toIntOrNull()
                             ?.let { Pair(ScreenKey.STUDENTS_IN_GROUP, it) } ?:*/ ScreenKey.GROUPS
                     "students_in_group" -> /*pathSegments.getOrNull(2)?.toIntOrNull()
@@ -123,7 +123,7 @@ class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager {
             when {
                 screenKeyFromIntent != null -> router.newRootScreen(screenKeyFromIntent.first.name, screenKeyFromIntent.second)
                 !DiHolder.userSettingsRepo.greetingShown -> router.newRootScreen(ScreenKey.GREETING.name)
-                DiHolder.userSettingsRepo.loginResult == null -> router.newRootScreen(ScreenKey.LOGIN.name)
+                !DiHolder.userSettingsRepo.isLogged() -> router.newRootScreen(ScreenKey.LOGIN.name)
                 else -> router.newRootScreen(ScreenKey.CABINET.name)
             }
         }

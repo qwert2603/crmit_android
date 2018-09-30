@@ -11,8 +11,8 @@ import io.reactivex.Single
 
 class CabinetPresenter : LRPresenter<Any, String, CabinetViewState, CabinetView>(DiHolder.uiSchedulerProvider) {
 
-    private val loginResultSingle = Single
-            .fromCallable { DiHolder.userSettingsRepo.loginResult!! }
+    private val loginResultSingle = DiHolder.userSettingsRepo
+            .getLoginResultOrMoveToLogin()
             .cache()
 
     private fun getFioFromServer() = loginResultSingle
@@ -53,8 +53,7 @@ class CabinetPresenter : LRPresenter<Any, String, CabinetViewState, CabinetView>
                                 .merge(listOf(
                                         DiHolder.rest.logout().onErrorComplete(),
                                         Completable.fromAction {
-                                            DiHolder.userSettingsRepo.loginResult = null
-                                            DiHolder.userSettingsRepo.displayFio = null
+                                            DiHolder.userSettingsRepo.clearUserInfo()
                                             DiHolder.clearDB()
                                         }
                                 ))

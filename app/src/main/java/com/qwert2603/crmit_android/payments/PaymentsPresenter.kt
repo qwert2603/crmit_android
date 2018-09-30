@@ -71,7 +71,7 @@ class PaymentsPresenter(
     override val partialChanges: Observable<PartialChange> = Observable.merge(
             loadRefreshPartialChanges(),
             loadIntent
-                    .map { DiHolder.userSettingsRepo.loginResult }
+                    .switchMapSingle { DiHolder.userSettingsRepo.getLoginResultOrMoveToLogin() }
                     .map { PaymentsPartialChange.AuthedUserLoaded(it) },
             paymentChanges
                     .map { PaymentsPartialChange.PaymentChanged(it) },
