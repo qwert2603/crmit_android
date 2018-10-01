@@ -12,7 +12,7 @@ import retrofit2.http.*
 interface Rest {
 
     companion object {
-        const val HEADER_ACCESS_TOKEN = "access_token"
+        const val QUERY_PARAM_ACCESS_TOKEN = "access_token"
 
         const val RESPONSE_CODE_UNAUTHORIZED = 401
         const val RESPONSE_CODE_BAD_REQUEST = 400

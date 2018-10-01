@@ -17,7 +17,13 @@ class AccessTokenInterceptor : Interceptor {
         }
         val request = chain.request()
                 .newBuilder()
-                .addHeader(Rest.HEADER_ACCESS_TOKEN, accessToken)
+                .url(
+                        chain.request()
+                                .url()
+                                .newBuilder()
+                                .addQueryParameter(Rest.QUERY_PARAM_ACCESS_TOKEN, accessToken)
+                                .build()
+                )
                 .build()
         val response = chain.proceed(request)
         if (response.code() == Rest.RESPONSE_CODE_UNAUTHORIZED) {
