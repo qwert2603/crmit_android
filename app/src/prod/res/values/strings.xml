@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">crmit</string>
+    <string name="app_name">CRM ЦМИТ</string>
     <color name="launcher_color">#FF0000</color>
 
     <string name="action_view_host" translatable="true">crm.cmit22.ru</string>

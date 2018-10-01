@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">crmit home</string>
+    <string name="app_name">CRM ЦМИТ home</string>
     <color name="launcher_color">#FFFF00</color>
 
     <string name="action_view_host" translatable="true">192.168.1.26</string>
