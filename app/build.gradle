@@ -47,7 +47,6 @@ android {
 
         prod {
             dimension "server"
-            applicationIdSuffix ".prod"
             versionNameSuffix "-prod"
         }
     }
