@@ -47,7 +47,6 @@ class PaymentsInGroupFragment : LRFragment<PaymentsInGroupViewState, PaymentsInG
         months_TabLayout.setupWithViewPager(months_ViewPager)
         months_ViewPager.offscreenPageLimit = 12
 
-
         super.onViewCreated(view, savedInstanceState)
     }
 
@@ -61,6 +60,7 @@ class PaymentsInGroupFragment : LRFragment<PaymentsInGroupViewState, PaymentsInG
     )
 
     override fun monthSelected(): Observable<Int> = RxViewPager.pageSelections(months_ViewPager)
+            .skipInitialValue()
             .map { it + (currentViewState.groupFull?.startMonth ?: 0) }
 
     override fun render(vs: PaymentsInGroupViewState) {
@@ -70,8 +70,7 @@ class PaymentsInGroupFragment : LRFragment<PaymentsInGroupViewState, PaymentsInG
 
         renderIfChanged({ groupFull }) { groupFull ->
             if (groupFull != null) {
-                val monthsAdapter = MonthsAdapter(childFragmentManager, resources, groupFull)
-                months_ViewPager.adapter = monthsAdapter
+                months_ViewPager.adapter = MonthsAdapter(childFragmentManager, resources, groupFull)
                 months_ViewPager.currentItem = vs.selectedMonth - (vs.groupFull?.startMonth ?: 0)
             } else {
                 months_ViewPager.adapter = null
