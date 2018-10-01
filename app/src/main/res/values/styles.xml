@@ -12,7 +12,7 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.ActionBar" />
 
     <style name="ActionBarStyle">
-        <item name="android:background">@android:color/white</item>
+        <item name="android:background">?android:windowBackground</item>
     </style>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark" />
