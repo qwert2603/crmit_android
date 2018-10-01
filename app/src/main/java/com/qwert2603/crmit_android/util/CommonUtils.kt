@@ -89,7 +89,8 @@ fun <T, U> secondOfTwo() = BiFunction { _: T, u: U -> u }
 
 fun SystemUser.toLastSeenString(resources: Resources): String {
     if (lastSeenWhere == SystemUser.LAST_SEEN_REGISTRATION) return resources.getString(R.string.text_never)
-    val millis = lastSeen + TimeZone.getDefault().getOffset(lastSeen)
+    val lastSeenMillis = SimpleDateFormat(Rest.DATE_TIME_FORMAT, Locale.getDefault()).parse(lastSeen).time
+    val millis = lastSeenMillis + TimeZone.getDefault().getOffset(lastSeenMillis)
     val date = millis.toDateString(resources)
     val time = SimpleDateFormat(resources.getString(R.string.date_pattern_last_seen_time), Locale.getDefault()).format(Date(millis))
     @Suppress("DEPRECATION")

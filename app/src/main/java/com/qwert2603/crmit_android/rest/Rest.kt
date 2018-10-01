@@ -18,6 +18,7 @@ interface Rest {
         const val RESPONSE_CODE_BAD_REQUEST = 400
 
         const val DATE_FORMAT = "yyyy-MM-dd"
+        const val DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm"
 
         const val LOGIN_ENDPOINT = "login"
     }

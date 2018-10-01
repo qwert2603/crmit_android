@@ -5,7 +5,7 @@ import com.qwert2603.andrlib.model.IdentifiableLong
 data class SystemUser(
         override val id: Long,
         val login: String,
-        val lastSeen: Long,
+        val lastSeen: String,
         val lastSeenWhere: Int,
         val systemRoleName: String,
         val enabled: Boolean

@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "20f19fa328707710399c31d556f42755",
+    "identityHash": "0ccc0e2786c2529dc1d5e0ac3e56f1ee",
     "entities": [
       {
         "tableName": "Master",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `fio` TEXT NOT NULL, `systemUser_id` INTEGER NOT NULL, `systemUser_login` TEXT NOT NULL, `systemUser_lastSeen` INTEGER NOT NULL, `systemUser_lastSeenWhere` INTEGER NOT NULL, `systemUser_systemRoleName` TEXT NOT NULL, `systemUser_enabled` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `fio` TEXT NOT NULL, `systemUser_id` INTEGER NOT NULL, `systemUser_login` TEXT NOT NULL, `systemUser_lastSeen` TEXT NOT NULL, `systemUser_lastSeenWhere` INTEGER NOT NULL, `systemUser_systemRoleName` TEXT NOT NULL, `systemUser_enabled` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -35,7 +35,7 @@
           {
             "fieldPath": "systemUser.lastSeen",
             "columnName": "systemUser_lastSeen",
-            "affinity": "INTEGER",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
@@ -68,7 +68,7 @@
       },
       {
         "tableName": "Teacher",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `fio` TEXT NOT NULL, `lessonsDoneCount` INTEGER NOT NULL, `phone` TEXT NOT NULL, `groups` TEXT NOT NULL, `systemUser_id` INTEGER NOT NULL, `systemUser_login` TEXT NOT NULL, `systemUser_lastSeen` INTEGER NOT NULL, `systemUser_lastSeenWhere` INTEGER NOT NULL, `systemUser_systemRoleName` TEXT NOT NULL, `systemUser_enabled` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `fio` TEXT NOT NULL, `lessonsDoneCount` INTEGER NOT NULL, `phone` TEXT NOT NULL, `groups` TEXT NOT NULL, `systemUser_id` INTEGER NOT NULL, `systemUser_login` TEXT NOT NULL, `systemUser_lastSeen` TEXT NOT NULL, `systemUser_lastSeenWhere` INTEGER NOT NULL, `systemUser_systemRoleName` TEXT NOT NULL, `systemUser_enabled` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -115,7 +115,7 @@
           {
             "fieldPath": "systemUser.lastSeen",
             "columnName": "systemUser_lastSeen",
-            "affinity": "INTEGER",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
@@ -148,7 +148,7 @@
       },
       {
         "tableName": "StudentBrief",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `fio` TEXT NOT NULL, `contactPhoneNumber` TEXT NOT NULL, `contactPhoneWho` TEXT NOT NULL, `filled` INTEGER NOT NULL, `schoolName` TEXT NOT NULL, `grade` TEXT NOT NULL, `shift` TEXT NOT NULL, `groups` TEXT NOT NULL, `lessonsAttendedCount` INTEGER NOT NULL, `systemUser_id` INTEGER NOT NULL, `systemUser_login` TEXT NOT NULL, `systemUser_lastSeen` INTEGER NOT NULL, `systemUser_lastSeenWhere` INTEGER NOT NULL, `systemUser_systemRoleName` TEXT NOT NULL, `systemUser_enabled` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `fio` TEXT NOT NULL, `contactPhoneNumber` TEXT NOT NULL, `contactPhoneWho` TEXT NOT NULL, `filled` INTEGER NOT NULL, `schoolName` TEXT NOT NULL, `grade` TEXT NOT NULL, `shift` TEXT NOT NULL, `groups` TEXT NOT NULL, `lessonsAttendedCount` INTEGER NOT NULL, `systemUser_id` INTEGER NOT NULL, `systemUser_login` TEXT NOT NULL, `systemUser_lastSeen` TEXT NOT NULL, `systemUser_lastSeenWhere` INTEGER NOT NULL, `systemUser_systemRoleName` TEXT NOT NULL, `systemUser_enabled` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -225,7 +225,7 @@
           {
             "fieldPath": "systemUser.lastSeen",
             "columnName": "systemUser_lastSeen",
-            "affinity": "INTEGER",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
@@ -258,7 +258,7 @@
       },
       {
         "tableName": "StudentFull",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `filled` INTEGER NOT NULL, `fio` TEXT NOT NULL, `birthDate` TEXT NOT NULL, `birthPlace` TEXT NOT NULL, `registrationPlace` TEXT NOT NULL, `actualAddress` TEXT NOT NULL, `additionalInfo` TEXT, `knownFrom` TEXT, `grade` TEXT NOT NULL, `shift` TEXT NOT NULL, `phone` TEXT, `contactPhoneNumber` TEXT NOT NULL, `contactPhoneWho` TEXT NOT NULL, `citizenshipName` TEXT NOT NULL, `groups` TEXT NOT NULL, `lessonsAttendedCount` INTEGER NOT NULL, `systemUser_id` INTEGER NOT NULL, `systemUser_login` TEXT NOT NULL, `systemUser_lastSeen` INTEGER NOT NULL, `systemUser_lastSeenWhere` INTEGER NOT NULL, `systemUser_systemRoleName` TEXT NOT NULL, `systemUser_enabled` INTEGER NOT NULL, `school_id` INTEGER NOT NULL, `school_name` TEXT NOT NULL, `mother_id` INTEGER, `mother_fio` TEXT, `mother_phone` TEXT, `mother_address` TEXT, `mother_email` TEXT, `mother_vkLink` TEXT, `mother_homePhone` TEXT, `mother_notificationTypesString` TEXT, `father_id` INTEGER, `father_fio` TEXT, `father_phone` TEXT, `father_address` TEXT, `father_email` TEXT, `father_vkLink` TEXT, `father_homePhone` TEXT, `father_notificationTypesString` TEXT, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `filled` INTEGER NOT NULL, `fio` TEXT NOT NULL, `birthDate` TEXT NOT NULL, `birthPlace` TEXT NOT NULL, `registrationPlace` TEXT NOT NULL, `actualAddress` TEXT NOT NULL, `additionalInfo` TEXT, `knownFrom` TEXT, `grade` TEXT NOT NULL, `shift` TEXT NOT NULL, `phone` TEXT, `contactPhoneNumber` TEXT NOT NULL, `contactPhoneWho` TEXT NOT NULL, `citizenshipName` TEXT NOT NULL, `groups` TEXT NOT NULL, `lessonsAttendedCount` INTEGER NOT NULL, `systemUser_id` INTEGER NOT NULL, `systemUser_login` TEXT NOT NULL, `systemUser_lastSeen` TEXT NOT NULL, `systemUser_lastSeenWhere` INTEGER NOT NULL, `systemUser_systemRoleName` TEXT NOT NULL, `systemUser_enabled` INTEGER NOT NULL, `school_id` INTEGER NOT NULL, `school_name` TEXT NOT NULL, `mother_id` INTEGER, `mother_fio` TEXT, `mother_phone` TEXT, `mother_address` TEXT, `mother_email` TEXT, `mother_vkLink` TEXT, `mother_homePhone` TEXT, `mother_notificationTypesString` TEXT, `father_id` INTEGER, `father_fio` TEXT, `father_phone` TEXT, `father_address` TEXT, `father_email` TEXT, `father_vkLink` TEXT, `father_homePhone` TEXT, `father_notificationTypesString` TEXT, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -377,7 +377,7 @@
           {
             "fieldPath": "systemUser.lastSeen",
             "columnName": "systemUser_lastSeen",
-            "affinity": "INTEGER",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
@@ -899,7 +899,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"20f19fa328707710399c31d556f42755\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"0ccc0e2786c2529dc1d5e0ac3e56f1ee\")"
     ]
   }
 }
