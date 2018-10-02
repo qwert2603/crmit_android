@@ -8,6 +8,7 @@ import com.google.gson.Gson
 import com.qwert2603.crmit_android.entity.LoginResult
 import com.qwert2603.crmit_android.navigation.ScreenKey
 import com.qwert2603.crmit_android.util.PrefsBoolean
+import com.qwert2603.crmit_android.util.PrefsInt
 import com.qwert2603.crmit_android.util.PrefsLoginResultNullable
 import com.qwert2603.crmit_android.util.PrefsStringNullable
 import io.reactivex.Single
@@ -24,6 +25,7 @@ class UserSettingsRepo(appContext: Context) {
     var greetingShown by PrefsBoolean(prefs, "greetingShown")
     var thereWillBeAttendingChangesCachingShown by PrefsBoolean(prefs, "thereWillBeAttendingChangesCachingShown")
     var thereWillBePaymentChangesCachingShown by PrefsBoolean(prefs, "thereWillBePaymentChangesCachingShown")
+    var whatsNewVersionCodeShown by PrefsInt(prefs, "whatsNewVersionCodeShown")
 
     fun isLogged() = accessToken != null
 

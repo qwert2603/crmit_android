@@ -130,4 +130,11 @@
 
     <string name="text_no_comment">нет комментария</string>
 
+    <string name="whats_new_title" formatted="true">Версия %s. Что нового?</string>
+
+    <string name="whats_new_message">
+        * исправлена ошибка при редактировании суммы платежа;\n
+        * улучшен дизайн.\n
+    </string>
+
 </resources>
