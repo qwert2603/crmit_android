@@ -10,7 +10,7 @@
         android:layout_height="24dp"
         android:layout_margin="6dp"
         android:indeterminateTint="@android:color/black"
-        tools:visibility="gone" />
+        android:indeterminateTintMode="src_in" />
 
     <ImageView
         android:id="@+id/uploadError_ImageView"
@@ -28,6 +28,7 @@
         android:layout_height="24dp"
         android:layout_margin="6dp"
         android:src="@drawable/ic_done_black_24dp"
-        tools:ignore="ContentDescription" />
+        tools:ignore="ContentDescription"
+        tools:visibility="gone" />
 
 </FrameLayout>
