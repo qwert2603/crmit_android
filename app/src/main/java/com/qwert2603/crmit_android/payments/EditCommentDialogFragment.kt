@@ -48,6 +48,7 @@ class EditCommentDialogFragment : DialogFragment() {
                 .create()
                 .also {
                     it.setOnShowListener { _ ->
+                        dialogView.comment_EditText.requestFocus()
                         val inputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                         inputMethodManager.showSoftInput(dialogView.comment_EditText, 0)
                     }

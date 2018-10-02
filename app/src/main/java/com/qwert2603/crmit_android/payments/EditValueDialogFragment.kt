@@ -63,6 +63,7 @@ class EditValueDialogFragment : DialogFragment() {
                 .create()
                 .also {
                     it.setOnShowListener { _ ->
+                        dialogView.value_EditText.requestFocus()
                         val inputMethodManager = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                         inputMethodManager.showSoftInput(dialogView.value_EditText, 0)
                     }
@@ -70,12 +71,13 @@ class EditValueDialogFragment : DialogFragment() {
     }
 
     private fun sendResult() {
+        val value = dialogView.value_EditText.text.toString().toIntOrNull() ?: 0
         targetFragment!!.onActivityResult(
                 targetRequestCode,
                 Activity.RESULT_OK,
                 Intent()
                         .putExtra(KEY_PAYMENT_ID, paymentId)
-                        .putExtra(KEY_PAYMENT_VALUE, dialogView.value_EditText.text.toString().toInt())
+                        .putExtra(KEY_PAYMENT_VALUE, value)
         )
     }
 }
