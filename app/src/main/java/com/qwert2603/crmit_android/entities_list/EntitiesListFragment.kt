@@ -17,6 +17,7 @@ import com.qwert2603.andrlib.util.inflate
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.db.DaoInterface
 import com.qwert2603.crmit_android.navigation.BackPressListener
+import com.qwert2603.crmit_android.navigation.StatusBarActivity
 import com.qwert2603.crmit_android.util.ConditionDividerDecoration
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -90,6 +91,11 @@ abstract class EntitiesListFragment<E : IdentifiableLong>
         super.onViewCreated(view, savedInstanceState)
     }
 
+    override fun onDestroyView() {
+        (requireActivity() as StatusBarActivity).setStatusBarBlack(false)
+        super.onDestroyView()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.entities_list, menu)
@@ -117,7 +123,10 @@ abstract class EntitiesListFragment<E : IdentifiableLong>
             _listEmpty_TextView.setText(if (vs.searchQuery.isNotEmpty()) R.string.text_nothing_found else R.string.empty_list_text)
         }
 
-        renderIfChanged({ searchOpen }) { entities_SearchUI.setOpen(it, prevViewState != null) }
+        renderIfChanged({ searchOpen }) {
+            entities_SearchUI.setOpen(it, prevViewState != null)
+            (requireActivity() as StatusBarActivity).setStatusBarBlack(it)
+        }
         renderIfChanged({ searchQuery }) { entities_SearchUI.setQuery(it) }
     }
 

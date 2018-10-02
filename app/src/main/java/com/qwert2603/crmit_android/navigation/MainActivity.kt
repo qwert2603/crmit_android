@@ -3,6 +3,7 @@ package com.qwert2603.crmit_android.navigation
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
@@ -24,12 +25,12 @@ import kotlinx.android.synthetic.main.header_navigation.view.*
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
 
-class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager {
+class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager, StatusBarActivity {
 
     companion object {
         private fun getScreenKeyFromIntent(intent: Intent): Pair<ScreenKey, Any?>? {
             if (intent.action != Intent.ACTION_VIEW) return null
-            val pathSegments = intent.data.pathSegments
+            val pathSegments = intent.data?.pathSegments ?: return null
             val result: Any = when (pathSegments.getOrNull(0)) {
                 "users" -> when (pathSegments.getOrNull(1)) {
                     "masters" -> ScreenKey.MASTERS
@@ -253,4 +254,11 @@ class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager {
     }
 
     override fun isKeyBoardShown() = activityRoot_FrameLayout.height < resources.displayMetrics.heightPixels - resources.toPx(30)
+
+    override fun setStatusBarBlack(black: Boolean) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            window.decorView.systemUiVisibility = if (black) 0 else View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+            window.statusBarColor = resources.color(if (black) android.R.color.black else android.R.color.transparent)
+        }
+    }
 }
