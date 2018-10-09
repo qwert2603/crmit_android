@@ -5,9 +5,12 @@ import android.support.annotation.StringRes
 import com.qwert2603.andrlib.model.IdentifiableLong
 
 data class NavigationItem(
-        override val id: Long,
         @DrawableRes val iconRes: Int,
         @StringRes val titleRes: Int,
-        val screenKey: ScreenKey
-) : IdentifiableLong
-
+        val screenKey: ScreenKey,
+        override val id: Long = nextId++
+) : IdentifiableLong {
+    companion object {
+        private var nextId = 1L
+    }
+}

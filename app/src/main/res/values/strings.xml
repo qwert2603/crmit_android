@@ -13,6 +13,8 @@
     <string name="title_lesson_format" formatted="true">Занятие %s</string>
     <string name="title_payments_in_group_default">Платежи</string>
     <string name="title_payments_in_group_format" formatted="true">Платежи в %s</string>
+    <string name="title_last_seens" formatted="true">Последние входы</string>
+    <string name="title_access_token" formatted="true">Токены для приложения</string>
 
     <string name="title_dialog_edit_payment_comment">Комментарий</string>
     <string name="title_dialog_edit_payment_value">Сумма</string>
@@ -133,8 +135,11 @@
     <string name="whats_new_title" formatted="true">Версия %s. Что нового?</string>
 
     <string name="whats_new_message">
+        <!--todo-->
         * исправлена ошибка при редактировании суммы платежа;\n
         * улучшен дизайн.\n
     </string>
+
+    <string name="text_expires">истекает</string>
 
 </resources>

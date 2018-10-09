@@ -19,4 +19,7 @@ enum class ScreenKey(val allowDrawer: Boolean = true) {
     GREETING(allowDrawer = false),
     LOGIN(allowDrawer = false),
     CABINET,
+
+    LAST_SEENS,
+    ACCESS_TOKENS
 }

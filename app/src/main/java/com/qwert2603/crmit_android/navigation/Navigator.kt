@@ -92,6 +92,8 @@ class Navigator(private val activity: ActivityInterface)
         ScreenKey.GREETING -> GreetingFragment()
         ScreenKey.LOGIN -> LoginFragment()
         ScreenKey.CABINET -> CabinetFragment()
+        ScreenKey.LAST_SEENS -> LastSeensListFragment()
+        ScreenKey.ACCESS_TOKENS -> AccessTokensListFragment()
     }.also { it.setScreenKey(ScreenKey.valueOf(screenKey)) }
 
     override fun exit() {

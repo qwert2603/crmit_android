@@ -90,13 +90,15 @@ class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager, S
     }
 
     private val rootNavigationItems = listOf(
-            NavigationItem(1L, R.drawable.ic_business_center_black_24dp, R.string.title_cabinet, ScreenKey.CABINET),
-            NavigationItem(2L, R.drawable.ic_person_black_24dp, R.string.title_masters, ScreenKey.MASTERS),
-            NavigationItem(3L, R.drawable.ic_person_black_24dp, R.string.title_teachers, ScreenKey.TEACHERS),
-            NavigationItem(4L, R.drawable.ic_person_black_24dp, R.string.title_students, ScreenKey.STUDENTS),
-            NavigationItem(5L, R.drawable.ic_group_black_24dp, R.string.title_sections, ScreenKey.SECTIONS),
-            NavigationItem(6L, R.drawable.ic_group_black_24dp, R.string.title_groups, ScreenKey.GROUPS),
-            NavigationItem(7L, R.drawable.ic_info_black_24dp, R.string.title_about, ScreenKey.ABOUT)
+            NavigationItem(R.drawable.ic_business_center_black_24dp, R.string.title_cabinet, ScreenKey.CABINET),
+            NavigationItem(R.drawable.ic_person_black_24dp, R.string.title_masters, ScreenKey.MASTERS),
+            NavigationItem(R.drawable.ic_person_black_24dp, R.string.title_teachers, ScreenKey.TEACHERS),
+            NavigationItem(R.drawable.ic_person_black_24dp, R.string.title_students, ScreenKey.STUDENTS),
+            NavigationItem(R.drawable.ic_group_black_24dp, R.string.title_sections, ScreenKey.SECTIONS),
+            NavigationItem(R.drawable.ic_group_black_24dp, R.string.title_groups, ScreenKey.GROUPS),
+            NavigationItem(R.drawable.ic_info_black_24dp, R.string.title_about, ScreenKey.ABOUT),
+            NavigationItem(R.drawable.ic_info_black_24dp, R.string.title_last_seens, ScreenKey.LAST_SEENS),
+            NavigationItem(R.drawable.ic_info_black_24dp, R.string.title_access_token, ScreenKey.ACCESS_TOKENS)
     )
 
     private val navigator = Navigator(object : ActivityInterface {
