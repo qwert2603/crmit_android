@@ -20,7 +20,13 @@ interface Rest {
         const val DATE_FORMAT = "yyyy-MM-dd"
         const val DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm"
 
-        const val LOGIN_ENDPOINT = "login"
+        const val ENDPOINT_LOGIN = "login"
+        const val ENDPOINT_APP_INFO = "app_info"
+
+        val ENDPOINT_WO_ACCESS_TOKEN = listOf(
+                ENDPOINT_LOGIN,
+                ENDPOINT_APP_INFO
+        )
     }
 
     @GET("teachers_list")
@@ -94,9 +100,18 @@ interface Rest {
     @POST("save_payment")
     fun savePayment(@Body savePaymentParams: SavePaymentParams): Completable
 
-    @POST(LOGIN_ENDPOINT)
+    @POST(ENDPOINT_LOGIN)
     fun login(@Body loginParams: LoginParams): Single<LoginResultServer>
 
     @POST("logout")
     fun logout(): Completable
+
+    @GET(ENDPOINT_APP_INFO)
+    fun appInfo(): Single<AppInfo>
+
+    @GET("last_seens")
+    fun getLastSeens(): Single<List<LastSeenItem>>
+
+    @GET("access_tokens")
+    fun getAccessTokens(): Single<List<AccessTokenItem>>
 }

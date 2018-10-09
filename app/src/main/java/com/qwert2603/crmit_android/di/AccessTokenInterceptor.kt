@@ -7,7 +7,8 @@ import okhttp3.Response
 
 class AccessTokenInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
-        if (chain.request().url().toString() == E.env.restBaseUrl + Rest.LOGIN_ENDPOINT) {
+        val requestUrl = chain.request().url().toString()
+        if (requestUrl in Rest.ENDPOINT_WO_ACCESS_TOKEN.map { E.env.restBaseUrl + it }) {
             return chain.proceed(chain.request())
         }
         val accessToken = DiHolder.userSettingsRepo.getAccessTokenSafe()

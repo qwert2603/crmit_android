@@ -14,7 +14,7 @@ object E {
 
 abstract class EnvInterface {
     protected abstract val serverUrl: String
-    val restBaseUrl by lazy { "$serverUrl/api/v1.0/" }
+    val restBaseUrl by lazy { "$serverUrl/api/v1.0.1/" }
     abstract val logType: LogUtils.LogType
     abstract val showClearCacheButton: Boolean
 }
