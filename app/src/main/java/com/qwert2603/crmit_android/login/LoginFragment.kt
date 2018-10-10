@@ -12,7 +12,7 @@ import com.qwert2603.andrlib.util.inflate
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.navigation.KeyboardManager
-import com.qwert2603.crmit_android.navigation.ScreenKey
+import com.qwert2603.crmit_android.navigation.Screen
 import com.qwert2603.crmit_android.util.UserInputEditText
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.fragment_login.*
@@ -59,7 +59,7 @@ class LoginFragment : BaseFragment<LoginViewState, LoginView, LoginPresenter>(),
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.login, menu)
         menu.findItem(R.id.about).setOnMenuItemClickListener {
-            DiHolder.router.navigateTo(ScreenKey.ABOUT.name)
+            DiHolder.router.navigateTo(Screen.About)
             true
         }
     }
@@ -93,7 +93,7 @@ class LoginFragment : BaseFragment<LoginViewState, LoginView, LoginPresenter>(),
         if (va !is LoginViewAction) return
         when (va) {
             is LoginViewAction.ShowLoginError -> Snackbar.make(login_CoordinatorLayout, va.loginErrorReason.descriptionRes, Snackbar.LENGTH_SHORT).show()
-            LoginViewAction.MoveToCabinet -> DiHolder.router.newRootScreen(ScreenKey.CABINET.name)
+            LoginViewAction.MoveToCabinet -> DiHolder.router.newRootScreen(Screen.Cabinet)
         }.also { }
     }
 }

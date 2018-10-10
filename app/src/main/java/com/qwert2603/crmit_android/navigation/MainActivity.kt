@@ -14,7 +14,6 @@ import android.support.v7.widget.Toolbar
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import com.qwert2603.andrlib.base.mvi.BaseFragment
 import com.qwert2603.andrlib.base.recyclerview.BaseRecyclerViewAdapter
 import com.qwert2603.andrlib.util.*
 import com.qwert2603.crmit_android.R
@@ -29,34 +28,34 @@ import ru.terrakok.cicerone.Router
 class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager, StatusBarActivity {
 
     companion object {
-        private fun getScreenKeyFromIntent(intent: Intent): Pair<ScreenKey, Any?>? {
+        private fun getScreenFromIntent(intent: Intent): Screen? {
             if (intent.action != Intent.ACTION_VIEW) return null
             val pathSegments = intent.data?.pathSegments ?: return null
-            val result: Any = when (pathSegments.getOrNull(0)) {
+            return when (pathSegments.getOrNull(0)) {
                 "users" -> when (pathSegments.getOrNull(1)) {
-                    "masters" -> ScreenKey.MASTERS
-                    "teachers" -> ScreenKey.TEACHERS
-                    "students" -> ScreenKey.STUDENTS
+                    "masters" -> Screen.Masters
+                    "teachers" -> Screen.Teachers
+                    "students" -> Screen.Students
                     "master" -> /*pathSegments.getOrNull(2)?.toIntOrNull()
-                                ?.let { Pair(ScreenKey.MASTER_DETAILS, it) } ?:*/ ScreenKey.MASTERS
+                                ?.let { Pair(ScreenKey.MASTER_DETAILS, it) } ?:*/ Screen.Masters
                     "teacher" -> /*pathSegments.getOrNull(2)?.toIntOrNull()
-                            ?.let { Pair(ScreenKey.TEACHER_DETAILS, it) } ?:*/ ScreenKey.TEACHERS
+                            ?.let { Pair(ScreenKey.TEACHER_DETAILS, it) } ?:*/ Screen.Teachers
                     "student_details" -> /*pathSegments.getOrNull(2)?.toIntOrNull()
-                            ?.let { Pair(ScreenKey.STUDENT_DETAILS, it) } ?:*/ ScreenKey.STUDENTS
-                    else -> ScreenKey.CABINET
+                            ?.let { Pair(ScreenKey.STUDENT_DETAILS, it) } ?:*/ Screen.Students
+                    else -> Screen.Cabinet
                 }
                 "structure" -> when (pathSegments.getOrNull(1)) {
-                    "groups" -> ScreenKey.GROUPS
-                    "sections" -> ScreenKey.SECTIONS
+                    "groups" -> Screen.Groups
+                    "sections" -> Screen.Sections
                     "group" -> /*pathSegments.getOrNull(2)?.toIntOrNull()
-                            ?.let { Pair(ScreenKey.GROUP_DETAILS, it) } ?:*/ ScreenKey.GROUPS
+                            ?.let { Pair(ScreenKey.GROUP_DETAILS, it) } ?:*/ Screen.Groups
                     "section" -> /*pathSegments.getOrNull(2)?.toIntOrNull()
-                            ?.let { Pair(ScreenKey.SECTION_DETAILS, it) } ?:*/ ScreenKey.SECTIONS
+                            ?.let { Pair(ScreenKey.SECTION_DETAILS, it) } ?:*/ Screen.Sections
                     "group_details" -> /*pathSegments.getOrNull(2)?.toIntOrNull()
-                            ?.let { Pair(ScreenKey.STUDENTS_IN_GROUP, it) } ?:*/ ScreenKey.GROUPS
+                            ?.let { Pair(ScreenKey.STUDENTS_IN_GROUP, it) } ?:*/ Screen.Groups
                     "students_in_group" -> /*pathSegments.getOrNull(2)?.toIntOrNull()
-                            ?.let { Pair(ScreenKey.STUDENTS_IN_GROUP, it) } ?:*/ ScreenKey.GROUPS
-                    else -> ScreenKey.CABINET
+                            ?.let { Pair(ScreenKey.STUDENTS_IN_GROUP, it) } ?:*/ Screen.Groups
+                    else -> Screen.Cabinet
                 }
 //                "lessons" -> when {
 //                    pathSegments.getOrNull(1) == "months" -> pathSegments.getOrNull(2)?.toIntOrNull()
@@ -65,11 +64,7 @@ class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager, S
 //                            ?.let { Pair(ScreenKey.LESSONS_IN_GROUP, it) } ?: ScreenKey.GROUPS
 //                }
 //                "payment" -> {}
-                else -> ScreenKey.CABINET
-            }
-            return result.let {
-                if (it is ScreenKey) Pair(it, null)
-                else it as Pair<ScreenKey, Any?>
+                else -> Screen.Cabinet
             }
         }
     }
@@ -90,26 +85,22 @@ class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager, S
     }
 
     private val rootNavigationItems = listOf(
-            NavigationItem(R.drawable.ic_business_center_black_24dp, R.string.title_cabinet, ScreenKey.CABINET),
-            NavigationItem(R.drawable.ic_person_black_24dp, R.string.title_masters, ScreenKey.MASTERS),
-            NavigationItem(R.drawable.ic_person_black_24dp, R.string.title_teachers, ScreenKey.TEACHERS),
-            NavigationItem(R.drawable.ic_person_black_24dp, R.string.title_students, ScreenKey.STUDENTS),
-            NavigationItem(R.drawable.ic_group_black_24dp, R.string.title_sections, ScreenKey.SECTIONS),
-            NavigationItem(R.drawable.ic_group_black_24dp, R.string.title_groups, ScreenKey.GROUPS),
-            NavigationItem(R.drawable.ic_info_black_24dp, R.string.title_about, ScreenKey.ABOUT),
-            NavigationItem(R.drawable.ic_info_black_24dp, R.string.title_last_seens, ScreenKey.LAST_SEENS),
-            NavigationItem(R.drawable.ic_info_black_24dp, R.string.title_access_token, ScreenKey.ACCESS_TOKENS)
+            NavigationItem(R.drawable.ic_business_center_black_24dp, R.string.title_cabinet, Screen.Cabinet),
+            NavigationItem(R.drawable.ic_person_black_24dp, R.string.title_masters, Screen.Masters),
+            NavigationItem(R.drawable.ic_person_black_24dp, R.string.title_teachers, Screen.Teachers),
+            NavigationItem(R.drawable.ic_person_black_24dp, R.string.title_students, Screen.Students),
+            NavigationItem(R.drawable.ic_group_black_24dp, R.string.title_sections, Screen.Sections),
+            NavigationItem(R.drawable.ic_group_black_24dp, R.string.title_groups, Screen.Groups),
+            NavigationItem(R.drawable.ic_info_black_24dp, R.string.title_about, Screen.About),
+            NavigationItem(R.drawable.ic_info_black_24dp, R.string.title_last_seens, Screen.LastSeens),
+            NavigationItem(R.drawable.ic_info_black_24dp, R.string.title_access_token, Screen.AccessTokens)
     )
 
     private val navigator = Navigator(object : ActivityInterface {
+        override val fragmentActivity = this@MainActivity
         override val supportFragmentManager = this@MainActivity.supportFragmentManager
         override val fragmentContainer = R.id.fragment_container
-        override fun finish() = this@MainActivity.finish()
         override fun hideKeyboard() = this@MainActivity.hideKeyboard()
-        override fun viewForSnackbars(): View = (supportFragmentManager.findFragmentById(R.id.fragment_container) as? BaseFragment<*, *, *>)
-                ?.viewForSnackbar()
-                ?: activity_CoordinatorLayout
-
         override val navigationActivity = this@MainActivity
     })
 
@@ -123,12 +114,12 @@ class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager, S
         setContentView(R.layout.activity_main)
 
         if (savedInstanceState == null) {
-            val screenKeyFromIntent = getScreenKeyFromIntent(intent)
+            val screenFromIntent = getScreenFromIntent(intent)
             when {
-                screenKeyFromIntent != null -> router.newRootScreen(screenKeyFromIntent.first.name, screenKeyFromIntent.second)
-                !DiHolder.userSettingsRepo.greetingShown -> router.newRootScreen(ScreenKey.GREETING.name)
-                !DiHolder.userSettingsRepo.isLogged() -> router.newRootScreen(ScreenKey.LOGIN.name)
-                else -> router.newRootScreen(ScreenKey.CABINET.name)
+                screenFromIntent != null -> router.newRootScreen(screenFromIntent)
+                !DiHolder.userSettingsRepo.greetingShown -> router.newRootScreen(Screen.Greeting)
+                !DiHolder.userSettingsRepo.isLogged() -> router.newRootScreen(Screen.Login)
+                else -> router.newRootScreen(Screen.Cabinet)
                         .also { WhatsNewDialog.showIfNeeded(supportFragmentManager) }
             }
         }
@@ -172,19 +163,19 @@ class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager, S
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
-        getScreenKeyFromIntent(intent)
+        getScreenFromIntent(intent)
                 ?.also {
                     closeDrawer()
-                    DiHolder.router.newRootScreen(it.first.name, it.second)
+                    DiHolder.router.newRootScreen(it)
                 }
     }
 
     private fun navigateToItem(navigationItem: NavigationItem, newRootScreen: Boolean) {
         closeDrawer()
         if (newRootScreen) {
-            router.newRootScreen(navigationItem.screenKey.name)
+            router.newRootScreen(navigationItem.screen)
         } else {
-            router.navigateTo(navigationItem.screenKey.name)
+            router.navigateTo(navigationItem.screen)
         }
     }
 
@@ -200,14 +191,14 @@ class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager, S
         LogUtils.d("onFragmentResumed $fragment")
         if (fragment !in supportFragmentManager.fragments) return
 
-        val screenKey: ScreenKey = fragment.getScreenKey() ?: return
+        val screen: Screen = fragment.getScreen() ?: return
         val isRoot = supportFragmentManager.backStackEntryCount == 0
         if (isRoot) {
-            navigationAdapter.selectedItemId = rootNavigationItems.find { screenKey == it.screenKey }?.id ?: 0
+            navigationAdapter.selectedItemId = rootNavigationItems.find { screen == it.screen }?.id ?: 0
         } else {
             navigationAdapter.selectedItemId = 0
         }
-        val allowDrawer = screenKey.allowDrawer && DiHolder.userSettingsRepo.isLogged()
+        val allowDrawer = screen.allowDrawer && DiHolder.userSettingsRepo.isLogged()
         activity_DrawerLayout.setDrawerLockMode(
                 (if (allowDrawer) DrawerLayout.LOCK_MODE_UNLOCKED else DrawerLayout.LOCK_MODE_LOCKED_CLOSED),
                 GravityCompat.START

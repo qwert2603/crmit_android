@@ -28,14 +28,6 @@ import kotlinx.android.synthetic.main.toolbar_default.*
 
 abstract class EntityDetailsFragment<E : Any> : LRFragment<EntityDetailsViewState<E>, EntityDetailsView<E>, EntityDetailsPresenter<E>>(), EntityDetailsView<E> {
 
-    data class Key(
-            val entityId: Long,
-            val entityName: String,
-            val entityNameTextView: TextView? = null,
-            val entityNameStrike: Boolean = false,
-            val entityNameColorAccent: Boolean = false
-    )
-
     @Arg
     var entityId: Long = IdentifiableLong.NO_ID
 

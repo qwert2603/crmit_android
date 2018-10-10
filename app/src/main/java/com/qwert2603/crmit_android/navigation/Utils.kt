@@ -5,19 +5,18 @@ import android.arch.lifecycle.LifecycleObserver
 import android.arch.lifecycle.OnLifecycleEvent
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import com.qwert2603.crmit_android.BuildConfig
 import ru.terrakok.cicerone.Navigator
 import ru.terrakok.cicerone.NavigatorHolder
 
-const val SCREEN_KEY_KEY = BuildConfig.APPLICATION_ID + ".SCREEN_KEY_KEY"
+private const val SCREEN_KEY_KEY = "SCREEN_KEY_KEY"
 
-fun Fragment.setScreenKey(screenKey: ScreenKey) {
+fun Fragment.setScreen(screen: Screen) {
     val args: Bundle = arguments ?: Bundle()
-    args.putString(SCREEN_KEY_KEY, screenKey.name)
+    args.putSerializable(SCREEN_KEY_KEY, screen)
     arguments = args
 }
 
-fun Fragment.getScreenKey(): ScreenKey? = arguments?.getString(SCREEN_KEY_KEY, null)?.let { ScreenKey.valueOf(it) }
+fun Fragment.getScreen(): Screen? = arguments?.getSerializable(SCREEN_KEY_KEY) as? Screen
 
 fun NavigatorHolder.createLifecycleObserver(navigator: Navigator) = object : LifecycleObserver {
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)

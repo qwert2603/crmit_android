@@ -14,7 +14,7 @@ import com.qwert2603.andrlib.util.inflate
 import com.qwert2603.andrlib.util.setVisible
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.di.DiHolder
-import com.qwert2603.crmit_android.navigation.ScreenKey
+import com.qwert2603.crmit_android.navigation.Screen
 import io.reactivex.Observable
 import kotlinx.android.synthetic.main.fragment_greeting.*
 import kotlinx.android.synthetic.main.view_greeting_message.view.*
@@ -71,7 +71,7 @@ class GreetingFragment : BaseFragment<GreetingViewState, GreetingView, GreetingP
     override fun executeAction(va: ViewAction) {
         if (va !is GreetingViewAction) return
         when (va) {
-            GreetingViewAction.MoveToLogin -> DiHolder.router.newRootScreen(ScreenKey.LOGIN.name)
+            GreetingViewAction.MoveToLogin -> DiHolder.router.newRootScreen(Screen.Login)
         }.also { }
     }
 }

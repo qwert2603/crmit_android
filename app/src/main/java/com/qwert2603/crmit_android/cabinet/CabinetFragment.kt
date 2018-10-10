@@ -14,9 +14,9 @@ import com.qwert2603.andrlib.util.inflate
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entity.AccountType
-import com.qwert2603.crmit_android.entity_details.EntityDetailsFragment
+import com.qwert2603.crmit_android.navigation.DetailsScreenKey
 import com.qwert2603.crmit_android.navigation.KeyboardManager
-import com.qwert2603.crmit_android.navigation.ScreenKey
+import com.qwert2603.crmit_android.navigation.Screen
 import kotlinx.android.synthetic.main.fragment_cabinet.*
 import kotlinx.android.synthetic.main.toolbar_default.*
 
@@ -71,19 +71,21 @@ class CabinetFragment : LRFragment<CabinetViewState, CabinetView, CabinetPresent
         if (va !is CabinetViewAction) return super.executeAction(va)
         when (va) {
             CabinetViewAction.ShowingCachedData -> Snackbar.make(cabinet_CoordinatorLayout, R.string.text_showing_cached_data, Snackbar.LENGTH_SHORT).show()
-            CabinetViewAction.MoveToLogin -> DiHolder.router.newRootScreen(ScreenKey.LOGIN.name)
-            is CabinetViewAction.MoveToUserDetails -> DiHolder.router.navigateTo(
-                    when (va.accountType) {
-                        AccountType.MASTER -> ScreenKey.MASTER_DETAILS
-                        AccountType.TEACHER -> ScreenKey.TEACHER_DETAILS
-                    }.name,
-                    EntityDetailsFragment.Key(
-                            entityId = va.detailsId,
-                            entityName = fio_TextView.text.toString(),
-                            entityNameTextView = fio_TextView,
-                            entityNameStrike = false // user's account in cabinet is always enabled.
-                    )
-            )
+            CabinetViewAction.MoveToLogin -> DiHolder.router.newRootScreen(Screen.Login)
+            is CabinetViewAction.MoveToUserDetails -> {
+                val detailsScreenKey = DetailsScreenKey(
+                        entityId = va.detailsId,
+                        entityName = fio_TextView.text.toString(),
+                        entityNameTextView = fio_TextView,
+                        entityNameStrike = false // user's account in cabinet is always enabled.
+                )
+                DiHolder.router.navigateTo(
+                        when (va.accountType) {
+                            AccountType.MASTER -> Screen.MasterDetails(detailsScreenKey)
+                            AccountType.TEACHER -> Screen.TeacherDetails(detailsScreenKey)
+                        }
+                )
+            }
         }.also { }
     }
 }

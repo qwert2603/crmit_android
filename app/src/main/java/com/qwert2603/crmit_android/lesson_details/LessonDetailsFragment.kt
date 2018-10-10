@@ -19,8 +19,8 @@ import com.qwert2603.andrlib.util.setVisible
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entity.AccountType
-import com.qwert2603.crmit_android.entity_details.EntityDetailsFragment
-import com.qwert2603.crmit_android.navigation.ScreenKey
+import com.qwert2603.crmit_android.navigation.DetailsScreenKey
+import com.qwert2603.crmit_android.navigation.Screen
 import com.qwert2603.crmit_android.rest.params.SaveAttendingStateParams
 import com.qwert2603.crmit_android.util.toShowingDate
 import io.reactivex.Observable
@@ -66,26 +66,26 @@ class LessonDetailsFragment : LRFragment<LessonDetailsViewState, LessonDetailsVi
 
         group_DetailsField.setOnClickListener {
             val groupBrief = currentViewState.groupBrief ?: return@setOnClickListener
-            DiHolder.router.navigateTo(ScreenKey.GROUP_DETAILS.name, EntityDetailsFragment.Key(
+            DiHolder.router.navigateTo(Screen.GroupDetails(DetailsScreenKey(
                     entityId = groupBrief.id,
                     entityName = groupBrief.name
-            ))
+            )))
         }
 
         teacher_DetailsField.setOnClickListener {
             val groupBrief = currentViewState.groupBrief ?: return@setOnClickListener
-            DiHolder.router.navigateTo(ScreenKey.TEACHER_DETAILS.name, EntityDetailsFragment.Key(
+            DiHolder.router.navigateTo(Screen.TeacherDetails(DetailsScreenKey(
                     entityId = groupBrief.teacherId,
                     entityName = groupBrief.teacherFio
-            ))
+            )))
         }
 
         adapter.modelItemClicks
                 .subscribe {
-                    DiHolder.router.navigateTo(ScreenKey.STUDENT_DETAILS.name, EntityDetailsFragment.Key(
+                    DiHolder.router.navigateTo(Screen.StudentDetails(DetailsScreenKey(
                             entityId = it.studentId,
                             entityName = it.studentFio
-                    ))
+                    )))
                 }
                 .disposeOnDestroyView()
 

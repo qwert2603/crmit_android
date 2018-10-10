@@ -9,8 +9,8 @@ import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entities_list.EntitiesListFragment
 import com.qwert2603.crmit_android.entity.AccountType
 import com.qwert2603.crmit_android.entity.GroupBrief
-import com.qwert2603.crmit_android.entity_details.EntityDetailsFragment
-import com.qwert2603.crmit_android.navigation.ScreenKey
+import com.qwert2603.crmit_android.navigation.DetailsScreenKey
+import com.qwert2603.crmit_android.navigation.Screen
 import kotlinx.android.synthetic.main.item_group.view.*
 
 class GroupsListFragment : EntitiesListFragment<GroupBrief>() {
@@ -38,11 +38,11 @@ class GroupsListFragment : EntitiesListFragment<GroupBrief>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         adapter.modelItemClicks
                 .subscribe {
-                    DiHolder.router.navigateTo(ScreenKey.GROUP_DETAILS.name, EntityDetailsFragment.Key(
+                    DiHolder.router.navigateTo(Screen.GroupDetails(DetailsScreenKey(
                             entityId = it.id,
                             entityName = it.name,
                             entityNameTextView = _list_RecyclerView.findViewHolderForItemId(it.id).itemView.name_TextView
-                    ))
+                    )))
                 }
                 .disposeOnDestroyView()
 

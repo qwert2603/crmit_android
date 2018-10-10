@@ -68,7 +68,7 @@ dependencies {
     ext.room_version = "1.1.1"
     ext.mosby_version = '3.1.0'
     ext.fragmentargs_version = '3.0.2'
-    ext.cicerone_version = '3.0.0'
+    ext.cicerone_version = '4.0.2'
 
     ext.rxjava_version = '2.2.1'
     ext.rxandroid_version = '2.1.0'

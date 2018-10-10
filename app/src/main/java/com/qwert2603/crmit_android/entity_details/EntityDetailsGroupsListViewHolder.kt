@@ -9,7 +9,8 @@ import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entity.AccountType
 import com.qwert2603.crmit_android.entity.GroupBrief
-import com.qwert2603.crmit_android.navigation.ScreenKey
+import com.qwert2603.crmit_android.navigation.DetailsScreenKey
+import com.qwert2603.crmit_android.navigation.Screen
 import kotlinx.android.synthetic.main.item_entity_details_group.view.*
 import kotlinx.android.synthetic.main.item_entity_details_groups_list.view.*
 
@@ -42,10 +43,10 @@ class EntityDetailsGroupsListViewHolder(parent: ViewGroup) : BaseRecyclerViewHol
         itemView.groups_RecyclerView.adapter = groupsAdapter
         groupsAdapter.modelItemClicks
                 .subscribe {
-                    DiHolder.router.navigateTo(ScreenKey.GROUP_DETAILS.name, EntityDetailsFragment.Key(
+                    DiHolder.router.navigateTo(Screen.GroupDetails(DetailsScreenKey(
                             entityId = it.id,
                             entityName = it.name
-                    ))
+                    )))
                 }
     }
 

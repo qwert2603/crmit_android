@@ -7,7 +7,7 @@ import com.qwert2603.andrlib.model.IdentifiableLong
 data class NavigationItem(
         @DrawableRes val iconRes: Int,
         @StringRes val titleRes: Int,
-        val screenKey: ScreenKey,
+        val screen: Screen,
         override val id: Long = nextId++
 ) : IdentifiableLong {
     companion object {

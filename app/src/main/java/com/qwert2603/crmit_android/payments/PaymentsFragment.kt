@@ -17,8 +17,8 @@ import com.qwert2603.andrlib.model.IdentifiableLong
 import com.qwert2603.andrlib.util.inflate
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.di.DiHolder
-import com.qwert2603.crmit_android.entity_details.EntityDetailsFragment
-import com.qwert2603.crmit_android.navigation.ScreenKey
+import com.qwert2603.crmit_android.navigation.DetailsScreenKey
+import com.qwert2603.crmit_android.navigation.Screen
 import com.qwert2603.crmit_android.payments_in_group.ParentPaymentsFragment
 import com.qwert2603.crmit_android.util.ConditionDividerDecoration
 import io.reactivex.Observable
@@ -32,8 +32,6 @@ class PaymentsFragment : LRFragment<PaymentsViewState, PaymentsView, PaymentsPre
         private const val REQUEST_CODE_VALUE = 1
         private const val REQUEST_CODE_COMMENT = 2
     }
-
-    data class Key(val groupId: Long, val monthNumber: Int)
 
     @Arg
     var groupId: Long = IdentifiableLong.NO_ID
@@ -62,10 +60,10 @@ class PaymentsFragment : LRFragment<PaymentsViewState, PaymentsView, PaymentsPre
 
         adapter.modelItemClicks
                 .subscribe {
-                    DiHolder.router.navigateTo(ScreenKey.STUDENT_DETAILS.name, EntityDetailsFragment.Key(
+                    DiHolder.router.navigateTo(Screen.StudentDetails(DetailsScreenKey(
                             entityId = it.studentId,
                             entityName = it.studentFio
-                    ))
+                    )))
                 }
                 .disposeOnDestroyView()
 

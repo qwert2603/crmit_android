@@ -6,7 +6,7 @@ import android.preference.PreferenceManager
 import android.support.annotation.WorkerThread
 import com.google.gson.Gson
 import com.qwert2603.crmit_android.entity.LoginResult
-import com.qwert2603.crmit_android.navigation.ScreenKey
+import com.qwert2603.crmit_android.navigation.Screen
 import com.qwert2603.crmit_android.util.PrefsBoolean
 import com.qwert2603.crmit_android.util.PrefsInt
 import com.qwert2603.crmit_android.util.PrefsLoginResultNullable
@@ -50,7 +50,7 @@ class UserSettingsRepo(appContext: Context) {
 
     fun on401() {
         DiHolder.uiSchedulerProvider.ui.scheduleDirect {
-            DiHolder.router.newRootScreen(ScreenKey.LOGIN.name)
+            DiHolder.router.newRootScreen(Screen.Login)
         }
     }
 

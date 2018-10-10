@@ -13,7 +13,7 @@ import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entities_list.EntitiesListFragment
 import com.qwert2603.crmit_android.entities_list.EntitiesListViewState
 import com.qwert2603.crmit_android.entity.Lesson
-import com.qwert2603.crmit_android.navigation.ScreenKey
+import com.qwert2603.crmit_android.navigation.Screen
 import com.qwert2603.crmit_android.rest.Rest
 import com.qwert2603.crmit_android.util.toShowingDate
 import kotlinx.android.synthetic.main.item_lesson.view.*
@@ -23,11 +23,6 @@ import java.util.*
 
 @FragmentWithArgs
 class LessonsInGroupListFragment : EntitiesListFragment<Lesson>() {
-
-    data class Key(
-            val groupId: Long,
-            val groupName: String
-    )
 
     @Arg
     var groupId: Long = IdentifiableLong.NO_ID
@@ -59,7 +54,7 @@ class LessonsInGroupListFragment : EntitiesListFragment<Lesson>() {
         toolbar.title = getString(R.string.title_lessons_in_group, groupName)
 
         adapter.modelItemClicks
-                .subscribe { DiHolder.router.navigateTo(ScreenKey.LESSON_DETAILS.name, it.id) }
+                .subscribe { DiHolder.router.navigateTo(Screen.LessonDetails(it.id)) }
                 .disposeOnDestroyView()
 
         super.onViewCreated(view, savedInstanceState)

@@ -9,8 +9,8 @@ import com.qwert2603.crmit_android.db.DaoInterface
 import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entities_list.EntitiesListFragment
 import com.qwert2603.crmit_android.entity.StudentBrief
-import com.qwert2603.crmit_android.entity_details.EntityDetailsFragment
-import com.qwert2603.crmit_android.navigation.ScreenKey
+import com.qwert2603.crmit_android.navigation.DetailsScreenKey
+import com.qwert2603.crmit_android.navigation.Screen
 import com.qwert2603.crmit_android.util.setStrike
 import kotlinx.android.synthetic.main.item_student.view.*
 
@@ -48,12 +48,12 @@ class StudentsListFragment : EntitiesListFragment<StudentBrief>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         adapter.modelItemClicks
                 .subscribe {
-                    DiHolder.router.navigateTo(ScreenKey.STUDENT_DETAILS.name, EntityDetailsFragment.Key(
+                    DiHolder.router.navigateTo(Screen.StudentDetails(DetailsScreenKey(
                             entityId = it.id,
                             entityName = it.fio,
                             entityNameTextView = _list_RecyclerView.findViewHolderForItemId(it.id).itemView.fio_TextView,
                             entityNameStrike = !it.systemUser.enabled
-                    ))
+                    )))
                 }
                 .disposeOnDestroyView()
 

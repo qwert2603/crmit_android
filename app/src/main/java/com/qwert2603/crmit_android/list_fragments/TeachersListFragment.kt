@@ -10,8 +10,8 @@ import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entities_list.EntitiesListFragment
 import com.qwert2603.crmit_android.entity.AccountType
 import com.qwert2603.crmit_android.entity.Teacher
-import com.qwert2603.crmit_android.entity_details.EntityDetailsFragment
-import com.qwert2603.crmit_android.navigation.ScreenKey
+import com.qwert2603.crmit_android.navigation.DetailsScreenKey
+import com.qwert2603.crmit_android.navigation.Screen
 import com.qwert2603.crmit_android.util.setStrike
 import kotlinx.android.synthetic.main.item_teacher.view.*
 
@@ -41,13 +41,13 @@ class TeachersListFragment : EntitiesListFragment<Teacher>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         adapter.modelItemClicks
                 .subscribe {
-                    DiHolder.router.navigateTo(ScreenKey.TEACHER_DETAILS.name, EntityDetailsFragment.Key(
+                    DiHolder.router.navigateTo(Screen.TeacherDetails(DetailsScreenKey(
                             entityId = it.id,
                             entityName = it.fio,
                             entityNameTextView = _list_RecyclerView.findViewHolderForItemId(it.id).itemView.fio_TextView,
                             entityNameStrike = !it.systemUser.enabled,
                             entityNameColorAccent = it.isAuthed()
-                    ))
+                    )))
                 }
                 .disposeOnDestroyView()
 

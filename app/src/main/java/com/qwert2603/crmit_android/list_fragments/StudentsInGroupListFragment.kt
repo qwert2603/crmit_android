@@ -11,8 +11,8 @@ import com.qwert2603.crmit_android.db.generated_dao.wrap
 import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entities_list.EntitiesListFragment
 import com.qwert2603.crmit_android.entity.StudentInGroup
-import com.qwert2603.crmit_android.entity_details.EntityDetailsFragment
-import com.qwert2603.crmit_android.navigation.ScreenKey
+import com.qwert2603.crmit_android.navigation.DetailsScreenKey
+import com.qwert2603.crmit_android.navigation.Screen
 import com.qwert2603.crmit_android.util.setStrike
 import com.qwert2603.crmit_android.util.toMonthString
 import com.qwert2603.crmit_android.util.toPointedString
@@ -21,11 +21,6 @@ import kotlinx.android.synthetic.main.toolbar_default.*
 
 @FragmentWithArgs
 class StudentsInGroupListFragment : EntitiesListFragment<StudentInGroup>() {
-
-    data class Key(
-            val groupId: Long,
-            val groupName: String
-    )
 
     @Arg
     var groupId: Long = IdentifiableLong.NO_ID
@@ -63,12 +58,12 @@ class StudentsInGroupListFragment : EntitiesListFragment<StudentInGroup>() {
 
         adapter.modelItemClicks
                 .subscribe {
-                    DiHolder.router.navigateTo(ScreenKey.STUDENT_DETAILS.name, EntityDetailsFragment.Key(
+                    DiHolder.router.navigateTo(Screen.StudentDetails(DetailsScreenKey(
                             entityId = it.studentId,
                             entityName = it.studentFio,
                             entityNameTextView = _list_RecyclerView.findViewHolderForItemId(it.id).itemView.fio_TextView,
                             entityNameStrike = !it.systemUserEnabled
-                    ))
+                    )))
                 }
                 .disposeOnDestroyView()
 
