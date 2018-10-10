@@ -26,6 +26,8 @@ class StudentsListFragment : EntitiesListFragment<StudentBrief>() {
 
     override val entityPluralsRes = R.plurals.students
 
+    override val pageSize = 20
+
     override fun View.bindEntity(e: StudentBrief) {
         fio_TextView.text = e.fio
         fio_TextView.transitionName = "entity_name_${e.id}"
