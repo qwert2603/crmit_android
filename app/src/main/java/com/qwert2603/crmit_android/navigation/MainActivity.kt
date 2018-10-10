@@ -19,14 +19,17 @@ import com.qwert2603.andrlib.util.*
 import com.qwert2603.crmit_android.BuildConfig
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.di.DiHolder
+import com.qwert2603.crmit_android.dialogs.MarkInPlayMarketDialog
 import com.qwert2603.crmit_android.dialogs.UpdateAvailableDialog
 import com.qwert2603.crmit_android.dialogs.WhatsNewDialog
 import com.qwert2603.crmit_android.util.disposeOnDestroy
+import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.header_navigation.view.*
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
+import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager, StatusBarActivity {
 
@@ -128,6 +131,7 @@ class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager, S
                 !DiHolder.userSettingsRepo.isLogged() -> router.newRootScreen(Screen.Login)
                 else -> router.newRootScreen(Screen.Cabinet)
                         .also { WhatsNewDialog.showIfNeeded(supportFragmentManager) }
+                        .also { MarkInPlayMarketDialog.showIfNeeded(supportFragmentManager) }
             }
             DiHolder.rest.appInfo()
                     .subscribeOn(DiHolder.modelSchedulersProvider.io)
@@ -140,6 +144,10 @@ class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager, S
                             LogUtils.e("MainActivity appInfo", t)
                         }
                     }
+                    .disposeOnDestroy(this)
+
+            Single.timer(5, TimeUnit.SECONDS)
+                    .subscribe { _, t -> if (t == null) DiHolder.userSettingsRepo.launchesCount++ }
                     .disposeOnDestroy(this)
         }
 
