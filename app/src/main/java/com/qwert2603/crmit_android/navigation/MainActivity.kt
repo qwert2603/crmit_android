@@ -16,9 +16,12 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import com.qwert2603.andrlib.base.recyclerview.BaseRecyclerViewAdapter
 import com.qwert2603.andrlib.util.*
+import com.qwert2603.crmit_android.BuildConfig
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.di.DiHolder
+import com.qwert2603.crmit_android.dialogs.UpdateAvailableDialog
 import com.qwert2603.crmit_android.dialogs.WhatsNewDialog
+import com.qwert2603.crmit_android.util.disposeOnDestroy
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.header_navigation.view.*
@@ -126,6 +129,18 @@ class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager, S
                 else -> router.newRootScreen(Screen.Cabinet)
                         .also { WhatsNewDialog.showIfNeeded(supportFragmentManager) }
             }
+            DiHolder.rest.appInfo()
+                    .subscribeOn(DiHolder.modelSchedulersProvider.io)
+                    .observeOn(DiHolder.uiSchedulerProvider.ui)
+                    .subscribe { appInfo, t ->
+                        if (appInfo != null && appInfo.actualAppBuildCode > BuildConfig.VERSION_CODE) {
+                            UpdateAvailableDialog().show(supportFragmentManager, null)
+                        }
+                        if (t != null) {
+                            LogUtils.e("MainActivity appInfo", t)
+                        }
+                    }
+                    .disposeOnDestroy(this)
         }
 
         headerNavigation = navigation_view.inflate(R.layout.header_navigation)

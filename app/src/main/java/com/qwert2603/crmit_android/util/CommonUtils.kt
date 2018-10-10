@@ -1,6 +1,10 @@
 package com.qwert2603.crmit_android.util
 
 import android.animation.Animator
+import android.arch.lifecycle.Lifecycle
+import android.arch.lifecycle.LifecycleObserver
+import android.arch.lifecycle.LifecycleOwner
+import android.arch.lifecycle.OnLifecycleEvent
 import android.content.res.Resources
 import android.graphics.Paint
 import android.support.annotation.MainThread
@@ -15,6 +19,7 @@ import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.entity.SystemUser
 import com.qwert2603.crmit_android.rest.Rest
 import io.reactivex.Observable
+import io.reactivex.disposables.Disposable
 import io.reactivex.functions.BiFunction
 import java.text.SimpleDateFormat
 import java.util.*
@@ -147,6 +152,15 @@ fun EditText.doAfterTextChanged(action: (String) -> Unit) {
         }
 
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+        }
+    })
+}
+
+fun Disposable.disposeOnDestroy(lifecycleOwner: LifecycleOwner) {
+    lifecycleOwner.lifecycle.addObserver(object : LifecycleObserver {
+        @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+        fun onResume() {
+            this@disposeOnDestroy.dispose()
         }
     })
 }

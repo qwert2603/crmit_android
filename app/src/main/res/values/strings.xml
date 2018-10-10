@@ -142,4 +142,11 @@
 
     <string name="text_expires">истекает</string>
 
+    <string name="update_available_title">Доступно обновление</string>
+    <string name="update_available_message">
+        <![CDATA[
+        Новая версия приложения доступна в <a href="https://play.google.com/store/apps/details?id=com.qwert2603.crmit_android">Play Market</a>.
+        ]]>
+    </string>
+
 </resources>
