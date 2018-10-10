@@ -18,7 +18,7 @@ import com.qwert2603.andrlib.base.recyclerview.BaseRecyclerViewAdapter
 import com.qwert2603.andrlib.util.*
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.di.DiHolder
-import com.qwert2603.crmit_android.whats_new.WhatsNewDialog
+import com.qwert2603.crmit_android.dialogs.WhatsNewDialog
 import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.header_navigation.view.*

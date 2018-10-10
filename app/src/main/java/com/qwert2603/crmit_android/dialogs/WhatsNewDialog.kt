@@ -1,4 +1,4 @@
-package com.qwert2603.crmit_android.whats_new
+package com.qwert2603.crmit_android.dialogs
 
 import android.app.Dialog
 import android.os.Bundle
