@@ -73,10 +73,10 @@ class LessonDetailsFragment : LRFragment<LessonDetailsViewState, LessonDetailsVi
         }
 
         teacher_DetailsField.setOnClickListener {
-            val groupBrief = currentViewState.groupBrief ?: return@setOnClickListener
+            val teacher = currentViewState.teacher ?: return@setOnClickListener
             DiHolder.router.navigateTo(Screen.TeacherDetails(DetailsScreenKey(
-                    entityId = groupBrief.teacherId,
-                    entityName = groupBrief.teacherFio
+                    entityId = teacher.id,
+                    entityName = teacher.fio
             )))
         }
 
@@ -103,13 +103,14 @@ class LessonDetailsFragment : LRFragment<LessonDetailsViewState, LessonDetailsVi
         vs.date?.let { toolbar.title = getString(R.string.title_lesson_format, it.toShowingDate()) }
 
         group_DetailsField.setVisible(vs.groupBrief != null)
-        teacher_DetailsField.setVisible(vs.groupBrief != null)
         if (vs.groupBrief != null) {
             group_DetailsField.fieldValue_TextView.text = vs.groupBrief.name
-
-            teacher_DetailsField.fieldValue_TextView.text = vs.groupBrief.teacherFio
+        }
+        teacher_DetailsField.setVisible(vs.teacher != null)
+        if (vs.teacher != null) {
+            teacher_DetailsField.fieldValue_TextView.text = vs.teacher.fio
             teacher_DetailsField.fieldValue_TextView.setTextColor(resources.color(
-                    if (vs.authedUserAccountType == AccountType.TEACHER && vs.authedUserDetailsId == vs.groupBrief.teacherId)
+                    if (vs.authedUserAccountType == AccountType.TEACHER && vs.authedUserDetailsId == vs.teacher.id)
                         R.color.colorAccent
                     else
                         android.R.color.black

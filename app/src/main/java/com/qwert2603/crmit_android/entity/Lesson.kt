@@ -16,5 +16,6 @@ data class Lesson(
         @PrimaryKey override val id: Long,
         val groupId: Long,
         val teacherId: Long,
+        val anotherTeacherFio: String?, // if (lesson.teacher != group.teacher) then group.teacher.fio else null
         val date: String
 ) : IdentifiableLong

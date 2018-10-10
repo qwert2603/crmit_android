@@ -7,9 +7,13 @@ import com.qwert2603.andrlib.util.LogUtils
 import com.qwert2603.crmit_android.db.generated_dao.wrap
 import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entity.Attending
+import com.qwert2603.crmit_android.entity.Teacher
 import com.qwert2603.crmit_android.entity.UploadStatus
+import com.qwert2603.crmit_android.util.Wrapper
+import com.qwert2603.crmit_android.util.wrap
 import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
@@ -17,7 +21,7 @@ import java.util.concurrent.TimeUnit
 class LessonDetailsPresenter(private val lessonId: Long)
     : LRPresenter<Any, LessonDetailsInitialModel, LessonDetailsViewState, LessonDetailsView>(DiHolder.uiSchedulerProvider) {
 
-    override val initialState = LessonDetailsViewState(EMPTY_LR_MODEL, null, null, null, emptyMap(), null, null)
+    override val initialState = LessonDetailsViewState(EMPTY_LR_MODEL, null, null, null, null, emptyMap(), null, null)
 
     private val attendingStatesChangesIntent = intent { it.attendingStatesChanges() }.shareAfterViewSubscribed()
 
@@ -61,26 +65,41 @@ class LessonDetailsPresenter(private val lessonId: Long)
             .flatMap { attendings ->
                 val lesson = DiHolder.lessonDao.getItem(lessonId)
                 if (lesson != null) {
-                    DiHolder.rest.getGroupDetails(lesson.groupId)
+                    val groupBriefSource = DiHolder.rest
+                            .getGroupDetails(lesson.groupId)
                             .doOnSuccess { DiHolder.groupFullDaoInterface.saveItem(it) }
                             .map { it.toGroupBrief() }
                             .doOnSuccess { DiHolder.groupBriefDaoInterface.saveItem(it) }
-                            .map {
-                                LessonDetailsInitialModel(
-                                        groupBrief = it,
-                                        date = lesson.date,
-                                        attendings = attendings
-                                )
-                            }
-                            .onErrorReturnItem(LessonDetailsInitialModel(
-                                    groupBrief = DiHolder.groupBriefDaoInterface.getItem(lesson.groupId)
-                                            ?: DiHolder.groupFullDaoInterface.getItem(lesson.groupId)?.toGroupBrief(),
-                                    date = lesson.date,
-                                    attendings = attendings
-                            ))
+                            .map { it.wrap() }
+                            .onErrorReturnItem((
+                                    DiHolder.groupBriefDaoInterface.getItem(lesson.groupId)
+                                            ?: DiHolder.groupFullDaoInterface.getItem(lesson.groupId)?.toGroupBrief()
+                                    ).wrap()
+                            )
+
+                    val teacherSource: Single<Wrapper<Teacher>> = DiHolder.rest
+                            .getTeacherDetails(lesson.teacherId)
+                            .doOnSuccess { DiHolder.teacherDaoInterface.saveItem(it) }
+                            .map { it.wrap() }
+                            .onErrorReturnItem(DiHolder.teacherDaoInterface.getItem(lesson.teacherId).wrap())
+
+                    Single
+                            .zip(
+                                    groupBriefSource,
+                                    teacherSource,
+                                    BiFunction { groupBrief, teacher ->
+                                        LessonDetailsInitialModel(
+                                                groupBrief = groupBrief.t,
+                                                teacher = teacher.t,
+                                                date = lesson.date,
+                                                attendings = attendings
+                                        )
+                                    }
+                            )
                 } else {
                     Single.just(LessonDetailsInitialModel(
                             groupBrief = null,
+                            teacher = null,
                             date = null,
                             attendings = attendings
                     ))
@@ -109,6 +128,7 @@ class LessonDetailsPresenter(private val lessonId: Long)
 
     override fun LessonDetailsViewState.applyInitialModel(i: LessonDetailsInitialModel) = copy(
             groupBrief = i.groupBrief,
+            teacher = i.teacher,
             date = i.date,
             attendings = i.attendings
     )

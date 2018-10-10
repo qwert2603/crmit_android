@@ -7,6 +7,7 @@ import com.hannesdorfmann.fragmentargs.annotation.Arg
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs
 import com.qwert2603.andrlib.model.IdentifiableLong
 import com.qwert2603.andrlib.util.color
+import com.qwert2603.andrlib.util.setVisible
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.db.generated_dao.wrap
 import com.qwert2603.crmit_android.di.DiHolder
@@ -46,6 +47,8 @@ class LessonsInGroupListFragment : EntitiesListFragment<Lesson>() {
         date_TextView.text = e.date.toShowingDate()
         date_TextView.setTypeface(null, if (e.date <= today) Typeface.BOLD else Typeface.NORMAL)
         date_TextView.setTextColor(resources.color(if (e.date == today) R.color.colorAccent else android.R.color.black))
+        teacherFio_TextView.setVisible(e.anotherTeacherFio != null)
+        if (e.anotherTeacherFio != null) teacherFio_TextView.text = e.anotherTeacherFio
     }
 
     override var withSearch = false
