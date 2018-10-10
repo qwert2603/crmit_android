@@ -28,6 +28,10 @@ import ru.terrakok.cicerone.Router
 class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager, StatusBarActivity {
 
     companion object {
+
+        private const val PATH_LAST_SEENS = "63be06d1-b174-40f8-b779-0498619e482f"
+        private const val PATH_ACCESS_TOKENS = "e64d9f38-26ba-422e-b739-cbe3c3ed9464"
+
         private fun getScreenFromIntent(intent: Intent): Screen? {
             if (intent.action != Intent.ACTION_VIEW) return null
             val pathSegments = intent.data?.pathSegments ?: return null
@@ -64,6 +68,8 @@ class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager, S
 //                            ?.let { Pair(ScreenKey.LESSONS_IN_GROUP, it) } ?: ScreenKey.GROUPS
 //                }
 //                "payment" -> {}
+                PATH_LAST_SEENS -> Screen.LastSeens
+                PATH_ACCESS_TOKENS -> Screen.AccessTokens
                 else -> Screen.Cabinet
             }
         }
@@ -91,9 +97,7 @@ class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager, S
             NavigationItem(R.drawable.ic_person_black_24dp, R.string.title_students, Screen.Students),
             NavigationItem(R.drawable.ic_group_black_24dp, R.string.title_sections, Screen.Sections),
             NavigationItem(R.drawable.ic_group_black_24dp, R.string.title_groups, Screen.Groups),
-            NavigationItem(R.drawable.ic_info_black_24dp, R.string.title_about, Screen.About),
-            NavigationItem(R.drawable.ic_info_black_24dp, R.string.title_last_seens, Screen.LastSeens),
-            NavigationItem(R.drawable.ic_info_black_24dp, R.string.title_access_token, Screen.AccessTokens)
+            NavigationItem(R.drawable.ic_info_black_24dp, R.string.title_about, Screen.About)
     )
 
     private val navigator = Navigator(object : ActivityInterface {
