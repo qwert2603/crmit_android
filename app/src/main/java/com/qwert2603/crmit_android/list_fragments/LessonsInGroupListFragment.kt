@@ -2,6 +2,7 @@ package com.qwert2603.crmit_android.list_fragments
 
 import android.graphics.Typeface
 import android.os.Bundle
+import android.support.v4.content.res.ResourcesCompat
 import android.view.View
 import com.hannesdorfmann.fragmentargs.annotation.Arg
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs
@@ -43,9 +44,11 @@ class LessonsInGroupListFragment : EntitiesListFragment<Lesson>() {
 
     private lateinit var today: String
 
+    private val fontTypeface by lazy { ResourcesCompat.getFont(requireContext(), R.font.roboto_slab) }
+
     override fun View.bindEntity(e: Lesson) {
         date_TextView.text = e.date.toShowingDate()
-        date_TextView.setTypeface(null, if (e.date <= today) Typeface.BOLD else Typeface.NORMAL)
+        date_TextView.setTypeface(fontTypeface, if (e.date <= today) Typeface.BOLD else Typeface.NORMAL)
         date_TextView.setTextColor(resources.color(if (e.date == today) R.color.colorAccent else android.R.color.black))
         teacherFio_TextView.setVisible(e.anotherTeacherFio != null)
         if (e.anotherTeacherFio != null) teacherFio_TextView.text = e.anotherTeacherFio

@@ -8,6 +8,7 @@ import android.support.v4.app.DialogFragment
 import android.support.v7.app.AlertDialog
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.util.CrmitConst
+import com.qwert2603.crmit_android.util.setFontToTextViews
 
 class UpdateAvailableDialog : DialogFragment() {
 
@@ -18,4 +19,5 @@ class UpdateAvailableDialog : DialogFragment() {
             .setCancelable(false)
             .create()
             .also { it.setCanceledOnTouchOutside(false) }
+            .setFontToTextViews(this)
 }

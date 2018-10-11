@@ -130,21 +130,23 @@ class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager, S
                 !DiHolder.userSettingsRepo.greetingShown -> router.newRootScreen(Screen.Greeting)
                 !DiHolder.userSettingsRepo.isLogged() -> router.newRootScreen(Screen.Login)
                 else -> router.newRootScreen(Screen.Cabinet)
-                        .also { WhatsNewDialog.showIfNeeded(supportFragmentManager) }
-                        .also { MarkInPlayMarketDialog.showIfNeeded(supportFragmentManager) }
+                        .also {
+                            if (WhatsNewDialog.showIfNeeded(supportFragmentManager)) return@also
+                            if (MarkInPlayMarketDialog.showIfNeeded(supportFragmentManager)) return@also
+                            DiHolder.rest.appInfo()
+                                    .subscribeOn(DiHolder.modelSchedulersProvider.io)
+                                    .observeOn(DiHolder.uiSchedulerProvider.ui)
+                                    .subscribe { appInfo, t ->
+                                        if (appInfo != null && appInfo.actualAppBuildCode > BuildConfig.VERSION_CODE) {
+                                            UpdateAvailableDialog().show(supportFragmentManager, null)
+                                        }
+                                        if (t != null) {
+                                            LogUtils.e("MainActivity appInfo", t)
+                                        }
+                                    }
+                                    .disposeOnDestroy(this)
+                        }
             }
-            DiHolder.rest.appInfo()
-                    .subscribeOn(DiHolder.modelSchedulersProvider.io)
-                    .observeOn(DiHolder.uiSchedulerProvider.ui)
-                    .subscribe { appInfo, t ->
-                        if (appInfo != null && appInfo.actualAppBuildCode > BuildConfig.VERSION_CODE) {
-                            UpdateAvailableDialog().show(supportFragmentManager, null)
-                        }
-                        if (t != null) {
-                            LogUtils.e("MainActivity appInfo", t)
-                        }
-                    }
-                    .disposeOnDestroy(this)
 
             Single.timer(5, TimeUnit.SECONDS)
                     .subscribe { _, t -> if (t == null) DiHolder.userSettingsRepo.launchesCount++ }

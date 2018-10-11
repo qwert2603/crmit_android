@@ -2,6 +2,7 @@ package com.qwert2603.crmit_android.payments
 
 import android.annotation.SuppressLint
 import android.graphics.Typeface
+import android.support.v4.content.res.ResourcesCompat
 import android.view.View
 import android.view.ViewGroup
 import com.qwert2603.andrlib.base.recyclerview.BaseRecyclerViewHolder
@@ -23,6 +24,8 @@ class PaymentViewHolder(parent: ViewGroup) : BaseRecyclerViewHolder<Payment>(par
     private val cashSwitch = UserInputCompoundButton(itemView.cash_Switch)
     private val confirmedSwitch = UserInputCompoundButton(itemView.confirmed_Switch)
 
+    private val fontTypeface = ResourcesCompat.getFont(itemView.context, R.font.roboto_slab)
+
     init {
         itemView.apply {
             cashSwitch.userInputListener = { (adapter as PaymentsAdapter).isCashChanges.onNext(m!!.id to it) }
@@ -30,6 +33,9 @@ class PaymentViewHolder(parent: ViewGroup) : BaseRecyclerViewHolder<Payment>(par
             value_TextView.setOnClickListener { (adapter as PaymentsAdapter).askToEditValue.onNext(m!!.id to m!!.value) }
             comment_TextView.setOnClickListener { (adapter as PaymentsAdapter).askToEditComment.onNext(m!!.id to m!!.comment) }
             uploadError_ImageView.setOnClickListener { (adapter as PaymentsAdapter).retryClicks.onNext(m!!.id) }
+
+            cash_Switch.typeface = fontTypeface
+            confirmed_Switch.typeface = fontTypeface
         }
     }
 
@@ -44,7 +50,7 @@ class PaymentViewHolder(parent: ViewGroup) : BaseRecyclerViewHolder<Payment>(par
         cashSwitch.setChecked(m.cash)
         confirmedSwitch.setChecked(m.confirmed)
         comment_TextView.text = m.comment.takeIf { it.isNotBlank() } ?: resources.getString(R.string.text_no_comment)
-        comment_TextView.setTypeface(null, if (m.comment.isNotBlank()) Typeface.NORMAL else Typeface.ITALIC)
+        comment_TextView.setTypeface(fontTypeface, if (m.comment.isNotBlank()) Typeface.NORMAL else Typeface.ITALIC)
 
         listOf(value_TextView, cash_Switch, comment_TextView)
                 .forEach { it.isEnabled = !m.confirmed }

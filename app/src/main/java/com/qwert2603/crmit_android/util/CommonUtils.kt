@@ -1,13 +1,17 @@
 package com.qwert2603.crmit_android.util
 
 import android.animation.Animator
+import android.annotation.SuppressLint
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.LifecycleObserver
 import android.arch.lifecycle.LifecycleOwner
 import android.arch.lifecycle.OnLifecycleEvent
 import android.content.res.Resources
 import android.graphics.Paint
+import android.graphics.Typeface
 import android.support.annotation.MainThread
+import android.support.v4.content.res.ResourcesCompat
+import android.support.v7.app.AlertDialog
 import android.text.Editable
 import android.text.Html
 import android.text.TextWatcher
@@ -33,6 +37,7 @@ fun Int.toMonthString(resources: Resources): String {
     return "${this / CrmitConst.MONTHS_PER_YEAR + CrmitConst.START_YEAR} $monthName"
 }
 
+@SuppressLint("ConstantLocale")
 private object DateFormats {
     val DATE_FORMAT_SERVER = SimpleDateFormat(Rest.DATE_FORMAT, Locale.getDefault())
     val DATE_FORMAT_SHOWING = SimpleDateFormat("d MMMM yyyy", Locale.getDefault())
@@ -163,4 +168,16 @@ fun Disposable.disposeOnDestroy(lifecycleOwner: LifecycleOwner) {
             this@disposeOnDestroy.dispose()
         }
     })
+}
+
+fun AlertDialog.setFontToTextViews(lifecycleOwner: LifecycleOwner): AlertDialog {
+    lifecycleOwner.lifecycle.addObserver(object : LifecycleObserver {
+        @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+        fun onResume() {
+            val typeface = ResourcesCompat.getFont(this@setFontToTextViews.context, R.font.roboto_slab)
+            this@setFontToTextViews.findViewById<TextView>(android.support.v7.appcompat.R.id.alertTitle)?.typeface = Typeface.create(typeface, Typeface.BOLD)
+            this@setFontToTextViews.findViewById<TextView>(android.R.id.message)?.typeface = typeface
+        }
+    })
+    return this
 }

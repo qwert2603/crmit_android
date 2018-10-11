@@ -10,14 +10,17 @@ import android.support.v7.app.AlertDialog
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.util.CrmitConst
+import com.qwert2603.crmit_android.util.setFontToTextViews
 
 class MarkInPlayMarketDialog : DialogFragment() {
 
     companion object {
-        fun showIfNeeded(fragmentManager: FragmentManager) {
+        fun showIfNeeded(fragmentManager: FragmentManager): Boolean {
             if (DiHolder.userSettingsRepo.launchesCount == 8) {
                 MarkInPlayMarketDialog().show(fragmentManager, null)
+                return true
             }
+            return false
         }
     }
 
@@ -27,4 +30,5 @@ class MarkInPlayMarketDialog : DialogFragment() {
             .setCancelable(false)
             .create()
             .also { it.setCanceledOnTouchOutside(false) }
+            .setFontToTextViews(this)
 }
