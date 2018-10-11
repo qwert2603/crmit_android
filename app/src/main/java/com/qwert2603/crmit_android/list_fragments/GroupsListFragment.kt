@@ -5,6 +5,7 @@ import android.view.View
 import com.qwert2603.andrlib.util.color
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.db.DaoInterface
+import com.qwert2603.crmit_android.db.wrap
 import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entities_list.EntitiesListFragment
 import com.qwert2603.crmit_android.entity.AccountType
@@ -16,7 +17,7 @@ import kotlinx.android.synthetic.main.item_group.view.*
 class GroupsListFragment : EntitiesListFragment<GroupBrief>() {
     override val source = DiHolder.rest::getGroupsList
 
-    override val dbDaoInterface: DaoInterface<GroupBrief> = DiHolder.groupBriefDaoInterface
+    override val dbDaoInterface: DaoInterface<GroupBrief> = DiHolder.groupBriefCustomOrderDao.wrap(DiHolder.userSettingsRepo.loginResult)
 
     override val titleRes = R.string.title_groups
 

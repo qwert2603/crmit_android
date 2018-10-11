@@ -32,10 +32,11 @@ abstract class LocalDB : RoomDatabase() {
     abstract fun studentBriefDao(): StudentBriefDao
     abstract fun studentFullDao(): StudentFullDao
     abstract fun sectionDao(): SectionDao
-    abstract fun groupBriefDao(): GroupBriefDao
     abstract fun groupFullDao(): GroupFullDao
     abstract fun studentInGroupDao(): StudentInGroupDao
     abstract fun lessonDao(): LessonDao
     abstract fun attendingDao(): AttendingDao
     abstract fun paymentDao(): PaymentDao
+
+    abstract fun groupBriefCustomOrderDao(): GroupBriefCustomOrderDao
 }

@@ -60,13 +60,13 @@ object DiHolder {
     val studentBriefDaoInterface by lazy { localDB.studentBriefDao().wrap() }
     val studentFullDaoInterface by lazy { localDB.studentFullDao().wrap() }
     val sectionDaoInterface by lazy { localDB.sectionDao().wrap() }
-    val groupBriefDaoInterface by lazy { localDB.groupBriefDao().wrap() }
     val groupFullDaoInterface by lazy { localDB.groupFullDao().wrap() }
 
     val studentInGroupDao by lazy { localDB.studentInGroupDao() }
     val lessonDao by lazy { localDB.lessonDao() }
     val attendingDao by lazy { localDB.attendingDao() }
     val paymentDao by lazy { localDB.paymentDao() }
+    val groupBriefCustomOrderDao by lazy { localDB.groupBriefCustomOrderDao() }
 
     fun clearDB() {
         listOf(
@@ -75,7 +75,6 @@ object DiHolder {
                 studentBriefDaoInterface,
                 studentFullDaoInterface,
                 sectionDaoInterface,
-                groupBriefDaoInterface,
                 groupFullDaoInterface
         ).forEach { it.deleteAllItems() }
 
@@ -83,6 +82,7 @@ object DiHolder {
         lessonDao.clearTable()
         attendingDao.clearTable()
         paymentDao.clearTable()
+        groupBriefCustomOrderDao.clearTable()
     }
 
     val userSettingsRepo by lazy { UserSettingsRepo(CrmitApplication.APP_CONTEXT) }

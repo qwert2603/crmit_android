@@ -69,10 +69,10 @@ class LessonDetailsPresenter(private val lessonId: Long)
                             .getGroupDetails(lesson.groupId)
                             .doOnSuccess { DiHolder.groupFullDaoInterface.saveItem(it) }
                             .map { it.toGroupBrief() }
-                            .doOnSuccess { DiHolder.groupBriefDaoInterface.saveItem(it) }
+                            .doOnSuccess { DiHolder.groupBriefCustomOrderDao.saveItem(it) }
                             .map { it.wrap() }
                             .onErrorReturnItem((
-                                    DiHolder.groupBriefDaoInterface.getItem(lesson.groupId)
+                                    DiHolder.groupBriefCustomOrderDao.getItem(lesson.groupId)
                                             ?: DiHolder.groupFullDaoInterface.getItem(lesson.groupId)?.toGroupBrief()
                                     ).wrap()
                             )
