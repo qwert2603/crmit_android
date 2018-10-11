@@ -5,6 +5,9 @@ import android.support.annotation.LayoutRes
 import android.support.annotation.PluralsRes
 import android.support.annotation.StringRes
 import android.support.design.widget.Snackbar
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.ForegroundColorSpan
 import android.view.*
 import com.qwert2603.andrlib.base.mvi.ViewAction
 import com.qwert2603.andrlib.base.mvi.load_refresh.LoadRefreshPanel
@@ -13,9 +16,12 @@ import com.qwert2603.andrlib.base.recyclerview.BaseRecyclerViewAdapter
 import com.qwert2603.andrlib.base.recyclerview.BaseRecyclerViewHolder
 import com.qwert2603.andrlib.base.recyclerview.vh.PageIndicatorViewHolder
 import com.qwert2603.andrlib.model.IdentifiableLong
+import com.qwert2603.andrlib.util.color
 import com.qwert2603.andrlib.util.inflate
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.db.DaoInterface
+import com.qwert2603.crmit_android.entity.AccountType
+import com.qwert2603.crmit_android.entity.GroupBrief
 import com.qwert2603.crmit_android.navigation.BackPressListener
 import com.qwert2603.crmit_android.navigation.StatusBarActivity
 import com.qwert2603.crmit_android.util.ConditionDividerDecoration
@@ -136,4 +142,20 @@ abstract class EntitiesListFragment<E : IdentifiableLong>
             EntitiesListViewAction.ShowingCachedData -> Snackbar.make(entities_CoordinatorLayout, R.string.text_showing_cached_data, Snackbar.LENGTH_SHORT).show()
         }.also { }
     }
+
+    protected fun List<GroupBrief>.toListString(): SpannableStringBuilder? =
+            if (this.isNotEmpty()) {
+                this
+                        .map {
+                            val s = "* ${it.name} (${it.teacherFio})"
+                            val spannableString = SpannableStringBuilder(s)
+                            if (currentViewState.authedUserAccountType == AccountType.TEACHER && currentViewState.authedUserDetailsId == it.teacherId) {
+                                spannableString.setSpan(ForegroundColorSpan(resources.color(R.color.colorAccent)), 0, s.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                            }
+                            spannableString
+                        }
+                        .reduce { acc, s -> acc.append('\n').append(s) }
+            } else {
+                null
+            }
 }

@@ -41,9 +41,7 @@ class StudentsListFragment : EntitiesListFragment<StudentBrief>() {
         lessonsAttendedCount_TextView.text = resources.getQuantityString(R.plurals.lessons_attended, e.lessonsAttendedCount, e.lessonsAttendedCount)
         groups_TextView.setVisible(e.groups.isNotEmpty())
         if (e.groups.isNotEmpty()) {
-            groups_TextView.text = e.groups
-                    .map { "* ${it.name}" }
-                    .reduce { acc, s -> "$acc\n$s" }
+            groups_TextView.text = e.groups.toListString()
         }
     }
 

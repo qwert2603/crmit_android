@@ -30,9 +30,7 @@ class SectionsListFragment : EntitiesListFragment<Section>() {
         price_TextView.text = getString(R.string.price_format, e.price.toPointedString())
         groups_TextView.setVisible(e.groups.isNotEmpty())
         if (e.groups.isNotEmpty()) {
-            groups_TextView.text = e.groups
-                    .map { "* ${it.name}" }
-                    .reduce { acc, s -> "$acc\n$s" }
+            groups_TextView.text = e.groups.toListString()
         }
     }
 
