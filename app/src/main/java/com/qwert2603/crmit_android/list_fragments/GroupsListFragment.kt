@@ -29,7 +29,7 @@ class GroupsListFragment : EntitiesListFragment<GroupBrief>() {
         teacherFio_TextView.setTextColor(resources.color(if (currentViewState.authedUserAccountType == AccountType.TEACHER && e.teacherId == currentViewState.authedUserDetailsId)
             R.color.colorAccent
         else
-            android.R.color.black
+            R.color.gray_text
         ))
         name_TextView.text = e.name
         name_TextView.transitionName = "entity_name_${e.id}"

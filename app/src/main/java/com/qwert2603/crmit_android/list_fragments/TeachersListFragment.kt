@@ -35,7 +35,7 @@ class TeachersListFragment : EntitiesListFragment<Teacher>() {
             groups_TextView.text = e.groups
                     .map { "* ${it.name}" }
                     .reduce { acc, s -> "$acc\n$s" }
-            groups_TextView.setTextColor(resources.color(if (e.isAuthed()) R.color.colorAccent else android.R.color.black))
+            groups_TextView.setTextColor(resources.color(if (e.isAuthed()) R.color.colorAccent else R.color.gray_text))
         }
     }
 
