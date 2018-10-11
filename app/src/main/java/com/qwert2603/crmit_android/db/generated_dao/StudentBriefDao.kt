@@ -24,7 +24,7 @@ interface StudentBriefDao {
         " SELECT *" +
         " FROM StudentBrief" +
         " WHERE fio LIKE '%' || :search || '%'" +
-        " ORDER BY filled, id" +
+        " ORDER BY filled, fio" +
         " LIMIT :count" +
         " OFFSET :offset"
     )

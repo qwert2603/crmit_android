@@ -6,7 +6,7 @@ import com.qwert2603.andrlib.model.IdentifiableLong
 import com.qwert2603.dao_generator.GenerateDao
 
 @Entity
-@GenerateDao(searchField = "name")
+@GenerateDao(searchField = "name", orderBy = "name")
 data class Section(
         @PrimaryKey override val id: Long,
         val name: String,

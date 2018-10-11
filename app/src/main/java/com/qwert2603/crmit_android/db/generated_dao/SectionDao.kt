@@ -24,7 +24,7 @@ interface SectionDao {
         " SELECT *" +
         " FROM Section" +
         " WHERE name LIKE '%' || :search || '%'" +
-        " ORDER BY id" +
+        " ORDER BY name" +
         " LIMIT :count" +
         " OFFSET :offset"
     )

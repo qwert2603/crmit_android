@@ -18,7 +18,7 @@ data class GroupFull(
         val studentsCount: Int,
         val lessonsDoneCount: Int
 ) {
-    fun toGroupBrief() = GroupBrief(id, name, teacherId, teacherFio)
+    fun toGroupBrief() = GroupBrief(id, name, teacherId, teacherFio, startMonth, endMonth)
 
     fun monthsCount() = endMonth - startMonth + 1
 }

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "5b71ee6bb66274b72f7c8c971d5ec2b2",
+    "identityHash": "f5d8e84f9ef99c3713baf8f0c99d18aa",
     "entities": [
       {
         "tableName": "Master",
@@ -556,7 +556,7 @@
       },
       {
         "tableName": "GroupBrief",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `teacherId` INTEGER NOT NULL, `teacherFio` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `teacherId` INTEGER NOT NULL, `teacherFio` TEXT NOT NULL, `startMonth` INTEGER NOT NULL, `endMonth` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -580,6 +580,18 @@
             "fieldPath": "teacherFio",
             "columnName": "teacherFio",
             "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "startMonth",
+            "columnName": "startMonth",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "endMonth",
+            "columnName": "endMonth",
+            "affinity": "INTEGER",
             "notNull": true
           }
         ],
@@ -905,7 +917,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"5b71ee6bb66274b72f7c8c971d5ec2b2\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"f5d8e84f9ef99c3713baf8f0c99d18aa\")"
     ]
   }
 }

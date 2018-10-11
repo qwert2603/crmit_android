@@ -24,7 +24,7 @@ interface GroupBriefDao {
         " SELECT *" +
         " FROM GroupBrief" +
         " WHERE name LIKE '%' || :search || '%'" +
-        " ORDER BY id" +
+        " ORDER BY startMonth DESC, name" +
         " LIMIT :count" +
         " OFFSET :offset"
     )

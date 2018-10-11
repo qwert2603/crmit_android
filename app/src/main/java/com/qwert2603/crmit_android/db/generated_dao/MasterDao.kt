@@ -24,7 +24,7 @@ interface MasterDao {
         " SELECT *" +
         " FROM Master" +
         " WHERE fio LIKE '%' || :search || '%'" +
-        " ORDER BY id" +
+        " ORDER BY fio" +
         " LIMIT :count" +
         " OFFSET :offset"
     )

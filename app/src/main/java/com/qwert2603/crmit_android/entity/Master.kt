@@ -7,7 +7,7 @@ import com.qwert2603.andrlib.model.IdentifiableLong
 import com.qwert2603.dao_generator.GenerateDao
 
 @Entity
-@GenerateDao(searchField = "fio")
+@GenerateDao(searchField = "fio", orderBy = "fio")
 data class Master(
         @PrimaryKey override val id: Long,
         val fio: String,

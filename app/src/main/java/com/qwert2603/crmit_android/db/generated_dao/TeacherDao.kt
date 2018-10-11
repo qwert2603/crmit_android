@@ -24,7 +24,7 @@ interface TeacherDao {
         " SELECT *" +
         " FROM Teacher" +
         " WHERE fio LIKE '%' || :search || '%'" +
-        " ORDER BY id" +
+        " ORDER BY fio" +
         " LIMIT :count" +
         " OFFSET :offset"
     )
