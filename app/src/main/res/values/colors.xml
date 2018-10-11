@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">@android:color/black</color>
     <color name="colorAccent">#FF0000</color>
 
+    <color name="colorStatusBar">@android:color/transparent</color>
+
     <color name="gray_text">#666666</color>
     <color name="gray_point">#B0B0B0</color>
 

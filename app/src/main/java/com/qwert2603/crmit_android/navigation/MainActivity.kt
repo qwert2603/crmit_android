@@ -282,7 +282,7 @@ class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager, S
     override fun setStatusBarBlack(black: Boolean) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             window.decorView.systemUiVisibility = if (black) 0 else View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-            window.statusBarColor = resources.color(if (black) android.R.color.black else android.R.color.transparent)
+            window.statusBarColor = resources.color(if (black) android.R.color.black else R.color.colorStatusBar)
         }
     }
 }
