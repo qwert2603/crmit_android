@@ -51,7 +51,7 @@ object DiHolder {
     private val localDB by lazy {
         Room
                 .databaseBuilder(CrmitApplication.APP_CONTEXT, LocalDB::class.java, "local.db")
-                .fallbackToDestructiveMigration()
+                .fallbackToDestructiveMigrationFrom(1)
                 .build()
     }
 
