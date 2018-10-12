@@ -84,6 +84,8 @@ abstract class EntityDetailsFragment<E : Any> : LRFragment<EntityDetailsViewStat
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
         recyclerView.addItemDecoration(ConditionDividerDecoration(requireContext()) { _, vh -> vh !is EntityDetailsSystemInfoViewHolder })
+
+        toolbar.setOnClickListener { recyclerView.smoothScrollToPosition(0) }
     }
 
 

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "f5d8e84f9ef99c3713baf8f0c99d18aa",
+    "identityHash": "637cfc43185ba0c0be8dc515dcc2dd7b",
     "entities": [
       {
         "tableName": "Master",
@@ -748,7 +748,7 @@
       },
       {
         "tableName": "Lesson",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `groupId` INTEGER NOT NULL, `teacherId` INTEGER NOT NULL, `anotherTeacherFio` TEXT, `date` TEXT NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `groupId` INTEGER NOT NULL, `groupName` TEXT NOT NULL, `teacherId` INTEGER NOT NULL, `anotherTeacherFio` TEXT, `date` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -760,6 +760,12 @@
             "fieldPath": "groupId",
             "columnName": "groupId",
             "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "groupName",
+            "columnName": "groupName",
+            "affinity": "TEXT",
             "notNull": true
           },
           {
@@ -917,7 +923,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"f5d8e84f9ef99c3713baf8f0c99d18aa\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"637cfc43185ba0c0be8dc515dcc2dd7b\")"
     ]
   }
 }

@@ -35,8 +35,14 @@ class AboutFragment : Fragment() {
                 SimpleDateFormat("H:mm", Locale.getDefault()).format(Date(BuildConfig.BIULD_TIME))
         ))
 
-        clearCache_Button.setVisible(E.env.showClearCacheButton)
-        clearCache_Button.setOnClickListener { _ ->
+        clearDB_Button.setVisible(E.env.showClearCacheButton)
+        clearAll_Button.setVisible(E.env.showClearCacheButton)
+        clearDB_Button.setOnClickListener { _ ->
+            DiHolder.modelSchedulersProvider.io.scheduleDirect {
+                DiHolder.clearDB()
+            }
+        }
+        clearAll_Button.setOnClickListener { _ ->
             DiHolder.modelSchedulersProvider.io.scheduleDirect {
                 DiHolder.userSettingsRepo.clearAll()
                 DiHolder.clearDB()

@@ -5,11 +5,17 @@ import com.qwert2603.andrlib.base.mvi.load_refresh.LRPresenter
 import com.qwert2603.andrlib.util.LogUtils
 import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entity.AccountType
+import com.qwert2603.crmit_android.entity.Lesson
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.functions.BiFunction
 
-class CabinetPresenter : LRPresenter<Any, String, CabinetViewState, CabinetView>(DiHolder.uiSchedulerProvider) {
+class CabinetPresenter : LRPresenter<Any, CabinetInitialModel, CabinetViewState, CabinetView>(DiHolder.uiSchedulerProvider) {
+
+    companion object {
+        private const val LAST_LESSONS_COUNT = 10
+    }
 
     private val loginResultSingle = DiHolder.userSettingsRepo
             .getLoginResultOrMoveToLogin()
@@ -36,8 +42,22 @@ class CabinetPresenter : LRPresenter<Any, String, CabinetViewState, CabinetView>
                     AccountType.TEACHER -> DiHolder.teacherDaoInterface.getItem(loginResult.detailsId)?.fio
                 } ?: DiHolder.userSettingsRepo.displayFio
             }
-            .doOnSuccess { viewActions.onNext(CabinetViewAction.ShowingCachedData) }
             .doOnSuccess { DiHolder.userSettingsRepo.displayFio = it }
+            .subscribeOn(DiHolder.modelSchedulersProvider.io)
+
+    private fun getLastLessonsFromServer() = DiHolder.rest
+            .getLastLessons(LAST_LESSONS_COUNT)
+            .doOnSuccess { DiHolder.lessonDao.addItems(it) }
+            .subscribeOn(DiHolder.modelSchedulersProvider.io)
+
+    private fun getLastLessonsFromCache() = loginResultSingle
+            .map { loginResult ->
+                when (loginResult.accountType) {
+                    AccountType.MASTER -> DiHolder.lastLessonDao.getLastLessons(LAST_LESSONS_COUNT)
+                    AccountType.TEACHER -> DiHolder.lastLessonDao.getLastLessonsForTeacher(loginResult.detailsId, LAST_LESSONS_COUNT)
+                }
+            }
+            .doOnSuccess { DiHolder.lessonDao.addItems(it) }
             .subscribeOn(DiHolder.modelSchedulersProvider.io)
 
     override val initialState = CabinetViewState(EMPTY_LR_MODEL, null, null, null, false)
@@ -65,21 +85,32 @@ class CabinetPresenter : LRPresenter<Any, String, CabinetViewState, CabinetView>
                     }
     )
 
-    override fun initialModelSingle(additionalKey: Any): Single<String> = getFioFromServer()
-            .doOnError { LogUtils.e("CabinetPresenter getFioFromServer", it) }
-            .onErrorResumeNext { getFioFromCache() }
+    override fun initialModelSingle(additionalKey: Any): Single<CabinetInitialModel> = Single.zip(
+            getFioFromServer()
+                    .doOnError { LogUtils.e("CabinetPresenter getFioFromServer", it) }
+                    .onErrorResumeNext(getFioFromCache()),
+            getLastLessonsFromServer()
+                    .doOnError { LogUtils.e("CabinetPresenter getLastLessonsFromServer", it) }
+                    .doOnError { viewActions.onNext(CabinetViewAction.ShowingCachedData) }
+                    .onErrorResumeNext(getLastLessonsFromCache()),
+            BiFunction { fio: String, lastLessons: List<Lesson> -> CabinetInitialModel(fio, lastLessons) }
+    )
 
-    override fun initialModelSingleRefresh(additionalKey: Any): Single<String> = getFioFromServer()
+    override fun initialModelSingleRefresh(additionalKey: Any): Single<CabinetInitialModel> = Single.zip(
+            getFioFromServer(),
+            getLastLessonsFromServer(),
+            BiFunction { fio: String, lastLessons: List<Lesson> -> CabinetInitialModel(fio, lastLessons) }
+    )
 
-    override fun CabinetViewState.applyInitialModel(i: String) = copy(fio = i)
+    override fun CabinetViewState.applyInitialModel(i: CabinetInitialModel) = copy(
+            fio = i.fio,
+            lastLessons = i.lastLessons
+    )
 
     override fun stateReducer(vs: CabinetViewState, change: PartialChange): CabinetViewState {
         if (change !is CabinetPartialChange) return super.stateReducer(vs, change)
         return when (change) {
-            is CabinetPartialChange.AuthedUserLoaded -> vs.copy(
-                    accountType = change.loginResult.accountType,
-                    detailsId = change.loginResult.detailsId
-            )
+            is CabinetPartialChange.AuthedUserLoaded -> vs.copy(loginResult = change.loginResult)
             CabinetPartialChange.LogoutStarted -> vs.copy(isLogout = true)
             CabinetPartialChange.LogoutSuccess -> vs.copy(isLogout = false)
         }

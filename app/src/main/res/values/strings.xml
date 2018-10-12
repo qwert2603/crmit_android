@@ -83,7 +83,8 @@
     <string name="text_never">Никогда</string>
 
     <string name="text_no_groups">Нет групп</string>
-    <string name="text_clear_cache">Очистить кеш и перезапустить</string>
+    <string name="text_clear_db">Очистить ДБ</string>
+    <string name="text_clear_all_and_restart">Очистить все и перезапустить</string>
     <string name="text_showing_cached_data">Показаны кешированные данные</string>
 
     <string name="text_back">Назад</string>
@@ -148,5 +149,8 @@
 
     <string name="mark_in_play_marker_message">Если Вам нравится приложение, Вы можете поддержать разработчика отличной оценкой в Play Market.</string>
     <string name="text_mark">Оценить</string>
+
+    <string name="text_last_lessons">Последние занятия</string>
+    <string name="text_your_last_lessons">Ваши последние занятия</string>
 
 </resources>

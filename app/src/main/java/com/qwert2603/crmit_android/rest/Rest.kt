@@ -85,6 +85,9 @@ interface Rest {
     @GET("lessons_in_group/{group_id}")
     fun getLessonsInGroup(@Path("group_id") groupId: Long): Single<List<Lesson>>
 
+    @GET("last_lessons")
+    fun getLastLessons(@Query("count") count: Int): Single<List<Lesson>>
+
     @GET("attendings_of_lesson/{lesson_id}")
     fun getAttendingsOfLesson(@Path("lesson_id") lessonId: Long): Single<List<Attending>>
 
