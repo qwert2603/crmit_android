@@ -10,7 +10,6 @@
     <string name="title_login">Вход</string>
     <string name="title_cabinet">Кабинет</string>
     <string name="title_lesson_default">Занятие</string>
-    <string name="title_lesson_format" formatted="true">Занятие %s</string>
     <string name="title_payments_in_group_default">Платежи</string>
     <string name="title_payments_in_group_format" formatted="true">Платежи в %s</string>
     <string name="title_last_seens" formatted="true">Последние входы</string>

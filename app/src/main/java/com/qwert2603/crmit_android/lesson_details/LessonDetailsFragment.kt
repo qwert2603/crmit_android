@@ -122,7 +122,7 @@ class LessonDetailsFragment : LRFragment<LessonDetailsViewState, LessonDetailsVi
     override fun render(vs: LessonDetailsViewState) {
         super.render(vs)
 
-        vs.date?.let { toolbar.title = getString(R.string.title_lesson_format, it.toShowingDate()) }
+        vs.date?.let { toolbar.title = it.toShowingDate() }
 
         group_DetailsField.setVisible(vs.groupBrief != null)
         if (vs.groupBrief != null) {
