@@ -21,4 +21,6 @@ data class LessonDetailsViewState(
         AccountType.TEACHER -> authedUserDetailsId != null && authedUserDetailsId == groupBrief?.teacherId
         null -> false
     }
+
+    fun isNavigateToPaymentsVisible() = groupBrief != null && date != null
 }

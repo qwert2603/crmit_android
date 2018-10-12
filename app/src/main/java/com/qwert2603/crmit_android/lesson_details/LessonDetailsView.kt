@@ -6,4 +6,5 @@ import io.reactivex.Observable
 
 interface LessonDetailsView : LRView<LessonDetailsViewState> {
     fun attendingStatesChanges(): Observable<SaveAttendingStateParams>
+    fun navigateToPaymentsClicks(): Observable<Any>
 }

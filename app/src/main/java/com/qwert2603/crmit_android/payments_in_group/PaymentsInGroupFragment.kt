@@ -26,7 +26,10 @@ class PaymentsInGroupFragment : LRFragment<PaymentsInGroupViewState, PaymentsInG
     @Arg
     var groupId: Long = IdentifiableLong.NO_ID
 
-    override fun createPresenter() = PaymentsInGroupPresenter(groupId)
+    @Arg(required = false)
+    var monthNumber: Int? = null
+
+    override fun createPresenter() = PaymentsInGroupPresenter(groupId, monthNumber)
 
     override fun loadRefreshPanel(): LoadRefreshPanel = paymentsInGroup_LRPanelImpl
 

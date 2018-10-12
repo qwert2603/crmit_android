@@ -2,9 +2,7 @@ package com.qwert2603.crmit_android.lesson_details
 
 import android.os.Bundle
 import android.support.design.widget.Snackbar
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import com.hannesdorfmann.fragmentargs.annotation.Arg
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs
 import com.qwert2603.andrlib.base.mvi.ViewAction
@@ -24,6 +22,7 @@ import com.qwert2603.crmit_android.navigation.Screen
 import com.qwert2603.crmit_android.rest.params.SaveAttendingStateParams
 import com.qwert2603.crmit_android.util.toShowingDate
 import io.reactivex.Observable
+import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_lesson_details.*
 import kotlinx.android.synthetic.main.item_entity_details_field.view.*
 import kotlinx.android.synthetic.main.toolbar_default.*
@@ -41,6 +40,19 @@ class LessonDetailsFragment : LRFragment<LessonDetailsViewState, LessonDetailsVi
     override fun viewForSnackbar(): View? = lessonDetails_CoordinatorLayout
 
     private val adapter = AttendingsAdapter()
+
+    private val navigateToPaymentsClicks = PublishSubject.create<Any>()
+
+    private var paymentsMenuItem: MenuItem? = null
+        set(value) {
+            field = value
+            field?.isVisible = currentViewState.isNavigateToPaymentsVisible()
+        }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             container?.inflate(R.layout.fragment_lesson_details)
@@ -95,7 +107,17 @@ class LessonDetailsFragment : LRFragment<LessonDetailsViewState, LessonDetailsVi
         super.onViewCreated(view, savedInstanceState)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.lesson, menu)
+        val menuItem = menu.findItem(R.id.payments)
+        menuItem.setOnMenuItemClickListener { navigateToPaymentsClicks.onNext(Any());true }
+        paymentsMenuItem = menuItem
+    }
+
     override fun attendingStatesChanges(): Observable<SaveAttendingStateParams> = adapter.attendingStateChanges
+
+    override fun navigateToPaymentsClicks(): Observable<Any> = navigateToPaymentsClicks
 
     override fun render(vs: LessonDetailsViewState) {
         super.render(vs)
@@ -122,6 +144,8 @@ class LessonDetailsFragment : LRFragment<LessonDetailsViewState, LessonDetailsVi
 
         val modelList = vs.attendings ?: emptyList()
         adapter.adapterList = BaseRecyclerViewAdapter.AdapterList(modelList, AllItemsLoaded(modelList.size).takeIf { modelList.isEmpty() })//todo
+
+        paymentsMenuItem?.isVisible = currentViewState.isNavigateToPaymentsVisible()
     }
 
     override fun executeAction(va: ViewAction) {
@@ -129,6 +153,7 @@ class LessonDetailsFragment : LRFragment<LessonDetailsViewState, LessonDetailsVi
         when (va) {
             LessonDetailsViewAction.ShowingCachedData -> Snackbar.make(lessonDetails_CoordinatorLayout, R.string.text_showing_cached_data, Snackbar.LENGTH_SHORT).show()
             LessonDetailsViewAction.ShowThereWillBeAttendingChangesCaching -> ThereWillBeAttendingChangesCachingDialogFragment().show(fragmentManager, null)
+            is LessonDetailsViewAction.NavigateToPayments -> DiHolder.router.navigateTo(Screen.PaymentsInGroup(va.groupId, va.monthNumber))
         }.also { }
     }
 }

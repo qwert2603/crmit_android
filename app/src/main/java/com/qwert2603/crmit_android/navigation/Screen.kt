@@ -55,14 +55,17 @@ sealed class Screen(
         StudentsInGroupListFragmentBuilder.newStudentsInGroupListFragment(groupId, groupName)
     })
 
-    data class PaymentsInGroup(val groupId: Long) : Screen({ PaymentsInGroupFragmentBuilder.newPaymentsInGroupFragment(groupId) })
+    data class PaymentsInGroup(val groupId: Long, val monthNumber: Int? = null) : Screen({
+        PaymentsInGroupFragmentBuilder(groupId)
+                .also { if (monthNumber != null) it.monthNumber(monthNumber) }
+                .build()
+    })
 
     data class LessonsInGroup(val groupId: Long, val groupName: String) : Screen({
         LessonsInGroupListFragmentBuilder.newLessonsInGroupListFragment(groupId, groupName)
     })
 
     data class LessonDetails(val lessonId: Long) : Screen({ LessonDetailsFragmentBuilder.newLessonDetailsFragment(lessonId) })
-
 
     object About : Screen({ AboutFragment() })
     object Greeting : Screen({ GreetingFragment() }, allowDrawer = false)

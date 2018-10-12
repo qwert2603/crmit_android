@@ -12,7 +12,7 @@ import io.reactivex.Single
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class PaymentsInGroupPresenter(private val groupId: Long)
+class PaymentsInGroupPresenter(private val groupId: Long, private val monthNumber: Int?)
     : LRPresenter<Any, GroupFull, PaymentsInGroupViewState, PaymentsInGroupView>(DiHolder.uiSchedulerProvider) {
 
     override val initialState = PaymentsInGroupViewState(EMPTY_LR_MODEL, null, null, null, 0)
@@ -53,13 +53,13 @@ class PaymentsInGroupPresenter(private val groupId: Long)
         if (change !is PaymentsInGroupPartialChange) return super.stateReducer(vs, change)
                 .let {
                     if (change is LRPartialChange.InitialModelLoaded<*> && vs.groupFull == null) {
-                        val currentMonthNumber = Date().getMonthNumber()
+                        val monthNumber = monthNumber ?: Date().getMonthNumber()
                         it.groupFull!!
                         it.copy(
                                 selectedMonth = when {
-                                    currentMonthNumber < it.groupFull.startMonth -> it.groupFull.startMonth
-                                    currentMonthNumber > it.groupFull.endMonth -> it.groupFull.endMonth
-                                    else -> currentMonthNumber
+                                    monthNumber < it.groupFull.startMonth -> it.groupFull.startMonth
+                                    monthNumber > it.groupFull.endMonth -> it.groupFull.endMonth
+                                    else -> monthNumber
                                 }
                         )
                     } else {

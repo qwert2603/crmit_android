@@ -48,6 +48,9 @@ fun String.toShowingDate(): String = this
         .let { DateFormats.DATE_FORMAT_SERVER.parse(it) }
         .let { DateFormats.DATE_FORMAT_SHOWING.format(it) }
 
+@MainThread
+fun String.toMonthNumber() = DateFormats.DATE_FORMAT_SERVER.parse(this).getMonthNumber()
+
 fun Long.toPointedString(): String {
     val negative = this < 0
     val absString = this.absoluteValue.toString().reversed()

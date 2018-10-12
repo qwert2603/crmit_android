@@ -10,6 +10,8 @@ import com.qwert2603.crmit_android.entity.Attending
 import com.qwert2603.crmit_android.entity.Teacher
 import com.qwert2603.crmit_android.entity.UploadStatus
 import com.qwert2603.crmit_android.util.Wrapper
+import com.qwert2603.crmit_android.util.secondOfTwo
+import com.qwert2603.crmit_android.util.toMonthNumber
 import com.qwert2603.crmit_android.util.wrap
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -180,6 +182,14 @@ class LessonDetailsPresenter(private val lessonId: Long)
                     }
                 }
                 .toObservable()
+                .subscribeToView()
+
+        intent { it.navigateToPaymentsClicks() }
+                .withLatestFrom(viewStateObservable, secondOfTwo())
+                .doOnNext {
+                    if (it.groupBrief == null || it.date == null) return@doOnNext
+                    viewActions.onNext(LessonDetailsViewAction.NavigateToPayments(it.groupBrief.id, it.date.toMonthNumber()))
+                }
                 .subscribeToView()
     }
 }
