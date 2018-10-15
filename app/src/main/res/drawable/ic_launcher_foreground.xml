@@ -11,15 +11,15 @@
         <!--android:strokeColor="#000" />-->
 
     <group
-        android:scaleX="2.2"
-        android:scaleY="2.2"
-        android:translateX="27"
-        android:translateY="31">
+        android:scaleX="3.2"
+        android:scaleY="3.2"
+        android:translateX="17"
+        android:translateY="18">
 
         <path
             android:layout_height="match_parent"
             android:pathData="@string/ic_launcher_path"
-            android:strokeWidth="1.6"
+            android:strokeWidth="1.9"
             android:strokeColor="@color/launcher_color" />
 
     </group>
