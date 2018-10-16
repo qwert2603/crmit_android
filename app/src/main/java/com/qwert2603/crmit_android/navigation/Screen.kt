@@ -5,7 +5,7 @@ import com.qwert2603.crmit_android.about.AboutFragment
 import com.qwert2603.crmit_android.cabinet.CabinetFragment
 import com.qwert2603.crmit_android.details_fragments.*
 import com.qwert2603.crmit_android.greeting.GreetingFragment
-import com.qwert2603.crmit_android.lesson_details.LessonDetailsFragmentBuilder
+import com.qwert2603.crmit_android.lessons_in_group.LessonsInGroupFragmentBuilder
 import com.qwert2603.crmit_android.list_fragments.*
 import com.qwert2603.crmit_android.login.LoginFragment
 import com.qwert2603.crmit_android.payments_in_group.PaymentsInGroupFragmentBuilder
@@ -61,11 +61,13 @@ sealed class Screen(
                 .build()
     })
 
-    data class LessonsInGroup(val groupId: Long, val groupName: String) : Screen({
+    data class LessonsInGroupList(val groupId: Long, val groupName: String) : Screen({
         LessonsInGroupListFragmentBuilder.newLessonsInGroupListFragment(groupId, groupName)
     })
 
-    data class LessonDetails(val lessonId: Long) : Screen({ LessonDetailsFragmentBuilder.newLessonDetailsFragment(lessonId) })
+    data class LessonsInGroup(val groupId: Long, val date: String) : Screen({
+        LessonsInGroupFragmentBuilder.newLessonsInGroupFragment(date, groupId)
+    })
 
     object About : Screen({ AboutFragment() })
     object Greeting : Screen({ GreetingFragment() }, allowDrawer = false)

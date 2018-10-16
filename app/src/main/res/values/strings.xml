@@ -12,7 +12,7 @@
     <string name="title_lessons_in_group" formatted="true">Занятия в %s</string>
     <string name="title_login">Вход</string>
     <string name="title_cabinet">Кабинет</string>
-    <string name="title_lesson_default">Занятие</string>
+    <string name="title_lesson_in_group_default">Занятия</string>
     <string name="title_payments_in_group_default">Платежи</string>
     <string name="title_payments_in_group_format" formatted="true">Платежи в %s</string>
     <string name="title_last_seens" formatted="true">Последние входы</string>

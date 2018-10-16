@@ -40,7 +40,7 @@ class GroupDetailsFragment : EntityDetailsFragment<GroupFull>() {
                 DiHolder.router.navigateTo(Screen.StudentsInGroup(id, name))
             },
             EntityDetailsField(R.string.detailsField_lessonsDoneCount, lessonsDoneCount.toString(), R.drawable.ic_date_range_black_24dp) {
-                DiHolder.router.navigateTo(Screen.LessonsInGroup(id, name))
+                DiHolder.router.navigateTo(Screen.LessonsInGroupList(id, name))
             },
             EntityDetailsField(R.string.detailsField_payments, getString(R.string.detailsField_paymentsInfo), R.drawable.ic_ruble) {
                 DiHolder.router.navigateTo(Screen.PaymentsInGroup(id))

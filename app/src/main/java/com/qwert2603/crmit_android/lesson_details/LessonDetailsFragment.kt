@@ -1,7 +1,6 @@
 package com.qwert2603.crmit_android.lesson_details
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
 import android.view.*
 import com.hannesdorfmann.fragmentargs.annotation.Arg
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs
@@ -17,15 +16,14 @@ import com.qwert2603.andrlib.util.setVisible
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entity.AccountType
+import com.qwert2603.crmit_android.lessons_in_group.ParentLessonsFragment
 import com.qwert2603.crmit_android.navigation.DetailsScreenKey
 import com.qwert2603.crmit_android.navigation.Screen
 import com.qwert2603.crmit_android.rest.params.SaveAttendingStateParams
-import com.qwert2603.crmit_android.util.toShowingDate
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_lesson_details.*
 import kotlinx.android.synthetic.main.item_entity_details_field.view.*
-import kotlinx.android.synthetic.main.toolbar_default.*
 
 @FragmentWithArgs
 class LessonDetailsFragment : LRFragment<LessonDetailsViewState, LessonDetailsView, LessonDetailsPresenter>(), LessonDetailsView {
@@ -37,7 +35,7 @@ class LessonDetailsFragment : LRFragment<LessonDetailsViewState, LessonDetailsVi
 
     override fun loadRefreshPanel(): LoadRefreshPanel = lessonDetails_LRPanelImpl
 
-    override fun viewForSnackbar(): View? = lessonDetails_CoordinatorLayout
+    override fun viewForSnackbar(): View? = lessonDetails_LRPanelImpl
 
     private val adapter = AttendingsAdapter()
 
@@ -58,8 +56,6 @@ class LessonDetailsFragment : LRFragment<LessonDetailsViewState, LessonDetailsVi
             container?.inflate(R.layout.fragment_lesson_details)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        toolbar.setTitle(R.string.title_lesson_default)
-
         group_DetailsField.fieldName_TextView.setText(R.string.detailsField_group)
         teacher_DetailsField.fieldName_TextView.setText(R.string.detailsField_teacher)
 
@@ -115,14 +111,16 @@ class LessonDetailsFragment : LRFragment<LessonDetailsViewState, LessonDetailsVi
         paymentsMenuItem = menuItem
     }
 
+    override fun retry(): Observable<Any> = super.retry()
+            .doOnNext { (parentFragment as ParentLessonsFragment).onRetryDateClicked() }
+            .filter { false }
+
     override fun attendingStatesChanges(): Observable<SaveAttendingStateParams> = adapter.attendingStateChanges
 
     override fun navigateToPaymentsClicks(): Observable<Any> = navigateToPaymentsClicks
 
     override fun render(vs: LessonDetailsViewState) {
         super.render(vs)
-
-        vs.date?.let { toolbar.title = it.toShowingDate() }
 
         group_DetailsField.setVisible(vs.groupBrief != null)
         if (vs.groupBrief != null) {
@@ -151,8 +149,6 @@ class LessonDetailsFragment : LRFragment<LessonDetailsViewState, LessonDetailsVi
     override fun executeAction(va: ViewAction) {
         if (va !is LessonDetailsViewAction) return super.executeAction(va)
         when (va) {
-            LessonDetailsViewAction.ShowingCachedData -> Snackbar.make(lessonDetails_CoordinatorLayout, R.string.text_showing_cached_data, Snackbar.LENGTH_SHORT).show()
-            LessonDetailsViewAction.ShowThereWillBeAttendingChangesCaching -> ThereWillBeAttendingChangesCachingDialogFragment().show(fragmentManager, null)
             is LessonDetailsViewAction.NavigateToPayments -> DiHolder.router.navigateTo(Screen.PaymentsInGroup(va.groupId, va.monthNumber))
         }.also { }
     }

@@ -18,23 +18,22 @@ import io.reactivex.Single
 import io.reactivex.functions.BiFunction
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.Executors
-import java.util.concurrent.TimeUnit
 
 class LessonDetailsPresenter(private val lessonId: Long)
     : LRPresenter<Any, LessonDetailsInitialModel, LessonDetailsViewState, LessonDetailsView>(DiHolder.uiSchedulerProvider) {
 
+    override val canRefreshAtAll = false
+
     override val initialState = LessonDetailsViewState(EMPTY_LR_MODEL, null, null, null, null, emptyMap(), null, null)
 
     private val attendingStatesChangesIntent = intent { it.attendingStatesChanges() }.shareAfterViewSubscribed()
-
-    private val loadRefreshPartialChanges = loadRefreshPartialChanges().shareAfterViewSubscribed()
 
     private val saveAttendingsStateScheduler = Schedulers.from(Executors.newSingleThreadExecutor())
 
     private val daoInterface = DiHolder.attendingDao.wrap(lessonId)
 
     override val partialChanges: Observable<PartialChange> = Observable.merge(listOf(
-            loadRefreshPartialChanges,
+            loadRefreshPartialChanges(),
             loadIntent
                     .switchMapSingle { DiHolder.userSettingsRepo.getLoginResultOrMoveToLogin() }
                     .map { LessonDetailsPartialChange.AuthedUserLoaded(it) },
@@ -115,7 +114,6 @@ class LessonDetailsPresenter(private val lessonId: Long)
                         .fromCallable { daoInterface.getItems() }
                         .flatMap {
                             if (it.isNotEmpty()) {
-                                viewActions.onNext(LessonDetailsViewAction.ShowingCachedData)
                                 Single.just(it)
                             } else {
                                 Single.error(Exception("no cache!"))
@@ -170,19 +168,6 @@ class LessonDetailsPresenter(private val lessonId: Long)
 
     override fun bindIntents() {
         super.bindIntents()
-
-        loadRefreshPartialChanges
-                .filter { it is LRPartialChange.InitialModelLoaded<*> }
-                .firstOrError()
-                .delay(2, TimeUnit.SECONDS)
-                .doOnSuccess {
-                    if (!DiHolder.userSettingsRepo.thereWillBeAttendingChangesCachingShown) {
-                        DiHolder.userSettingsRepo.thereWillBeAttendingChangesCachingShown = true
-                        viewActions.onNext(LessonDetailsViewAction.ShowThereWillBeAttendingChangesCaching)
-                    }
-                }
-                .toObservable()
-                .subscribeToView()
 
         intent { it.navigateToPaymentsClicks() }
                 .withLatestFrom(viewStateObservable, secondOfTwo())
