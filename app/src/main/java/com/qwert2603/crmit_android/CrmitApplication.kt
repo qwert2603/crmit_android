@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.os.Looper
+import android.support.annotation.FontRes
 import com.qwert2603.andrlib.base.mvi.load_refresh.list.listModelChangerInstance
 import com.qwert2603.andrlib.base.mvi.load_refresh.lrModelChangerInstance
 import com.qwert2603.andrlib.generated.LRModelChangerImpl
@@ -19,6 +20,9 @@ class CrmitApplication : Application() {
     companion object {
         @SuppressLint("StaticFieldLeak")
         lateinit var APP_CONTEXT: Context
+
+        @FontRes
+        const val appFontRes = R.font.google_sans
     }
 
     override fun onCreate() {

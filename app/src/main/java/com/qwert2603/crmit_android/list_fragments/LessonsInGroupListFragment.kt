@@ -9,6 +9,7 @@ import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs
 import com.qwert2603.andrlib.model.IdentifiableLong
 import com.qwert2603.andrlib.util.color
 import com.qwert2603.andrlib.util.setVisible
+import com.qwert2603.crmit_android.CrmitApplication
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.db.generated_dao.wrap
 import com.qwert2603.crmit_android.di.DiHolder
@@ -44,7 +45,7 @@ class LessonsInGroupListFragment : EntitiesListFragment<Lesson>() {
 
     private lateinit var today: String
 
-    private val fontTypeface by lazy { ResourcesCompat.getFont(requireContext(), R.font.roboto_slab) }
+    private val fontTypeface by lazy { ResourcesCompat.getFont(requireContext(), CrmitApplication.appFontRes) }
 
     override fun View.bindEntity(e: Lesson) {
         date_TextView.text = e.date.toShowingDate()

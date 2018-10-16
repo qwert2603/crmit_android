@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.qwert2603.andrlib.base.recyclerview.BaseRecyclerViewHolder
 import com.qwert2603.andrlib.util.color
 import com.qwert2603.andrlib.util.setVisible
+import com.qwert2603.crmit_android.CrmitApplication
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.entity.Payment
 import com.qwert2603.crmit_android.entity.UploadStatus
@@ -24,7 +25,7 @@ class PaymentViewHolder(parent: ViewGroup) : BaseRecyclerViewHolder<Payment>(par
     private val cashSwitch = UserInputCompoundButton(itemView.cash_Switch)
     private val confirmedSwitch = UserInputCompoundButton(itemView.confirmed_Switch)
 
-    private val fontTypeface = ResourcesCompat.getFont(itemView.context, R.font.roboto_slab)
+    private val fontTypeface = ResourcesCompat.getFont(itemView.context, CrmitApplication.appFontRes)
 
     init {
         itemView.apply {

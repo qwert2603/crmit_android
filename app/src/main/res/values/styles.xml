@@ -6,7 +6,7 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:statusBarColor">@color/colorStatusBar</item>
-        <item name="android:fontFamily">@font/roboto_slab</item>
+        <item name="android:fontFamily">@font/google_sans</item>
     </style>
 
     <style name="AppThemeBase.AppTheme">

@@ -19,6 +19,7 @@ import android.view.View
 import android.view.ViewTreeObserver
 import android.widget.EditText
 import android.widget.TextView
+import com.qwert2603.crmit_android.CrmitApplication
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.entity.SystemUser
 import com.qwert2603.crmit_android.rest.Rest
@@ -177,7 +178,7 @@ fun AlertDialog.setFontToTextViews(lifecycleOwner: LifecycleOwner): AlertDialog 
     lifecycleOwner.lifecycle.addObserver(object : LifecycleObserver {
         @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
         fun onResume() {
-            val typeface = ResourcesCompat.getFont(this@setFontToTextViews.context, R.font.roboto_slab)
+            val typeface = ResourcesCompat.getFont(this@setFontToTextViews.context, CrmitApplication.appFontRes)
             this@setFontToTextViews.findViewById<TextView>(android.support.v7.appcompat.R.id.alertTitle)?.typeface = Typeface.create(typeface, Typeface.BOLD)
             this@setFontToTextViews.findViewById<TextView>(android.R.id.message)?.typeface = typeface
         }
