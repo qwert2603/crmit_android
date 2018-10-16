@@ -16,11 +16,11 @@ data class LessonDetailsViewState(
         val authedUserAccountType: AccountType?,
         val authedUserDetailsId: Long?
 ) : LRViewState {
-    fun isUserCanChangeAttendingStates() = when (authedUserAccountType) {
+    fun isUserCanWriteGroup() = when (authedUserAccountType) {
         AccountType.MASTER -> true
         AccountType.TEACHER -> authedUserDetailsId != null && authedUserDetailsId == groupBrief?.teacherId
         null -> false
     }
 
-    fun isNavigateToPaymentsVisible() = groupBrief != null && date != null
+    fun isNavigateToPaymentsVisible() = isUserCanWriteGroup() && groupBrief != null && date != null
 }

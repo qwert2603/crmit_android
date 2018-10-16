@@ -138,7 +138,7 @@ class LessonDetailsFragment : LRFragment<LessonDetailsViewState, LessonDetailsVi
         }
 
         adapter.uploadStatuses = vs.uploadingAttendingStateStatuses
-        adapter.userCanChangeAttendingState = vs.isUserCanChangeAttendingStates()
+        adapter.userCanChangeAttendingState = vs.isUserCanWriteGroup()
 
         val modelList = vs.attendings ?: emptyList()
         adapter.adapterList = BaseRecyclerViewAdapter.AdapterList(modelList, AllItemsLoaded(modelList.size).takeIf { modelList.isEmpty() })//todo

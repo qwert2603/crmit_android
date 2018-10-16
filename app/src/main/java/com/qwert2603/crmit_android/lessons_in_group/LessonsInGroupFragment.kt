@@ -53,7 +53,7 @@ class LessonsInGroupFragment : LRFragment<LessonsInGroupViewState, LessonsInGrou
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         toolbar.setTitle(R.string.title_lesson_in_group_default)
-        lessons_ViewPager.offscreenPageLimit = 5
+        lessons_ViewPager.offscreenPageLimit = 2
 
         super.onViewCreated(view, savedInstanceState)
     }
