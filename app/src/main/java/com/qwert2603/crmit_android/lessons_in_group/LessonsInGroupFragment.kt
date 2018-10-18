@@ -89,7 +89,9 @@ class LessonsInGroupFragment : LRFragment<LessonsInGroupViewState, LessonsInGrou
         }
         renderIfChanged({ selectedIndex() }) { selectedIndex ->
             lessons_ViewPager.setCurrentItem(selectedIndex ?: 0, false)
-            if (selectedIndex != null) toolbar.title = vs.lessons?.get(selectedIndex)?.date?.toShowingDate()
+            if (selectedIndex != null && vs.lessons != null) {
+                toolbar.title = "${vs.lessons[selectedIndex].date.toShowingDate()} (${selectedIndex + 1}/${vs.lessons.size})"
+            }
         }
     }
 
