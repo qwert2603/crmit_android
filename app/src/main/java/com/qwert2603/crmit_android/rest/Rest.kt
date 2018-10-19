@@ -116,5 +116,5 @@ interface Rest {
     fun getLastSeens(): Single<List<LastSeenItem>>
 
     @GET("access_tokens")
-    fun getAccessTokens(): Single<List<AccessTokenItem>>
+    fun getAccessTokens(): Single<List<AccessTokensItem>>
 }
