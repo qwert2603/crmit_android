@@ -14,10 +14,12 @@ import com.qwert2603.andrlib.base.mvi.ViewAction
 import com.qwert2603.andrlib.base.mvi.load_refresh.LRFragment
 import com.qwert2603.andrlib.base.mvi.load_refresh.LoadRefreshPanel
 import com.qwert2603.andrlib.model.IdentifiableLong
+import com.qwert2603.andrlib.util.color
 import com.qwert2603.andrlib.util.inflate
 import com.qwert2603.andrlib.util.setVisible
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.lesson_details.LessonDetailsFragmentBuilder
+import com.qwert2603.crmit_android.rest.Rest
 import com.qwert2603.crmit_android.util.SaveImageLifecycleObserver
 import com.qwert2603.crmit_android.util.mapNotNull
 import com.qwert2603.crmit_android.util.toShowingDate
@@ -25,6 +27,8 @@ import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_lessons_in_group.*
 import kotlinx.android.synthetic.main.toolbar_default.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 @FragmentWithArgs
 class LessonsInGroupFragment : LRFragment<LessonsInGroupViewState, LessonsInGroupView, LessonsInGroupPresenter>(), LessonsInGroupView, ParentLessonsFragment {
@@ -91,6 +95,8 @@ class LessonsInGroupFragment : LRFragment<LessonsInGroupViewState, LessonsInGrou
             lessons_ViewPager.setCurrentItem(selectedIndex ?: 0, false)
             if (selectedIndex != null && vs.lessons != null) {
                 toolbar.title = "${vs.lessons[selectedIndex].date.toShowingDate()} (${selectedIndex + 1}/${vs.lessons.size})"
+                val today = SimpleDateFormat(Rest.DATE_FORMAT, Locale.getDefault()).format(Date())
+                toolbar.setTitleTextColor((resources.color(if (vs.lessons[selectedIndex].date == today) R.color.colorAccent else android.R.color.black)))
             }
         }
     }
