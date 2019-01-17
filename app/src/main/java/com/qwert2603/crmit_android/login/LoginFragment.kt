@@ -22,8 +22,6 @@ class LoginFragment : BaseFragment<LoginViewState, LoginView, LoginPresenter>(),
 
     override fun createPresenter() = LoginPresenter()
 
-    override fun viewForSnackbar(): View? = login_CoordinatorLayout
-
     private lateinit var loginEditText: UserInputEditText
     private lateinit var passwordEditText: UserInputEditText
 

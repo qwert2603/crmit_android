@@ -17,6 +17,7 @@ import com.qwert2603.andrlib.base.recyclerview.BaseRecyclerViewAdapter
 import com.qwert2603.andrlib.model.IdentifiableLong
 import com.qwert2603.andrlib.util.color
 import com.qwert2603.andrlib.util.inflate
+import com.qwert2603.andrlib.util.renderIfChanged
 import com.qwert2603.andrlib.util.showIfNotYet
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.db.DaoInterface
@@ -62,8 +63,6 @@ abstract class EntityDetailsFragment<E : Any> : LRFragment<EntityDetailsViewStat
     )
 
     override fun loadRefreshPanel(): LoadRefreshPanel = entityDetails_LRPanelImpl
-
-    override fun viewForSnackbar(): View? = entityDetails_CoordinatorLayout
 
     protected val toolbarTitleTextView: TextView get() = toolbar.getChildAt(0) as TextView
 

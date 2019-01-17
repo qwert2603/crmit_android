@@ -30,8 +30,6 @@ class CabinetFragment : BaseFragment<CabinetViewState, CabinetView, CabinetPrese
 
     override fun createPresenter() = CabinetPresenter()
 
-    override fun viewForSnackbar(): View? = cabinet_CoordinatorLayout
-
     private val logoutDialog by lazy {
         AlertDialog.Builder(requireContext())
                 .setView(R.layout.dialog_logout)

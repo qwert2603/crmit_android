@@ -13,6 +13,7 @@ import com.qwert2603.andrlib.base.mvi.load_refresh.LRFragment
 import com.qwert2603.andrlib.base.mvi.load_refresh.LoadRefreshPanel
 import com.qwert2603.andrlib.model.IdentifiableLong
 import com.qwert2603.andrlib.util.inflate
+import com.qwert2603.andrlib.util.renderIfChanged
 import com.qwert2603.andrlib.util.setVisible
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.util.SaveImageLifecycleObserver
@@ -32,8 +33,6 @@ class PaymentsInGroupFragment : LRFragment<PaymentsInGroupViewState, PaymentsInG
     override fun createPresenter() = PaymentsInGroupPresenter(groupId, monthNumber)
 
     override fun loadRefreshPanel(): LoadRefreshPanel = paymentsInGroup_LRPanelImpl
-
-    override fun viewForSnackbar(): View? = paymentsInGroup_CoordinatorLayout
 
     private val onRetryMonthClicked = PublishSubject.create<Any>()
 

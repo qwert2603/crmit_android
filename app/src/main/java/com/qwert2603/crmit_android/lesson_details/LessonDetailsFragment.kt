@@ -35,8 +35,6 @@ class LessonDetailsFragment : LRFragment<LessonDetailsViewState, LessonDetailsVi
 
     override fun loadRefreshPanel(): LoadRefreshPanel = lessonDetails_LRPanelImpl
 
-    override fun viewForSnackbar(): View? = lessonDetails_LRPanelImpl
-
     private val adapter = AttendingsAdapter()
 
     private val navigateToPaymentsClicks = PublishSubject.create<Any>()

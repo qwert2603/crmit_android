@@ -43,8 +43,6 @@ class PaymentsFragment : LRFragment<PaymentsViewState, PaymentsView, PaymentsPre
 
     override fun loadRefreshPanel(): LoadRefreshPanel = payments_LRPanelImpl
 
-    override fun viewForSnackbar(): View? = payments_LRPanelImpl
-
     private val adapter = PaymentsAdapter()
 
     private val valueChanges = PublishSubject.create<Pair<Long, Int>>()

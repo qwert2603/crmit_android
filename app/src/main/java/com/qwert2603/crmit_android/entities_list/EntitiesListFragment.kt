@@ -18,6 +18,7 @@ import com.qwert2603.andrlib.base.recyclerview.vh.PageIndicatorViewHolder
 import com.qwert2603.andrlib.model.IdentifiableLong
 import com.qwert2603.andrlib.util.color
 import com.qwert2603.andrlib.util.inflate
+import com.qwert2603.andrlib.util.renderIfChanged
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.db.DaoInterface
 import com.qwert2603.crmit_android.entity.AccountType
@@ -77,8 +78,6 @@ abstract class EntitiesListFragment<E : IdentifiableLong>
     )
 
     override fun loadRefreshPanel(): LoadRefreshPanel = entities_LRPanelImpl
-
-    override fun viewForSnackbar(): View? = entities_CoordinatorLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

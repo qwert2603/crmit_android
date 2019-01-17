@@ -11,6 +11,7 @@ import com.jakewharton.rxbinding2.view.RxView
 import com.qwert2603.andrlib.base.mvi.BaseFragment
 import com.qwert2603.andrlib.base.mvi.ViewAction
 import com.qwert2603.andrlib.util.inflate
+import com.qwert2603.andrlib.util.renderIfChanged
 import com.qwert2603.andrlib.util.setVisible
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.di.DiHolder
@@ -22,8 +23,6 @@ import kotlinx.android.synthetic.main.view_greeting_message.view.*
 class GreetingFragment : BaseFragment<GreetingViewState, GreetingView, GreetingPresenter>(), GreetingView {
 
     override fun createPresenter() = GreetingPresenter()
-
-    override fun viewForSnackbar(): View? = greeting_LinearLayout
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             container?.inflate(R.layout.fragment_greeting)

@@ -16,6 +16,7 @@ import com.qwert2603.andrlib.base.mvi.load_refresh.LoadRefreshPanel
 import com.qwert2603.andrlib.model.IdentifiableLong
 import com.qwert2603.andrlib.util.color
 import com.qwert2603.andrlib.util.inflate
+import com.qwert2603.andrlib.util.renderIfChanged
 import com.qwert2603.andrlib.util.setVisible
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.lesson_details.LessonDetailsFragmentBuilder
@@ -42,8 +43,6 @@ class LessonsInGroupFragment : LRFragment<LessonsInGroupViewState, LessonsInGrou
     override fun createPresenter() = LessonsInGroupPresenter(groupId, date)
 
     override fun loadRefreshPanel(): LoadRefreshPanel = lrPanelImpl
-
-    override fun viewForSnackbar(): View? = coordinatorLayout
 
     private val onRetryDateClicked = PublishSubject.create<Any>()
 
