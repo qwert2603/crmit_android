@@ -3,12 +3,15 @@ package com.qwert2603.crmit_android.login
 import android.app.AlertDialog
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.support.v4.content.res.ResourcesCompat
+import android.text.method.PasswordTransformationMethod
 import android.view.*
 import com.jakewharton.rxbinding2.view.RxView
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.qwert2603.andrlib.base.mvi.BaseFragment
 import com.qwert2603.andrlib.base.mvi.ViewAction
 import com.qwert2603.andrlib.util.inflate
+import com.qwert2603.crmit_android.CrmitApplication
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.navigation.KeyboardManager
@@ -44,6 +47,9 @@ class LoginFragment : BaseFragment<LoginViewState, LoginView, LoginPresenter>(),
         toolbar.setTitle(R.string.title_login)
         loginEditText = UserInputEditText(login_EditText)
         passwordEditText = UserInputEditText(password_EditText)
+
+        password_EditText.typeface = ResourcesCompat.getFont(requireContext(), CrmitApplication.appFontRes)
+        password_EditText.transformationMethod = PasswordTransformationMethod()
 
         super.onViewCreated(view, savedInstanceState)
     }

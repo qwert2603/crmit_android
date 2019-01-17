@@ -50,7 +50,8 @@
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp">
+                    android:layout_marginTop="12dp"
+                    app:passwordToggleEnabled="true">
 
                     <EditText
                         android:id="@+id/password_EditText"
@@ -58,7 +59,6 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/hint_password"
                         android:imeOptions="flagNoFullscreen"
-                        android:inputType="textPassword"
                         android:selectAllOnFocus="true"
                         tools:ignore="LabelFor"
                         tools:text="1918" />
