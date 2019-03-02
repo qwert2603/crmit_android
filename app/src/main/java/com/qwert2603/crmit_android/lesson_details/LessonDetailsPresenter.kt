@@ -62,6 +62,7 @@ class LessonDetailsPresenter(private val lessonId: Long)
             }
             .subscribeOn(DiHolder.modelSchedulersProvider.io)
 
+    // todo: load groupBrief / teacher in LessonsInGroupPresenter.
     private fun Single<List<Attending>>.toInitialModel(): Single<LessonDetailsInitialModel> = this
             .flatMap { attendings ->
                 val lesson = DiHolder.lessonDao.getItem(lessonId)
