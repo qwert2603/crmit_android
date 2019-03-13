@@ -6,7 +6,7 @@
     android:orientation="horizontal">
 
     <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
@@ -14,7 +14,7 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/value_EditText"
-            style="@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox.Dense"
+            style="@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/hint_value"
