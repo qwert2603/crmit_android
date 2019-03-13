@@ -1,6 +1,6 @@
 package com.qwert2603.crmit_android.cabinet
 
-import android.app.AlertDialog
+import androidx.appcompat.app.AlertDialog
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
 import android.view.LayoutInflater

@@ -2,7 +2,7 @@ package com.qwert2603.crmit_android.payments
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.app.AlertDialog
+import androidx.appcompat.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -61,6 +61,7 @@ class EditValueDialogFragment : DialogFragment() {
                 .setView(dialogView)
                 .setPositiveButton(android.R.string.ok) { _, _ -> sendResult() }
                 .create()
+                .also { it.setCanceledOnTouchOutside(false) }
                 .also {
                     it.setOnShowListener { _ ->
                         dialogView.value_EditText.requestFocus()

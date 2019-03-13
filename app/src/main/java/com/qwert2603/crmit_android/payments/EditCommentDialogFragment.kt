@@ -2,14 +2,14 @@ package com.qwert2603.crmit_android.payments
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.app.AlertDialog
+import androidx.appcompat.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.DialogFragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.fragment.app.DialogFragment
 import com.hannesdorfmann.fragmentargs.annotation.Arg
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs
 import com.qwert2603.andrlib.model.IdentifiableLong
@@ -46,6 +46,7 @@ class EditCommentDialogFragment : DialogFragment() {
                 .setView(dialogView)
                 .setPositiveButton(android.R.string.ok) { _, _ -> sendResult() }
                 .create()
+                .also { it.setCanceledOnTouchOutside(false) }
                 .also {
                     it.setOnShowListener { _ ->
                         dialogView.comment_EditText.requestFocus()
