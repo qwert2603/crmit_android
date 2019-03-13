@@ -10,7 +10,7 @@ android {
         config {
             storeFile file('/home/alex/StudioProjects/key.jks')
             storePassword key_store_password
-            keyAlias 'crmit'
+            keyAlias 'crmit_android'
             keyPassword key_store_password
         }
     }

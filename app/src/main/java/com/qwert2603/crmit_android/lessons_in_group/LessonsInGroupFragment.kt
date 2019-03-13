@@ -14,10 +14,7 @@ import com.qwert2603.andrlib.base.mvi.ViewAction
 import com.qwert2603.andrlib.base.mvi.load_refresh.LRFragment
 import com.qwert2603.andrlib.base.mvi.load_refresh.LoadRefreshPanel
 import com.qwert2603.andrlib.model.IdentifiableLong
-import com.qwert2603.andrlib.util.color
-import com.qwert2603.andrlib.util.inflate
-import com.qwert2603.andrlib.util.renderIfChanged
-import com.qwert2603.andrlib.util.setVisible
+import com.qwert2603.andrlib.util.*
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.lesson_details.LessonDetailsFragmentBuilder
 import com.qwert2603.crmit_android.rest.Rest
@@ -92,10 +89,13 @@ class LessonsInGroupFragment : LRFragment<LessonsInGroupViewState, LessonsInGrou
         }
         renderIfChanged({ selectedIndex() }) { selectedIndex ->
             lessons_ViewPager.setCurrentItem(selectedIndex ?: 0, false)
-            if (selectedIndex != null && vs.lessons != null) {
-                toolbar.title = "${vs.lessons[selectedIndex].date.toShowingDate()} (${selectedIndex + 1}/${vs.lessons.size})"
+        }
+
+        renderIfChangedTwo({ lessons to selectedIndex() }) { (lessons, selectedIndex) ->
+            if (selectedIndex != null && lessons != null) {
+                toolbar.title = "${lessons[selectedIndex].date.toShowingDate()} (${selectedIndex + 1}/${lessons.size})"
                 val today = SimpleDateFormat(Rest.DATE_FORMAT, Locale.getDefault()).format(Date())
-                toolbar.setTitleTextColor((resources.color(if (vs.lessons[selectedIndex].date == today) R.color.colorAccent else android.R.color.black)))
+                toolbar.setTitleTextColor((resources.color(if (lessons[selectedIndex].date == today) R.color.colorAccent else android.R.color.black)))
             }
         }
     }

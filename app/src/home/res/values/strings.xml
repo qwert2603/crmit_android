@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">CRM ЦМИТ home</string>
-    <color name="launcher_color">#FFB000</color>
+    <color name="launcher_color">#FF8000</color>
 
     <string name="action_view_host" translatable="true">192.168.1.26</string>
     <string name="action_view_port" translatable="true">1918</string>

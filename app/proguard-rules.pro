@@ -20,11 +20,18 @@
 # hide the original source file name.
 -renamesourcefileattribute SourceFile
 
+
+# andrlib
+-keepclasseswithmembernames class com.hannesdorfmann.mosby3.FragmentMviDelegateImpl { *; }
+
+
 # andrlib_generator
 -dontwarn com.qwert2603.andrlib.generator.**
 
+
 # dao_generator
 -dontwarn com.qwert2603.dao_generator.**
+
 
 # retrofit & okhttp
 -keepattributes Signature, InnerClasses, EnclosingMethod
@@ -38,6 +45,12 @@
 -dontwarn retrofit2.KotlinExtensions
 -if interface * { @retrofit2.http.* <methods>; }
 -keep,allowobfuscation interface <1>
+
+
+# Crashlytics
+-keepattributes *Annotation*
+-keep public class * extends java.lang.Exception
+
 
 -keep class com.qwert2603.crmit_android.entity.** { *; }
 -keep class com.qwert2603.crmit_android.rest.params.** { *; }
