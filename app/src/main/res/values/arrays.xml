@@ -15,6 +15,16 @@
         <item>декабрь</item>
     </string-array>
 
+    <string-array name="days_of_week_names">
+        <item>понедельник</item>
+        <item>вторник</item>
+        <item>среда</item>
+        <item>четверг</item>
+        <item>пятница</item>
+        <item>суббота</item>
+        <item>воскресенье</item>
+    </string-array>
+
     <string-array name="greeting">
         <item><![CDATA[
         Добро пожаловать в приложение <b><font color="#FF0000">CRM \"ЦМИТ\"</font></b> для Android.

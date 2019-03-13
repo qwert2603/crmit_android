@@ -82,10 +82,12 @@
     <string name="detailsField_payments">Оплата</string>
     <string name="detailsField_paymentsInfo">Информация о платежах</string>
     <string name="detailsField_sumNotConfirmed">Сумма неподтвержденных платежей</string>
+    <string name="detailsField_schedule">Расписание</string>
 
     <string name="text_never">Никогда</string>
 
     <string name="text_no_groups">Нет групп</string>
+    <string name="text_no_schedule">Нет расписания</string>
     <string name="text_clear_db">Очистить ДБ</string>
     <string name="text_clear_all_and_restart">Очистить все и перезапустить</string>
     <string name="text_showing_cached_data">Показаны кешированные данные</string>

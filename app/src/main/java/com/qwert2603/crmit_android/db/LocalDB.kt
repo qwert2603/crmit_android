@@ -4,6 +4,7 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.qwert2603.crmit_android.db.converters.GroupBriefListConverter
+import com.qwert2603.crmit_android.db.converters.ScheduleItemListConverter
 import com.qwert2603.crmit_android.db.converters.StringListConverter
 import com.qwert2603.crmit_android.db.generated_dao.*
 import com.qwert2603.crmit_android.entity.*
@@ -25,7 +26,7 @@ import com.qwert2603.crmit_android.entity.*
         version = 3,
         exportSchema = true
 )
-@TypeConverters(GroupBriefListConverter::class, StringListConverter::class)
+@TypeConverters(GroupBriefListConverter::class, StringListConverter::class, ScheduleItemListConverter::class)
 abstract class LocalDB : RoomDatabase() {
     abstract fun masterDao(): MasterDao
     abstract fun teacherDao(): TeacherDao

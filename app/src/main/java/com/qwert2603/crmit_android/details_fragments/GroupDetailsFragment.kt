@@ -21,6 +21,8 @@ class GroupDetailsFragment : EntityDetailsFragment<GroupFull>() {
 
     override fun GroupFull.entityName() = name
 
+    private val daysOfWeekNames by lazy { resources.getStringArray(R.array.days_of_week_names) }
+
     override fun GroupFull.toDetailsList() = listOfNotNull(
             EntityDetailsField(
                     fieldTitleStringRes = R.string.detailsField_teacher,
@@ -56,6 +58,15 @@ class GroupDetailsFragment : EntityDetailsFragment<GroupFull>() {
                     fieldTitleStringRes = R.string.detailsField_sumNotConfirmed,
                     fieldValue = getString(R.string.price_format, sumNotConfirmed.toPointedString()),
                     iconDrawableRes = R.drawable.ic_summa
+            ),
+            EntityDetailsField(
+                    fieldTitleStringRes = R.string.detailsField_schedule,
+                    fieldValue = schedule
+                            .takeIf { it.isNotEmpty() }
+                            ?.map { "${daysOfWeekNames[it.dayOfWeek]} ${it.time ?: ""}" }
+                            ?.reduce { acc, s -> "$acc\n$s" }
+                            ?: getString(R.string.text_no_schedule),
+                    iconDrawableRes = R.drawable.ic_schedule_black_24dp
             )
     )
 }

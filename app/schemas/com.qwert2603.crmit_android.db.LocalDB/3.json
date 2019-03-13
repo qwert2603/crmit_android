@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "e6c5b219f837447d3ac73563ef9084fb",
+    "identityHash": "b859e150b689f99afaedb3def0877050",
     "entities": [
       {
         "tableName": "Master",
@@ -612,7 +612,7 @@
       },
       {
         "tableName": "GroupFull",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `teacherId` INTEGER NOT NULL, `teacherFio` TEXT NOT NULL, `sectionId` INTEGER NOT NULL, `sectionName` TEXT NOT NULL, `startMonth` INTEGER NOT NULL, `endMonth` INTEGER NOT NULL, `studentsCount` INTEGER NOT NULL, `lessonsDoneCount` INTEGER NOT NULL, `sumNotConfirmed` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name` TEXT NOT NULL, `teacherId` INTEGER NOT NULL, `teacherFio` TEXT NOT NULL, `sectionId` INTEGER NOT NULL, `sectionName` TEXT NOT NULL, `startMonth` INTEGER NOT NULL, `endMonth` INTEGER NOT NULL, `studentsCount` INTEGER NOT NULL, `lessonsDoneCount` INTEGER NOT NULL, `sumNotConfirmed` INTEGER NOT NULL, `schedule` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -678,6 +678,12 @@
             "fieldPath": "sumNotConfirmed",
             "columnName": "sumNotConfirmed",
             "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "schedule",
+            "columnName": "schedule",
+            "affinity": "TEXT",
             "notNull": true
           }
         ],
@@ -942,7 +948,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"e6c5b219f837447d3ac73563ef9084fb\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"b859e150b689f99afaedb3def0877050\")"
     ]
   }
 }
