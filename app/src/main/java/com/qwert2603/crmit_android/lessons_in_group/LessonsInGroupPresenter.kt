@@ -7,6 +7,7 @@ import com.qwert2603.andrlib.util.LogUtils
 import com.qwert2603.crmit_android.db.generated_dao.wrap
 import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entity.Lesson
+import com.qwert2603.crmit_android.util.NoCacheException
 import io.reactivex.Observable
 import io.reactivex.Single
 import java.util.concurrent.TimeUnit
@@ -43,7 +44,7 @@ class LessonsInGroupPresenter(private val groupId: Long, date: String)
                                 viewActions.onNext(LessonsInGroupViewAction.ShowingCachedData)
                                 Single.just(it)
                             } else {
-                                Single.error(Exception("no cache!"))
+                                Single.error(NoCacheException())
                             }
                         }
                         .subscribeOn(DiHolder.modelSchedulersProvider.io)

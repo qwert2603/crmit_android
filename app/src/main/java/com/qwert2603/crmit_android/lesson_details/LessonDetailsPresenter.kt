@@ -9,10 +9,7 @@ import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entity.Attending
 import com.qwert2603.crmit_android.entity.Teacher
 import com.qwert2603.crmit_android.entity.UploadStatus
-import com.qwert2603.crmit_android.util.Wrapper
-import com.qwert2603.crmit_android.util.secondOfTwo
-import com.qwert2603.crmit_android.util.toMonthNumber
-import com.qwert2603.crmit_android.util.wrap
+import com.qwert2603.crmit_android.util.*
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.functions.BiFunction
@@ -117,7 +114,7 @@ class LessonDetailsPresenter(private val lessonId: Long)
                             if (it.isNotEmpty()) {
                                 Single.just(it)
                             } else {
-                                Single.error(Exception("no cache!"))
+                                Single.error(NoCacheException())
                             }
                         }
                         .subscribeOn(DiHolder.modelSchedulersProvider.io)

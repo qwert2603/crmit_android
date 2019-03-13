@@ -1,10 +1,22 @@
 apply plugin: 'com.android.application'
+apply plugin: 'io.fabric'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
+
+    signingConfigs {
+        config {
+            storeFile file('/home/alex/StudioProjects/key.jks')
+            storePassword key_store_password
+            keyAlias 'crmit'
+            keyPassword key_store_password
+        }
+    }
+
     compileSdkVersion 28
+    buildToolsVersion "28.0.3"
     defaultConfig {
         applicationId "com.qwert2603.crmit_android"
         minSdkVersion 21
@@ -33,6 +45,7 @@ android {
             shrinkResources true
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
 
@@ -85,6 +98,9 @@ dependencies {
     ext.retrofit_version = '2.5.0'
     ext.okhttp_version = '3.13.1'
 
+    ext.firebase_core_version = '16.0.7'
+    ext.crashlytics_version = '2.9.9'
+
     ext.stetho_version = '1.5.0'
 
     implementation "com.github.qwert2603:andrlib:$andrlib_version"
@@ -116,5 +132,10 @@ dependencies {
     implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofit_version"
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
 
+    implementation "com.google.firebase:firebase-core:$firebase_core_version"
+    implementation "com.crashlytics.sdk.android:crashlytics:$crashlytics_version"
+
     debugImplementation "com.facebook.stetho:stetho:$stetho_version"
 }
+
+apply plugin: 'com.google.gms.google-services'

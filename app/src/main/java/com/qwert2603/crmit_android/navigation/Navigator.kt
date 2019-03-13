@@ -11,13 +11,12 @@ import androidx.core.view.ViewGroupCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.hannesdorfmann.fragmentargs.FragmentArgs
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.login.LoginFragment
 import ru.terrakok.cicerone.android.support.SupportAppNavigator
-import ru.terrakok.cicerone.commands.Command
-import ru.terrakok.cicerone.commands.Forward
-import ru.terrakok.cicerone.commands.Replace
+import ru.terrakok.cicerone.commands.*
 
 class Navigator(private val activity: ActivityInterface)
     : SupportAppNavigator(activity.fragmentActivity, activity.supportFragmentManager, activity.fragmentContainer) {
@@ -83,11 +82,25 @@ class Navigator(private val activity: ActivityInterface)
     }
 
     override fun applyCommand(command: Command?) {
+        FirebaseAnalytics.getInstance(activity.fragmentActivity).logEvent(
+                "navigation",
+                Bundle()
+                        .also { it.putString("command", command.toString()) }
+                        .also { it.putString("screen", command?.getScreen().toString()) }
+        )
         activity.hideKeyboard()
         super.applyCommand(command)
     }
 
     companion object {
         private const val TRANSITION_DURATION = 300L
+
+        private fun Command.getScreen(): Screen? = when (this) {
+            is Forward -> this.screen as? Screen
+            is Replace -> this.screen as? Screen
+            is BackTo -> this.screen as? Screen
+            is Back -> null
+            else -> null
+        }
     }
 }

@@ -8,6 +8,7 @@ import com.qwert2603.crmit_android.db.generated_dao.wrap
 import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entity.Payment
 import com.qwert2603.crmit_android.entity.UploadStatus
+import com.qwert2603.crmit_android.util.NoCacheException
 import com.qwert2603.crmit_android.util.makePair
 import com.qwert2603.crmit_android.util.mapNotNull
 import io.reactivex.Observable
@@ -108,7 +109,7 @@ class PaymentsPresenter(
                             if (it.isNotEmpty()) {
                                 Single.just(it)
                             } else {
-                                Single.error(Exception("no cache!"))
+                                Single.error(NoCacheException())
                             }
                         }
             }

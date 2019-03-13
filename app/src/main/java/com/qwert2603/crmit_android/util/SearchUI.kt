@@ -6,7 +6,9 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.widget.FrameLayout
+import androidx.core.widget.doOnTextChanged
 import com.jakewharton.rxbinding2.view.RxView
+import com.qwert2603.andrlib.util.LogUtils
 import com.qwert2603.andrlib.util.inflate
 import com.qwert2603.andrlib.util.setVisible
 import com.qwert2603.andrlib.util.toPx
@@ -33,6 +35,14 @@ class SearchUI(context: Context, attrs: AttributeSet) : FrameLayout(context, att
         typedArray.recycle()
 
         clearSearch_Button.setOnClickListener { clearSearch() }
+
+        query_EditText.doOnTextChanged { s, _, _, _ ->
+            LogUtils.d("doOnTextChanged $s")
+            when (s.toString()) {
+                "log error 1918" -> LogUtils.e("log error 1918", RuntimeException("log error 1918"))
+                "make error 1918" -> throw RuntimeException("make error 1918")
+            }
+        }
     }
 
     fun closeClicks() = RxView.clicks(closeSearch_Button)

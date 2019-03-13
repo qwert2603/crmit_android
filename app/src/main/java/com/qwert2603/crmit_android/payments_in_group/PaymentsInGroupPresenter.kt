@@ -6,6 +6,7 @@ import com.qwert2603.andrlib.base.mvi.load_refresh.LRPresenter
 import com.qwert2603.andrlib.util.LogUtils
 import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entity.GroupFull
+import com.qwert2603.crmit_android.util.NoCacheException
 import com.qwert2603.crmit_android.util.getMonthNumber
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -41,7 +42,7 @@ class PaymentsInGroupPresenter(private val groupId: Long, private val monthNumbe
                     viewActions.onNext(PaymentsInGroupViewAction.ShowingCachedData)
                     Single.just(cached)
                 } else {
-                    Single.error(Exception("no cache!"))
+                    Single.error(NoCacheException())
                 }
             }
 

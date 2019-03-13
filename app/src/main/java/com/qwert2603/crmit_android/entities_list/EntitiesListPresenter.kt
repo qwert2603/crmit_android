@@ -9,6 +9,7 @@ import com.qwert2603.andrlib.model.pagination.fixed_size.FixedSizePagesLoader
 import com.qwert2603.andrlib.util.LogUtils
 import com.qwert2603.crmit_android.db.DaoInterface
 import com.qwert2603.crmit_android.di.DiHolder
+import com.qwert2603.crmit_android.util.NoCacheException
 import io.reactivex.Observable
 import io.reactivex.Single
 import java.util.concurrent.TimeUnit
@@ -78,7 +79,7 @@ class EntitiesListPresenter<E : IdentifiableLong>(
                                                     viewActions.onNext(EntitiesListViewAction.ShowingCachedData)
                                                     Single.just(it)
                                                 } else {
-                                                    Single.error(Exception("no cache"))
+                                                    Single.error(NoCacheException())
                                                 }
                                             }
 
