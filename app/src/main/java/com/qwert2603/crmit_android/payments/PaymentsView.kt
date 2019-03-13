@@ -7,8 +7,8 @@ interface PaymentsView : LRView<PaymentsViewState> {
     fun isCashChanges(): Observable<Pair<Long, Boolean>>
     fun isConfirmedChanges(): Observable<Pair<Long, Boolean>>
 
-    fun askToEditValue(): Observable<Pair<Long, Int>>
-    fun askToEditComment(): Observable<Pair<Long, String>>
+    fun askToEditValue(): Observable<Long>
+    fun askToEditComment(): Observable<Long>
 
     fun valueChanges(): Observable<Pair<Long, Int>>
     fun commentChanges(): Observable<Pair<Long, String>>

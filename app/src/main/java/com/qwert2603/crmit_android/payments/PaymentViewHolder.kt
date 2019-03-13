@@ -1,6 +1,5 @@
 package com.qwert2603.crmit_android.payments
 
-import android.annotation.SuppressLint
 import android.graphics.Typeface
 import android.view.View
 import android.view.ViewGroup
@@ -31,8 +30,8 @@ class PaymentViewHolder(parent: ViewGroup) : BaseRecyclerViewHolder<Payment>(par
         itemView.apply {
             cashSwitch.userInputListener = { (adapter as PaymentsAdapter).isCashChanges.onNext(m!!.id to it) }
             confirmedSwitch.userInputListener = { (adapter as PaymentsAdapter).isConfirmedChanges.onNext(m!!.id to it) }
-            value_TextView.setOnClickListener { (adapter as PaymentsAdapter).askToEditValue.onNext(m!!.id to m!!.value) }
-            comment_TextView.setOnClickListener { (adapter as PaymentsAdapter).askToEditComment.onNext(m!!.id to m!!.comment) }
+            value_TextView.setOnClickListener { (adapter as PaymentsAdapter).askToEditValue.onNext(m!!.id) }
+            comment_TextView.setOnClickListener { (adapter as PaymentsAdapter).askToEditComment.onNext(m!!.id) }
             uploadError_ImageView.setOnClickListener { (adapter as PaymentsAdapter).retryClicks.onNext(m!!.id) }
 
             cash_Switch.typeface = fontTypeface
@@ -44,7 +43,6 @@ class PaymentViewHolder(parent: ViewGroup) : BaseRecyclerViewHolder<Payment>(par
         super.bind(m)
 
         studentFio_TextView.text = m.studentFio
-        @SuppressLint("SetTextI18n")
         value_TextView.text = resources.getString(R.string.payment_value_format, m.value.toPointedString(), m.needToPay.toPointedString())
         value_TextView.setTextColor(resources.color(if (m.confirmed) R.color.payment_value_confirmed else android.R.color.black))
 

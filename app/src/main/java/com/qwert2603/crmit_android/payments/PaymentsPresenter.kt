@@ -156,7 +156,6 @@ class PaymentsPresenter(
         super.bindIntents()
 
         intent { it.askToEditValue() }
-                .map { it.first }
                 .withLatestFrom(viewStateObservable, makePair())
                 .mapNotNull { (paymentId, vs) ->
                     vs.payments?.singleOrNull { it.id == paymentId }
@@ -172,7 +171,6 @@ class PaymentsPresenter(
                 .subscribeToView()
 
         intent { it.askToEditComment() }
-                .map { it.first }
                 .withLatestFrom(viewStateObservable, makePair())
                 .mapNotNull { (paymentId, vs) ->
                     vs.payments?.singleOrNull { it.id == paymentId }

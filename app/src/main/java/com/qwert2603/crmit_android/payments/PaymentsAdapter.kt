@@ -11,8 +11,8 @@ class PaymentsAdapter : BaseRecyclerViewAdapter<Payment>() {
 
     val isCashChanges = PublishSubject.create<Pair<Long, Boolean>>()
     val isConfirmedChanges = PublishSubject.create<Pair<Long, Boolean>>()
-    val askToEditValue = PublishSubject.create<Pair<Long, Int>>()
-    val askToEditComment = PublishSubject.create<Pair<Long, String>>()
+    val askToEditValue = PublishSubject.create<Long>()
+    val askToEditComment = PublishSubject.create<Long>()
     val retryClicks = PublishSubject.create<Long>()
 
     var uploadStatuses: Map<Long, UploadStatus> = emptyMap()

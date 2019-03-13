@@ -90,8 +90,8 @@ class PaymentsFragment : LRFragment<PaymentsViewState, PaymentsView, PaymentsPre
     override fun isCashChanges(): Observable<Pair<Long, Boolean>> = adapter.isCashChanges
     override fun isConfirmedChanges(): Observable<Pair<Long, Boolean>> = adapter.isConfirmedChanges
 
-    override fun askToEditValue(): Observable<Pair<Long, Int>> = adapter.askToEditValue
-    override fun askToEditComment(): Observable<Pair<Long, String>> = adapter.askToEditComment
+    override fun askToEditValue(): Observable<Long> = adapter.askToEditValue
+    override fun askToEditComment(): Observable<Long> = adapter.askToEditComment
 
     override fun valueChanges(): Observable<Pair<Long, Int>> = valueChanges
     override fun commentChanges(): Observable<Pair<Long, String>> = commentChanges
