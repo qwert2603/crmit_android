@@ -1,8 +1,8 @@
 package com.qwert2603.crmit_android.db
 
-import android.arch.persistence.room.Database
-import android.arch.persistence.room.RoomDatabase
-import android.arch.persistence.room.TypeConverters
+import androidx.room.Database
+import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.qwert2603.crmit_android.db.converters.GroupBriefListConverter
 import com.qwert2603.crmit_android.db.converters.StringListConverter
 import com.qwert2603.crmit_android.db.generated_dao.*

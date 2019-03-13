@@ -2,7 +2,7 @@ package com.qwert2603.crmit_android.payments
 
 import android.annotation.SuppressLint
 import android.graphics.Typeface
-import android.support.v4.content.res.ResourcesCompat
+import androidx.core.content.res.ResourcesCompat
 import android.view.View
 import android.view.ViewGroup
 import com.qwert2603.andrlib.base.recyclerview.BaseRecyclerViewHolder

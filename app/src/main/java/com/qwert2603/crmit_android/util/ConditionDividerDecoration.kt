@@ -4,10 +4,10 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 
-class ConditionDividerDecoration(context: Context, private val condition: (RecyclerView, RecyclerView.ViewHolder) -> Boolean) : RecyclerView.ItemDecoration() {
+class ConditionDividerDecoration(context: Context, private val condition: (androidx.recyclerview.widget.RecyclerView, androidx.recyclerview.widget.RecyclerView.ViewHolder) -> Boolean) : androidx.recyclerview.widget.RecyclerView.ItemDecoration() {
 
     private var mDivider: Drawable
 
@@ -15,7 +15,7 @@ class ConditionDividerDecoration(context: Context, private val condition: (Recyc
 
     init {
         val a = context.obtainStyledAttributes(ATTRS)
-        mDivider = a.getDrawable(0)
+        mDivider = a.getDrawable(0)!!
         a.recycle()
     }
 

@@ -1,9 +1,9 @@
 package com.qwert2603.crmit_android.payments_in_group
 
 import android.content.res.Resources
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentStatePagerAdapter
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentStatePagerAdapter
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.entity.GroupFull
 import com.qwert2603.crmit_android.payments.PaymentsFragmentBuilder

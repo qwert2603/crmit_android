@@ -1,6 +1,6 @@
 package com.qwert2603.crmit_android.navigation
 
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import com.qwert2603.crmit_android.about.AboutFragment
 import com.qwert2603.crmit_android.cabinet.CabinetFragment
 import com.qwert2603.crmit_android.details_fragments.*
@@ -9,12 +9,13 @@ import com.qwert2603.crmit_android.lessons_in_group.LessonsInGroupFragmentBuilde
 import com.qwert2603.crmit_android.list_fragments.*
 import com.qwert2603.crmit_android.login.LoginFragment
 import com.qwert2603.crmit_android.payments_in_group.PaymentsInGroupFragmentBuilder
+import ru.terrakok.cicerone.android.support.SupportAppScreen
 import java.io.Serializable
 
 sealed class Screen(
-        private val fragmentCreator: () -> Fragment = { null!! },
+        private val fragmentCreator: () -> androidx.fragment.app.Fragment = { null!! },
         val allowDrawer: Boolean = true
-) : ru.terrakok.cicerone.android.support.SupportAppScreen(), Serializable {
+) : SupportAppScreen(), Serializable {
 
     override fun getFragment(): Fragment = fragmentCreator().also { it.setScreen(this) }
 

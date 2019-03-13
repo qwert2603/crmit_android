@@ -1,6 +1,6 @@
 package com.qwert2603.crmit_android.util
 
-import android.support.design.widget.TextInputEditText
+import com.google.android.material.textfield.TextInputEditText
 import android.widget.AutoCompleteTextView
 import android.widget.EditText
 import com.jakewharton.rxbinding2.widget.RxTextView

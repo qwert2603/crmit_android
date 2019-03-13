@@ -1,7 +1,7 @@
 package com.qwert2603.crmit_android.payments_in_group
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
+import com.google.android.material.snackbar.Snackbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -94,7 +94,7 @@ class PaymentsInGroupFragment : LRFragment<PaymentsInGroupViewState, PaymentsInG
                     .make(paymentsInGroup_CoordinatorLayout, R.string.text_showing_cached_data, Snackbar.LENGTH_SHORT)
                     .show()
             PaymentsInGroupViewAction.ShowThereWillBePaymentChangesCaching -> ThereWillBePaymentChangesCachingDialogFragment()
-                    .show(fragmentManager, null)
+                    .show(requireFragmentManager(), null)
         }
     }
 }

@@ -3,7 +3,7 @@ package com.qwert2603.crmit_android.di
 import android.annotation.SuppressLint
 import android.content.Context
 import android.preference.PreferenceManager
-import android.support.annotation.WorkerThread
+import androidx.annotation.WorkerThread
 import com.google.gson.Gson
 import com.qwert2603.crmit_android.entity.LoginResult
 import com.qwert2603.crmit_android.navigation.Screen

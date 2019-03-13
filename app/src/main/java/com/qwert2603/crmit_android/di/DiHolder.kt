@@ -1,6 +1,6 @@
 package com.qwert2603.crmit_android.di
 
-import android.arch.persistence.room.Room
+import androidx.room.Room
 import android.content.res.Resources
 import com.qwert2603.andrlib.schedulers.ModelSchedulersProvider
 import com.qwert2603.andrlib.schedulers.UiSchedulerProvider

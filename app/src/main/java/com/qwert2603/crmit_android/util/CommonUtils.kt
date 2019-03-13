@@ -2,16 +2,16 @@ package com.qwert2603.crmit_android.util
 
 import android.animation.Animator
 import android.annotation.SuppressLint
-import android.arch.lifecycle.Lifecycle
-import android.arch.lifecycle.LifecycleObserver
-import android.arch.lifecycle.LifecycleOwner
-import android.arch.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.OnLifecycleEvent
 import android.content.res.Resources
 import android.graphics.Paint
 import android.graphics.Typeface
-import android.support.annotation.MainThread
-import android.support.v4.content.res.ResourcesCompat
-import android.support.v7.app.AlertDialog
+import androidx.annotation.MainThread
+import androidx.core.content.res.ResourcesCompat
+import androidx.appcompat.app.AlertDialog
 import android.text.Editable
 import android.text.Html
 import android.text.TextWatcher
@@ -179,7 +179,7 @@ fun AlertDialog.setFontToTextViews(lifecycleOwner: LifecycleOwner): AlertDialog 
         @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
         fun onResume() {
             val typeface = ResourcesCompat.getFont(this@setFontToTextViews.context, CrmitApplication.appFontRes)
-            this@setFontToTextViews.findViewById<TextView>(android.support.v7.appcompat.R.id.alertTitle)?.typeface = Typeface.create(typeface, Typeface.BOLD)
+            this@setFontToTextViews.findViewById<TextView>(androidx.appcompat.R.id.alertTitle)?.typeface = Typeface.create(typeface, Typeface.BOLD)
             this@setFontToTextViews.findViewById<TextView>(android.R.id.message)?.typeface = typeface
         }
     })

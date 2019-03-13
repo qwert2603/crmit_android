@@ -2,10 +2,10 @@ package com.qwert2603.crmit_android.navigation
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentTransaction
-import android.support.v4.view.ViewGroupCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
+import androidx.core.view.ViewGroupCompat
 import android.transition.Slide
 import android.transition.TransitionInflater
 import android.view.Gravity

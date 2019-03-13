@@ -1,9 +1,9 @@
 package com.qwert2603.crmit_android.lessons_in_group
 
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentStatePagerAdapter
+import com.google.android.material.snackbar.Snackbar
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentStatePagerAdapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -104,7 +104,7 @@ class LessonsInGroupFragment : LRFragment<LessonsInGroupViewState, LessonsInGrou
         if (va !is LessonsInGroupViewAction) return super.executeAction(va)
         when (va) {
             LessonsInGroupViewAction.ShowingCachedData -> Snackbar.make(coordinatorLayout, R.string.text_showing_cached_data, Snackbar.LENGTH_SHORT).show()
-            LessonsInGroupViewAction.ShowThereWillBeAttendingChangesCaching -> ThereWillBeAttendingChangesCachingDialogFragment().show(fragmentManager, null)
+            LessonsInGroupViewAction.ShowThereWillBeAttendingChangesCaching -> ThereWillBeAttendingChangesCachingDialogFragment().show(requireFragmentManager(), null)
         }.also { }
     }
 }

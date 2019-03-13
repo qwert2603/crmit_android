@@ -1,6 +1,6 @@
 package com.qwert2603.crmit_android.entity
 
-import android.support.annotation.StringRes
+import androidx.annotation.StringRes
 import com.qwert2603.crmit_android.R
 
 enum class LoginErrorReason(@StringRes val descriptionRes: Int) {

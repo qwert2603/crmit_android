@@ -1,10 +1,10 @@
 package com.qwert2603.crmit_android.entities_list
 
 import android.os.Bundle
-import android.support.annotation.LayoutRes
-import android.support.annotation.PluralsRes
-import android.support.annotation.StringRes
-import android.support.design.widget.Snackbar
+import androidx.annotation.LayoutRes
+import androidx.annotation.PluralsRes
+import androidx.annotation.StringRes
+import com.google.android.material.snackbar.Snackbar
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan

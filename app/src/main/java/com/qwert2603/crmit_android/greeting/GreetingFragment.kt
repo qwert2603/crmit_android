@@ -1,7 +1,7 @@
 package com.qwert2603.crmit_android.greeting
 
 import android.os.Bundle
-import android.support.v4.view.PagerAdapter
+import androidx.viewpager.widget.PagerAdapter
 import android.text.Html
 import android.view.LayoutInflater
 import android.view.View

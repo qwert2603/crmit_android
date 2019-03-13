@@ -1,6 +1,6 @@
 package com.qwert2603.crmit_android.db.converters
 
-import android.arch.persistence.room.TypeConverter
+import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.qwert2603.crmit_android.entity.GroupBrief

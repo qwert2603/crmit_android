@@ -3,7 +3,7 @@ package com.qwert2603.crmit_android.util
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
-import android.support.annotation.ColorInt
+import androidx.annotation.ColorInt
 import android.util.AttributeSet
 import android.view.View
 import com.qwert2603.andrlib.util.color
@@ -40,8 +40,8 @@ class PointsView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     }
 
     override fun onDraw(canvas: Canvas) {
-        val cx = canvas.width / 2f
-        val cy = canvas.height / 2f
+        val cx = width / 2f
+        val cy = height / 2f
 
         for (i in 0 until count) {
             paint.color = if (i == current) colorAccent else colorPrimary

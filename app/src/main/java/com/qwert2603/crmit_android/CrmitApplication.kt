@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Application
 import android.content.Context
 import android.os.Looper
-import android.support.annotation.FontRes
+import androidx.annotation.FontRes
 import com.qwert2603.andrlib.base.mvi.load_refresh.list.listModelChangerInstance
 import com.qwert2603.andrlib.base.mvi.load_refresh.lrModelChangerInstance
 import com.qwert2603.andrlib.generated.LRModelChangerImpl
