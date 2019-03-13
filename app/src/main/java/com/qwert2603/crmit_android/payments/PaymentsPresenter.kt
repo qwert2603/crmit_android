@@ -4,10 +4,12 @@ import com.qwert2603.andrlib.base.mvi.PartialChange
 import com.qwert2603.andrlib.base.mvi.load_refresh.LRPartialChange
 import com.qwert2603.andrlib.base.mvi.load_refresh.LRPresenter
 import com.qwert2603.andrlib.util.LogUtils
+import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.db.generated_dao.wrap
 import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entity.Payment
 import com.qwert2603.crmit_android.entity.UploadStatus
+import com.qwert2603.crmit_android.util.CrmitConst
 import com.qwert2603.crmit_android.util.NoCacheException
 import com.qwert2603.crmit_android.util.makePair
 import com.qwert2603.crmit_android.util.mapNotNull
@@ -159,11 +161,39 @@ class PaymentsPresenter(
                 .mapNotNull { (paymentId, vs) ->
                     vs.payments?.singleOrNull { it.id == paymentId }
                 }
-                .doOnNext { viewActions.onNext(PaymentsViewAction.AskToEditValue(it.id, it.value, it.needToPay)) }
+                .doOnNext { payment ->
+                    viewActions.onNext(PaymentsViewAction.AskToEditValue(
+                            paymentId = payment.id,
+                            value = payment.value,
+                            maxValue = payment.needToPay,
+                            title = payment.toDialogTitle()
+                    ))
+                }
                 .subscribeToView()
 
         intent { it.askToEditComment() }
-                .doOnNext { viewActions.onNext(PaymentsViewAction.AskToEditComment(it.first, it.second)) }
+                .map { it.first }
+                .withLatestFrom(viewStateObservable, makePair())
+                .mapNotNull { (paymentId, vs) ->
+                    vs.payments?.singleOrNull { it.id == paymentId }
+                }
+                .doOnNext { payment ->
+                    viewActions.onNext(PaymentsViewAction.AskToEditComment(
+                            paymentId = payment.id,
+                            comment = payment.comment,
+                            title = payment.toDialogTitle()
+                    ))
+                }
                 .subscribeToView()
+    }
+
+    companion object {
+        private fun Int.toMonthTabTitle(): String {
+            val monthName = DiHolder.resources.getStringArray(R.array.month_names)[this % CrmitConst.MONTHS_PER_YEAR]
+            return "${this / CrmitConst.MONTHS_PER_YEAR + CrmitConst.START_YEAR} $monthName"
+        }
+
+        private fun Payment.toDialogTitle() = "$studentFio\n$groupName ${monthNumber.toMonthTabTitle()}"
+
     }
 }

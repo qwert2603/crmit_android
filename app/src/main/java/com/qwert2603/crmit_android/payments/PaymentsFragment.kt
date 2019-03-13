@@ -111,11 +111,11 @@ class PaymentsFragment : LRFragment<PaymentsViewState, PaymentsView, PaymentsPre
         if (va !is PaymentsViewAction) return super.executeAction(va)
         when (va) {
             is PaymentsViewAction.AskToEditValue -> EditValueDialogFragmentBuilder
-                    .newEditValueDialogFragment(va.maxValue, va.paymentId, va.value)
+                    .newEditValueDialogFragment(va.maxValue, va.paymentId, va.title, va.value)
                     .also { it.setTargetFragment(this, REQUEST_CODE_VALUE) }
                     .show(requireFragmentManager(), null)
             is PaymentsViewAction.AskToEditComment -> EditCommentDialogFragmentBuilder
-                    .newEditCommentDialogFragment(va.comment, va.paymentId)
+                    .newEditCommentDialogFragment(va.comment, va.paymentId, va.title)
                     .also { it.setTargetFragment(this, REQUEST_CODE_COMMENT) }
                     .show(requireFragmentManager(), null)
         }.also { }

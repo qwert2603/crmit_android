@@ -30,6 +30,9 @@ class EditCommentDialogFragment : DialogFragment() {
     @Arg
     lateinit var comment: String
 
+    @Arg
+    lateinit var title: String
+
     private lateinit var dialogView: View
 
     override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
@@ -42,11 +45,10 @@ class EditCommentDialogFragment : DialogFragment() {
             true
         }
         return AlertDialog.Builder(requireContext())
-                .setTitle(R.string.title_dialog_edit_payment_comment)
+                .setTitle(title)
                 .setView(dialogView)
                 .setPositiveButton(android.R.string.ok) { _, _ -> sendResult() }
                 .create()
-                .also { it.setCanceledOnTouchOutside(false) }
                 .also {
                     it.setOnShowListener { _ ->
                         dialogView.comment_EditText.requestFocus()

@@ -35,6 +35,9 @@ class EditValueDialogFragment : DialogFragment() {
     @Arg
     var maxValue: Int = 0
 
+    @Arg
+    lateinit var title: String
+
     private lateinit var dialogView: View
 
     override fun onCreateDialog(savedInstanceState: Bundle?): AlertDialog {
@@ -57,11 +60,10 @@ class EditValueDialogFragment : DialogFragment() {
             }
         }
         return AlertDialog.Builder(requireContext())
-                .setTitle(R.string.title_dialog_edit_payment_value)
+                .setTitle(title)
                 .setView(dialogView)
                 .setPositiveButton(android.R.string.ok) { _, _ -> sendResult() }
                 .create()
-                .also { it.setCanceledOnTouchOutside(false) }
                 .also {
                     it.setOnShowListener { _ ->
                         dialogView.value_EditText.requestFocus()

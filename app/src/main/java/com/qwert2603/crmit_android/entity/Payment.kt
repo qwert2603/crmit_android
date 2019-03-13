@@ -22,6 +22,7 @@ data class Payment(
         val studentId: Long,
         val studentFio: String,
         val groupId: Long,
+        val groupName: String,
         val monthNumber: Int,
         val value: Int,
         val cash: Boolean,
