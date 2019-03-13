@@ -37,7 +37,7 @@ class GroupDetailsFragment : EntityDetailsFragment<GroupFull>() {
             EntityDetailsField(R.string.detailsField_startMonth, startMonth.toMonthString(resources)),
             EntityDetailsField(R.string.detailsField_endMonth, endMonth.toMonthString(resources)),
             EntityDetailsField(R.string.detailsField_studentsCount, studentsCount.toString(), R.drawable.ic_group_black_24dp) {
-                DiHolder.router.navigateTo(Screen.StudentsInGroup(id, name))
+                DiHolder.router.navigateTo(Screen.StudentsInGroup(id, name, startMonth, endMonth))
             },
             EntityDetailsField(R.string.detailsField_lessonsDoneCount, lessonsDoneCount.toString(), R.drawable.ic_date_range_black_24dp) {
                 DiHolder.router.navigateTo(Screen.LessonsInGroupList(id, name))

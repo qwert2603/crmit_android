@@ -188,7 +188,7 @@ class PaymentsPresenter(
     companion object {
         private fun Int.toMonthTabTitle(): String {
             val monthName = DiHolder.resources.getStringArray(R.array.month_names)[this % CrmitConst.MONTHS_PER_YEAR]
-            return "${this / CrmitConst.MONTHS_PER_YEAR + CrmitConst.START_YEAR} $monthName"
+            return "$monthName ${this / CrmitConst.MONTHS_PER_YEAR + CrmitConst.START_YEAR}"
         }
 
         private fun Payment.toDialogTitle() = "$studentFio\n$groupName ${monthNumber.toMonthTabTitle()}"

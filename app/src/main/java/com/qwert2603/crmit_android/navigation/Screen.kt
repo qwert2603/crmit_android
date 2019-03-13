@@ -52,8 +52,13 @@ sealed class Screen(
                 .newStudentDetailsFragment(key.entityId, key.entityName, key.entityNameColorAccent, key.entityNameStrike)
     }), DetailsScreen
 
-    data class StudentsInGroup(val groupId: Long, val groupName: String) : Screen({
-        StudentsInGroupListFragmentBuilder.newStudentsInGroupListFragment(groupId, groupName)
+    data class StudentsInGroup(
+            val groupId: Long,
+            val groupName: String,
+            val groupStartMonth: Int,
+            val groupEndMonth: Int
+    ) : Screen({
+        StudentsInGroupListFragmentBuilder.newStudentsInGroupListFragment(groupEndMonth, groupId, groupName, groupStartMonth)
     })
 
     data class PaymentsInGroup(val groupId: Long, val monthNumber: Int? = null) : Screen({

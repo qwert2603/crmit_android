@@ -5,6 +5,7 @@ import android.view.View
 import com.hannesdorfmann.fragmentargs.annotation.Arg
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs
 import com.qwert2603.andrlib.model.IdentifiableLong
+import com.qwert2603.andrlib.util.color
 import com.qwert2603.andrlib.util.setVisible
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.db.generated_dao.wrap
@@ -28,6 +29,12 @@ class StudentsInGroupListFragment : EntitiesListFragment<StudentInGroup>() {
     @Arg
     lateinit var groupName: String
 
+    @Arg
+    var groupStartMonth = -1
+
+    @Arg
+    var groupEndMonth = -1
+
     override val source = { _: Int, _: Int, _: String -> DiHolder.rest.getStudentsInGroup(groupId) }
 
     override val dbDaoInterface by lazy { DiHolder.studentInGroupDao.wrap(groupId) }
@@ -42,12 +49,18 @@ class StudentsInGroupListFragment : EntitiesListFragment<StudentInGroup>() {
         fio_TextView.text = e.studentFio
         fio_TextView.setStrike(!e.systemUserEnabled)
         fio_TextView.transitionName = "entity_name_${e.studentId}"
+
+        enterMonth_TextView.setTextColor(resources.color(if (e.enterMonth == groupStartMonth) android.R.color.black else R.color.colorAccent))
         enterMonth_TextView.text = e.enterMonth.toMonthString(resources)
+
+        exitMonth_TextView.setTextColor(resources.color(if (e.exitMonth == groupEndMonth) android.R.color.black else R.color.colorAccent))
         exitMonth_TextView.text = e.exitMonth.toMonthString(resources)
+
         discount_TextView.setVisible(e.discount > 0)
         if (e.discount > 0) {
             discount_TextView.text = getString(R.string.discount_format, e.discount.toPointedString())
         }
+
         lessonsAttendedCount_TextView.text = resources.getQuantityString(R.plurals.lessons_attended, e.lessonsAttendedCount, e.lessonsAttendedCount)
     }
 
