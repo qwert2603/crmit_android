@@ -135,6 +135,9 @@
 
     <string name="text_no_comment">нет комментария</string>
 
+    <string name="hint_comment">Комментарий</string>
+    <string name="hint_value">Сумма</string>
+
     <string name="whats_new_title" formatted="true">Версия %s. Что нового?</string>
 
     <string name="whats_new_message">

@@ -5,18 +5,26 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/comment_EditText"
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="12dp"
-        android:imeOptions="flagNoFullscreen"
-        android:inputType="text"
-        android:lines="1"
-        android:maxLength="32"
-        android:maxLines="1"
-        android:selectAllOnFocus="true"
-        tools:ignore="LabelFor"
-        tools:text="комментарий" />
+        android:layout_margin="12dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/comment_EditText"
+            style="@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_comment"
+            android:imeOptions="flagNoFullscreen"
+            android:inputType="text"
+            android:lines="1"
+            android:maxLength="32"
+            android:maxLines="1"
+            android:selectAllOnFocus="true"
+            tools:text="текст" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
 </LinearLayout>

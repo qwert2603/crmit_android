@@ -18,4 +18,6 @@
     <color name="attending_state_was_not_ill">#F69606</color>
 
     <color name="payment_value_confirmed">#00B000</color>
+
+    <color name="colorDisabled">#999999</color>
 </resources>

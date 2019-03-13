@@ -5,26 +5,34 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/value_EditText"
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="12dp"
-        android:layout_weight="1"
-        android:imeOptions="flagNoFullscreen"
-        android:inputType="number"
-        android:maxLength="4"
-        android:selectAllOnFocus="true"
-        tools:ignore="LabelFor"
-        tools:text="1918" />
+        android:layout_weight="1">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/value_EditText"
+            style="@style/Widget.MaterialComponents.TextInputEditText.OutlinedBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_value"
+            android:imeOptions="flagNoFullscreen"
+            android:inputType="number"
+            android:maxLength="4"
+            android:selectAllOnFocus="true"
+            tools:text="1918" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/maxValue_TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_marginEnd="12dp"
         android:layout_marginStart="-8dp"
+        android:layout_marginEnd="12dp"
         android:textColor="@android:color/black"
         android:textSize="16sp"
         tools:text="/ 1.100 ₽" />
