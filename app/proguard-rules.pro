@@ -27,14 +27,17 @@
 -dontwarn com.qwert2603.dao_generator.**
 
 # retrofit & okhttp
--dontwarn okio.**
--dontwarn okhttp3.**
+-keepattributes Signature, InnerClasses, EnclosingMethod
+-keepattributes RuntimeVisibleAnnotations, RuntimeVisibleParameterAnnotations
+-keepclassmembers,allowshrinking,allowobfuscation interface * {
+    @retrofit2.http.* <methods>;
+}
+-dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
 -dontwarn javax.annotation.**
--dontwarn retrofit2.**
--dontwarn retrofit2.Platform$Java8
--dontnote retrofit2.Platform
--keepattributes Signature
--keepattributes Exceptions
+-dontwarn kotlin.Unit
+-dontwarn retrofit2.KotlinExtensions
+-if interface * { @retrofit2.http.* <methods>; }
+-keep,allowobfuscation interface <1>
 
 -keep class com.qwert2603.crmit_android.entity.** { *; }
 -keep class com.qwert2603.crmit_android.rest.params.** { *; }

@@ -10,7 +10,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 4
-        versionName "2.0.0"
+        versionName "1.2.0"
         buildConfigField "Long", "BIULD_TIME", System.currentTimeMillis() + "L"
 
         resConfigs "ru"
@@ -49,6 +49,11 @@ android {
             dimension "server"
         }
     }
+
+    compileOptions {
+        targetCompatibility = "8"
+        sourceCompatibility = "8"
+    }
 }
 
 androidExtensions {
@@ -70,12 +75,12 @@ dependencies {
     ext.fragmentargs_version = '3.0.2'
     ext.cicerone_version = '4.0.2'
 
-    ext.rxjava_version = '2.2.5'
-    ext.rxandroid_version = '2.1.0'
+    ext.rxjava_version = '2.2.7'
+    ext.rxandroid_version = '2.1.1'
     ext.rxbinding_version = '2.2.0'
 
     ext.retrofit_version = '2.5.0'
-    ext.okhttp_version = '3.12.1'
+    ext.okhttp_version = '3.13.1'
 
     ext.stetho_version = '1.5.0'
 
