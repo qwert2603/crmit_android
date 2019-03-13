@@ -9,6 +9,7 @@ import com.qwert2603.crmit_android.CrmitApplication
 import com.qwert2603.crmit_android.db.LocalDB
 import com.qwert2603.crmit_android.db.generated_dao.wrap
 import com.qwert2603.crmit_android.env.E
+import com.qwert2603.crmit_android.rest.AccessTokenInterceptor
 import com.qwert2603.crmit_android.rest.Rest
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

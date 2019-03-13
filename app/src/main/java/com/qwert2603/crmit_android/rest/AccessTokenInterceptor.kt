@@ -1,7 +1,7 @@
-package com.qwert2603.crmit_android.di
+package com.qwert2603.crmit_android.rest
 
+import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.env.E
-import com.qwert2603.crmit_android.rest.Rest
 import okhttp3.Interceptor
 import okhttp3.Response
 
