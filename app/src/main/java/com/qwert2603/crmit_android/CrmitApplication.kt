@@ -6,11 +6,13 @@ import android.content.Context
 import android.os.Looper
 import androidx.annotation.FontRes
 import com.crashlytics.android.Crashlytics
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.qwert2603.andrlib.base.mvi.load_refresh.list.listModelChangerInstance
 import com.qwert2603.andrlib.base.mvi.load_refresh.lrModelChangerInstance
 import com.qwert2603.andrlib.generated.LRModelChangerImpl
 import com.qwert2603.andrlib.generated.ListModelChangerImpl
 import com.qwert2603.andrlib.util.LogUtils
+import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.env.E
 import com.qwert2603.crmit_android.util.NoCacheException
 import io.reactivex.android.plugins.RxAndroidPlugins
@@ -75,5 +77,12 @@ class CrmitApplication : Application() {
         listModelChangerInstance = ListModelChangerImpl()
 
         setupLogs()
+
+        DiHolder.userSettingsRepo.loginResult
+                ?.let { "${it.accountType.name} ${it.detailsId}" }
+                .also {
+                    FirebaseAnalytics.getInstance(this)
+                            .setUserProperty("loginResult", it ?: "n/a")
+                }
     }
 }
