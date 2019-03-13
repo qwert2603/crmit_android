@@ -22,7 +22,7 @@ import com.qwert2603.crmit_android.entity.*
             Attending::class,
             Payment::class
         ],
-        version = 2,
+        version = 3,
         exportSchema = true
 )
 @TypeConverters(GroupBriefListConverter::class, StringListConverter::class)
