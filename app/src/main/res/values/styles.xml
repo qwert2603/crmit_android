@@ -27,4 +27,9 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="TabItem" parent="@android:style/TextAppearance.Widget.TabWidget">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:fontFamily">@font/google_sans</item>
+    </style>
+
 </resources>

@@ -20,12 +20,13 @@
             app:titleTextColor="@android:color/black" />
 
         <com.google.android.material.tabs.TabLayout
-            android:background="@color/colorStatusBar"
             android:id="@+id/months_TabLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/colorStatusBar"
             app:tabGravity="fill"
-            app:tabMode="scrollable" />
+            app:tabMode="scrollable"
+            app:tabTextAppearance="@style/TabItem" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
