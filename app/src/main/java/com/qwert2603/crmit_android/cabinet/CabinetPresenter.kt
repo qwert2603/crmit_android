@@ -14,7 +14,7 @@ import io.reactivex.functions.BiFunction
 class CabinetPresenter : LRPresenter<Any, CabinetInitialModel, CabinetViewState, CabinetView>(DiHolder.uiSchedulerProvider) {
 
     companion object {
-        private const val LAST_LESSONS_COUNT = 10
+        private const val LAST_LESSONS_COUNT = 20
     }
 
     private val loginResultSingle = DiHolder.userSettingsRepo

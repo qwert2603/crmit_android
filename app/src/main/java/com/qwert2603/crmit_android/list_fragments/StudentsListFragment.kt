@@ -26,7 +26,7 @@ class StudentsListFragment : EntitiesListFragment<StudentBrief>() {
 
     override val entityPluralsRes = R.plurals.students
 
-    override val pageSize = 20
+    override val pageSize = 50
 
     override fun View.bindEntity(e: StudentBrief) {
         fio_TextView.text = e.fio
