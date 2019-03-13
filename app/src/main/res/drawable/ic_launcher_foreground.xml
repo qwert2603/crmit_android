@@ -1,20 +1,21 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp"
     android:height="108dp"
-    android:viewportWidth="48"
-    android:viewportHeight="48">
-  <group android:translateX="12"
-      android:translateY="12">
+    android:viewportWidth="46.153847"
+    android:viewportHeight="46.153847">
+    <group
+        android:translateX="11.076923"
+        android:translateY="11.076923">
 
-      <group android:translateY="1.0">
+        <group android:translateY="1.0">
 
-          <path
-              android:pathData="@string/ic_launcher_path"
-              android:strokeWidth="1.6"
-              android:strokeColor="@color/launcher_color"
-              android:strokeLineCap="round" />
+            <path
+                android:pathData="@string/ic_launcher_path"
+                android:strokeWidth="1.8"
+                android:strokeColor="@color/launcher_color"
+                android:strokeLineCap="round" />
 
-      </group>
+        </group>
 
-  </group>
+    </group>
 </vector>

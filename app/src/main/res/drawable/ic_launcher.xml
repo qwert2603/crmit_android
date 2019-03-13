@@ -8,7 +8,7 @@
 
         <path
             android:pathData="@string/ic_launcher_path"
-            android:strokeWidth="1.6"
+            android:strokeWidth="1.8"
             android:strokeColor="@color/launcher_color"
             android:strokeLineCap="round" />
 
