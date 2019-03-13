@@ -10,6 +10,7 @@ import com.qwert2603.crmit_android.entity_details.EntityDetailsFragment
 import com.qwert2603.crmit_android.navigation.DetailsScreenKey
 import com.qwert2603.crmit_android.navigation.Screen
 import com.qwert2603.crmit_android.util.toMonthString
+import com.qwert2603.crmit_android.util.toPointedString
 
 @FragmentWithArgs
 class GroupDetailsFragment : EntityDetailsFragment<GroupFull>() {
@@ -50,6 +51,11 @@ class GroupDetailsFragment : EntityDetailsFragment<GroupFull>() {
                     AccountType.TEACHER -> currentViewState.authedUserDetailsId == teacherId
                     null -> false
                 }
-            }
+            },
+            EntityDetailsField(
+                    fieldTitleStringRes = R.string.detailsField_sumNotConfirmed,
+                    fieldValue = getString(R.string.price_format, sumNotConfirmed.toPointedString()),
+                    iconDrawableRes = R.drawable.ic_summa
+            )
     )
 }

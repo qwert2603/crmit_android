@@ -81,6 +81,7 @@
     <string name="detailsField_lastSeen">Последний визит</string>
     <string name="detailsField_payments">Оплата</string>
     <string name="detailsField_paymentsInfo">Информация о платежах</string>
+    <string name="detailsField_sumNotConfirmed">Сумма неподтвержденных платежей</string>
 
     <string name="text_never">Никогда</string>
 

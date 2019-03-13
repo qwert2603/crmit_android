@@ -11,5 +11,6 @@ data class GroupBrief(
         val teacherId: Long,
         val teacherFio: String,
         val startMonth: Int,
-        val endMonth: Int
+        val endMonth: Int,
+        val sumNotConfirmed: Int
 ) : IdentifiableLong
