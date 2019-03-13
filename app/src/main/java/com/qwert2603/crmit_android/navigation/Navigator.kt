@@ -2,15 +2,15 @@ package com.qwert2603.crmit_android.navigation
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
-import androidx.core.view.ViewGroupCompat
 import android.transition.Slide
 import android.transition.TransitionInflater
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewGroupCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import com.hannesdorfmann.fragmentargs.FragmentArgs
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.login.LoginFragment

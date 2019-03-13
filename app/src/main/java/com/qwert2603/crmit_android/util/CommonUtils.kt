@@ -2,16 +2,9 @@ package com.qwert2603.crmit_android.util
 
 import android.animation.Animator
 import android.annotation.SuppressLint
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.OnLifecycleEvent
 import android.content.res.Resources
 import android.graphics.Paint
 import android.graphics.Typeface
-import androidx.annotation.MainThread
-import androidx.core.content.res.ResourcesCompat
-import androidx.appcompat.app.AlertDialog
 import android.text.Editable
 import android.text.Html
 import android.text.TextWatcher
@@ -19,6 +12,13 @@ import android.view.View
 import android.view.ViewTreeObserver
 import android.widget.EditText
 import android.widget.TextView
+import androidx.annotation.MainThread
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.res.ResourcesCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.OnLifecycleEvent
 import com.qwert2603.crmit_android.CrmitApplication
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.entity.SystemUser

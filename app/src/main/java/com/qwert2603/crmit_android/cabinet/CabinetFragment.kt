@@ -1,11 +1,11 @@
 package com.qwert2603.crmit_android.cabinet
 
-import androidx.appcompat.app.AlertDialog
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
+import com.google.android.material.snackbar.Snackbar
 import com.jakewharton.rxbinding2.support.v4.widget.RxSwipeRefreshLayout
 import com.jakewharton.rxbinding2.view.RxView
 import com.qwert2603.andrlib.base.mvi.BaseFragment

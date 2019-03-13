@@ -1,10 +1,10 @@
 package com.qwert2603.crmit_android.navigation
 
+import android.os.Bundle
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
-import android.os.Bundle
-import androidx.fragment.app.Fragment
 import ru.terrakok.cicerone.Navigator
 import ru.terrakok.cicerone.NavigatorHolder
 

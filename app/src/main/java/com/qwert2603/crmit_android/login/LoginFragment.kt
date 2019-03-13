@@ -1,11 +1,11 @@
 package com.qwert2603.crmit_android.login
 
-import androidx.appcompat.app.AlertDialog
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
-import androidx.core.content.res.ResourcesCompat
 import android.text.method.PasswordTransformationMethod
 import android.view.*
+import androidx.appcompat.app.AlertDialog
+import androidx.core.content.res.ResourcesCompat
+import com.google.android.material.snackbar.Snackbar
 import com.jakewharton.rxbinding2.view.RxView
 import com.jakewharton.rxbinding2.widget.RxTextView
 import com.qwert2603.andrlib.base.mvi.BaseFragment

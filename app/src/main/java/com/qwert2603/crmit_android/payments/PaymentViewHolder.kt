@@ -2,9 +2,9 @@ package com.qwert2603.crmit_android.payments
 
 import android.annotation.SuppressLint
 import android.graphics.Typeface
-import androidx.core.content.res.ResourcesCompat
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import com.qwert2603.andrlib.base.recyclerview.BaseRecyclerViewHolder
 import com.qwert2603.andrlib.util.color
 import com.qwert2603.andrlib.util.setVisible

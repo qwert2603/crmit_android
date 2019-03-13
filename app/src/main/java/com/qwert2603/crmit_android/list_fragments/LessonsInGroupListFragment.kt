@@ -2,8 +2,8 @@ package com.qwert2603.crmit_android.list_fragments
 
 import android.graphics.Typeface
 import android.os.Bundle
-import androidx.core.content.res.ResourcesCompat
 import android.view.View
+import androidx.core.content.res.ResourcesCompat
 import com.hannesdorfmann.fragmentargs.annotation.Arg
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs
 import com.qwert2603.andrlib.model.IdentifiableLong

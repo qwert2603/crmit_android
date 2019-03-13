@@ -1,14 +1,14 @@
 package com.qwert2603.crmit_android.entities_list
 
 import android.os.Bundle
-import androidx.annotation.LayoutRes
-import androidx.annotation.PluralsRes
-import androidx.annotation.StringRes
-import com.google.android.material.snackbar.Snackbar
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.view.*
+import androidx.annotation.LayoutRes
+import androidx.annotation.PluralsRes
+import androidx.annotation.StringRes
+import com.google.android.material.snackbar.Snackbar
 import com.qwert2603.andrlib.base.mvi.ViewAction
 import com.qwert2603.andrlib.base.mvi.load_refresh.LoadRefreshPanel
 import com.qwert2603.andrlib.base.mvi.load_refresh.list.ListFragment

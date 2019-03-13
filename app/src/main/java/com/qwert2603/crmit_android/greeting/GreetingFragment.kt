@@ -1,11 +1,11 @@
 package com.qwert2603.crmit_android.greeting
 
 import android.os.Bundle
-import androidx.viewpager.widget.PagerAdapter
 import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.viewpager.widget.PagerAdapter
 import com.jakewharton.rxbinding2.support.v4.view.RxViewPager
 import com.jakewharton.rxbinding2.view.RxView
 import com.qwert2603.andrlib.base.mvi.BaseFragment

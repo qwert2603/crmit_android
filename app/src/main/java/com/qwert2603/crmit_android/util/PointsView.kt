@@ -3,9 +3,9 @@ package com.qwert2603.crmit_android.util
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
-import androidx.annotation.ColorInt
 import android.util.AttributeSet
 import android.view.View
+import androidx.annotation.ColorInt
 import com.qwert2603.andrlib.util.color
 import com.qwert2603.andrlib.util.toPx
 import com.qwert2603.crmit_android.R

@@ -2,9 +2,9 @@ package com.qwert2603.crmit_android.dialogs
 
 import android.app.Dialog
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
-import androidx.appcompat.app.AlertDialog
 import com.qwert2603.crmit_android.BuildConfig
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.di.DiHolder

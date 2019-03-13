@@ -4,8 +4,8 @@ import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.DialogFragment
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.DialogFragment
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.util.CrmitConst
 import com.qwert2603.crmit_android.util.setFontToTextViews
