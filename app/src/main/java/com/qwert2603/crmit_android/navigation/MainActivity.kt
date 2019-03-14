@@ -220,13 +220,8 @@ class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager, S
 
         val screen: Screen = fragment.getScreen() ?: return
         val isRoot = supportFragmentManager.backStackEntryCount == 0
-        if (isRoot) {
-            navigationAdapter.selectedItemId = navigationAdapter.adapterList.modelList
-                    .find { screen == it.screen }?.id
-                    ?: 0
-        } else {
-            navigationAdapter.selectedItemId = 0
-        }
+        navigationAdapter.selectedScreen = if (isRoot) screen else null
+
         val allowDrawer = screen.allowDrawer && DiHolder.userSettingsRepo.isLogged()
         activity_DrawerLayout.setDrawerLockMode(
                 (if (allowDrawer) DrawerLayout.LOCK_MODE_UNLOCKED else DrawerLayout.LOCK_MODE_LOCKED_CLOSED),

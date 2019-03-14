@@ -17,7 +17,7 @@ class NavigationItemViewHolder(parent: ViewGroup) : BaseRecyclerViewHolder<Navig
         super.bind(m)
         icon_ImageView.setImageResource(m.iconRes)
         title_TextView.setText(m.titleRes)
-        val selected = itemId == (adapter as? NavigationAdapter)?.selectedItemId
+        val selected = m.screen == (adapter as? NavigationAdapter)?.selectedScreen
         itemView.isSelected = selected
         with(itemView) {
             val tintColor = resources.color(if (selected) R.color.colorAccent else android.R.color.black)
