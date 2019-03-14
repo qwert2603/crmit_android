@@ -24,6 +24,14 @@ class GroupDetailsFragment : EntityDetailsFragment<GroupFull>() {
 
     private val daysOfWeekNames by lazy { resources.getStringArray(R.array.days_of_week_names) }
 
+    private fun showPaymentInfo() = when (currentViewState.authedUserAccountType) {
+        AccountType.MASTER -> true
+        AccountType.TEACHER -> currentViewState.authedUserDetailsId == currentViewState.entity?.teacherId
+        AccountType.DEVELOPER -> true
+        AccountType.BOT -> throw BotAccountIsNotSupportedException()
+        null -> false
+    }
+
     override fun GroupFull.toDetailsList() = listOfNotNull(
             EntityDetailsField(
                     fieldTitleStringRes = R.string.detailsField_teacher,
@@ -48,20 +56,12 @@ class GroupDetailsFragment : EntityDetailsFragment<GroupFull>() {
             },
             EntityDetailsField(R.string.detailsField_payments, getString(R.string.detailsField_paymentsInfo), R.drawable.ic_ruble) {
                 DiHolder.router.navigateTo(Screen.PaymentsInGroup(id))
-            }.takeIf {
-                when (currentViewState.authedUserAccountType) {
-                    AccountType.MASTER -> true
-                    AccountType.TEACHER -> currentViewState.authedUserDetailsId == teacherId
-                    AccountType.DEVELOPER -> true
-                    AccountType.BOT -> throw BotAccountIsNotSupportedException()
-                    null -> false
-                }
-            },
+            }.takeIf { showPaymentInfo() },
             EntityDetailsField(
                     fieldTitleStringRes = R.string.detailsField_sumNotConfirmed,
                     fieldValue = getString(R.string.price_format, sumNotConfirmed.toPointedString()),
                     iconDrawableRes = R.drawable.ic_summa
-            ),
+            ).takeIf { showPaymentInfo() },
             EntityDetailsField(
                     fieldTitleStringRes = R.string.detailsField_schedule,
                     fieldValue = schedule
