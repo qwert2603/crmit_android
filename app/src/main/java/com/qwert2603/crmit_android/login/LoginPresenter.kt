@@ -4,17 +4,14 @@ import com.google.gson.Gson
 import com.qwert2603.andrlib.base.mvi.BasePresenter
 import com.qwert2603.andrlib.base.mvi.PartialChange
 import com.qwert2603.andrlib.util.LogUtils
+import com.qwert2603.crmit_android.BuildConfig
 import com.qwert2603.crmit_android.di.DiHolder
-import com.qwert2603.crmit_android.entity.AccountType
-import com.qwert2603.crmit_android.entity.BotAccountIsNotSupportedException
-import com.qwert2603.crmit_android.entity.LoginErrorReason
-import com.qwert2603.crmit_android.entity.LoginResultError
+import com.qwert2603.crmit_android.entity.*
 import com.qwert2603.crmit_android.rest.Rest
 import com.qwert2603.crmit_android.rest.params.LoginParams
 import com.qwert2603.crmit_android.util.DeviceUtils
 import com.qwert2603.crmit_android.util.makePair
 import com.qwert2603.crmit_android.util.secondOfTwo
-import com.qwert2603.crmit_android.entity.wrap
 import io.reactivex.Observable
 import io.reactivex.Single
 import retrofit2.HttpException
@@ -84,5 +81,20 @@ class LoginPresenter : BasePresenter<LoginView, LoginViewState>(DiHolder.uiSched
             LoginPartialChange.LoggingError -> vs.copy(isLogging = false)
             LoginPartialChange.LoggingSuccess -> vs.copy(isLogging = false)
         }
+    }
+
+    override fun bindIntents() {
+
+        DiHolder.rest.appInfo()
+                .subscribeOn(DiHolder.modelSchedulersProvider.io)
+                .doOnSuccess {
+                    if (it.actualAppBuildCode > BuildConfig.VERSION_CODE) {
+                        viewActions.onNext(LoginViewAction.ShowUpdateAvailable)
+                    }
+                }
+                .toObservable()
+                .subscribeToView()
+
+        super.bindIntents()
     }
 }

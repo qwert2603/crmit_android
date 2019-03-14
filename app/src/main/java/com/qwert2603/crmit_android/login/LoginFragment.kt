@@ -14,6 +14,7 @@ import com.qwert2603.andrlib.util.inflate
 import com.qwert2603.crmit_android.CrmitApplication
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.di.DiHolder
+import com.qwert2603.crmit_android.dialogs.UpdateAvailableDialog
 import com.qwert2603.crmit_android.navigation.KeyboardManager
 import com.qwert2603.crmit_android.navigation.Screen
 import com.qwert2603.crmit_android.util.UserInputEditText
@@ -98,6 +99,7 @@ class LoginFragment : BaseFragment<LoginViewState, LoginView, LoginPresenter>(),
         when (va) {
             is LoginViewAction.ShowLoginError -> Snackbar.make(login_CoordinatorLayout, va.loginErrorReason.descriptionRes, Snackbar.LENGTH_SHORT).show()
             LoginViewAction.MoveToCabinet -> DiHolder.router.newRootScreen(Screen.Cabinet())
+            LoginViewAction.ShowUpdateAvailable -> UpdateAvailableDialog().show(requireFragmentManager(), null)
         }.also { }
     }
 }

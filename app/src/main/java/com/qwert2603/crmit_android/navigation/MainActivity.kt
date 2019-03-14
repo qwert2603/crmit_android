@@ -15,11 +15,9 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.qwert2603.andrlib.base.recyclerview.BaseRecyclerViewAdapter
 import com.qwert2603.andrlib.util.*
-import com.qwert2603.crmit_android.BuildConfig
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.dialogs.MarkInPlayMarketDialog
-import com.qwert2603.crmit_android.dialogs.UpdateAvailableDialog
 import com.qwert2603.crmit_android.dialogs.WhatsNewDialog
 import com.qwert2603.crmit_android.entity.AccountType
 import com.qwert2603.crmit_android.util.disposeOnDestroy
@@ -132,25 +130,15 @@ class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager, S
                 else -> router.newRootScreen(Screen.Cabinet())
                         .also {
                             if (WhatsNewDialog.showIfNeeded(supportFragmentManager)) return@also
-                            if (MarkInPlayMarketDialog.showIfNeeded(supportFragmentManager)) return@also
-                            DiHolder.rest.appInfo()
-                                    .subscribeOn(DiHolder.modelSchedulersProvider.io)
-                                    .observeOn(DiHolder.uiSchedulerProvider.ui)
-                                    .subscribe { appInfo, t ->
-                                        if (appInfo != null && appInfo.actualAppBuildCode > BuildConfig.VERSION_CODE) {
-                                            UpdateAvailableDialog().show(supportFragmentManager, null)
-                                        }
-                                        if (t != null) {
-                                            LogUtils.e("MainActivity appInfo", t)
+                            Single.timer(5, TimeUnit.SECONDS)
+                                    .subscribe { _, t ->
+                                        if (t == null) {
+                                            MarkInPlayMarketDialog.showIfNeeded(supportFragmentManager)
                                         }
                                     }
                                     .disposeOnDestroy(this)
                         }
             }
-
-            Single.timer(5, TimeUnit.SECONDS)
-                    .subscribe { _, t -> if (t == null) DiHolder.userSettingsRepo.launchesCount++ }
-                    .disposeOnDestroy(this)
         }
 
         headerNavigation = navigation_view.inflate(R.layout.header_navigation)
