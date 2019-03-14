@@ -2,6 +2,7 @@ package com.qwert2603.crmit_android.lesson_details
 
 import android.os.Bundle
 import android.view.*
+import com.google.android.material.snackbar.Snackbar
 import com.hannesdorfmann.fragmentargs.annotation.Arg
 import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs
 import com.qwert2603.andrlib.base.mvi.ViewAction
@@ -62,7 +63,7 @@ class LessonDetailsFragment : LRFragment<LessonDetailsViewState, LessonDetailsVi
             container?.inflate(R.layout.fragment_lesson_details)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        toolbar.setVisible(parentFragment == null)
+        toolbar.setVisible(!asNested)
         toolbar.setTitle(R.string.title_lesson_details_default)
 
         group_DetailsField.fieldName_TextView.setText(R.string.detailsField_group)
@@ -122,9 +123,8 @@ class LessonDetailsFragment : LRFragment<LessonDetailsViewState, LessonDetailsVi
 
     override fun retry(): Observable<Any> = super.retry()
             .filter {
-                val parentFragment = parentFragment
-                if (parentFragment is ParentLessonsFragment) {
-                    parentFragment.onRetryDateClicked()
+                if (asNested) {
+                    (parentFragment as? ParentLessonsFragment)?.onRetryDateClicked()
                     false
                 } else {
                     true
@@ -171,6 +171,12 @@ class LessonDetailsFragment : LRFragment<LessonDetailsViewState, LessonDetailsVi
     override fun executeAction(va: ViewAction) {
         if (va !is LessonDetailsViewAction) return super.executeAction(va)
         when (va) {
+            LessonDetailsViewAction.ShowingCachedData -> {
+                if (!asNested) {
+                    Snackbar.make(coordinatorLayout, R.string.text_showing_cached_data, Snackbar.LENGTH_SHORT).show()
+                } else {
+                }
+            }
             is LessonDetailsViewAction.NavigateToPayments -> DiHolder.router.navigateTo(Screen.PaymentsInGroup(va.groupId, va.monthNumber))
         }.also { }
     }

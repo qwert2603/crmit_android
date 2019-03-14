@@ -54,7 +54,6 @@ class LessonDetailsPresenter(private val lessonId: Long, canRefresh: Boolean)
     override fun initialModelSingle(additionalKey: Any): Single<LessonDetailsInitialModel> = initialModelSingleRefresh(additionalKey)
             .onErrorResumeNext { t ->
                 LogUtils.e("LessonDetailsPresenter getAttendingsFromServer", t)
-//                viewActions.onNext(CabinetViewAction.ShowingCachedData) todo
                 Single
                         .fromCallable { attendingsDaoInterface.getItems() }
                         .flatMap { attendings ->
@@ -80,6 +79,7 @@ class LessonDetailsPresenter(private val lessonId: Long, canRefresh: Boolean)
                                 Single.error(NoCacheException())
                             }
                         }
+                        .doOnSuccess { viewActions.onNext(LessonDetailsViewAction.ShowingCachedData) }
                         .subscribeOn(DiHolder.modelSchedulersProvider.io)
             }
 

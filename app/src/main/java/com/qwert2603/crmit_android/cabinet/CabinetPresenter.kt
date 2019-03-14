@@ -72,13 +72,13 @@ class CabinetPresenter : LRPresenter<Any, CabinetInitialModel, CabinetViewState,
 
     override fun initialModelSingle(additionalKey: Any): Single<CabinetInitialModel> = initialModelSingleRefresh(additionalKey)
             .onErrorResumeNext {
-                viewActions.onNext(CabinetViewAction.ShowingCachedData)
                 Single
                         .zip(
                                 getFioFromCache(),
                                 getLastLessonsFromCache(),
                                 BiFunction { fio: String, lastLessons: List<Lesson> -> CabinetInitialModel(fio, lastLessons) }
                         )
+                        .doOnSuccess { viewActions.onNext(CabinetViewAction.ShowingCachedData) }
                         .subscribeOn(DiHolder.modelSchedulersProvider.io)
             }
 
