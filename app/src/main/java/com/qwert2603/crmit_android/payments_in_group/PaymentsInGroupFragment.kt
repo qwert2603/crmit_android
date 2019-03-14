@@ -18,11 +18,10 @@ import com.qwert2603.andrlib.util.setVisible
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.util.SaveImageLifecycleObserver
 import io.reactivex.Observable
-import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_payments_in_group.*
 
 @FragmentWithArgs
-class PaymentsInGroupFragment : LRFragment<PaymentsInGroupViewState, PaymentsInGroupView, PaymentsInGroupPresenter>(), PaymentsInGroupView, ParentPaymentsFragment {
+class PaymentsInGroupFragment : LRFragment<PaymentsInGroupViewState, PaymentsInGroupView, PaymentsInGroupPresenter>(), PaymentsInGroupView {
 
     @Arg
     var groupId: Long = IdentifiableLong.NO_ID
@@ -33,8 +32,6 @@ class PaymentsInGroupFragment : LRFragment<PaymentsInGroupViewState, PaymentsInG
     override fun createPresenter() = PaymentsInGroupPresenter(groupId, monthNumber)
 
     override fun loadRefreshPanel(): LoadRefreshPanel = paymentsInGroup_LRPanelImpl
-
-    private val onRetryMonthClicked = PublishSubject.create<Any>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,38 +49,29 @@ class PaymentsInGroupFragment : LRFragment<PaymentsInGroupViewState, PaymentsInG
         super.onViewCreated(view, savedInstanceState)
     }
 
-    override fun onRetryMonthClicked() {
-        onRetryMonthClicked.onNext(Any())
-    }
-
-    override fun retry(): Observable<Any> = Observable.merge(
-            super.retry(),
-            onRetryMonthClicked
-    )
-
     override fun monthSelected(): Observable<Int> = RxViewPager.pageSelections(months_ViewPager)
             .skipInitialValue()
-            .map { it + (currentViewState.groupFull?.startMonth ?: 0) }
+            .map { it + (currentViewState.groupBrief?.startMonth ?: 0) }
 
     override fun render(vs: PaymentsInGroupViewState) {
         super.render(vs)
 
-        renderIfChanged({ groupFull }) { if (it != null) toolbar.title = getString(R.string.title_payments_in_group_format, it.name) }
+        renderIfChanged({ groupBrief }) { if (it != null) toolbar.title = getString(R.string.title_payments_in_group_format, it.name) }
 
-        renderIfChanged({ groupFull }) { groupFull ->
-            if (groupFull != null) {
-                months_ViewPager.adapter = MonthsAdapter(childFragmentManager, resources, groupFull)
-                months_ViewPager.currentItem = vs.selectedMonth - (vs.groupFull?.startMonth ?: 0)
+        renderIfChanged({ groupBrief }) { groupBrief ->
+            if (groupBrief != null) {
+                months_ViewPager.adapter = MonthsAdapter(childFragmentManager, resources, groupBrief)
+                months_ViewPager.currentItem = vs.selectedMonth - (vs.groupBrief?.startMonth ?: 0)
             } else {
                 months_ViewPager.adapter = null
             }
 
-            val show = groupFull != null && vs.canUserSeePayments()
+            val show = groupBrief != null && vs.canUserSeePayments()
             months_TabLayout.setVisible(show)
             months_ViewPager.setVisible(show)
         }
         renderIfChanged({ selectedMonth }) {
-            months_ViewPager.setCurrentItem(it - (vs.groupFull?.startMonth ?: 0), false)
+            months_ViewPager.setCurrentItem(it - (vs.groupBrief?.startMonth ?: 0), false)
         }
     }
 

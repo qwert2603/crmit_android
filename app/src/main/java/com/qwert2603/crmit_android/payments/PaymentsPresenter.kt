@@ -3,14 +3,11 @@ package com.qwert2603.crmit_android.payments
 import com.qwert2603.andrlib.base.mvi.PartialChange
 import com.qwert2603.andrlib.base.mvi.load_refresh.LRPartialChange
 import com.qwert2603.andrlib.base.mvi.load_refresh.LRPresenter
-import com.qwert2603.andrlib.util.LogUtils
 import com.qwert2603.crmit_android.R
-import com.qwert2603.crmit_android.db.generated_dao.wrap
 import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entity.Payment
 import com.qwert2603.crmit_android.entity.UploadStatus
 import com.qwert2603.crmit_android.util.CrmitConst
-import com.qwert2603.crmit_android.util.NoCacheException
 import com.qwert2603.crmit_android.util.makePair
 import com.qwert2603.crmit_android.util.mapNotNull
 import io.reactivex.Observable
@@ -24,8 +21,6 @@ class PaymentsPresenter(
 ) : LRPresenter<Any, List<Payment>, PaymentsViewState, PaymentsView>(DiHolder.uiSchedulerProvider) {
 
     override val canRefreshAtAll = false
-
-    private val daoInterface = DiHolder.paymentDao.wrap(groupId, monthNumber)
 
     override val initialState = PaymentsViewState(
             lrModel = EMPTY_LR_MODEL,
@@ -88,7 +83,7 @@ class PaymentsPresenter(
                     )
                     .flatMap { payment ->
                         DiHolder.rest.savePayment(payment.toSavePaymentParams())
-                                .doOnComplete { daoInterface.saveItem(payment) }
+                                .doOnComplete { DiHolder.paymentDao.saveItem(payment) }
                                 .toSingleDefault<PaymentsPartialChange>(PaymentsPartialChange.UploadPaymentSuccess(payment.id))
                                 .onErrorReturnItem(PaymentsPartialChange.UploadPaymentError(payment.id))
                                 .toObservable()
@@ -98,24 +93,8 @@ class PaymentsPresenter(
                     }
     )
 
-    override fun initialModelSingle(additionalKey: Any): Single<List<Payment>> = DiHolder.rest
-            .getPayments(groupId, monthNumber)
-            .doOnSuccess {
-                daoInterface.deleteAllItems()
-                daoInterface.addItems(it)
-            }
-            .onErrorResumeNext { t ->
-                LogUtils.e("PaymentsPresenter DiHolder.rest.getPayments(groupId, monthNumber)", t)
-                Single
-                        .fromCallable { daoInterface.getItems() }
-                        .flatMap {
-                            if (it.isNotEmpty()) {
-                                Single.just(it)
-                            } else {
-                                Single.error(NoCacheException())
-                            }
-                        }
-            }
+    override fun initialModelSingle(additionalKey: Any): Single<List<Payment>> = Single
+            .fromCallable { DiHolder.paymentsInGroupInMonthDao.getPaymentsInGroupInMonth(groupId, monthNumber) }
             .subscribeOn(DiHolder.modelSchedulersProvider.io)
 
     override fun PaymentsViewState.applyInitialModel(i: List<Payment>) = copy(payments = i)

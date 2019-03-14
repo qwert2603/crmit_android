@@ -70,6 +70,7 @@ object DiHolder {
     val paymentDao by lazy { localDB.paymentDao() }
     val groupBriefCustomOrderDao by lazy { localDB.groupBriefCustomOrderDao() }
     val lastLessonDao by lazy { localDB.lastLessonDao() }
+    val paymentsInGroupInMonthDao by lazy { localDB.paymentsInGroupInMonthDao() }
 
     fun clearDB() {
         listOf(

@@ -10,10 +10,7 @@ import com.qwert2603.dao_generator.GenerateDao
 
 @Entity
 @GenerateDao(
-        filters = [
-            Filter("groupId", FilterType.LONG),
-            Filter("monthNumber", FilterType.INT)
-        ],
+        filters = [Filter("groupId", FilterType.LONG)],
         orderBy = "studentFio"
 )
 data class Payment(

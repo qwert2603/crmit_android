@@ -13,4 +13,6 @@ data class GroupBrief(
         val startMonth: Int,
         val endMonth: Int,
         val sumNotConfirmed: Int
-) : IdentifiableLong
+) : IdentifiableLong {
+    fun monthsCount() = endMonth - startMonth + 1
+}

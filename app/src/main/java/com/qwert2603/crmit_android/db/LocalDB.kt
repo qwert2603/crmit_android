@@ -43,4 +43,5 @@ abstract class LocalDB : RoomDatabase() {
 
     abstract fun groupBriefCustomOrderDao(): GroupBriefCustomOrderDao
     abstract fun lastLessonDao(): LastLessonsDao
+    abstract fun paymentsInGroupInMonthDao(): PaymentsInGroupInMonthDao
 }

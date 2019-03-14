@@ -23,26 +23,26 @@ interface PaymentDao {
     @Query(
         " SELECT *" +
         " FROM Payment" +
-        " WHERE groupId = :groupId AND monthNumber = :monthNumber" +
+        " WHERE groupId = :groupId" +
         " ORDER BY studentFio" +
         " LIMIT :count" +
         " OFFSET :offset"
     )
-    fun getItems(groupId: Long, monthNumber: Int, offset: Int, count: Int): List<Payment>
+    fun getItems(groupId: Long, offset: Int, count: Int): List<Payment>
 
-    @Query("DELETE FROM Payment WHERE groupId = :groupId AND monthNumber = :monthNumber")
-    fun deleteAllItems(groupId: Long, monthNumber: Int)
+    @Query("DELETE FROM Payment WHERE groupId = :groupId")
+    fun deleteAllItems(groupId: Long)
 
     @Query("DELETE FROM Payment")
     fun clearTable()
 }
 
-fun PaymentDao.wrap(groupId: Long, monthNumber: Int): DaoInterface<Payment> = PaymentDaoWrapper(groupId, monthNumber,  this)
+fun PaymentDao.wrap(groupId: Long): DaoInterface<Payment> = PaymentDaoWrapper(groupId,  this)
 
-private class PaymentDaoWrapper(private val groupId: Long, private val monthNumber: Int,  private val paymentDao: PaymentDao) : DaoInterface<Payment> {
+private class PaymentDaoWrapper(private val groupId: Long,  private val paymentDao: PaymentDao) : DaoInterface<Payment> {
     override fun addItems(items: List<Payment>) = paymentDao.addItems(items)
     override fun saveItem(item: Payment) = paymentDao.saveItem(item)
     override fun getItem(itemId: Long): Payment? = paymentDao.getItem(itemId)
-    override fun getItems(search: String, offset: Int, count: Int): List<Payment> = paymentDao.getItems(groupId, monthNumber, offset, count)
-    override fun deleteAllItems() = paymentDao.deleteAllItems(groupId, monthNumber)
+    override fun getItems(search: String, offset: Int, count: Int): List<Payment> = paymentDao.getItems(groupId, offset, count)
+    override fun deleteAllItems() = paymentDao.deleteAllItems(groupId)
 }
