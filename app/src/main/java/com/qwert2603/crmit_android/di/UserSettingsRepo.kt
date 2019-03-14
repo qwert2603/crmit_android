@@ -51,7 +51,7 @@ class UserSettingsRepo(appContext: Context) {
 
     fun on401() {
         DiHolder.uiSchedulerProvider.ui.scheduleDirect {
-            DiHolder.router.newRootScreen(Screen.Login)
+            DiHolder.router.newRootScreen(Screen.Login())
         }
     }
 

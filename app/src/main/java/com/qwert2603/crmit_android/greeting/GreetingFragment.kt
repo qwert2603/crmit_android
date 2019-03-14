@@ -70,7 +70,7 @@ class GreetingFragment : BaseFragment<GreetingViewState, GreetingView, GreetingP
     override fun executeAction(va: ViewAction) {
         if (va !is GreetingViewAction) return
         when (va) {
-            GreetingViewAction.MoveToLogin -> DiHolder.router.newRootScreen(Screen.Login)
+            GreetingViewAction.MoveToLogin -> DiHolder.router.newRootScreen(Screen.Login())
         }.also { }
     }
 }

@@ -43,29 +43,29 @@ class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager, S
             val pathSegments = intent.data?.pathSegments ?: return null
             return when (pathSegments.getOrNull(0)) {
                 "users" -> when (pathSegments.getOrNull(1)) {
-                    "masters" -> Screen.Masters
-                    "teachers" -> Screen.Teachers
-                    "students" -> Screen.Students
+                    "masters" -> Screen.Masters()
+                    "teachers" -> Screen.Teachers()
+                    "students" -> Screen.Students()
                     "master" -> /*pathSegments.getOrNull(2)?.toIntOrNull()
-                                ?.let { Pair(ScreenKey.MASTER_DETAILS, it) } ?:*/ Screen.Masters
+                                ?.let { Pair(ScreenKey.MASTER_DETAILS, it) } ?:*/ Screen.Masters()
                     "teacher" -> /*pathSegments.getOrNull(2)?.toIntOrNull()
-                            ?.let { Pair(ScreenKey.TEACHER_DETAILS, it) } ?:*/ Screen.Teachers
+                            ?.let { Pair(ScreenKey.TEACHER_DETAILS, it) } ?:*/ Screen.Teachers()
                     "student_details" -> /*pathSegments.getOrNull(2)?.toIntOrNull()
-                            ?.let { Pair(ScreenKey.STUDENT_DETAILS, it) } ?:*/ Screen.Students
-                    else -> Screen.Cabinet
+                            ?.let { Pair(ScreenKey.STUDENT_DETAILS, it) } ?:*/ Screen.Students()
+                    else -> Screen.Cabinet()
                 }
                 "structure" -> when (pathSegments.getOrNull(1)) {
-                    "groups" -> Screen.Groups
-                    "sections" -> Screen.Sections
+                    "groups" -> Screen.Groups()
+                    "sections" -> Screen.Sections()
                     "group" -> /*pathSegments.getOrNull(2)?.toIntOrNull()
-                            ?.let { Pair(ScreenKey.GROUP_DETAILS, it) } ?:*/ Screen.Groups
+                            ?.let { Pair(ScreenKey.GROUP_DETAILS, it) } ?:*/ Screen.Groups()
                     "section" -> /*pathSegments.getOrNull(2)?.toIntOrNull()
-                            ?.let { Pair(ScreenKey.SECTION_DETAILS, it) } ?:*/ Screen.Sections
+                            ?.let { Pair(ScreenKey.SECTION_DETAILS, it) } ?:*/ Screen.Sections()
                     "group_details" -> /*pathSegments.getOrNull(2)?.toIntOrNull()
-                            ?.let { Pair(ScreenKey.STUDENTS_IN_GROUP, it) } ?:*/ Screen.Groups
+                            ?.let { Pair(ScreenKey.STUDENTS_IN_GROUP, it) } ?:*/ Screen.Groups()
                     "students_in_group" -> /*pathSegments.getOrNull(2)?.toIntOrNull()
-                            ?.let { Pair(ScreenKey.STUDENTS_IN_GROUP, it) } ?:*/ Screen.Groups
-                    else -> Screen.Cabinet
+                            ?.let { Pair(ScreenKey.STUDENTS_IN_GROUP, it) } ?:*/ Screen.Groups()
+                    else -> Screen.Cabinet()
                 }
 //                "lessons" -> when {
 //                    pathSegments.getOrNull(1) == "months" -> pathSegments.getOrNull(2)?.toIntOrNull()
@@ -74,9 +74,9 @@ class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager, S
 //                            ?.let { Pair(ScreenKey.LESSONS_IN_GROUP, it) } ?: ScreenKey.GROUPS
 //                }
 //                "payment" -> {}
-                PATH_LAST_SEENS -> Screen.LastSeens
-                PATH_ACCESS_TOKENS -> Screen.AccessTokens
-                else -> Screen.Cabinet
+                PATH_LAST_SEENS -> Screen.LastSeens()
+                PATH_ACCESS_TOKENS -> Screen.AccessTokens()
+                else -> Screen.Cabinet()
             }
         }
     }
@@ -97,13 +97,13 @@ class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager, S
     }
 
     private val rootNavigationItems = listOf(
-            NavigationItem(R.drawable.ic_business_center_black_24dp, R.string.title_cabinet, Screen.Cabinet),
-            NavigationItem(R.drawable.ic_person_black_24dp, R.string.title_masters, Screen.Masters),
-            NavigationItem(R.drawable.ic_person_black_24dp, R.string.title_teachers, Screen.Teachers),
-            NavigationItem(R.drawable.ic_person_black_24dp, R.string.title_students, Screen.Students),
-            NavigationItem(R.drawable.ic_group_black_24dp, R.string.title_sections, Screen.Sections),
-            NavigationItem(R.drawable.ic_group_black_24dp, R.string.title_groups, Screen.Groups),
-            NavigationItem(R.drawable.ic_info_black_24dp, R.string.title_about, Screen.About)
+            NavigationItem(R.drawable.ic_business_center_black_24dp, R.string.title_cabinet, Screen.Cabinet()),
+            NavigationItem(R.drawable.ic_person_black_24dp, R.string.title_masters, Screen.Masters()),
+            NavigationItem(R.drawable.ic_person_black_24dp, R.string.title_teachers, Screen.Teachers()),
+            NavigationItem(R.drawable.ic_person_black_24dp, R.string.title_students, Screen.Students()),
+            NavigationItem(R.drawable.ic_group_black_24dp, R.string.title_sections, Screen.Sections()),
+            NavigationItem(R.drawable.ic_group_black_24dp, R.string.title_groups, Screen.Groups()),
+            NavigationItem(R.drawable.ic_info_black_24dp, R.string.title_about, Screen.About())
     )
 
     private val navigator = Navigator(object : ActivityInterface {
@@ -127,9 +127,9 @@ class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager, S
             val screenFromIntent = getScreenFromIntent(intent)
             when {
                 screenFromIntent != null -> router.newRootScreen(screenFromIntent)
-                !DiHolder.userSettingsRepo.greetingShown -> router.newRootScreen(Screen.Greeting)
-                !DiHolder.userSettingsRepo.isLogged() -> router.newRootScreen(Screen.Login)
-                else -> router.newRootScreen(Screen.Cabinet)
+                !DiHolder.userSettingsRepo.greetingShown -> router.newRootScreen(Screen.Greeting())
+                !DiHolder.userSettingsRepo.isLogged() -> router.newRootScreen(Screen.Login())
+                else -> router.newRootScreen(Screen.Cabinet())
                         .also {
                             if (WhatsNewDialog.showIfNeeded(supportFragmentManager)) return@also
                             if (MarkInPlayMarketDialog.showIfNeeded(supportFragmentManager)) return@also

@@ -63,7 +63,7 @@ class LoginFragment : BaseFragment<LoginViewState, LoginView, LoginPresenter>(),
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.login, menu)
         menu.findItem(R.id.about).setOnMenuItemClickListener {
-            DiHolder.router.navigateTo(Screen.About)
+            DiHolder.router.navigateTo(Screen.About())
             true
         }
     }
@@ -97,7 +97,7 @@ class LoginFragment : BaseFragment<LoginViewState, LoginView, LoginPresenter>(),
         if (va !is LoginViewAction) return
         when (va) {
             is LoginViewAction.ShowLoginError -> Snackbar.make(login_CoordinatorLayout, va.loginErrorReason.descriptionRes, Snackbar.LENGTH_SHORT).show()
-            LoginViewAction.MoveToCabinet -> DiHolder.router.newRootScreen(Screen.Cabinet)
+            LoginViewAction.MoveToCabinet -> DiHolder.router.newRootScreen(Screen.Cabinet())
         }.also { }
     }
 }

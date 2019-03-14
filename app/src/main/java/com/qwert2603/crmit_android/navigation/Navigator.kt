@@ -85,8 +85,8 @@ class Navigator(private val activity: ActivityInterface)
         FirebaseAnalytics.getInstance(activity.fragmentActivity).logEvent(
                 "navigation",
                 Bundle()
-                        .also { it.putString("command", command.toString()) }
-                        .also { it.putString("screen", command?.getScreen().toString()) }
+                        .also { it.putString("command", command?.javaClass?.simpleName.toString()) }
+                        .also { it.putString("screen", command?.getScreen()?.javaClass?.simpleName.toString()) }
         )
         activity.hideKeyboard()
         super.applyCommand(command)

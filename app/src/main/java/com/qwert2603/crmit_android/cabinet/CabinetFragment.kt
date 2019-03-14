@@ -122,7 +122,7 @@ class CabinetFragment : BaseFragment<CabinetViewState, CabinetView, CabinetPrese
         }
         when (va) {
             CabinetViewAction.ShowingCachedData -> Snackbar.make(cabinet_CoordinatorLayout, R.string.text_showing_cached_data, Snackbar.LENGTH_SHORT).show()
-            CabinetViewAction.MoveToLogin -> DiHolder.router.newRootScreen(Screen.Login)
+            CabinetViewAction.MoveToLogin -> DiHolder.router.newRootScreen(Screen.Login())
             is CabinetViewAction.MoveToUserDetails -> {
                 val detailsScreenKey = DetailsScreenKey(
                         entityId = va.detailsId,

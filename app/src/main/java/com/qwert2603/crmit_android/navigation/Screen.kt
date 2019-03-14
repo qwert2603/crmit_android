@@ -12,20 +12,21 @@ import com.qwert2603.crmit_android.payments_in_group.PaymentsInGroupFragmentBuil
 import ru.terrakok.cicerone.android.support.SupportAppScreen
 import java.io.Serializable
 
+// don't use objects because of serialization.
 sealed class Screen(
-        private val fragmentCreator: () -> androidx.fragment.app.Fragment = { null!! },
+        private val fragmentCreator: () -> Fragment = { null!! },
         val allowDrawer: Boolean = true
 ) : SupportAppScreen(), Serializable {
 
     override fun getFragment(): Fragment = fragmentCreator().also { it.setScreen(this) }
 
-    object Sections : Screen({ SectionsListFragment() })
-    object Groups : Screen({ GroupsListFragment() })
-    object Masters : Screen({ MastersListFragment() })
-    object Teachers : Screen({ TeachersListFragment() })
-    object Students : Screen({ StudentsListFragment() })
-    object LastSeens : Screen({ LastSeensListFragment() })
-    object AccessTokens : Screen({ AccessTokensListFragment() })
+    data class Sections(@Transient private val ignored: Unit? = null) : Screen({ SectionsListFragment() })
+    data class Groups(@Transient private val ignored: Unit? = null) : Screen({ GroupsListFragment() })
+    data class Masters(@Transient private val ignored: Unit? = null) : Screen({ MastersListFragment() })
+    data class Teachers(@Transient private val ignored: Unit? = null) : Screen({ TeachersListFragment() })
+    data class Students(@Transient private val ignored: Unit? = null) : Screen({ StudentsListFragment() })
+    data class LastSeens(@Transient private val ignored: Unit? = null) : Screen({ LastSeensListFragment() })
+    data class AccessTokens(@Transient private val ignored: Unit? = null) : Screen({ AccessTokensListFragment() })
 
     data class SectionDetails(override val key: DetailsScreenKey) : Screen({
         SectionDetailsFragmentBuilder
@@ -75,8 +76,8 @@ sealed class Screen(
         LessonsInGroupFragmentBuilder.newLessonsInGroupFragment(date, groupId)
     })
 
-    object About : Screen({ AboutFragment() })
-    object Greeting : Screen({ GreetingFragment() }, allowDrawer = false)
-    object Login : Screen({ LoginFragment() }, allowDrawer = false)
-    object Cabinet : Screen({ CabinetFragment() })
+    data class About(@Transient private val ignored: Unit? = null) : Screen({ AboutFragment() })
+    data class Greeting(@Transient private val ignored: Unit? = null) : Screen({ GreetingFragment() }, allowDrawer = false)
+    data class Login(@Transient private val ignored: Unit? = null) : Screen({ LoginFragment() }, allowDrawer = false)
+    data class Cabinet(@Transient private val ignored: Unit? = null) : Screen({ CabinetFragment() })
 }
