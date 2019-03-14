@@ -4,6 +4,7 @@ import com.qwert2603.crmit_android.entity.*
 import com.qwert2603.crmit_android.rest.params.LoginParams
 import com.qwert2603.crmit_android.rest.params.SaveAttendingStateParams
 import com.qwert2603.crmit_android.rest.params.SavePaymentParams
+import com.qwert2603.crmit_android.rest.results.CabinetInfoResult
 import com.qwert2603.crmit_android.rest.results.LessonDetailsResult
 import com.qwert2603.crmit_android.rest.results.LoginResultServer
 import com.qwert2603.crmit_android.rest.results.PaymentsInGroupResult
@@ -97,8 +98,8 @@ interface Rest {
     @GET("lessons_in_group/{group_id}")
     fun getLessonsInGroup(@Path("group_id") groupId: Long): Single<List<Lesson>>
 
-    @GET("last_lessons")
-    fun getLastLessons(@Query("count") count: Int): Single<List<Lesson>>
+    @GET("cabinet_info")
+    fun getCabinetInfo(@Query("last_lessons_count") lastLessonsCount: Int): Single<CabinetInfoResult>
 
     @GET("lesson_details/{lesson_id}")
     fun getLessonDetails(@Path("lesson_id") lessonId: Long): Single<LessonDetailsResult>

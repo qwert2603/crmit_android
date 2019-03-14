@@ -14,9 +14,9 @@ interface LastLessonsDao {
         private fun dateToday() = SimpleDateFormat(Rest.DATE_FORMAT, Locale.getDefault()).format(Date())
     }
 
-    @Query("SELECT * FROM Lesson WHERE date <= :date ORDER BY date DESC LIMIT :count")
+    @Query("SELECT * FROM Lesson WHERE date <= :date ORDER BY date DESC, id LIMIT :count")
     fun getLastLessons(count: Int, date: String = dateToday()): List<Lesson>
 
-    @Query("SELECT * FROM Lesson WHERE teacherId = :teacherId AND date <= :date ORDER BY date DESC LIMIT :count")
+    @Query("SELECT * FROM Lesson WHERE teacherId = :teacherId AND date <= :date ORDER BY date DESC, id LIMIT :count")
     fun getLastLessonsForTeacher(teacherId: Long, count: Int, date: String = dateToday()): List<Lesson>
 }

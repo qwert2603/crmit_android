@@ -2,7 +2,6 @@ package com.qwert2603.crmit_android.cabinet
 
 import com.qwert2603.andrlib.base.mvi.PartialChange
 import com.qwert2603.andrlib.base.mvi.load_refresh.LRPresenter
-import com.qwert2603.andrlib.util.LogUtils
 import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entity.AccountType
 import com.qwert2603.crmit_android.entity.BotAccountIsNotSupportedException
@@ -22,42 +21,19 @@ class CabinetPresenter : LRPresenter<Any, CabinetInitialModel, CabinetViewState,
             .getLoginResultOrMoveToLogin()
             .cache()
 
-    private fun getFioFromServer() = loginResultSingle
-            .flatMap { loginResult ->
-                when (loginResult.accountType) {
-                    AccountType.MASTER -> DiHolder.rest.getMasterDetails(loginResult.detailsId)
-                            .doOnSuccess { DiHolder.masterDaoInterface.saveItem(it) }
-                            .map { it.fio }
-                    AccountType.TEACHER -> DiHolder.rest.getTeacherDetails(loginResult.detailsId)
-                            .doOnSuccess { DiHolder.teacherDaoInterface.saveItem(it) }
-                            .map { it.fio }
-                    AccountType.DEVELOPER -> DiHolder.rest.getDeveloperDetails(loginResult.detailsId)
-                            .doOnSuccess { DiHolder.developerDaoInterface.saveItem(it) }
-                            .map { it.fio }
-                    AccountType.BOT -> throw BotAccountIsNotSupportedException()
-                }
-                        .subscribeOn(DiHolder.modelSchedulersProvider.io)
-            }
-            .doOnSuccess { DiHolder.userSettingsRepo.displayFio = it }
-
-    private fun getFioFromCache() = loginResultSingle
+    private fun getFioFromCache(): Single<String> = loginResultSingle
             .map { loginResult ->
                 when (loginResult.accountType) {
                     AccountType.MASTER -> DiHolder.masterDaoInterface.getItem(loginResult.detailsId)?.fio
                     AccountType.TEACHER -> DiHolder.teacherDaoInterface.getItem(loginResult.detailsId)?.fio
                     AccountType.DEVELOPER -> DiHolder.developerDaoInterface.getItem(loginResult.detailsId)?.fio
                     AccountType.BOT -> throw BotAccountIsNotSupportedException()
-                } ?: DiHolder.userSettingsRepo.displayFio
+                } ?: DiHolder.userSettingsRepo.displayFio!!
             }
             .doOnSuccess { DiHolder.userSettingsRepo.displayFio = it }
             .subscribeOn(DiHolder.modelSchedulersProvider.io)
 
-    private fun getLastLessonsFromServer() = DiHolder.rest
-            .getLastLessons(LAST_LESSONS_COUNT)
-            .doOnSuccess { DiHolder.lessonDao.addItems(it) }
-            .subscribeOn(DiHolder.modelSchedulersProvider.io)
-
-    private fun getLastLessonsFromCache() = loginResultSingle
+    private fun getLastLessonsFromCache(): Single<List<Lesson>> = loginResultSingle
             .map { loginResult ->
                 when (loginResult.accountType) {
                     AccountType.MASTER -> DiHolder.lastLessonDao.getLastLessons(LAST_LESSONS_COUNT)
@@ -66,7 +42,6 @@ class CabinetPresenter : LRPresenter<Any, CabinetInitialModel, CabinetViewState,
                     AccountType.BOT -> throw BotAccountIsNotSupportedException()
                 }
             }
-            .doOnSuccess { DiHolder.lessonDao.addItems(it) }
             .subscribeOn(DiHolder.modelSchedulersProvider.io)
 
     override val initialState = CabinetViewState(EMPTY_LR_MODEL, null, null, null, false)
@@ -77,7 +52,7 @@ class CabinetPresenter : LRPresenter<Any, CabinetInitialModel, CabinetViewState,
                     .switchMapSingle { loginResultSingle }
                     .map { CabinetPartialChange.AuthedUserLoaded(it) },
             intent { it.logoutClicks() }
-                    .switchMap { _ ->
+                    .switchMap {
                         Completable
                                 .merge(listOf(
                                         DiHolder.rest.logout().onErrorComplete(),
@@ -94,22 +69,29 @@ class CabinetPresenter : LRPresenter<Any, CabinetInitialModel, CabinetViewState,
                     }
     )
 
-    override fun initialModelSingle(additionalKey: Any): Single<CabinetInitialModel> = Single.zip(
-            getFioFromServer()
-                    .doOnError { LogUtils.e("CabinetPresenter getFioFromServer", it) }
-                    .onErrorResumeNext(getFioFromCache()),
-            getLastLessonsFromServer()
-                    .doOnError { LogUtils.e("CabinetPresenter getLastLessonsFromServer", it) }
-                    .doOnError { viewActions.onNext(CabinetViewAction.ShowingCachedData) }
-                    .onErrorResumeNext(getLastLessonsFromCache()),
-            BiFunction { fio: String, lastLessons: List<Lesson> -> CabinetInitialModel(fio, lastLessons) }
-    )
+    override fun initialModelSingle(additionalKey: Any): Single<CabinetInitialModel> = initialModelSingleRefresh(additionalKey)
+            .onErrorResumeNext {
+                viewActions.onNext(CabinetViewAction.ShowingCachedData)
+                Single
+                        .zip(
+                                getFioFromCache(),
+                                getLastLessonsFromCache(),
+                                BiFunction { fio: String, lastLessons: List<Lesson> -> CabinetInitialModel(fio, lastLessons) }
+                        )
+                        .subscribeOn(DiHolder.modelSchedulersProvider.io)
+            }
 
-    override fun initialModelSingleRefresh(additionalKey: Any): Single<CabinetInitialModel> = Single.zip(
-            getFioFromServer(),
-            getLastLessonsFromServer(),
-            BiFunction { fio: String, lastLessons: List<Lesson> -> CabinetInitialModel(fio, lastLessons) }
-    )
+    override fun initialModelSingleRefresh(additionalKey: Any): Single<CabinetInitialModel> = DiHolder.rest
+            .getCabinetInfo(LAST_LESSONS_COUNT)
+            .doOnSuccess {
+                DiHolder.lessonDao.addItems(it.lastLessons)
+                DiHolder.userSettingsRepo.displayFio = it.fio
+            }
+            .doOnSuccess {
+                it.actualAppBuildCode//todo
+            }
+            .map { CabinetInitialModel(fio = it.fio, lastLessons = it.lastLessons) }
+            .subscribeOn(DiHolder.modelSchedulersProvider.io)
 
     override fun CabinetViewState.applyInitialModel(i: CabinetInitialModel) = copy(
             fio = i.fio,
@@ -129,7 +111,7 @@ class CabinetPresenter : LRPresenter<Any, CabinetInitialModel, CabinetViewState,
         super.bindIntents()
 
         intent { it.onFioClicks() }
-                .switchMapCompletable { _ ->
+                .switchMapCompletable {
                     loginResultSingle
                             .doOnSuccess { viewActions.onNext(CabinetViewAction.MoveToUserDetails(it.accountType, it.detailsId)) }
                             .ignoreElement()
