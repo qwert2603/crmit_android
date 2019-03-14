@@ -4,6 +4,7 @@ import com.qwert2603.crmit_android.entity.*
 import com.qwert2603.crmit_android.rest.params.LoginParams
 import com.qwert2603.crmit_android.rest.params.SaveAttendingStateParams
 import com.qwert2603.crmit_android.rest.params.SavePaymentParams
+import com.qwert2603.crmit_android.rest.results.LessonDetailsResult
 import com.qwert2603.crmit_android.rest.results.LoginResultServer
 import com.qwert2603.crmit_android.rest.results.PaymentsInGroupResult
 import io.reactivex.Completable
@@ -99,8 +100,8 @@ interface Rest {
     @GET("last_lessons")
     fun getLastLessons(@Query("count") count: Int): Single<List<Lesson>>
 
-    @GET("attendings_of_lesson/{lesson_id}")
-    fun getAttendingsOfLesson(@Path("lesson_id") lessonId: Long): Single<List<Attending>>
+    @GET("lesson_details/{lesson_id}")
+    fun getLessonDetails(@Path("lesson_id") lessonId: Long): Single<LessonDetailsResult>
 
     @GET("payments/{group_id}")
     fun getPaymentsInGroup(@Path("group_id") groupId: Long): Single<PaymentsInGroupResult>
