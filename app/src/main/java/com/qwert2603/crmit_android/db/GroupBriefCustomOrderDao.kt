@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.qwert2603.andrlib.model.IdentifiableLong
 import com.qwert2603.crmit_android.entity.AccountType
+import com.qwert2603.crmit_android.entity.BotAccountIsNotSupportedException
 import com.qwert2603.crmit_android.entity.GroupBrief
 import com.qwert2603.crmit_android.entity.LoginResult
 
@@ -38,6 +39,8 @@ private class GroupBriefCustomOrderDaoWrapper(loginResult: LoginResult?, private
     private val authedTeacherId = when (loginResult?.accountType) {
         AccountType.MASTER -> IdentifiableLong.NO_ID
         AccountType.TEACHER -> loginResult.detailsId
+        AccountType.DEVELOPER -> IdentifiableLong.NO_ID
+        AccountType.BOT -> throw BotAccountIsNotSupportedException()
         null -> IdentifiableLong.NO_ID
     }
 

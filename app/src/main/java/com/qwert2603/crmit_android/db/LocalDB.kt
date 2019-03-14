@@ -11,6 +11,7 @@ import com.qwert2603.crmit_android.entity.*
 
 @Database(
         entities = [
+            Developer::class,
             Master::class,
             Teacher::class,
             StudentBrief::class,
@@ -28,6 +29,7 @@ import com.qwert2603.crmit_android.entity.*
 )
 @TypeConverters(GroupBriefListConverter::class, StringListConverter::class, ScheduleItemListConverter::class)
 abstract class LocalDB : RoomDatabase() {
+    abstract fun developerDao(): DeveloperDao
     abstract fun masterDao(): MasterDao
     abstract fun teacherDao(): TeacherDao
     abstract fun studentBriefDao(): StudentBriefDao

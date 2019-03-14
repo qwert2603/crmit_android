@@ -19,6 +19,8 @@ data class LessonDetailsViewState(
     fun isUserCanWriteGroup() = when (authedUserAccountType) {
         AccountType.MASTER -> true
         AccountType.TEACHER -> authedUserDetailsId != null && authedUserDetailsId == groupBrief?.teacherId
+        AccountType.DEVELOPER -> true
+        AccountType.BOT -> throw BotAccountIsNotSupportedException()
         null -> false
     }
 

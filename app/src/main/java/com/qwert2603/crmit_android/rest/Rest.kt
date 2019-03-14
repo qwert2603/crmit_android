@@ -43,6 +43,13 @@ interface Rest {
             @Query("search") search: String
     ): Single<List<Master>>
 
+    @GET("developers_list")
+    fun getDevelopersList(
+            @Query("offset") offset: Int,
+            @Query("count") count: Int,
+            @Query("search") search: String
+    ): Single<List<Developer>>
+
     @GET("students_list")
     fun getStudentsList(
             @Query("offset") offset: Int,
@@ -72,6 +79,9 @@ interface Rest {
 
     @GET("section_details/{section_id}")
     fun getSectionDetails(@Path("section_id") sectionId: Long): Single<Section>
+
+    @GET("developer_details/{developer_id}")
+    fun getDeveloperDetails(@Path("developer_id") developerId: Long): Single<Developer>
 
     @GET("master_details/{master_id}")
     fun getMasterDetails(@Path("master_id") masterId: Long): Single<Master>

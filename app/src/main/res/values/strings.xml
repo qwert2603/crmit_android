@@ -104,12 +104,15 @@
     <string name="login_error_reason_wrong_login_or_password">Неверный логин или пароль!</string>
     <string name="login_error_reason_account_disabled">Ваш аккаунт был отключен!</string>
     <string name="login_error_reason_student_account_is_not_supported">Аккаунт ученика не поддерживается</string>
+    <string name="login_error_reason_bot_account_is_not_supported">Аккаунт бота не поддерживается</string>
     <string name="login_error_reason_another">Ошибка входа</string>
 
     <string name="text_logout">Выйти</string>
 
     <string name="account_type_master">Руководитель</string>
     <string name="account_type_teacher">Преподаватель</string>
+    <string name="account_type_developer">Разработчик</string>
+    <string name="account_type_bot">Бот</string>
 
     <string name="date_pattern_last_seen_date">d MMMM yyyy года</string>
     <string name="date_pattern_last_seen_time">в H:mm</string>

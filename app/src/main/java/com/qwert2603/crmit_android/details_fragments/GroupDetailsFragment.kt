@@ -4,6 +4,7 @@ import com.hannesdorfmann.fragmentargs.annotation.FragmentWithArgs
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entity.AccountType
+import com.qwert2603.crmit_android.entity.BotAccountIsNotSupportedException
 import com.qwert2603.crmit_android.entity.GroupFull
 import com.qwert2603.crmit_android.entity_details.EntityDetailsField
 import com.qwert2603.crmit_android.entity_details.EntityDetailsFragment
@@ -51,6 +52,8 @@ class GroupDetailsFragment : EntityDetailsFragment<GroupFull>() {
                 when (currentViewState.authedUserAccountType) {
                     AccountType.MASTER -> true
                     AccountType.TEACHER -> currentViewState.authedUserDetailsId == teacherId
+                    AccountType.DEVELOPER -> true
+                    AccountType.BOT -> throw BotAccountIsNotSupportedException()
                     null -> false
                 }
             },

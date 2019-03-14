@@ -5,6 +5,8 @@ import com.qwert2603.andrlib.base.mvi.BasePresenter
 import com.qwert2603.andrlib.base.mvi.PartialChange
 import com.qwert2603.andrlib.util.LogUtils
 import com.qwert2603.crmit_android.di.DiHolder
+import com.qwert2603.crmit_android.entity.AccountType
+import com.qwert2603.crmit_android.entity.BotAccountIsNotSupportedException
 import com.qwert2603.crmit_android.entity.LoginErrorReason
 import com.qwert2603.crmit_android.entity.LoginResultError
 import com.qwert2603.crmit_android.rest.Rest
@@ -13,6 +15,7 @@ import com.qwert2603.crmit_android.util.DeviceUtils
 import com.qwert2603.crmit_android.util.makePair
 import com.qwert2603.crmit_android.util.secondOfTwo
 import io.reactivex.Observable
+import io.reactivex.Single
 import retrofit2.HttpException
 
 class LoginPresenter : BasePresenter<LoginView, LoginViewState>(DiHolder.uiSchedulerProvider) {
@@ -31,6 +34,13 @@ class LoginPresenter : BasePresenter<LoginView, LoginViewState>(DiHolder.uiSched
                     .switchMap { (login, password) ->
                         DiHolder.rest
                                 .login(LoginParams(login, password, DeviceUtils.device))
+                                .flatMap {
+                                    if (it.accountType == AccountType.BOT) {
+                                        Single.error(BotAccountIsNotSupportedException())
+                                    } else {
+                                        Single.just(it)
+                                    }
+                                }
                                 .doOnSuccess { loginResultServer ->
                                     val newLoginResult = loginResultServer.toLoginResult()
                                     if (newLoginResult != DiHolder.userSettingsRepo.loginResult) {
@@ -44,16 +54,16 @@ class LoginPresenter : BasePresenter<LoginView, LoginViewState>(DiHolder.uiSched
                                 .subscribeOn(DiHolder.modelSchedulersProvider.io)
                                 .map<LoginPartialChange> { LoginPartialChange.LoggingSuccess }
                                 .doOnError {
-                                    val loginErrorReason = if (it is HttpException && it.code() == Rest.RESPONSE_CODE_BAD_REQUEST) {
-                                        try {
+                                    val loginErrorReason = when {
+                                        it is BotAccountIsNotSupportedException -> LoginErrorReason.BOT_ACCOUNT_IN_NOT_SUPPORTED
+                                        it is HttpException && it.code() == Rest.RESPONSE_CODE_BAD_REQUEST -> try {
                                             val string = it.response().errorBody()!!.string()
                                             Gson().fromJson(string, LoginResultError::class.java).loginErrorReason
                                         } catch (t: Throwable) {
                                             LogUtils.e("login error", t)
                                             LoginErrorReason.ANOTHER
                                         }
-                                    } else {
-                                        LoginErrorReason.ANOTHER
+                                        else -> LoginErrorReason.ANOTHER
                                     }
                                     viewActions.onNext(LoginViewAction.ShowLoginError(loginErrorReason))
                                 }

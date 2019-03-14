@@ -5,6 +5,7 @@ import com.qwert2603.andrlib.base.mvi.load_refresh.LRPresenter
 import com.qwert2603.andrlib.util.LogUtils
 import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entity.AccountType
+import com.qwert2603.crmit_android.entity.BotAccountIsNotSupportedException
 import com.qwert2603.crmit_android.entity.Lesson
 import io.reactivex.Completable
 import io.reactivex.Observable
@@ -30,6 +31,10 @@ class CabinetPresenter : LRPresenter<Any, CabinetInitialModel, CabinetViewState,
                     AccountType.TEACHER -> DiHolder.rest.getTeacherDetails(loginResult.detailsId)
                             .doOnSuccess { DiHolder.teacherDaoInterface.saveItem(it) }
                             .map { it.fio }
+                    AccountType.DEVELOPER -> DiHolder.rest.getDeveloperDetails(loginResult.detailsId)
+                            .doOnSuccess { DiHolder.developerDaoInterface.saveItem(it) }
+                            .map { it.fio }
+                    AccountType.BOT -> throw BotAccountIsNotSupportedException()
                 }
                         .subscribeOn(DiHolder.modelSchedulersProvider.io)
             }
@@ -40,6 +45,8 @@ class CabinetPresenter : LRPresenter<Any, CabinetInitialModel, CabinetViewState,
                 when (loginResult.accountType) {
                     AccountType.MASTER -> DiHolder.masterDaoInterface.getItem(loginResult.detailsId)?.fio
                     AccountType.TEACHER -> DiHolder.teacherDaoInterface.getItem(loginResult.detailsId)?.fio
+                    AccountType.DEVELOPER -> DiHolder.developerDaoInterface.getItem(loginResult.detailsId)?.fio
+                    AccountType.BOT -> throw BotAccountIsNotSupportedException()
                 } ?: DiHolder.userSettingsRepo.displayFio
             }
             .doOnSuccess { DiHolder.userSettingsRepo.displayFio = it }
@@ -55,6 +62,8 @@ class CabinetPresenter : LRPresenter<Any, CabinetInitialModel, CabinetViewState,
                 when (loginResult.accountType) {
                     AccountType.MASTER -> DiHolder.lastLessonDao.getLastLessons(LAST_LESSONS_COUNT)
                     AccountType.TEACHER -> DiHolder.lastLessonDao.getLastLessonsForTeacher(loginResult.detailsId, LAST_LESSONS_COUNT)
+                    AccountType.DEVELOPER -> DiHolder.lastLessonDao.getLastLessons(LAST_LESSONS_COUNT)
+                    AccountType.BOT -> throw BotAccountIsNotSupportedException()
                 }
             }
             .doOnSuccess { DiHolder.lessonDao.addItems(it) }
