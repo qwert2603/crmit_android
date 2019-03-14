@@ -2,6 +2,7 @@ package com.qwert2603.crmit_android.cabinet
 
 import com.qwert2603.andrlib.base.mvi.PartialChange
 import com.qwert2603.andrlib.base.mvi.load_refresh.LRPresenter
+import com.qwert2603.crmit_android.BuildConfig
 import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entity.AccountType
 import com.qwert2603.crmit_android.entity.BotAccountIsNotSupportedException
@@ -88,7 +89,9 @@ class CabinetPresenter : LRPresenter<Any, CabinetInitialModel, CabinetViewState,
                 DiHolder.userSettingsRepo.displayFio = it.fio
             }
             .doOnSuccess {
-                it.actualAppBuildCode//todo
+                if (it.actualAppBuildCode > BuildConfig.VERSION_CODE) {
+                    viewActions.onNext(CabinetViewAction.ShowUpdateAvailable)
+                }
             }
             .map { CabinetInitialModel(fio = it.fio, lastLessons = it.lastLessons) }
             .subscribeOn(DiHolder.modelSchedulersProvider.io)

@@ -17,6 +17,7 @@ import com.qwert2603.andrlib.util.setVisible
 import com.qwert2603.andrlib.util.showIfNotYet
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.di.DiHolder
+import com.qwert2603.crmit_android.dialogs.UpdateAvailableDialog
 import com.qwert2603.crmit_android.entity.AccountType
 import com.qwert2603.crmit_android.entity.BotAccountIsNotSupportedException
 import com.qwert2603.crmit_android.navigation.DetailsScreenKey
@@ -125,6 +126,7 @@ class CabinetFragment : BaseFragment<CabinetViewState, CabinetView, CabinetPrese
         }
         when (va) {
             CabinetViewAction.ShowingCachedData -> Snackbar.make(cabinet_CoordinatorLayout, R.string.text_showing_cached_data, Snackbar.LENGTH_SHORT).show()
+            CabinetViewAction.ShowUpdateAvailable -> UpdateAvailableDialog().show(requireFragmentManager(), null)
             CabinetViewAction.MoveToLogin -> DiHolder.router.newRootScreen(Screen.Login())
             is CabinetViewAction.MoveToUserDetails -> {
                 val detailsScreenKey = DetailsScreenKey(
