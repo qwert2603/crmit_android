@@ -48,6 +48,7 @@ class LessonDetailsPresenter(private val lessonId: Long)
                                 .toObservable()
                                 .subscribeOn(saveAttendingsStateScheduler)
                                 .startWith(LessonDetailsPartialChange.UploadAttendingStateStarted(params.attendingId))
+                                .takeUntil(attendingStatesChangesIntent.filter { it.attendingId == params.attendingId })
                     }
     ))
 

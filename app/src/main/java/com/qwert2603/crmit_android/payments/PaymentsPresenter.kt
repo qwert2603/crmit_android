@@ -94,6 +94,7 @@ class PaymentsPresenter(
                                 .toObservable()
                                 .subscribeOn(savePaymentsScheduler)
                                 .startWith(PaymentsPartialChange.UploadPaymentStarted(payment.id))
+                                .takeUntil(paymentChanges.filter { it.id == payment.id })
                     }
     )
 
@@ -192,6 +193,5 @@ class PaymentsPresenter(
         }
 
         private fun Payment.toDialogTitle() = "$studentFio\n$groupName ${monthNumber.toMonthTabTitle()}"
-
     }
 }
