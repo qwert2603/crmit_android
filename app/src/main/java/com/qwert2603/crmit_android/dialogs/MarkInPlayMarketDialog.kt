@@ -16,7 +16,7 @@ class MarkInPlayMarketDialog : DialogFragment() {
 
     companion object {
         fun showIfNeeded(fragmentManager: FragmentManager): Boolean {
-            if (DiHolder.userSettingsRepo.launchesCount == 8) {
+            if (DiHolder.userSettingsRepo.launchesCount == 4) {
                 MarkInPlayMarketDialog().show(fragmentManager, null)
                 return true
             }

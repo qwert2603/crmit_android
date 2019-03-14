@@ -26,7 +26,7 @@ class UserSettingsRepo(appContext: Context) {
     var thereWillBeAttendingChangesCachingShown by PrefsBoolean(prefs, "thereWillBeAttendingChangesCachingShown")
     var thereWillBePaymentChangesCachingShown by PrefsBoolean(prefs, "thereWillBePaymentChangesCachingShown")
     var whatsNewVersionCodeShown by PrefsInt(prefs, "whatsNewVersionCodeShown")
-    var launchesCount by PrefsInt(prefs, "launchesCount")
+    var launchesCount by PrefsInt(prefs, "launchesCount_2")
 
     fun isLogged() = accessToken != null
 
