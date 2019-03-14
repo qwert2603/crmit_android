@@ -1,4 +1,4 @@
-package com.qwert2603.crmit_android.util
+package com.qwert2603.crmit_android.entity
 
 data class Wrapper<T : Any>(val t: T?)
 

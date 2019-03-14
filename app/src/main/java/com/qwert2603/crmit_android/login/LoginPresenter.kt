@@ -14,7 +14,7 @@ import com.qwert2603.crmit_android.rest.params.LoginParams
 import com.qwert2603.crmit_android.util.DeviceUtils
 import com.qwert2603.crmit_android.util.makePair
 import com.qwert2603.crmit_android.util.secondOfTwo
-import com.qwert2603.crmit_android.util.wrap
+import com.qwert2603.crmit_android.entity.wrap
 import io.reactivex.Observable
 import io.reactivex.Single
 import retrofit2.HttpException

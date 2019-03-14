@@ -6,6 +6,7 @@ import android.preference.PreferenceManager
 import androidx.annotation.WorkerThread
 import com.google.gson.Gson
 import com.qwert2603.crmit_android.entity.LoginResult
+import com.qwert2603.crmit_android.entity.Wrapper
 import com.qwert2603.crmit_android.navigation.Screen
 import com.qwert2603.crmit_android.util.*
 import io.reactivex.Single
