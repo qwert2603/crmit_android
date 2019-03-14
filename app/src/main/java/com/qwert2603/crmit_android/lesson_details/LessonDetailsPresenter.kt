@@ -15,10 +15,10 @@ import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.Executors
 
-class LessonDetailsPresenter(private val lessonId: Long)
+class LessonDetailsPresenter(private val lessonId: Long, canRefresh: Boolean)
     : LRPresenter<Any, LessonDetailsInitialModel, LessonDetailsViewState, LessonDetailsView>(DiHolder.uiSchedulerProvider) {
 
-    override val canRefreshAtAll = false
+    override val canRefreshAtAll = canRefresh
 
     override val initialState = LessonDetailsViewState(EMPTY_LR_MODEL, null, null, null, null, emptyMap(), null, null)
 
@@ -64,14 +64,14 @@ class LessonDetailsPresenter(private val lessonId: Long)
                                             groupBrief = DiHolder.groupBriefCustomOrderDao.getItem(lesson.groupId)
                                                     ?: DiHolder.groupFullDaoInterface.getItem(lesson.groupId)?.toGroupBrief(),
                                             teacher = DiHolder.teacherDaoInterface.getItem(lesson.teacherId),
-                                            date = lesson.date,
+                                            lesson = lesson,
                                             attendings = attendings
                                     ))
                                 } else {
                                     Single.just(LessonDetailsInitialModel(
                                             groupBrief = null,
                                             teacher = null,
-                                            date = null,
+                                            lesson = null,
                                             attendings = attendings
                                     ))
                                 }
@@ -95,7 +95,7 @@ class LessonDetailsPresenter(private val lessonId: Long)
                 LessonDetailsInitialModel(
                         groupBrief = it.group,
                         teacher = it.teacher,
-                        date = it.lesson.date,
+                        lesson = it.lesson,
                         attendings = it.attendings
                 )
             }
@@ -104,7 +104,7 @@ class LessonDetailsPresenter(private val lessonId: Long)
     override fun LessonDetailsViewState.applyInitialModel(i: LessonDetailsInitialModel) = copy(
             groupBrief = i.groupBrief,
             teacher = i.teacher,
-            date = i.date,
+            lesson = i.lesson,
             attendings = i.attendings
     )
 
@@ -147,8 +147,8 @@ class LessonDetailsPresenter(private val lessonId: Long)
         intent { it.navigateToPaymentsClicks() }
                 .withLatestFrom(viewStateObservable, secondOfTwo())
                 .doOnNext {
-                    if (it.groupBrief == null || it.date == null) return@doOnNext
-                    viewActions.onNext(LessonDetailsViewAction.NavigateToPayments(it.groupBrief.id, it.date.toMonthNumber()))
+                    if (it.groupBrief == null || it.lesson == null) return@doOnNext
+                    viewActions.onNext(LessonDetailsViewAction.NavigateToPayments(it.groupBrief.id, it.lesson.date.toMonthNumber()))
                 }
                 .subscribeToView()
     }

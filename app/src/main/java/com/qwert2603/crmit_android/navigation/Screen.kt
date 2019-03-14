@@ -5,6 +5,7 @@ import com.qwert2603.crmit_android.about.AboutFragment
 import com.qwert2603.crmit_android.cabinet.CabinetFragment
 import com.qwert2603.crmit_android.details_fragments.*
 import com.qwert2603.crmit_android.greeting.GreetingFragment
+import com.qwert2603.crmit_android.lesson_details.LessonDetailsFragmentBuilder
 import com.qwert2603.crmit_android.lessons_in_group.LessonsInGroupFragmentBuilder
 import com.qwert2603.crmit_android.list_fragments.*
 import com.qwert2603.crmit_android.login.LoginFragment
@@ -74,6 +75,10 @@ sealed class Screen(
 
     data class LessonsInGroup(val groupId: Long, val date: String) : Screen({
         LessonsInGroupFragmentBuilder.newLessonsInGroupFragment(date, groupId)
+    })
+
+    data class LessonDetails(val lessonId: Long, val asNested: Boolean) : Screen({
+        LessonDetailsFragmentBuilder.newLessonDetailsFragment(asNested, lessonId)
     })
 
     data class About(@Transient private val ignored: Unit? = null) : Screen({ AboutFragment() })

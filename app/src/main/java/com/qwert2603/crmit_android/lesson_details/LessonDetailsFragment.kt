@@ -19,11 +19,16 @@ import com.qwert2603.crmit_android.entity.AccountType
 import com.qwert2603.crmit_android.lessons_in_group.ParentLessonsFragment
 import com.qwert2603.crmit_android.navigation.DetailsScreenKey
 import com.qwert2603.crmit_android.navigation.Screen
+import com.qwert2603.crmit_android.rest.Rest
 import com.qwert2603.crmit_android.rest.params.SaveAttendingStateParams
+import com.qwert2603.crmit_android.util.toShowingDate
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.fragment_lesson_details.*
 import kotlinx.android.synthetic.main.item_entity_details_field.view.*
+import kotlinx.android.synthetic.main.toolbar_default.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 @FragmentWithArgs
 class LessonDetailsFragment : LRFragment<LessonDetailsViewState, LessonDetailsView, LessonDetailsPresenter>(), LessonDetailsView {
@@ -31,7 +36,10 @@ class LessonDetailsFragment : LRFragment<LessonDetailsViewState, LessonDetailsVi
     @Arg
     var lessonId: Long = IdentifiableLong.NO_ID
 
-    override fun createPresenter() = LessonDetailsPresenter(lessonId)
+    @Arg
+    var asNested: Boolean = false
+
+    override fun createPresenter() = LessonDetailsPresenter(lessonId, !asNested)
 
     override fun loadRefreshPanel(): LoadRefreshPanel = lessonDetails_LRPanelImpl
 
@@ -54,6 +62,9 @@ class LessonDetailsFragment : LRFragment<LessonDetailsViewState, LessonDetailsVi
             container?.inflate(R.layout.fragment_lesson_details)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        toolbar.setVisible(parentFragment == null)
+        toolbar.setTitle(R.string.title_lesson_details_default)
+
         group_DetailsField.fieldName_TextView.setText(R.string.detailsField_group)
         teacher_DetailsField.fieldName_TextView.setText(R.string.detailsField_teacher)
 
@@ -110,8 +121,15 @@ class LessonDetailsFragment : LRFragment<LessonDetailsViewState, LessonDetailsVi
     }
 
     override fun retry(): Observable<Any> = super.retry()
-            .doOnNext { (parentFragment as ParentLessonsFragment).onRetryDateClicked() }
-            .filter { false }
+            .filter {
+                val parentFragment = parentFragment
+                if (parentFragment is ParentLessonsFragment) {
+                    parentFragment.onRetryDateClicked()
+                    false
+                } else {
+                    true
+                }
+            }
 
     override fun attendingStatesChanges(): Observable<SaveAttendingStateParams> = adapter.attendingStateChanges
 
@@ -119,6 +137,12 @@ class LessonDetailsFragment : LRFragment<LessonDetailsViewState, LessonDetailsVi
 
     override fun render(vs: LessonDetailsViewState) {
         super.render(vs)
+
+        if (vs.lesson != null) {
+            toolbar.title = vs.lesson.date.toShowingDate()
+            val today = SimpleDateFormat(Rest.DATE_FORMAT, Locale.getDefault()).format(Date())
+            toolbar.setTitleTextColor((resources.color(if (vs.lesson.date == today) R.color.colorAccent else android.R.color.black)))
+        }
 
         group_DetailsField.setVisible(vs.groupBrief != null)
         if (vs.groupBrief != null) {

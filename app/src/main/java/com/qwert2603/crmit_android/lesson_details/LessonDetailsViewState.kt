@@ -10,7 +10,7 @@ data class LessonDetailsViewState(
         override val lrModel: LRModel,
         val groupBrief: GroupBrief?,
         val teacher: Teacher?,
-        val date: String?,
+        val lesson: Lesson?,
         val attendings: List<Attending>?,
         val uploadingAttendingStateStatuses: Map<Long, UploadStatus>,
         val authedUserAccountType: AccountType?,
@@ -24,5 +24,5 @@ data class LessonDetailsViewState(
         null -> false
     }
 
-    fun isNavigateToPaymentsVisible() = isUserCanWriteGroup() && groupBrief != null && date != null
+    fun isNavigateToPaymentsVisible() = isUserCanWriteGroup() && groupBrief != null && lesson != null
 }

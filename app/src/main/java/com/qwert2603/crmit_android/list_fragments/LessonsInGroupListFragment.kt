@@ -61,7 +61,7 @@ class LessonsInGroupListFragment : EntitiesListFragment<Lesson>() {
         toolbar.title = getString(R.string.title_lessons_in_group, groupName)
 
         adapter.modelItemClicks
-                .subscribe { DiHolder.router.navigateTo(Screen.LessonsInGroup(it.groupId, it.date)) }
+                .subscribe { DiHolder.router.navigateTo(Screen.LessonDetails(it.id, false)) }
                 .disposeOnDestroyView()
 
         super.onViewCreated(view, savedInstanceState)

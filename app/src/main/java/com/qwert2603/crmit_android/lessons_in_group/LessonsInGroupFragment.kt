@@ -77,7 +77,7 @@ class LessonsInGroupFragment : LRFragment<LessonsInGroupViewState, LessonsInGrou
         renderIfChanged({ lessons }) { lessons ->
             if (lessons != null) {
                 lessons_ViewPager.adapter = object : FragmentStatePagerAdapter(childFragmentManager) {
-                    override fun getItem(index: Int): Fragment = LessonDetailsFragmentBuilder.newLessonDetailsFragment(lessons[index].id)
+                    override fun getItem(index: Int): Fragment = LessonDetailsFragmentBuilder.newLessonDetailsFragment(true, lessons[index].id)
                     override fun getCount() = lessons.size
                 }
                 lessons_ViewPager.currentItem = vs.selectedIndex() ?: 0
