@@ -54,7 +54,7 @@ class CabinetFragment : BaseFragment<CabinetViewState, CabinetView, CabinetPrese
         lastLessons_RecyclerView.itemAnimator = null
         lastLessons_RecyclerView.adapter = lastLessonAdapter
         lastLessonAdapter.modelItemClicks
-                .subscribe { DiHolder.router.navigateTo(Screen.LessonsInGroup(it.groupId, it.date)) }
+                .subscribe { DiHolder.router.navigateTo(Screen.LessonDetails(it.id, false)) }
                 .disposeOnDestroyView()
 
         super.onViewCreated(view, savedInstanceState)
