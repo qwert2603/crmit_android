@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.res.Resources
 import android.graphics.Paint
 import android.graphics.Typeface
+import android.os.Build
 import android.text.Editable
 import android.text.Html
 import android.text.TextWatcher
@@ -184,4 +185,8 @@ fun AlertDialog.setFontToTextViews(lifecycleOwner: LifecycleOwner): AlertDialog 
         }
     })
     return this
+}
+
+object DeviceUtils {
+    val device = "${Build.MANUFACTURER} ${Build.MODEL} Android ${Build.VERSION.RELEASE}"
 }

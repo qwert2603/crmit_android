@@ -9,6 +9,7 @@ import com.qwert2603.crmit_android.entity.LoginErrorReason
 import com.qwert2603.crmit_android.entity.LoginResultError
 import com.qwert2603.crmit_android.rest.Rest
 import com.qwert2603.crmit_android.rest.params.LoginParams
+import com.qwert2603.crmit_android.util.DeviceUtils
 import com.qwert2603.crmit_android.util.makePair
 import com.qwert2603.crmit_android.util.secondOfTwo
 import io.reactivex.Observable
@@ -29,7 +30,7 @@ class LoginPresenter : BasePresenter<LoginView, LoginViewState>(DiHolder.uiSched
                     .withLatestFrom(credentials, secondOfTwo())
                     .switchMap { (login, password) ->
                         DiHolder.rest
-                                .login(LoginParams(login, password))
+                                .login(LoginParams(login, password, DeviceUtils.device))
                                 .doOnSuccess { loginResultServer ->
                                     val newLoginResult = loginResultServer.toLoginResult()
                                     if (newLoginResult != DiHolder.userSettingsRepo.loginResult) {
