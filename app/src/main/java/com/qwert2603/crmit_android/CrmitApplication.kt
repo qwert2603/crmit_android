@@ -78,7 +78,7 @@ class CrmitApplication : Application() {
 
         setupLogs()
 
-        DiHolder.userSettingsRepo.loginResult
+        DiHolder.userSettingsRepo.loginResult.field.t
                 ?.let { "${it.accountType.name} ${it.detailsId}" }
                 .also {
                     FirebaseAnalytics.getInstance(this)

@@ -13,7 +13,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.qwert2603.andrlib.base.recyclerview.BaseRecyclerViewAdapter
 import com.qwert2603.andrlib.util.*
 import com.qwert2603.crmit_android.BuildConfig
@@ -22,9 +21,10 @@ import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.dialogs.MarkInPlayMarketDialog
 import com.qwert2603.crmit_android.dialogs.UpdateAvailableDialog
 import com.qwert2603.crmit_android.dialogs.WhatsNewDialog
+import com.qwert2603.crmit_android.entity.AccountType
 import com.qwert2603.crmit_android.util.disposeOnDestroy
+import com.qwert2603.crmit_android.util.subscribeWhileResumed
 import io.reactivex.Single
-import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.header_navigation.view.*
 import ru.terrakok.cicerone.NavigatorHolder
@@ -34,9 +34,6 @@ import java.util.concurrent.TimeUnit
 class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager, StatusBarActivity {
 
     companion object {
-
-        private const val PATH_LAST_SEENS = "63be06d1-b174-40f8-b779-0498619e482f"
-        private const val PATH_ACCESS_TOKENS = "e64d9f38-26ba-422e-b739-cbe3c3ed9464"
 
         private fun getScreenFromIntent(intent: Intent): Screen? {
             if (intent.action != Intent.ACTION_VIEW) return null
@@ -74,11 +71,26 @@ class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager, S
 //                            ?.let { Pair(ScreenKey.LESSONS_IN_GROUP, it) } ?: ScreenKey.GROUPS
 //                }
 //                "payment" -> {}
-                PATH_LAST_SEENS -> Screen.LastSeens()
-                PATH_ACCESS_TOKENS -> Screen.AccessTokens()
                 else -> Screen.Cabinet()
             }
         }
+
+        private fun getRootNavigationItems(accountType: AccountType?) =
+                if (accountType != null) {
+                    listOfNotNull(
+                            NavigationItem(R.drawable.ic_business_center_black_24dp, R.string.title_cabinet, Screen.Cabinet()),
+                            NavigationItem(R.drawable.ic_person_black_24dp, R.string.title_masters, Screen.Masters()),
+                            NavigationItem(R.drawable.ic_person_black_24dp, R.string.title_teachers, Screen.Teachers()),
+                            NavigationItem(R.drawable.ic_person_black_24dp, R.string.title_students, Screen.Students()),
+                            NavigationItem(R.drawable.ic_group_black_24dp, R.string.title_sections, Screen.Sections()),
+                            NavigationItem(R.drawable.ic_group_black_24dp, R.string.title_groups, Screen.Groups()),
+                            NavigationItem(R.drawable.ic_schedule_black_24dp, R.string.title_last_seens, Screen.LastSeens()).takeIf { accountType == AccountType.DEVELOPER },
+                            NavigationItem(R.drawable.ic_schedule_black_24dp, R.string.title_access_token, Screen.AccessTokens()).takeIf { accountType == AccountType.DEVELOPER },
+                            NavigationItem(R.drawable.ic_info_black_24dp, R.string.title_about, Screen.About())
+                    )
+                } else {
+                    emptyList()
+                }
     }
 
     private val router: Router = DiHolder.router
@@ -96,16 +108,6 @@ class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager, S
         }
     }
 
-    private val rootNavigationItems = listOf(
-            NavigationItem(R.drawable.ic_business_center_black_24dp, R.string.title_cabinet, Screen.Cabinet()),
-            NavigationItem(R.drawable.ic_person_black_24dp, R.string.title_masters, Screen.Masters()),
-            NavigationItem(R.drawable.ic_person_black_24dp, R.string.title_teachers, Screen.Teachers()),
-            NavigationItem(R.drawable.ic_person_black_24dp, R.string.title_students, Screen.Students()),
-            NavigationItem(R.drawable.ic_group_black_24dp, R.string.title_sections, Screen.Sections()),
-            NavigationItem(R.drawable.ic_group_black_24dp, R.string.title_groups, Screen.Groups()),
-            NavigationItem(R.drawable.ic_info_black_24dp, R.string.title_about, Screen.About())
-    )
-
     private val navigator = Navigator(object : ActivityInterface {
         override val fragmentActivity = this@MainActivity
         override val supportFragmentManager = this@MainActivity.supportFragmentManager
@@ -113,8 +115,6 @@ class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager, S
         override fun hideKeyboard() = this@MainActivity.hideKeyboard()
         override val navigationActivity = this@MainActivity
     })
-
-    private val navigationDisposable = CompositeDisposable()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -155,38 +155,36 @@ class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager, S
 
         headerNavigation = navigation_view.inflate(R.layout.header_navigation)
         navigation_view.addHeaderView(headerNavigation)
-        headerNavigation.navigation_recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
         headerNavigation.navigation_recyclerView.itemAnimator = null
+        headerNavigation.navigation_recyclerView.adapter = navigationAdapter
+
+        navigationAdapter.modelItemClicks
+                .doOnNext { navigateToItem(it, true) }
+                .subscribeWhileResumed(this)
+
+        navigationAdapter.modelItemLongClicks
+                .doOnNext { navigateToItem(it, false) }
+                .subscribeWhileResumed(this)
+
+        DiHolder.userSettingsRepo.loginResult.changes
+                .observeOn(DiHolder.uiSchedulerProvider.ui)
+                .subscribe {
+                    LogUtils.d("DiHolder.userSettingsRepo.loginResult.changes $it")
+                    val navigationItems = getRootNavigationItems(it.t?.accountType)
+                    navigationAdapter.adapterList = BaseRecyclerViewAdapter.AdapterList(navigationItems)
+                }
+                .disposeOnDestroy(this)
 
         lifecycle.addObserver(navigatorHolder.createLifecycleObserver(navigator))
     }
 
     override fun onStart() {
         super.onStart()
-
-        navigationAdapter.modelItemClicks
-                .subscribe { navigateToItem(it, true) }
-                .addTo(navigationDisposable)
-
-        navigationAdapter.modelItemLongClicks
-                .subscribe { navigateToItem(it, false) }
-                .addTo(navigationDisposable)
-
-        headerNavigation.navigation_recyclerView.adapter = navigationAdapter
-
-        if (navigationAdapter.adapterList.modelList.isEmpty()) {
-            navigationAdapter.adapterList = BaseRecyclerViewAdapter.AdapterList(rootNavigationItems)
-        }
-
         activity_DrawerLayout.addDrawerListener(drawerListener)
     }
 
     override fun onStop() {
-        with(headerNavigation) {
-            navigation_recyclerView.adapter = null
-        }
         activity_DrawerLayout.removeDrawerListener(drawerListener)
-        navigationDisposable.clear()
         super.onStop()
     }
 
@@ -223,7 +221,9 @@ class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager, S
         val screen: Screen = fragment.getScreen() ?: return
         val isRoot = supportFragmentManager.backStackEntryCount == 0
         if (isRoot) {
-            navigationAdapter.selectedItemId = rootNavigationItems.find { screen == it.screen }?.id ?: 0
+            navigationAdapter.selectedItemId = navigationAdapter.adapterList.modelList
+                    .find { screen == it.screen }?.id
+                    ?: 0
         } else {
             navigationAdapter.selectedItemId = 0
         }

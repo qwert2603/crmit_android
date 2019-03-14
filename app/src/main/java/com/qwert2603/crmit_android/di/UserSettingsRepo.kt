@@ -7,10 +7,7 @@ import androidx.annotation.WorkerThread
 import com.google.gson.Gson
 import com.qwert2603.crmit_android.entity.LoginResult
 import com.qwert2603.crmit_android.navigation.Screen
-import com.qwert2603.crmit_android.util.PrefsBoolean
-import com.qwert2603.crmit_android.util.PrefsInt
-import com.qwert2603.crmit_android.util.PrefsLoginResultNullable
-import com.qwert2603.crmit_android.util.PrefsStringNullable
+import com.qwert2603.crmit_android.util.*
 import io.reactivex.Single
 
 class UserSettingsRepo(appContext: Context) {
@@ -18,7 +15,12 @@ class UserSettingsRepo(appContext: Context) {
 
     private var accessToken by PrefsStringNullable(prefs, "accessToken")
 
-    var loginResult: LoginResult? by PrefsLoginResultNullable(prefs, "loginResult", Gson())
+    var loginResult: ObservableField<Wrapper<LoginResult>> = PreferenceUtils.createPrefsObjectObservable(
+            prefs = prefs,
+            key = "loginResult",
+            gson = Gson(),
+            defaultValue = Wrapper<LoginResult>(null)
+    )
 
     var displayFio by PrefsStringNullable(prefs, "displayFio")
 
@@ -41,9 +43,9 @@ class UserSettingsRepo(appContext: Context) {
     }
 
     fun getLoginResultOrMoveToLogin(): Single<LoginResult> = Single.create {
-        val loginResult = loginResult
-        if (!it.isDisposed && loginResult != null) {
-            it.onSuccess(loginResult)
+        val loginResult = loginResult.field
+        if (!it.isDisposed && loginResult.t != null) {
+            it.onSuccess(loginResult.t)
         } else {
             on401()
         }
@@ -57,7 +59,7 @@ class UserSettingsRepo(appContext: Context) {
 
     fun clearUserInfo() {
         accessToken = null
-        loginResult = null
+        loginResult.field = Wrapper(null)
         displayFio = null
     }
 

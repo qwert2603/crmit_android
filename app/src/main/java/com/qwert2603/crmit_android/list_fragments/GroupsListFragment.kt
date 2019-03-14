@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.item_group.view.*
 class GroupsListFragment : EntitiesListFragment<GroupBrief>() {
     override val source = DiHolder.rest::getGroupsList
 
-    override val dbDaoInterface: DaoInterface<GroupBrief> = DiHolder.groupBriefCustomOrderDao.wrap(DiHolder.userSettingsRepo.loginResult)
+    override val dbDaoInterface: DaoInterface<GroupBrief> = DiHolder.groupBriefCustomOrderDao.wrap(DiHolder.userSettingsRepo.loginResult.field.t)
 
     override val titleRes = R.string.title_groups
 

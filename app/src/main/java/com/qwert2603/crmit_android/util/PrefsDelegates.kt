@@ -1,8 +1,11 @@
 package com.qwert2603.crmit_android.util
 
 import android.content.SharedPreferences
+import androidx.core.content.edit
 import com.google.gson.Gson
-import com.qwert2603.crmit_android.entity.LoginResult
+import com.google.gson.reflect.TypeToken
+import io.reactivex.Observable
+import io.reactivex.subjects.BehaviorSubject
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
@@ -92,27 +95,55 @@ class PrefsStringNullable(
     }
 }
 
+abstract class ObservableField<T> {
+    protected val lock = Any()
 
-class PrefsLoginResultNullable(
-        private val prefs: SharedPreferences,
-        private val key: String,
-        private val gson: Gson
-) : ReadWriteProperty<Any, LoginResult?> {
+    abstract var field: T
+    abstract val changes: Observable<T>
 
-    override fun getValue(thisRef: Any, property: KProperty<*>): LoginResult? =
-            if (key in prefs) {
-                gson.fromJson(prefs.getString(key, ""), LoginResult::class.java)
-            } else {
-                null
-            }
-
-    override fun setValue(thisRef: Any, property: KProperty<*>, value: LoginResult?) {
-        prefs.makeEdit {
-            if (value != null) {
-                putString(key, gson.toJson(value))
-            } else {
-                remove(key)
-            }
+    fun updateField(updater: (T) -> T): T {
+        synchronized(lock) {
+            field = updater(field)
+            return field
         }
     }
+}
+
+object PreferenceUtils {
+
+    inline fun <reified T : Any> createPrefsObjectObservable(
+            prefs: SharedPreferences,
+            key: String,
+            gson: Gson,
+            defaultValue: T
+    ): ObservableField<T> {
+        val changes = BehaviorSubject.create<T>()
+
+        return object : ObservableField<T>() {
+            init {
+                changes.onNext(field)
+            }
+
+            override var field: T
+                get() =
+                    if (key in prefs) {
+                        try {
+                            gson.fromJson<T>(prefs.getString(key, ""), object : TypeToken<T>() {}.type)
+                        } catch (t: Throwable) {
+                            defaultValue
+                        }
+                    } else {
+                        defaultValue
+                    }
+                set(value) {
+                    synchronized(lock) {
+                        prefs.edit { putString(key, gson.toJson(value)) }
+                        changes.onNext(value)
+                    }
+                }
+
+            override val changes: Observable<T> = changes.hide()
+        }
+    }
+
 }

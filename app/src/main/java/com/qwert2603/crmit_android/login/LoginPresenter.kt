@@ -14,6 +14,7 @@ import com.qwert2603.crmit_android.rest.params.LoginParams
 import com.qwert2603.crmit_android.util.DeviceUtils
 import com.qwert2603.crmit_android.util.makePair
 import com.qwert2603.crmit_android.util.secondOfTwo
+import com.qwert2603.crmit_android.util.wrap
 import io.reactivex.Observable
 import io.reactivex.Single
 import retrofit2.HttpException
@@ -43,12 +44,12 @@ class LoginPresenter : BasePresenter<LoginView, LoginViewState>(DiHolder.uiSched
                                 }
                                 .doOnSuccess { loginResultServer ->
                                     val newLoginResult = loginResultServer.toLoginResult()
-                                    if (newLoginResult != DiHolder.userSettingsRepo.loginResult) {
+                                    if (newLoginResult != DiHolder.userSettingsRepo.loginResult.field.t) {
                                         DiHolder.clearDB()
                                         DiHolder.userSettingsRepo.clearUserInfo()
                                     }
 
-                                    DiHolder.userSettingsRepo.loginResult = newLoginResult
+                                    DiHolder.userSettingsRepo.loginResult.field = newLoginResult.wrap()
                                     DiHolder.userSettingsRepo.saveAccessToken(loginResultServer.token)
                                 }
                                 .subscribeOn(DiHolder.modelSchedulersProvider.io)

@@ -190,3 +190,25 @@ fun AlertDialog.setFontToTextViews(lifecycleOwner: LifecycleOwner): AlertDialog 
 object DeviceUtils {
     val device = "${Build.MANUFACTURER} ${Build.MODEL} Android ${Build.VERSION.RELEASE}"
 }
+
+fun <T> Observable<T>.subscribeWhileResumed(lifecycleOwner: LifecycleOwner) {
+    lifecycleOwner.lifecycle.addObserver(object : LifecycleObserver {
+        private var disposable: Disposable? = null
+
+        @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+        fun resume() {
+            disposePrev()
+            disposable = this@subscribeWhileResumed.subscribe()
+        }
+
+        @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
+        fun pause() {
+            disposePrev()
+        }
+
+        private fun disposePrev() {
+            disposable?.dispose()
+            disposable = null
+        }
+    })
+}
