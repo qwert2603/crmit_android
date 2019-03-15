@@ -31,7 +31,12 @@ class LoginPresenter : BasePresenter<LoginView, LoginViewState>(DiHolder.uiSched
                     .withLatestFrom(credentials, secondOfTwo())
                     .switchMap { (login, password) ->
                         DiHolder.rest
-                                .login(LoginParams(login, password, DeviceUtils.device))
+                                .login(LoginParams(
+                                        login = login,
+                                        password = password,
+                                        device = DeviceUtils.device,
+                                        appVersion = BuildConfig.VERSION_NAME
+                                ))
                                 .flatMap {
                                     if (it.accountType == AccountType.BOT) {
                                         Single.error(BotAccountIsNotSupportedException())

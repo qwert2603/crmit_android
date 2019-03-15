@@ -31,30 +31,30 @@ class AccessTokensListFragment : EntitiesListFragment<AccessTokensItem>() {
         fio_TextView.text = e.fio
         login_TextView.text = e.systemUser.login
         roleName_TextView.text = e.systemUser.systemRoleName
-        expiresList_TextView.text = e.expiresList.expiresListToString()
+        expiresList_TextView.text = e.tokens.listToString()
     }
 
     override var withSearch = false
 
-    private fun List<String>.expiresListToString(): SpannableStringBuilder? {
-        val textExpires = getString(R.string.text_expires)
-        return this
-                .map { expires ->
-                    // dirty, but works.
-                    val expiresString = SystemUser(
-                            id = IdentifiableLong.NO_ID,
-                            login = "",
-                            lastSeen = expires,
-                            lastSeenWhere = SystemUser.LAST_SEEN_WEB,
-                            systemRoleName = "",
-                            enabled = false
-                    ).toLastSeenString(resources)
-                    val s = "$textExpires $expiresString"
-                    val spannableString = SpannableStringBuilder(s)
-                    val foregroundColorSpan = ForegroundColorSpan(resources.color(R.color.colorAccent))
-                    spannableString.setSpan(foregroundColorSpan, textExpires.length + 1, s.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
-                    spannableString
-                }
-                .reduce { acc, s -> acc.append('\n').append(s) }
-    }
+    private fun List<AccessTokensItem.Token>.listToString(): SpannableStringBuilder = this
+            .map { token ->
+                // dirty, but works.
+                val lastUseString = SystemUser(
+                        id = IdentifiableLong.NO_ID,
+                        login = "",
+                        lastSeen = token.lastUse,
+                        lastSeenWhere = SystemUser.LAST_SEEN_WEB,
+                        systemRoleName = "",
+                        enabled = false
+                ).toLastSeenString(resources)
+
+                val s = "$lastUseString\n${token.appVersion} / ${token.device}"
+                val spannableString = SpannableStringBuilder(s)
+                val foregroundAccentSpan = ForegroundColorSpan(resources.color(R.color.colorAccent))
+                spannableString.setSpan(foregroundAccentSpan, 0, lastUseString.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                val foregroundGreySpan = ForegroundColorSpan(resources.color(R.color.gray_text))
+                spannableString.setSpan(foregroundGreySpan, lastUseString.length + 1, s.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                spannableString
+            }
+            .reduce { acc, s -> acc.append("\n\n").append(s) }
 }
