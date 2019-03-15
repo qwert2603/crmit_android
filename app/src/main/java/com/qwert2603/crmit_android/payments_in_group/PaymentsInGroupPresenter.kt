@@ -71,13 +71,7 @@ class PaymentsInGroupPresenter(private val groupId: Long, private val monthNumbe
                     if (change is LRPartialChange.InitialModelLoaded<*> && vs.groupBrief == null) {
                         val monthNumber = monthNumber ?: Date().getMonthNumber()
                         it.groupBrief!!
-                        it.copy(
-                                selectedMonth = when {
-                                    monthNumber < it.groupBrief.startMonth -> it.groupBrief.startMonth
-                                    monthNumber > it.groupBrief.endMonth -> it.groupBrief.endMonth
-                                    else -> monthNumber
-                                }
-                        )
+                        it.copy(selectedMonth = monthNumber.coerceIn(it.groupBrief.startMonth, it.groupBrief.endMonth))
                     } else {
                         it
                     }

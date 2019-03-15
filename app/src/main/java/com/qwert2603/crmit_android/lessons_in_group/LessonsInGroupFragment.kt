@@ -37,6 +37,8 @@ class LessonsInGroupFragment : LRFragment<LessonsInGroupViewState, LessonsInGrou
     @Arg
     lateinit var date: String
 
+    private var isRendering = false
+
     override fun createPresenter() = LessonsInGroupPresenter(groupId, date)
 
     override fun loadRefreshPanel(): LoadRefreshPanel = lrPanelImpl
@@ -69,9 +71,11 @@ class LessonsInGroupFragment : LRFragment<LessonsInGroupViewState, LessonsInGrou
 
     override fun dateSelected(): Observable<String> = RxViewPager.pageSelections(lessons_ViewPager)
             .skipInitialValue()
+            .filter { !isRendering }
             .mapNotNull { currentViewState.lessons?.get(it)?.date }
 
     override fun render(vs: LessonsInGroupViewState) {
+        isRendering = true
         super.render(vs)
 
         renderIfChanged({ lessons }) { lessons ->
@@ -80,7 +84,6 @@ class LessonsInGroupFragment : LRFragment<LessonsInGroupViewState, LessonsInGrou
                     override fun getItem(index: Int): Fragment = LessonDetailsFragmentBuilder.newLessonDetailsFragment(true, lessons[index].id)
                     override fun getCount() = lessons.size
                 }
-                lessons_ViewPager.currentItem = vs.selectedIndex() ?: 0
             } else {
                 lessons_ViewPager.adapter = null
             }
@@ -98,6 +101,7 @@ class LessonsInGroupFragment : LRFragment<LessonsInGroupViewState, LessonsInGrou
                 toolbar.setTitleTextColor((resources.color(if (lessons[selectedIndex].date == today) R.color.colorAccent else android.R.color.black)))
             }
         }
+        isRendering = false
     }
 
     override fun executeAction(va: ViewAction) {

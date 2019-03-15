@@ -29,6 +29,8 @@ class PaymentsInGroupFragment : LRFragment<PaymentsInGroupViewState, PaymentsInG
     @Arg(required = false)
     var monthNumber: Int? = null
 
+    private var isRendering = false
+
     override fun createPresenter() = PaymentsInGroupPresenter(groupId, monthNumber)
 
     override fun loadRefreshPanel(): LoadRefreshPanel = paymentsInGroup_LRPanelImpl
@@ -51,9 +53,11 @@ class PaymentsInGroupFragment : LRFragment<PaymentsInGroupViewState, PaymentsInG
 
     override fun monthSelected(): Observable<Int> = RxViewPager.pageSelections(months_ViewPager)
             .skipInitialValue()
+            .filter { !isRendering }
             .map { it + (currentViewState.groupBrief?.startMonth ?: 0) }
 
     override fun render(vs: PaymentsInGroupViewState) {
+        isRendering = true
         super.render(vs)
 
         renderIfChanged({ groupBrief }) { if (it != null) toolbar.title = getString(R.string.title_payments_in_group_format, it.name) }
@@ -61,7 +65,6 @@ class PaymentsInGroupFragment : LRFragment<PaymentsInGroupViewState, PaymentsInG
         renderIfChanged({ groupBrief }) { groupBrief ->
             if (groupBrief != null) {
                 months_ViewPager.adapter = MonthsAdapter(childFragmentManager, resources, groupBrief)
-                months_ViewPager.currentItem = vs.selectedMonth - (vs.groupBrief?.startMonth ?: 0)
             } else {
                 months_ViewPager.adapter = null
             }
@@ -73,6 +76,7 @@ class PaymentsInGroupFragment : LRFragment<PaymentsInGroupViewState, PaymentsInG
         renderIfChanged({ selectedMonth }) {
             months_ViewPager.setCurrentItem(it - (vs.groupBrief?.startMonth ?: 0), false)
         }
+        isRendering = false
     }
 
     override fun executeAction(va: ViewAction) {
