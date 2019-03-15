@@ -8,6 +8,7 @@ import java.lang.reflect.Proxy
 
 object ProxyUtils {
 
+    @Suppress("UNCHECKED_CAST")
     inline fun <reified T> createDoubleProxy(q1: T, q2: T): T = Proxy
             .newProxyInstance(
                     T::class.java.classLoader,
@@ -27,8 +28,7 @@ object ProxyUtils {
                                 .let { it as Single<Any> }
                                 .onErrorResumeNext(method.invoke(q2, *args) as Single<Any>)
                     }
-                    else -> null
+                    else -> throw Exception("createDoubleProxy wrong returnType ${method.returnType.canonicalName}")
                 }
             } as T
-
 }
