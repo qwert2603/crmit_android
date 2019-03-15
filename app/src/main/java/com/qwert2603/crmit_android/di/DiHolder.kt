@@ -11,6 +11,7 @@ import com.qwert2603.crmit_android.db.generated_dao.wrap
 import com.qwert2603.crmit_android.env.E
 import com.qwert2603.crmit_android.rest.AccessTokenInterceptor
 import com.qwert2603.crmit_android.rest.Rest
+import com.qwert2603.crmit_android.util.ProxyUtils
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -27,24 +28,28 @@ object DiHolder {
     val uiSchedulerProvider: UiSchedulerProvider by lazy { schedulersProvider }
     val modelSchedulersProvider: ModelSchedulersProvider by lazy { schedulersProvider }
 
-    private val okHttpClient by lazy {
-        OkHttpClient.Builder()
-                .addInterceptor(HttpLoggingInterceptor { message -> LogUtils.d("ok_http", message) }.setLevel(HttpLoggingInterceptor.Level.BODY))
-                .addInterceptor(AccessTokenInterceptor())
-                .build()
-    }
+    private fun createRest(restBaseUrl: String): Rest = Retrofit.Builder()
+            .baseUrl(restBaseUrl)
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .client(OkHttpClient.Builder()
+                    .addInterceptor(HttpLoggingInterceptor { message -> LogUtils.d("ok_http", message) }.setLevel(HttpLoggingInterceptor.Level.BODY))
+                    .addInterceptor(AccessTokenInterceptor(restBaseUrl))
+                    .build())
+            .build()
+            .create(Rest::class.java)
 
     val rest: Rest by lazy {
-        Retrofit.Builder()
-                .baseUrl(E.env.restBaseUrl)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .client(okHttpClient)
-                .build()
-                .create(Rest::class.java)
+        val rest1: Rest by lazy { createRest(E.env.restBaseUrl1) }
+        val rest2: Rest by lazy { createRest(E.env.restBaseUrl2) }
+        if (E.env.useProxy) {
+            ProxyUtils.createRxProxy(rest1, rest2)
+        } else {
+            rest2
+        }
     }
 
-    private val cicerone: Cicerone<Router>  by lazy { Cicerone.create() }
+    private val cicerone: Cicerone<Router> by lazy { Cicerone.create() }
 
     val navigatorHolder: NavigatorHolder by lazy { cicerone.navigatorHolder }
     val router: Router  by lazy { cicerone.router }

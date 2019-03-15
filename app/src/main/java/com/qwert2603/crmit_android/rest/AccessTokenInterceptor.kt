@@ -1,14 +1,13 @@
 package com.qwert2603.crmit_android.rest
 
 import com.qwert2603.crmit_android.di.DiHolder
-import com.qwert2603.crmit_android.env.E
 import okhttp3.Interceptor
 import okhttp3.Response
 
-class AccessTokenInterceptor : Interceptor {
+class AccessTokenInterceptor(private val restBaseUrl: String) : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val requestUrl = chain.request().url().toString()
-        if (requestUrl in Rest.ENDPOINT_WO_ACCESS_TOKEN.map { E.env.restBaseUrl + it }) {
+        if (requestUrl in Rest.ENDPOINT_WO_ACCESS_TOKEN.map { restBaseUrl + it }) {
             return chain.proceed(chain.request())
         }
         val accessToken = DiHolder.userSettingsRepo.getAccessTokenSafe()
