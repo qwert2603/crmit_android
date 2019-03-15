@@ -7,6 +7,8 @@ import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entity.AccountType
 import com.qwert2603.crmit_android.entity.BotAccountIsNotSupportedException
 import com.qwert2603.crmit_android.entity.Lesson
+import com.qwert2603.crmit_android.rest.params.CabinetInfoParams
+import com.qwert2603.crmit_android.util.DeviceUtils
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -83,7 +85,11 @@ class CabinetPresenter : LRPresenter<Any, CabinetInitialModel, CabinetViewState,
             }
 
     override fun initialModelSingleRefresh(additionalKey: Any): Single<CabinetInitialModel> = DiHolder.rest
-            .getCabinetInfo(LAST_LESSONS_COUNT)
+            .getCabinetInfo(CabinetInfoParams(
+                    device = DeviceUtils.device,
+                    appVersion = BuildConfig.VERSION_NAME,
+                    lastLessonsCount = LAST_LESSONS_COUNT
+            ))
             .doOnSuccess {
                 DiHolder.lessonDao.addItems(it.lastLessons)
                 DiHolder.userSettingsRepo.displayFio = it.fio

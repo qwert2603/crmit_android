@@ -1,6 +1,7 @@
 package com.qwert2603.crmit_android.rest
 
 import com.qwert2603.crmit_android.entity.*
+import com.qwert2603.crmit_android.rest.params.CabinetInfoParams
 import com.qwert2603.crmit_android.rest.params.LoginParams
 import com.qwert2603.crmit_android.rest.params.SaveAttendingStateParams
 import com.qwert2603.crmit_android.rest.params.SavePaymentParams
@@ -108,8 +109,8 @@ interface Rest {
     @GET("lessons_in_group/{group_id}")
     fun getLessonsInGroup(@Path("group_id") groupId: Long): Single<List<Lesson>>
 
-    @GET("cabinet_info")
-    fun getCabinetInfo(@Query("last_lessons_count") lastLessonsCount: Int): Single<CabinetInfoResult>
+    @POST("cabinet_info")
+    fun getCabinetInfo(@Body cabinetInfoParams: CabinetInfoParams): Single<CabinetInfoResult>
 
     @GET("lesson_details/{lesson_id}")
     fun getLessonDetails(@Path("lesson_id") lessonId: Long): Single<LessonDetailsResult>
