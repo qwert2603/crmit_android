@@ -44,7 +44,8 @@
             android:gravity="center_vertical"
             android:textColor="@android:color/black"
             android:textSize="16sp"
-            tools:text="2020 сентябрь " />
+            tools:text="2020 сентябрь "
+            tools:textColor="@color/colorAccent" />
 
     </LinearLayout>
 
