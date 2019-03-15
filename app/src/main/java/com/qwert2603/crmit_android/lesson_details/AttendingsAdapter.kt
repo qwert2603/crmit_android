@@ -10,6 +10,15 @@ import io.reactivex.subjects.PublishSubject
 
 class AttendingsAdapter : BaseRecyclerViewAdapter<Attending>() {
 
+    init {
+        // App crashed w/o this, because Attending can't be cast to AllItemsLoaded.
+        // And i don't now why it happens.
+        // AdapterList is created correctly and it returns correct items via AdapterList#get(position) method.
+        // May be new AdapterList is setted to adapter while calculating diffs for prev list.
+        // =\
+        useDiffUtils = false
+    }
+
     val attendingStateChanges = PublishSubject.create<SaveAttendingStateParams>()
 
     var uploadStatuses: Map<Long, UploadStatus> = emptyMap()

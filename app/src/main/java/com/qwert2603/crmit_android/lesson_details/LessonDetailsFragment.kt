@@ -163,7 +163,7 @@ class LessonDetailsFragment : LRFragment<LessonDetailsViewState, LessonDetailsVi
         adapter.userCanChangeAttendingState = vs.isUserCanWriteGroup()
 
         val modelList = vs.attendings ?: emptyList()
-        adapter.adapterList = BaseRecyclerViewAdapter.AdapterList(modelList, AllItemsLoaded(modelList.size).takeIf { modelList.isEmpty() })//todo
+        adapter.adapterList = BaseRecyclerViewAdapter.AdapterList(modelList, AllItemsLoaded(modelList.size))
 
         paymentsMenuItem?.isVisible = currentViewState.isNavigateToPaymentsVisible()
     }
