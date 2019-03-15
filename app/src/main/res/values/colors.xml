@@ -10,7 +10,7 @@
     <color name="gray_point">#B0B0B0</color>
 
     <color name="navigation_menu_item_background">#F8F8F8</color>
-    <color name="navigation_menu_item_background_selected">#42FF0000</color>
+    <color name="navigation_menu_item_background_selected">#37FF0000</color>
     <color name="navigation_menu_item_background_pressed">#CCCCCC</color>
 
     <color name="attending_state_was_not">#666666</color>
