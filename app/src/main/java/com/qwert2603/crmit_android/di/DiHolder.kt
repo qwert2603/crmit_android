@@ -57,6 +57,7 @@ object DiHolder {
     }
 
     val developerDaoInterface by lazy { localDB.developerDao().wrap() }
+    val botDaoInterface by lazy { localDB.botDao().wrap() }
     val masterDaoInterface by lazy { localDB.masterDao().wrap() }
     val teacherDaoInterface by lazy { localDB.teacherDao().wrap() }
     val studentBriefDaoInterface by lazy { localDB.studentBriefDao().wrap() }
@@ -75,6 +76,7 @@ object DiHolder {
     fun clearDB() {
         listOf(
                 developerDaoInterface,
+                botDaoInterface,
                 masterDaoInterface,
                 teacherDaoInterface,
                 studentBriefDaoInterface,

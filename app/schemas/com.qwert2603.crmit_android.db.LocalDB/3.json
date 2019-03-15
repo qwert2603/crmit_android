@@ -2,10 +2,72 @@
   "formatVersion": 1,
   "database": {
     "version": 3,
-    "identityHash": "8c3c5e096079a4b0a39f41bedf433082",
+    "identityHash": "ca7dbb5408664cc6721b6d5f16fd65cd",
     "entities": [
       {
         "tableName": "Developer",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `fio` TEXT NOT NULL, `systemUser_id` INTEGER NOT NULL, `systemUser_login` TEXT NOT NULL, `systemUser_lastSeen` TEXT NOT NULL, `systemUser_lastSeenWhere` INTEGER NOT NULL, `systemUser_systemRoleName` TEXT NOT NULL, `systemUser_enabled` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "fio",
+            "columnName": "fio",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "systemUser.id",
+            "columnName": "systemUser_id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "systemUser.login",
+            "columnName": "systemUser_login",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "systemUser.lastSeen",
+            "columnName": "systemUser_lastSeen",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "systemUser.lastSeenWhere",
+            "columnName": "systemUser_lastSeenWhere",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "systemUser.systemRoleName",
+            "columnName": "systemUser_systemRoleName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "systemUser.enabled",
+            "columnName": "systemUser_enabled",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "Bot",
         "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `fio` TEXT NOT NULL, `systemUser_id` INTEGER NOT NULL, `systemUser_login` TEXT NOT NULL, `systemUser_lastSeen` TEXT NOT NULL, `systemUser_lastSeenWhere` INTEGER NOT NULL, `systemUser_systemRoleName` TEXT NOT NULL, `systemUser_enabled` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
@@ -1010,7 +1072,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"8c3c5e096079a4b0a39f41bedf433082\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"ca7dbb5408664cc6721b6d5f16fd65cd\")"
     ]
   }
 }

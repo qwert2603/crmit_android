@@ -30,6 +30,18 @@
         <item quantity="many">%d преподавателей</item>
         <item quantity="other">%d преподавателей</item>
     </plurals>
+    <plurals name="developers">
+        <item quantity="one">%d разработчик</item>
+        <item quantity="few">%d разработчика</item>
+        <item quantity="many">%d разработчиков</item>
+        <item quantity="other">%d разработчиков</item>
+    </plurals>
+    <plurals name="bots">
+        <item quantity="one">%d бот</item>
+        <item quantity="few">%d бота</item>
+        <item quantity="many">%d ботов</item>
+        <item quantity="other">%d ботов</item>
+    </plurals>
     <plurals name="masters">
         <item quantity="one">%d руководитель</item>
         <item quantity="few">%d руководителя</item>

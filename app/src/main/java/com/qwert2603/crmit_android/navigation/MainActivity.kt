@@ -80,6 +80,8 @@ class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager, S
                             NavigationItem(R.drawable.ic_person_black_24dp, R.string.title_masters, Screen.Masters()),
                             NavigationItem(R.drawable.ic_person_black_24dp, R.string.title_teachers, Screen.Teachers()),
                             NavigationItem(R.drawable.ic_person_black_24dp, R.string.title_students, Screen.Students()),
+                            NavigationItem(R.drawable.ic_person_black_24dp, R.string.title_developers, Screen.Developers()).takeIf { accountType == AccountType.DEVELOPER },
+                            NavigationItem(R.drawable.ic_person_black_24dp, R.string.title_bots, Screen.Bots()).takeIf { accountType == AccountType.DEVELOPER },
                             NavigationItem(R.drawable.ic_group_black_24dp, R.string.title_sections, Screen.Sections()),
                             NavigationItem(R.drawable.ic_group_black_24dp, R.string.title_groups, Screen.Groups()),
                             NavigationItem(R.drawable.ic_schedule_black_24dp, R.string.title_last_seens, Screen.LastSeens()).takeIf { accountType == AccountType.DEVELOPER },

@@ -24,6 +24,8 @@ sealed class Screen(
     data class Sections(@Transient private val ignored: Unit? = null) : Screen({ SectionsListFragment() })
     data class Groups(@Transient private val ignored: Unit? = null) : Screen({ GroupsListFragment() })
     data class Masters(@Transient private val ignored: Unit? = null) : Screen({ MastersListFragment() })
+    data class Developers(@Transient private val ignored: Unit? = null) : Screen({ DevelopersListFragment() })
+    data class Bots(@Transient private val ignored: Unit? = null) : Screen({ BotsListFragment() })
     data class Teachers(@Transient private val ignored: Unit? = null) : Screen({ TeachersListFragment() })
     data class Students(@Transient private val ignored: Unit? = null) : Screen({ StudentsListFragment() })
     data class LastSeens(@Transient private val ignored: Unit? = null) : Screen({ LastSeensListFragment() })
@@ -42,6 +44,16 @@ sealed class Screen(
     data class MasterDetails(override val key: DetailsScreenKey) : Screen({
         MasterDetailsFragmentBuilder
                 .newMasterDetailsFragment(key.entityId, key.entityName, key.entityNameColorAccent, key.entityNameStrike)
+    }), DetailsScreen
+
+    data class DeveloperDetails(override val key: DetailsScreenKey) : Screen({
+        DeveloperDetailsFragmentBuilder
+                .newDeveloperDetailsFragment(key.entityId, key.entityName, key.entityNameColorAccent, key.entityNameStrike)
+    }), DetailsScreen
+
+    data class BotDetails(override val key: DetailsScreenKey) : Screen({
+        BotDetailsFragmentBuilder
+                .newBotDetailsFragment(key.entityId, key.entityName, key.entityNameColorAccent, key.entityNameStrike)
     }), DetailsScreen
 
     data class TeacherDetails(override val key: DetailsScreenKey) : Screen({

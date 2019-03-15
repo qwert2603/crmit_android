@@ -139,7 +139,7 @@ class CabinetFragment : BaseFragment<CabinetViewState, CabinetView, CabinetPrese
                         when (va.accountType) {
                             AccountType.MASTER -> Screen.MasterDetails(detailsScreenKey)
                             AccountType.TEACHER -> Screen.TeacherDetails(detailsScreenKey)
-                            AccountType.DEVELOPER -> Screen.About()//todo
+                            AccountType.DEVELOPER -> Screen.DeveloperDetails(detailsScreenKey)
                             AccountType.BOT -> throw BotAccountIsNotSupportedException()
                         }
                 )
