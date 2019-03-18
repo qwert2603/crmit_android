@@ -98,6 +98,7 @@ class LoginPresenter : BasePresenter<LoginView, LoginViewState>(DiHolder.uiSched
                     }
                 }
                 .toObservable()
+                .onErrorResumeNext(Observable.empty())
                 .subscribeToView()
 
         super.bindIntents()
