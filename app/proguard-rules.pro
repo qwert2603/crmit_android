@@ -55,3 +55,8 @@
 -keep class com.qwert2603.crmit_android.entity.** { *; }
 -keep class com.qwert2603.crmit_android.rest.params.** { *; }
 -keep class com.qwert2603.crmit_android.rest.results.** { *; }
+
+# for FirebaseAnalytics
+-keepattributes InnerClasses
+-keepnames class ru.terrakok.cicerone.commands.** { *; }
+-keepnames class com.qwert2603.crmit_android.navigation.Screen$* { *; }
