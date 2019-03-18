@@ -90,7 +90,7 @@ class LessonsInGroupFragment : LRFragment<LessonsInGroupViewState, LessonsInGrou
 
             lessons_ViewPager.setVisible(lessons != null)
         }
-        renderIfChanged({ selectedIndex() }) { selectedIndex ->
+        renderIfChangedTwo({ selectedIndex() to lessons }) { (selectedIndex, _) ->
             lessons_ViewPager.setCurrentItem(selectedIndex ?: 0, false)
         }
 

@@ -14,6 +14,7 @@ import com.qwert2603.andrlib.base.mvi.load_refresh.LoadRefreshPanel
 import com.qwert2603.andrlib.model.IdentifiableLong
 import com.qwert2603.andrlib.util.inflate
 import com.qwert2603.andrlib.util.renderIfChanged
+import com.qwert2603.andrlib.util.renderIfChangedTwo
 import com.qwert2603.andrlib.util.setVisible
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.util.SaveImageLifecycleObserver
@@ -73,8 +74,8 @@ class PaymentsInGroupFragment : LRFragment<PaymentsInGroupViewState, PaymentsInG
             months_TabLayout.setVisible(show)
             months_ViewPager.setVisible(show)
         }
-        renderIfChanged({ selectedMonth }) {
-            months_ViewPager.setCurrentItem(it - (vs.groupBrief?.startMonth ?: 0), false)
+        renderIfChangedTwo({ selectedMonth to groupBrief }) { (selectedMonth, _) ->
+            months_ViewPager.setCurrentItem(selectedMonth - (vs.groupBrief?.startMonth ?: 0), false)
         }
         isRendering = false
     }

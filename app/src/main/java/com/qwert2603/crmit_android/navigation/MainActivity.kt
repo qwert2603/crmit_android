@@ -149,7 +149,10 @@ class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager, S
         headerNavigation.navigation_recyclerView.adapter = navigationAdapter
 
         navigationAdapter.modelItemClicks
-                .doOnNext { navigateToItem(it, true) }
+                .doOnNext {
+                    navigationAdapter.selectedScreen = it.screen
+                    navigateToItem(it, true)
+                }
                 .subscribeWhileResumed(this)
 
         navigationAdapter.modelItemLongClicks
