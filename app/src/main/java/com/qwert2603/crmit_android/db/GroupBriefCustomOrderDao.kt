@@ -5,10 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.qwert2603.andrlib.model.IdentifiableLong
-import com.qwert2603.crmit_android.entity.AccountType
-import com.qwert2603.crmit_android.entity.BotAccountIsNotSupportedException
-import com.qwert2603.crmit_android.entity.GroupBrief
-import com.qwert2603.crmit_android.entity.LoginResult
+import com.qwert2603.crmit_android.entity.*
 
 @Dao
 interface GroupBriefCustomOrderDao {
@@ -41,6 +38,7 @@ private class GroupBriefCustomOrderDaoWrapper(loginResult: LoginResult?, private
         AccountType.TEACHER -> loginResult.detailsId
         AccountType.DEVELOPER -> IdentifiableLong.NO_ID
         AccountType.BOT -> throw BotAccountIsNotSupportedException()
+        AccountType.STUDENT -> throw StudentAccountIsNotSupportedException()
         null -> IdentifiableLong.NO_ID
     }
 

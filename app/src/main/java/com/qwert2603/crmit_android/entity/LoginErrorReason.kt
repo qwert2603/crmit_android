@@ -4,6 +4,7 @@ import androidx.annotation.StringRes
 import com.qwert2603.crmit_android.R
 
 class BotAccountIsNotSupportedException : Exception()
+class StudentAccountIsNotSupportedException : Exception()
 
 enum class LoginErrorReason(@StringRes val descriptionRes: Int) {
     WRONG_LOGIN_OR_PASSWORD(R.string.login_error_reason_wrong_login_or_password),

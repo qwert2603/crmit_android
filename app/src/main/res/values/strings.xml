@@ -116,6 +116,7 @@
     <string name="account_type_teacher">Преподаватель</string>
     <string name="account_type_developer">Разработчик</string>
     <string name="account_type_bot">Бот</string>
+    <string name="account_type_student">Ученик</string>
 
     <string name="date_pattern_last_seen_date">d MMMM yyyy года</string>
     <string name="date_pattern_last_seen_time">в H:mm</string>

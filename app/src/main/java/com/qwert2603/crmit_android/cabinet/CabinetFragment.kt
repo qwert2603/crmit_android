@@ -20,6 +20,7 @@ import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.dialogs.UpdateAvailableDialog
 import com.qwert2603.crmit_android.entity.AccountType
 import com.qwert2603.crmit_android.entity.BotAccountIsNotSupportedException
+import com.qwert2603.crmit_android.entity.StudentAccountIsNotSupportedException
 import com.qwert2603.crmit_android.navigation.DetailsScreenKey
 import com.qwert2603.crmit_android.navigation.KeyboardManager
 import com.qwert2603.crmit_android.navigation.Screen
@@ -100,6 +101,7 @@ class CabinetFragment : BaseFragment<CabinetViewState, CabinetView, CabinetPrese
                 AccountType.TEACHER -> R.string.text_your_last_lessons
                 AccountType.DEVELOPER -> R.string.text_last_lessons
                 AccountType.BOT -> throw BotAccountIsNotSupportedException()
+                AccountType.STUDENT -> throw StudentAccountIsNotSupportedException()
             })
         }
         vs.lastLessons?.let {
@@ -141,6 +143,7 @@ class CabinetFragment : BaseFragment<CabinetViewState, CabinetView, CabinetPrese
                             AccountType.TEACHER -> Screen.TeacherDetails(detailsScreenKey)
                             AccountType.DEVELOPER -> Screen.DeveloperDetails(detailsScreenKey)
                             AccountType.BOT -> throw BotAccountIsNotSupportedException()
+                            AccountType.STUDENT -> throw StudentAccountIsNotSupportedException()
                         }
                 )
             }

@@ -1,5 +1,6 @@
 package com.qwert2603.crmit_android.list_fragments
 
+import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
@@ -11,7 +12,10 @@ import com.qwert2603.crmit_android.db.EmptyDaoInterface
 import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entities_list.EntitiesListFragment
 import com.qwert2603.crmit_android.entity.AccessTokensItem
+import com.qwert2603.crmit_android.entity.AccountType
 import com.qwert2603.crmit_android.entity.SystemUser
+import com.qwert2603.crmit_android.navigation.DetailsScreenKey
+import com.qwert2603.crmit_android.navigation.Screen
 import com.qwert2603.crmit_android.util.toLastSeenString
 import kotlinx.android.synthetic.main.item_access_token.view.*
 
@@ -36,6 +40,27 @@ class AccessTokensListFragment : EntitiesListFragment<AccessTokensItem>() {
 
     override var withSearch = false
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        adapter.modelItemClicks
+                .subscribe {
+                    val detailsScreenKey = DetailsScreenKey(
+                            entityId = it.detailsId,
+                            entityName = it.fio
+                    )
+                    DiHolder.router.navigateTo(when (it.systemUser.accountType) {
+                        AccountType.MASTER -> Screen.MasterDetails(detailsScreenKey)
+                        AccountType.TEACHER -> Screen.TeacherDetails(detailsScreenKey)
+                        AccountType.DEVELOPER -> Screen.DeveloperDetails(detailsScreenKey)
+                        AccountType.BOT -> Screen.BotDetails(detailsScreenKey)
+                        AccountType.STUDENT -> Screen.StudentDetails(detailsScreenKey)
+                    })
+                }
+                .disposeOnDestroyView()
+
+        super.onViewCreated(view, savedInstanceState)
+    }
+
     private fun List<AccessTokensItem.Token>.listToString(): SpannableStringBuilder = this
             .map { token ->
                 // dirty, but works.
@@ -45,6 +70,7 @@ class AccessTokensListFragment : EntitiesListFragment<AccessTokensItem>() {
                         lastSeen = token.lastUse,
                         lastSeenWhere = SystemUser.LAST_SEEN_WEB,
                         systemRoleName = "",
+                        accountType = AccountType.MASTER,
                         enabled = false
                 ).toLastSeenString(resources)
 

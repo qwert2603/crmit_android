@@ -7,6 +7,7 @@ import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entity.AccountType
 import com.qwert2603.crmit_android.entity.BotAccountIsNotSupportedException
 import com.qwert2603.crmit_android.entity.Lesson
+import com.qwert2603.crmit_android.entity.StudentAccountIsNotSupportedException
 import com.qwert2603.crmit_android.rest.params.CabinetInfoParams
 import com.qwert2603.crmit_android.util.DeviceUtils
 import io.reactivex.Completable
@@ -31,6 +32,7 @@ class CabinetPresenter : LRPresenter<Any, CabinetInitialModel, CabinetViewState,
                     AccountType.TEACHER -> DiHolder.teacherDaoInterface.getItem(loginResult.detailsId)?.fio
                     AccountType.DEVELOPER -> DiHolder.developerDaoInterface.getItem(loginResult.detailsId)?.fio
                     AccountType.BOT -> throw BotAccountIsNotSupportedException()
+                    AccountType.STUDENT -> throw StudentAccountIsNotSupportedException()
                 } ?: DiHolder.userSettingsRepo.displayFio!!
             }
             .doOnSuccess { DiHolder.userSettingsRepo.displayFio = it }
@@ -43,6 +45,7 @@ class CabinetPresenter : LRPresenter<Any, CabinetInitialModel, CabinetViewState,
                     AccountType.TEACHER -> DiHolder.lastLessonDao.getLastLessonsForTeacher(loginResult.detailsId, LAST_LESSONS_COUNT)
                     AccountType.DEVELOPER -> DiHolder.lastLessonDao.getLastLessons(LAST_LESSONS_COUNT)
                     AccountType.BOT -> throw BotAccountIsNotSupportedException()
+                    AccountType.STUDENT -> throw StudentAccountIsNotSupportedException()
                 }
             }
             .subscribeOn(DiHolder.modelSchedulersProvider.io)

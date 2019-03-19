@@ -1,11 +1,15 @@
 package com.qwert2603.crmit_android.list_fragments
 
+import android.os.Bundle
 import android.view.View
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.db.EmptyDaoInterface
 import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.entities_list.EntitiesListFragment
+import com.qwert2603.crmit_android.entity.AccountType
 import com.qwert2603.crmit_android.entity.LastSeenItem
+import com.qwert2603.crmit_android.navigation.DetailsScreenKey
+import com.qwert2603.crmit_android.navigation.Screen
 import com.qwert2603.crmit_android.util.toLastSeenString
 import kotlinx.android.synthetic.main.item_last_seen.view.*
 
@@ -29,4 +33,24 @@ class LastSeensListFragment : EntitiesListFragment<LastSeenItem>() {
     }
 
     override var withSearch = false
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        adapter.modelItemClicks
+                .subscribe {
+                    val detailsScreenKey = DetailsScreenKey(
+                            entityId = it.detailsId,
+                            entityName = it.fio
+                    )
+                    DiHolder.router.navigateTo(when (it.systemUser.accountType) {
+                        AccountType.MASTER -> Screen.MasterDetails(detailsScreenKey)
+                        AccountType.TEACHER -> Screen.TeacherDetails(detailsScreenKey)
+                        AccountType.DEVELOPER -> Screen.DeveloperDetails(detailsScreenKey)
+                        AccountType.BOT -> Screen.BotDetails(detailsScreenKey)
+                        AccountType.STUDENT -> Screen.StudentDetails(detailsScreenKey)
+                    })
+                }
+                .disposeOnDestroyView()
+
+        super.onViewCreated(view, savedInstanceState)
+    }
 }

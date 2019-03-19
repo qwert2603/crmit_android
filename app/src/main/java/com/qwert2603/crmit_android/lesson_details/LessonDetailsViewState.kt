@@ -21,6 +21,7 @@ data class LessonDetailsViewState(
         AccountType.TEACHER -> authedUserDetailsId != null && authedUserDetailsId == groupBrief?.teacherId
         AccountType.DEVELOPER -> true
         AccountType.BOT -> throw BotAccountIsNotSupportedException()
+        AccountType.STUDENT -> throw StudentAccountIsNotSupportedException()
         null -> false
     }
 

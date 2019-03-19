@@ -8,6 +8,7 @@ data class SystemUser(
         val lastSeen: String,
         val lastSeenWhere: Int,
         val systemRoleName: String,
+        val accountType: AccountType,
         val enabled: Boolean
 ) : IdentifiableLong {
     companion object {

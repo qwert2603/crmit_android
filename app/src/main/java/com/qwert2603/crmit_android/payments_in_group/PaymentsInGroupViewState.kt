@@ -6,6 +6,7 @@ import com.qwert2603.andrlib.generator.GenerateLRChanger
 import com.qwert2603.crmit_android.entity.AccountType
 import com.qwert2603.crmit_android.entity.BotAccountIsNotSupportedException
 import com.qwert2603.crmit_android.entity.GroupBrief
+import com.qwert2603.crmit_android.entity.StudentAccountIsNotSupportedException
 
 @GenerateLRChanger
 data class PaymentsInGroupViewState(
@@ -20,6 +21,7 @@ data class PaymentsInGroupViewState(
         AccountType.TEACHER -> authedUserDetailsId != null && authedUserDetailsId == groupBrief?.teacherId
         AccountType.DEVELOPER -> true
         AccountType.BOT -> throw BotAccountIsNotSupportedException()
+        AccountType.STUDENT -> throw StudentAccountIsNotSupportedException()
         null -> false
     }
 }

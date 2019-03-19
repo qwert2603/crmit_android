@@ -8,4 +8,5 @@ enum class AccountType(@StringRes val displayNameRes: Int) {
     TEACHER(R.string.account_type_teacher),
     DEVELOPER(R.string.account_type_developer),
     BOT(R.string.account_type_bot),
+    STUDENT(R.string.account_type_student),
 }

@@ -3,6 +3,7 @@ package com.qwert2603.crmit_android.db
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.qwert2603.crmit_android.db.converters.AccountTypeConverter
 import com.qwert2603.crmit_android.db.converters.GroupBriefListConverter
 import com.qwert2603.crmit_android.db.converters.ScheduleItemListConverter
 import com.qwert2603.crmit_android.db.converters.StringListConverter
@@ -25,10 +26,15 @@ import com.qwert2603.crmit_android.entity.*
             Attending::class,
             Payment::class
         ],
-        version = 3,
+        version = 4,
         exportSchema = true
 )
-@TypeConverters(GroupBriefListConverter::class, StringListConverter::class, ScheduleItemListConverter::class)
+@TypeConverters(
+        GroupBriefListConverter::class,
+        StringListConverter::class,
+        ScheduleItemListConverter::class,
+        AccountTypeConverter::class
+)
 abstract class LocalDB : RoomDatabase() {
     abstract fun developerDao(): DeveloperDao
     abstract fun botDao(): BotDao
