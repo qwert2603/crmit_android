@@ -89,5 +89,11 @@ class CrmitApplication : Application() {
 
         Flutter.startInitialization(this)
         GeneratedPluginRegistrant.flutterInterface = FlutterInterfaceImpl
+
+        // $ cd ../crmit_android_flutter
+        // $ flutter clean
+        // $ cd .android/
+        // $ ./gradlew clean
+        // $ ./gradlew assembleDebug
     }
 }
