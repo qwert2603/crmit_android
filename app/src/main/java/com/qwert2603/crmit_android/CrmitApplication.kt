@@ -15,6 +15,8 @@ import com.qwert2603.andrlib.util.LogUtils
 import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.env.E
 import com.qwert2603.crmit_android.util.NoCacheException
+import io.flutter.facade.Flutter
+import io.flutter.plugins.GeneratedPluginRegistrant
 import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.plugins.RxJavaPlugins
@@ -84,5 +86,8 @@ class CrmitApplication : Application() {
                     FirebaseAnalytics.getInstance(this)
                             .setUserProperty("loginResult", it ?: "n/a")
                 }
+
+        Flutter.startInitialization(this)
+        GeneratedPluginRegistrant.flutterInterface = FlutterInterfaceImpl
     }
 }

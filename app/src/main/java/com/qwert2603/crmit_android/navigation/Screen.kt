@@ -10,6 +10,7 @@ import com.qwert2603.crmit_android.lessons_in_group.LessonsInGroupFragmentBuilde
 import com.qwert2603.crmit_android.list_fragments.*
 import com.qwert2603.crmit_android.login.LoginFragment
 import com.qwert2603.crmit_android.payments_in_group.PaymentsInGroupFragmentBuilder
+import io.flutter.facade.Flutter
 import ru.terrakok.cicerone.android.support.SupportAppScreen
 import java.io.Serializable
 
@@ -97,4 +98,6 @@ sealed class Screen(
     data class Greeting(@Transient private val ignored: Unit? = null) : Screen({ GreetingFragment() }, allowDrawer = false)
     data class Login(@Transient private val ignored: Unit? = null) : Screen({ LoginFragment() }, allowDrawer = false)
     data class Cabinet(@Transient private val ignored: Unit? = null) : Screen({ CabinetFragment() })
+
+    data class Schedule(val isRoot: Boolean) : Screen({ Flutter.createFragment(if (isRoot) "root" else "not_root") })
 }
