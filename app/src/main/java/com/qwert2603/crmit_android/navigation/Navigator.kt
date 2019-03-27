@@ -11,14 +11,10 @@ import androidx.core.view.ViewGroupCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.hannesdorfmann.fragmentargs.FragmentArgs
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.login.LoginFragment
-import io.flutter.facade.FlutterFragment
 import ru.terrakok.cicerone.android.support.SupportAppNavigator
 import ru.terrakok.cicerone.commands.*
 
@@ -51,19 +47,6 @@ class Navigator(private val activity: ActivityInterface)
 
                     @SuppressLint("RtlHardcoded")
                     override fun onFragmentCreated(fm: FragmentManager, f: Fragment, savedInstanceState: Bundle?) {
-                        if (f is FlutterFragment) {
-                            f.lifecycle.addObserver(object : LifecycleObserver {
-                                @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-                                fun resume() {
-                                    (f.requireActivity() as StatusBarActivity).setStatusBarBlack(true)
-                                }
-
-                                @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
-                                fun pause() {
-                                    (f.requireActivity() as StatusBarActivity).setStatusBarBlack(false)
-                                }
-                            })
-                        } else {
                             f.exitTransition = Slide(Gravity.LEFT)
                                     .also { it.duration = TRANSITION_DURATION }
                             f.enterTransition = Slide(if (fm.backStackEntryCount > 0 || f is LoginFragment) Gravity.RIGHT else Gravity.LEFT)
@@ -72,7 +55,6 @@ class Navigator(private val activity: ActivityInterface)
                                     .inflateTransition(R.transition.shared_element)
                             f.sharedElementEnterTransition = sharedElementTransition
                             f.sharedElementReturnTransition = sharedElementTransition
-                        }
                     }
                 },
                 false
@@ -82,12 +64,10 @@ class Navigator(private val activity: ActivityInterface)
     @SuppressLint("RtlHardcoded")
     override fun setupFragmentTransaction(command: Command, currentFragment: Fragment?, nextFragment: Fragment, fragmentTransaction: FragmentTransaction) {
         currentFragment
-                ?.takeIf { it !is FlutterFragment }
                 ?.exitTransition = Slide(Gravity.LEFT)
                 .also { it.duration = TRANSITION_DURATION }
         nextFragment
-                .takeIf { it !is FlutterFragment }
-                ?.enterTransition = Slide(if (command is Forward || nextFragment is LoginFragment) Gravity.RIGHT else Gravity.LEFT)
+                .enterTransition = Slide(if (command is Forward || nextFragment is LoginFragment) Gravity.RIGHT else Gravity.LEFT)
                 .also { it.duration = TRANSITION_DURATION }
 
         command

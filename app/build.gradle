@@ -79,8 +79,6 @@ dependencies {
     annotationProcessor project(":dao_generator")
     kapt project(":dao_generator")
 
-    implementation project(':flutter')
-
     ext.andrlib_version = '1.14.2'
     ext.andrlib_generator_version = '1.2.0'
 

@@ -239,6 +239,7 @@ class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager, S
                             else -> R.drawable.ic_arrow_back_24dp
                         })
                         setNavigationOnClickListener {
+                            // todo: to separated method.
                             if (isRoot) {
                                 hideKeyboard()
                                 activity_DrawerLayout.openDrawer(GravityCompat.START)

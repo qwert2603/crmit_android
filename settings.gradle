@@ -1,6 +1,1 @@
 include ':app', ':dao_generator'
-setBinding(new Binding([gradle: this]))
-evaluate(new File(
-        settingsDir.parentFile,
-        'crmit_android_flutter/.android/include_flutter.groovy'
-))

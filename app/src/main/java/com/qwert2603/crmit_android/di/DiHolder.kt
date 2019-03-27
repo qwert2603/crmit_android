@@ -6,7 +6,6 @@ import com.qwert2603.andrlib.schedulers.ModelSchedulersProvider
 import com.qwert2603.andrlib.schedulers.UiSchedulerProvider
 import com.qwert2603.andrlib.util.LogUtils
 import com.qwert2603.crmit_android.CrmitApplication
-import com.qwert2603.crmit_android.FlutterInterfaceImpl
 import com.qwert2603.crmit_android.db.LocalDB
 import com.qwert2603.crmit_android.db.generated_dao.wrap
 import com.qwert2603.crmit_android.env.E
@@ -96,8 +95,6 @@ object DiHolder {
         attendingDao.clearTable()
         paymentDao.clearTable()
         groupBriefCustomOrderDao.clearTable()
-
-        FlutterInterfaceImpl.cacheDirFile.deleteRecursively()
     }
 
     val userSettingsRepo by lazy { UserSettingsRepo(CrmitApplication.APP_CONTEXT) }
