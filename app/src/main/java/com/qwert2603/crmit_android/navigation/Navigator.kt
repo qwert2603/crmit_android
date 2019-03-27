@@ -47,14 +47,14 @@ class Navigator(private val activity: ActivityInterface)
 
                     @SuppressLint("RtlHardcoded")
                     override fun onFragmentCreated(fm: FragmentManager, f: Fragment, savedInstanceState: Bundle?) {
-                            f.exitTransition = Slide(Gravity.LEFT)
-                                    .also { it.duration = TRANSITION_DURATION }
-                            f.enterTransition = Slide(if (fm.backStackEntryCount > 0 || f is LoginFragment) Gravity.RIGHT else Gravity.LEFT)
-                                    .also { it.duration = TRANSITION_DURATION }
-                            val sharedElementTransition = TransitionInflater.from(f.requireContext())
-                                    .inflateTransition(R.transition.shared_element)
-                            f.sharedElementEnterTransition = sharedElementTransition
-                            f.sharedElementReturnTransition = sharedElementTransition
+                        f.exitTransition = Slide(Gravity.LEFT)
+                                .also { it.duration = TRANSITION_DURATION }
+                        f.enterTransition = Slide(if (fm.backStackEntryCount > 0 || f is LoginFragment) Gravity.RIGHT else Gravity.LEFT)
+                                .also { it.duration = TRANSITION_DURATION }
+                        val sharedElementTransition = TransitionInflater.from(f.requireContext())
+                                .inflateTransition(R.transition.shared_element)
+                        f.sharedElementEnterTransition = sharedElementTransition
+                        f.sharedElementReturnTransition = sharedElementTransition
                     }
                 },
                 false
