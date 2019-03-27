@@ -86,7 +86,6 @@ class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager, S
                             NavigationItem(R.drawable.ic_group_black_24dp, R.string.title_groups, Screen.Groups()),
                             NavigationItem(R.drawable.ic_schedule_black_24dp, R.string.title_last_seens, Screen.LastSeens()).takeIf { accountType == AccountType.DEVELOPER },
                             NavigationItem(R.drawable.ic_schedule_black_24dp, R.string.title_access_token, Screen.AccessTokens()).takeIf { accountType == AccountType.DEVELOPER },
-                            NavigationItem(R.drawable.ic_date_range_black_24dp, R.string.title_schedule, Screen.Schedule(true)),
                             NavigationItem(R.drawable.ic_info_black_24dp, R.string.title_about, Screen.About())
                     )
                 } else {
@@ -193,18 +192,10 @@ class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager, S
 
     private fun navigateToItem(navigationItem: NavigationItem, newRootScreen: Boolean) {
         closeDrawer()
-        if (navigationItem.screen is Screen.Schedule) {
-            if (newRootScreen) {
-                router.newRootScreen(Screen.Schedule(true))
-            } else {
-                router.navigateTo(Screen.Schedule(false))
-            }
+        if (newRootScreen) {
+            router.newRootScreen(navigationItem.screen)
         } else {
-            if (newRootScreen) {
-                router.newRootScreen(navigationItem.screen)
-            } else {
-                router.navigateTo(navigationItem.screen)
-            }
+            router.navigateTo(navigationItem.screen)
         }
     }
 
@@ -239,7 +230,6 @@ class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager, S
                             else -> R.drawable.ic_arrow_back_24dp
                         })
                         setNavigationOnClickListener {
-                            // todo: to separated method.
                             if (isRoot) {
                                 hideKeyboard()
                                 activity_DrawerLayout.openDrawer(GravityCompat.START)
