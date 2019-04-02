@@ -265,8 +265,6 @@ class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager, S
         (getSystemService(Service.INPUT_METHOD_SERVICE) as InputMethodManager).showSoftInput(editText, 0)
     }
 
-    override fun isKeyBoardShown() = activityRoot_FrameLayout.height < resources.displayMetrics.heightPixels - resources.toPx(30)
-
     override fun setStatusBarBlack(black: Boolean) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             window.decorView.systemUiVisibility = if (black) 0 else View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
