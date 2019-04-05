@@ -21,8 +21,8 @@ android {
         applicationId "com.qwert2603.crmit_android"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 7
-        versionName "1.2.3"
+        versionCode 8
+        versionName "1.2.4"
         buildConfigField "Long", "BIULD_TIME", System.currentTimeMillis() + "L"
 
         resConfigs "ru"
