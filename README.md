@@ -6,5 +6,4 @@ Android client for CRM CMIT https://github.com/qwert2603/crmit
 
 ## Demo screens
 
-![](https://github.com/qwert2603/crmit_android/blob/master/art/1.png)
-![](https://github.com/qwert2603/crmit_android/blob/master/art/2.png)
+![](https://github.com/qwert2603/crmit_android/blob/master/art/5.png)
