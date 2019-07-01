@@ -9,6 +9,7 @@ import com.qwert2603.crmit_android.CrmitApplication
 import com.qwert2603.crmit_android.db.LocalDB
 import com.qwert2603.crmit_android.db.generated_dao.wrap
 import com.qwert2603.crmit_android.env.E
+import com.qwert2603.crmit_android.navigation.Screen
 import com.qwert2603.crmit_android.rest.AccessTokenInterceptor
 import com.qwert2603.crmit_android.rest.Rest
 import com.qwert2603.crmit_android.util.ProxyUtils
@@ -20,6 +21,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import ru.terrakok.cicerone.Cicerone
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
+import java.io.File
 
 object DiHolder {
 
@@ -53,6 +55,11 @@ object DiHolder {
 
     val navigatorHolder: NavigatorHolder by lazy { cicerone.navigatorHolder }
     val router: Router  by lazy { cicerone.router }
+
+    val flutterCacheDir: File by lazy {
+        File(CrmitApplication.APP_CONTEXT.cacheDir, "flutter_cache")
+                .also { it.mkdirs() }
+    }
 
     private val localDB by lazy {
         Room
@@ -100,4 +107,17 @@ object DiHolder {
     val userSettingsRepo by lazy { UserSettingsRepo(CrmitApplication.APP_CONTEXT) }
 
     val resources: Resources by lazy { CrmitApplication.APP_CONTEXT.resources }
+
+    fun on401() {
+        userSettingsRepo.clearAccessToken()
+        uiSchedulerProvider.ui.scheduleDirect {
+            router.newRootScreen(Screen.Login())
+        }
+    }
+
+    fun clearAllData() {
+        userSettingsRepo.clearUserInfo()
+        clearDB()
+        flutterCacheDir.deleteRecursively()
+    }
 }

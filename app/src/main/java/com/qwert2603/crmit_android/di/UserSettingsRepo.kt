@@ -48,13 +48,7 @@ class UserSettingsRepo(appContext: Context) {
         if (!it.isDisposed && loginResult.t != null) {
             it.onSuccess(loginResult.t)
         } else {
-            on401()
-        }
-    }
-
-    fun on401() {
-        DiHolder.uiSchedulerProvider.ui.scheduleDirect {
-            DiHolder.router.newRootScreen(Screen.Login())
+            DiHolder.on401()
         }
     }
 

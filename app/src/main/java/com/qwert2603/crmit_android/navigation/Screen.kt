@@ -97,4 +97,6 @@ sealed class Screen(
     data class Greeting(@Transient private val ignored: Unit? = null) : Screen({ GreetingFragment() }, allowDrawer = false)
     data class Login(@Transient private val ignored: Unit? = null) : Screen({ LoginFragment() }, allowDrawer = false)
     data class Cabinet(@Transient private val ignored: Unit? = null) : Screen({ CabinetFragment() })
+
+    data class Schedule(@Transient private val ignored: Unit? = null) : Screen({ null!! })
 }

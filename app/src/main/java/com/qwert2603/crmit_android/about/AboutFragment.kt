@@ -30,7 +30,6 @@ class AboutFragment : Fragment() {
         @Suppress("DEPRECATION")
         appInfo_TextView.text = Html.fromHtml(getString(R.string.app_info_text_format,
                 BuildConfig.VERSION_NAME,
-                BuildConfig.VERSION_CODE,
                 SimpleDateFormat("d MMMM yyyy", Locale.getDefault()).format(Date(BuildConfig.BIULD_TIME)),
                 SimpleDateFormat("H:mm", Locale.getDefault()).format(Date(BuildConfig.BIULD_TIME))
         ))
@@ -44,8 +43,8 @@ class AboutFragment : Fragment() {
         }
         clearAll_Button.setOnClickListener { _ ->
             DiHolder.modelSchedulersProvider.io.scheduleDirect {
+                DiHolder.clearAllData()
                 DiHolder.userSettingsRepo.clearAll()
-                DiHolder.clearDB()
 
                 DiHolder.uiSchedulerProvider.ui.scheduleDirect {
                     val intent = Intent(requireContext(), MainActivity::class.java)

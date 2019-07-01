@@ -47,8 +47,7 @@ class LoginPresenter : BasePresenter<LoginView, LoginViewState>(DiHolder.uiSched
                                 .doOnSuccess { loginResultServer ->
                                     val newLoginResult = loginResultServer.toLoginResult()
                                     if (newLoginResult != DiHolder.userSettingsRepo.loginResult.field.t) {
-                                        DiHolder.clearDB()
-                                        DiHolder.userSettingsRepo.clearUserInfo()
+                                        DiHolder.clearAllData()
                                     }
 
                                     DiHolder.userSettingsRepo.loginResult.field = newLoginResult.wrap()
@@ -60,7 +59,7 @@ class LoginPresenter : BasePresenter<LoginView, LoginViewState>(DiHolder.uiSched
                                     val loginErrorReason = when {
                                         it is BotAccountIsNotSupportedException -> LoginErrorReason.BOT_ACCOUNT_IN_NOT_SUPPORTED
                                         it is HttpException && it.code() == Rest.RESPONSE_CODE_BAD_REQUEST -> try {
-                                            val string = it.response().errorBody()!!.string()
+                                            val string = it.response()!!.errorBody()!!.string()
                                             Gson().fromJson(string, LoginResultError::class.java).loginErrorReason
                                         } catch (t: Throwable) {
                                             LogUtils.e("login error", t)

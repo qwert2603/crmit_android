@@ -63,8 +63,7 @@ class CabinetPresenter : LRPresenter<Any, CabinetInitialModel, CabinetViewState,
                                 .merge(listOf(
                                         DiHolder.rest.logout().onErrorComplete(),
                                         Completable.fromAction {
-                                            DiHolder.userSettingsRepo.clearUserInfo()
-                                            DiHolder.clearDB()
+                                            DiHolder.clearAllData()
                                         }
                                 ))
                                 .doOnComplete { viewActions.onNext(CabinetViewAction.MoveToLogin) }

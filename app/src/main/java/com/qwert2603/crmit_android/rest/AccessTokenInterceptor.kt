@@ -12,7 +12,7 @@ class AccessTokenInterceptor(private val restBaseUrl: String) : Interceptor {
         }
         val accessToken = DiHolder.userSettingsRepo.getAccessTokenSafe()
         if (accessToken == null) {
-            DiHolder.userSettingsRepo.on401()
+            DiHolder.on401()
             throw Exception("DiHolder.userSettingsRepo.loginResult == null")
         }
         val request = chain.request()
@@ -27,8 +27,7 @@ class AccessTokenInterceptor(private val restBaseUrl: String) : Interceptor {
                 .build()
         val response = chain.proceed(request)
         if (response.code() == Rest.RESPONSE_CODE_UNAUTHORIZED) {
-            DiHolder.userSettingsRepo.clearAccessToken()
-            DiHolder.userSettingsRepo.on401()
+            DiHolder.on401()
         }
         return response
     }

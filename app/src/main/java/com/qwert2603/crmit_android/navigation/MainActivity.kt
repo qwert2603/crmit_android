@@ -14,12 +14,16 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.qwert2603.andrlib.base.recyclerview.BaseRecyclerViewAdapter
-import com.qwert2603.andrlib.util.*
+import com.qwert2603.andrlib.util.LogUtils
+import com.qwert2603.andrlib.util.color
+import com.qwert2603.andrlib.util.drawable
+import com.qwert2603.andrlib.util.inflate
 import com.qwert2603.crmit_android.R
 import com.qwert2603.crmit_android.di.DiHolder
 import com.qwert2603.crmit_android.dialogs.MarkInPlayMarketDialog
 import com.qwert2603.crmit_android.dialogs.WhatsNewDialog
 import com.qwert2603.crmit_android.entity.AccountType
+import com.qwert2603.crmit_android.flutter.MyFlutterActivity
 import com.qwert2603.crmit_android.util.disposeOnDestroy
 import com.qwert2603.crmit_android.util.subscribeWhileResumed
 import io.reactivex.Single
@@ -84,6 +88,7 @@ class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager, S
                             NavigationItem(R.drawable.ic_person_black_24dp, R.string.title_bots, Screen.Bots()).takeIf { accountType == AccountType.DEVELOPER },
                             NavigationItem(R.drawable.ic_group_black_24dp, R.string.title_sections, Screen.Sections()),
                             NavigationItem(R.drawable.ic_group_black_24dp, R.string.title_groups, Screen.Groups()),
+                            NavigationItem(R.drawable.ic_date_range_black_24dp, R.string.title_schedule, Screen.Schedule()),
                             NavigationItem(R.drawable.ic_schedule_black_24dp, R.string.title_last_seens, Screen.LastSeens()).takeIf { accountType == AccountType.DEVELOPER },
                             NavigationItem(R.drawable.ic_schedule_black_24dp, R.string.title_access_token, Screen.AccessTokens()).takeIf { accountType == AccountType.DEVELOPER },
                             NavigationItem(R.drawable.ic_info_black_24dp, R.string.title_about, Screen.About())
@@ -192,10 +197,10 @@ class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager, S
 
     private fun navigateToItem(navigationItem: NavigationItem, newRootScreen: Boolean) {
         closeDrawer()
-        if (newRootScreen) {
-            router.newRootScreen(navigationItem.screen)
-        } else {
-            router.navigateTo(navigationItem.screen)
+        when {
+            navigationItem.screen is Screen.Schedule -> startActivity(Intent(this, MyFlutterActivity::class.java))
+            newRootScreen -> router.newRootScreen(navigationItem.screen)
+            else -> router.navigateTo(navigationItem.screen)
         }
     }
 

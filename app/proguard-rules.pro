@@ -56,7 +56,17 @@
 -keep class com.qwert2603.crmit_android.rest.params.** { *; }
 -keep class com.qwert2603.crmit_android.rest.results.** { *; }
 
+
 # for FirebaseAnalytics
 -keepattributes InnerClasses
 -keepnames class ru.terrakok.cicerone.commands.** { *; }
 -keepnames class com.qwert2603.crmit_android.navigation.Screen$* { *; }
+
+
+## Flutter wrapper
+-keep class io.flutter.app.** { *; }
+-keep class io.flutter.plugin.**  { *; }
+-keep class io.flutter.util.**  { *; }
+-keep class io.flutter.view.**  { *; }
+-keep class io.flutter.**  { *; }
+-keep class io.flutter.plugins.**  { *; }
