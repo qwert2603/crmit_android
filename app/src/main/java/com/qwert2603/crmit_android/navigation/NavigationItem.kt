@@ -8,6 +8,7 @@ data class NavigationItem(
         @DrawableRes val iconRes: Int,
         @StringRes val titleRes: Int,
         val screen: Screen,
+        val withOpen: Boolean = false,
         override val id: Long = nextId++
 ) : IdentifiableLong {
     companion object {

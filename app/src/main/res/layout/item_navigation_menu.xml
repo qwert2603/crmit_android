@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/navigation_item_background"
     android:layout_marginEnd="8dp"
+    android:background="@drawable/navigation_item_background"
     android:orientation="horizontal"
     android:padding="12dp">
 
@@ -26,5 +26,15 @@
         android:textSize="15sp"
         android:textStyle="bold"
         tools:text="преподаватели" />
+
+    <ImageView
+        android:id="@+id/open_ImageView"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="4dp"
+        android:src="@drawable/ic_open_in_new_black_24dp"
+        android:tint="@color/colorAccent"
+        tools:ignore="ContentDescription" />
 
 </LinearLayout>
