@@ -200,12 +200,7 @@ class MainActivity : AppCompatActivity(), NavigationActivity, KeyboardManager, S
         closeDrawer()
         when {
             navigationItem.screen is Screen.Schedule -> {
-                FirebaseAnalytics.getInstance(this).logEvent(
-                        "navigation",
-                        Bundle()
-                                .also { it.putString("command", "open") }
-                                .also { it.putString("screen", "schedule") }
-                )
+                FirebaseAnalytics.getInstance(this).logEvent("schedule_open", null)
                 startActivity(Intent(this, MyFlutterActivity::class.java))
             }
             newRootScreen -> router.newRootScreen(navigationItem.screen)
