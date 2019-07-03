@@ -1,9 +1,6 @@
 package com.qwert2603.crmit_android.navigation
 
 import android.os.Bundle
-import android.view.View
-import android.view.ViewGroup
-import androidx.core.view.ViewGroupCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -23,10 +20,6 @@ class Navigator(private val activity: ActivityInterface)
                 object : FragmentManager.FragmentLifecycleCallbacks() {
                     override fun onFragmentPreCreated(fm: FragmentManager, f: Fragment, savedInstanceState: Bundle?) {
                         FragmentArgs.inject(f)
-                    }
-
-                    override fun onFragmentViewCreated(fm: FragmentManager, f: Fragment, v: View, savedInstanceState: Bundle?) {
-                        (v as? ViewGroup)?.let { ViewGroupCompat.setTransitionGroup(it, true) }
                     }
                 },
                 true
