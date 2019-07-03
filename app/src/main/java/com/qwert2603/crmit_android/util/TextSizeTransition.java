@@ -3,17 +3,18 @@ package com.qwert2603.crmit_android.util;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.transition.Transition;
-import android.transition.TransitionValues;
 import android.util.AttributeSet;
 import android.util.Property;
 import android.util.TypedValue;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.transition.Transition;
+import androidx.transition.TransitionValues;
+
 public class TextSizeTransition extends Transition {
     private static final String PROPNAME_TEXT_SIZE = "alexjlockwood:transition:textsize";
-    private static final String[] TRANSITION_PROPERTIES = { PROPNAME_TEXT_SIZE };
+    private static final String[] TRANSITION_PROPERTIES = {PROPNAME_TEXT_SIZE};
 
     private static final Property<TextView, Float> TEXT_SIZE_PROPERTY =
             new Property<TextView, Float>(Float.class, "textSize") {

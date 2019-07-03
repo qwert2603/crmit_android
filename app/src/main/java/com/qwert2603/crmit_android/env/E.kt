@@ -23,7 +23,7 @@ abstract class EnvInterface {
     val restBaseUrl2 by lazy { "$serverUrl2$API_PREFIX" }
     abstract val logType: LogUtils.LogType
     abstract val showClearCacheButton: Boolean
-    open val useProxy = true
+    open val useProxy = false
 }
 
 private object Home : EnvInterface() {

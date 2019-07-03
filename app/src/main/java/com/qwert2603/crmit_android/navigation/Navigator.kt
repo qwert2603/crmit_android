@@ -1,16 +1,13 @@
 package com.qwert2603.crmit_android.navigation
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.transition.Slide
-import android.transition.TransitionInflater
-import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.ViewGroupCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.transition.TransitionInflater
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.hannesdorfmann.fragmentargs.FragmentArgs
 import com.qwert2603.crmit_android.R
@@ -45,12 +42,7 @@ class Navigator(private val activity: ActivityInterface)
                         activity.navigationActivity.onFragmentPaused(f)
                     }
 
-                    @SuppressLint("RtlHardcoded")
                     override fun onFragmentCreated(fm: FragmentManager, f: Fragment, savedInstanceState: Bundle?) {
-                        f.exitTransition = Slide(Gravity.LEFT)
-                                .also { it.duration = TRANSITION_DURATION }
-                        f.enterTransition = Slide(if (fm.backStackEntryCount > 0 || f is LoginFragment) Gravity.RIGHT else Gravity.LEFT)
-                                .also { it.duration = TRANSITION_DURATION }
                         val sharedElementTransition = TransitionInflater.from(f.requireContext())
                                 .inflateTransition(R.transition.shared_element)
                         f.sharedElementEnterTransition = sharedElementTransition
@@ -61,14 +53,15 @@ class Navigator(private val activity: ActivityInterface)
         )
     }
 
-    @SuppressLint("RtlHardcoded")
     override fun setupFragmentTransaction(command: Command, currentFragment: Fragment?, nextFragment: Fragment, fragmentTransaction: FragmentTransaction) {
-        currentFragment
-                ?.exitTransition = Slide(Gravity.LEFT)
-                .also { it.duration = TRANSITION_DURATION }
-        nextFragment
-                .enterTransition = Slide(if (command is Forward || nextFragment is LoginFragment) Gravity.RIGHT else Gravity.LEFT)
-                .also { it.duration = TRANSITION_DURATION }
+        if (currentFragment != null) {
+            fragmentTransaction.setCustomAnimations(
+                    if (command is Forward || nextFragment is LoginFragment) R.anim.nav_enter else R.anim.nav_pop_enter,
+                    R.anim.nav_exit,
+                    R.anim.nav_pop_enter,
+                    R.anim.nav_pop_exit
+            )
+        }
 
         command
                 .let { it as? Forward }
@@ -95,8 +88,6 @@ class Navigator(private val activity: ActivityInterface)
     }
 
     companion object {
-        private const val TRANSITION_DURATION = 300L
-
         private fun Command.getScreen(): Screen? = when (this) {
             is Forward -> this.screen as? Screen
             is Replace -> this.screen as? Screen
